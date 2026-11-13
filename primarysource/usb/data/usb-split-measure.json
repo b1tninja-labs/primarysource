@@ -1,0 +1,1803 @@
+{
+ "schema": 1,
+ "specs": [
+  {
+   "slug": "usb-type-cr-connector-system-software-interface-ucsi-specification",
+   "pdf": "USB Type-C Connector System Software Interface Revision_3.2 OR Clean.pdf",
+   "pdf_count": 6,
+   "pages": 120,
+   "chars": 351229,
+   "section_count": 90,
+   "shallow_sections": 28,
+   "sequence_errors": 0,
+   "largest_section_lines": 509,
+   "sample_headings": [
+    "1 Introduction",
+    "5 PPM-LPM Interface Protocol",
+    "6.5.24 Security Request"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-type-c-and-power-delivery-source-power-requirements-compliance-test",
+   "pdf": "USB-C%20Source%20Power%20Test%20Specification%20V1.2%202026%2011%2004.pdf",
+   "pdf_count": 1,
+   "pages": 75,
+   "chars": 199294,
+   "section_count": 6,
+   "shallow_sections": 6,
+   "sequence_errors": 0,
+   "largest_section_lines": 2656,
+   "sample_headings": [
+    "1 Introduction",
+    "2.1 USB PD 2.0 Assertions",
+    "2.3 USB PD 3.2 V1.2 Assertions"
+   ],
+   "group": "too_few"
+  },
+  {
+   "slug": "usb-power-delivery",
+   "pdf": "USB_PD_R2_0 V1.3 - 20170112.pdf",
+   "pdf_count": 45,
+   "pages": 547,
+   "chars": 1784953,
+   "section_count": 787,
+   "shallow_sections": 71,
+   "sequence_errors": 1,
+   "largest_section_lines": 3192,
+   "sample_headings": [
+    "1. Introduction",
+    "6.4.2.2 GiveBack Flag",
+    "8.3.2.8.1 Type-C Power Role Swap"
+   ],
+   "group": "sequence_errors"
+  },
+  {
+   "slug": "usb-32-revision-11-june-2022",
+   "pdf": "USB 3.2 Revision 1.1.pdf",
+   "pdf_count": 23,
+   "pages": 569,
+   "chars": 1750640,
+   "section_count": 627,
+   "shallow_sections": 88,
+   "sequence_errors": 0,
+   "largest_section_lines": 3552,
+   "sample_headings": [
+    "1  Introduction",
+    "7.2.4.1.6     Receiving Data Packet Header in Gen 2 Operation",
+    "9.2.5.1 Power Budgeting"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb4cv-compliance-test-specification",
+   "pdf": "USB4 Logical Layer CTS Rev 2.9 - CLEAN.pdf",
+   "pdf_count": 13,
+   "pages": 302,
+   "chars": 774651,
+   "section_count": 36,
+   "shallow_sections": 36,
+   "sequence_errors": 0,
+   "largest_section_lines": 5029,
+   "sample_headings": [
+    "1. Send an LT_Fall Transaction to the Link Partner of the Upstream Facing",
+    "13. TMU_ADP_6",
+    "25. Else:"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-power-delivery-compliance-test-specification-0",
+   "pdf": "USB PD3 CTS Q4 2026 OR.pdf",
+   "pdf_count": 36,
+   "pages": 345,
+   "chars": 926845,
+   "section_count": 68,
+   "shallow_sections": 32,
+   "sequence_errors": 0,
+   "largest_section_lines": 1812,
+   "sample_headings": [
+    "1 Introduction",
+    "4.1.1 PD3 Mode",
+    "5.7.2 PD3 Mode"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-audio-devices-release-40-and-adopters-agreement",
+   "pdf": "Audio4_with_Errata_and ECN_through_October_09_2026.pdf",
+   "pdf_count": 2,
+   "pages": 239,
+   "chars": 765930,
+   "section_count": 353,
+   "shallow_sections": 52,
+   "sequence_errors": 0,
+   "largest_section_lines": 1081,
+   "sample_headings": [
+    "1    INTRODUCTION",
+    "4.5.3.4  TERMINAL COMPANION DESCRIPTOR",
+    "5.3.3.7.2.1 BYPASS CONTROL"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through",
+   "pdf": "Audio2_with_Errata_and_ECN_through_Sep_14_2026.pdf",
+   "pdf_count": 1,
+   "pages": 144,
+   "chars": 456618,
+   "section_count": 327,
+   "shallow_sections": 59,
+   "sequence_errors": 0,
+   "largest_section_lines": 218,
+   "sample_headings": [
+    "1 Introduction",
+    "4.10.1.1 Standard AS Isochronous Audio Data Endpoint Descriptor",
+    "5.2.5.9.2.1 Enable Control"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-20-electrical-compliance-test-specification",
+   "pdf": "USB2%20Electrical%20Compliance%20Specification%20v1.08.pdf",
+   "pdf_count": 1,
+   "pages": 12,
+   "chars": 24758,
+   "section_count": 37,
+   "shallow_sections": 19,
+   "sequence_errors": 0,
+   "largest_section_lines": 41,
+   "sample_headings": [
+    "3 High Speed Electrical Compliance",
+    "3.8 Host requirements",
+    "4.3 J and K Voltage Levels"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-type-cr-cable-and-connector-specification-release-25",
+   "pdf": "USB Type-C Spec R2.5 - March 2026 Compared to R2.4.pdf",
+   "pdf_count": 12,
+   "pages": 446,
+   "chars": 1269808,
+   "section_count": 625,
+   "shallow_sections": 49,
+   "sequence_errors": 0,
+   "largest_section_lines": 4402,
+   "sample_headings": [
+    "1 Introduction",
+    "4.5.2.2.9 Attached.SRC State",
+    "6.1.2.5.1 Electrical Requirements Applying to All Active Cables"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb4r-specification-v20",
+   "pdf": "USB4 Specification 2.0 November 2025 - CLEAN.pdf",
+   "pdf_count": 44,
+   "pages": 839,
+   "chars": 2817180,
+   "section_count": 633,
+   "shallow_sections": 93,
+   "sequence_errors": 0,
+   "largest_section_lines": 2562,
+   "sample_headings": [
+    "1    Introduction",
+    "5.1.2.3  Error Correction Code (ECC)",
+    "10.1.3  DP Physical Layer"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-communications-class-subclass-specifications-network-control-model-devices-v11",
+   "pdf": "Changes - NCM11_20250522 and NCM11_20260205.pdf",
+   "pdf_count": 6,
+   "pages": 91,
+   "chars": 265481,
+   "section_count": 101,
+   "shallow_sections": 59,
+   "sequence_errors": 0,
+   "largest_section_lines": 292,
+   "sample_headings": [
+    "1 Introduction",
+    "4.4.2 Transmit parameters combinations and dependencies",
+    "7.2.11 SetCrcMode"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb4-electrical-compliance-test-specification",
+   "pdf": "USB4  Electrical Compliance Test Specification Ver2 1p0 no watermark official release clean.pdf",
+   "pdf_count": 6,
+   "pages": 126,
+   "chars": 209499,
+   "section_count": 275,
+   "shallow_sections": 23,
+   "sequence_errors": 0,
+   "largest_section_lines": 816,
+   "sample_headings": [
+    "1 Introduction",
+    "4.1.3.1.1 Reference",
+    "5.3.1.1 Reference"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "hid-usage-tables-17",
+   "pdf": "hut1_7.pdf",
+   "pdf_count": 1,
+   "pages": 441,
+   "chars": 1002861,
+   "section_count": 388,
+   "shallow_sections": 243,
+   "sequence_errors": 0,
+   "largest_section_lines": 1314,
+   "sample_headings": [
+    "3 Usage Pages",
+    "16.3.1 Digitizer-Specific Fields",
+    "23.20.2.2 Hinge Fold Gesture"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-type-c-shared-capacity-charger-interoperability-compliance-test-specification",
+   "pdf": "USB_Type-C_Shared_Capacity_Interoperabiltiy_CTS_1.0.pdf",
+   "pdf_count": 1,
+   "pages": 9,
+   "chars": 13514,
+   "section_count": 6,
+   "shallow_sections": 6,
+   "sequence_errors": 0,
+   "largest_section_lines": 93,
+   "sample_headings": [
+    "1. Apple MacBook M4 (EPR) and Google Pixelbook Go",
+    "3. Apple MacBook M4 (EPR) and Google Pixel 10 Phone",
+    "5. Google Pixelbook Go and Google Pixel 10 Phone"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb3cv-and-xhcicv-compliance-test-specifications",
+   "pdf": "USB_Video_Class_Compliance_1 1.pdf",
+   "pdf_count": 14,
+   "pages": 217,
+   "chars": 659236,
+   "section_count": 35,
+   "shallow_sections": 20,
+   "sequence_errors": 0,
+   "largest_section_lines": 1910,
+   "sample_headings": [
+    "1 Scope",
+    "5.1 Descriptor related assertions",
+    "6.5 Test details"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-20-specification",
+   "pdf": "usb_20.pdf",
+   "pdf_count": 37,
+   "pages": 650,
+   "chars": 1895748,
+   "section_count": 50,
+   "shallow_sections": 8,
+   "sequence_errors": 0,
+   "largest_section_lines": 19894,
+   "sample_headings": [
+    "8. After the device completes its chirp, it looks for the high-speed hub chirp. At a minimum, the de",
+    "8.4.2.1 Split Transactions",
+    "8.5.3 Control Transfers"
+   ],
+   "group": "too_few"
+  },
+  {
+   "slug": "class-definitions-communication-devices-12",
+   "pdf": "WMC110-20101103-track.pdf",
+   "pdf_count": 10,
+   "pages": 75,
+   "chars": 192332,
+   "section_count": 146,
+   "shallow_sections": 30,
+   "sequence_errors": 0,
+   "largest_section_lines": 191,
+   "sample_headings": [
+    "1 Introduction",
+    "6.3.2.3 Telephone Control Model Functional Descriptor",
+    "6.6.1 Functional Topology"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-active-cable-thermal-compliance-test-specification",
+   "pdf": "USB%20Active%20Cable%20Thermal%20Compliance%20Test%20Specification%20v0.92%20May%2015th.pdf",
+   "pdf_count": 1,
+   "pages": 20,
+   "chars": 30984,
+   "section_count": 21,
+   "shallow_sections": 5,
+   "sequence_errors": 0,
+   "largest_section_lines": 110,
+   "sample_headings": [
+    "1 USB Active Cable Thermal Compliance Test",
+    "1.2.3 Device",
+    "1.2.10 Customized USB C to C Passive Cable B (Length: 0.3m)"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b",
+   "pdf": "USB%20Type-C_Compliance%20Document_Rev_2_1b_June_2021.pdf",
+   "pdf_count": 1,
+   "pages": 86,
+   "chars": 219981,
+   "section_count": 36,
+   "shallow_sections": 21,
+   "sequence_errors": 0,
+   "largest_section_lines": 1199,
+   "sample_headings": [
+    "1 Introduction",
+    "4.5 General Information",
+    "4.10.1.1 Visual Inspection"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "embedded-usb2-version-20-supplement-usb-20-specification-eusb2v2",
+   "pdf": "Embedded%20USB2%20Version%202.0%20Supplement%20to%20the%20USB%202.0%20Specification_0.pdf",
+   "pdf_count": 1,
+   "pages": 65,
+   "chars": 162172,
+   "section_count": 64,
+   "shallow_sections": 18,
+   "sequence_errors": 0,
+   "largest_section_lines": 516,
+   "sample_headings": [
+    "1    Introduction",
+    "2  Architecture",
+    "3.7.2  Transmitter De-emphasis"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "embedded-usb2-eusb2-physical-layer-supplement-usb-revision-20-specification-rev-12",
+   "pdf": "eUSB2_1p2_20211217.pdf",
+   "pdf_count": 3,
+   "pages": 169,
+   "chars": 461784,
+   "section_count": 50,
+   "shallow_sections": 17,
+   "sequence_errors": 0,
+   "largest_section_lines": 6042,
+   "sample_headings": [
+    "1 Preface",
+    "3.3.1 FS/LS SYNC and EOP",
+    "3.3.8.1 CM Retry and Recovery Rules"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-type-cr-locking-connector-specification",
+   "pdf": "usb_type-c_locking_connector_specification_rev_1_0_20160309.pdf",
+   "pdf_count": 2,
+   "pages": 13,
+   "chars": 22058,
+   "section_count": 20,
+   "shallow_sections": 10,
+   "sequence_errors": 0,
+   "largest_section_lines": 75,
+   "sample_headings": [
+    "1 Introduction",
+    "1.4.2 Keywords",
+    "1.4.2.6 Reserved"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-32-link-layer-test-specification",
+   "pdf": "USB%203%202%20Link%20Layer%20Test%20Specification%202024%2003%2003.pdf",
+   "pdf_count": 1,
+   "pages": 106,
+   "chars": 311595,
+   "section_count": 8,
+   "shallow_sections": 8,
+   "sequence_errors": 0,
+   "largest_section_lines": 3441,
+   "sample_headings": [
+    "1 Introduction",
+    "3 Test Assertions",
+    "5             Timeout Counter is equal to 3, then the Requester shall"
+   ],
+   "group": "too_few"
+  },
+  {
+   "slug": "usb-type-c-functional-test-specification",
+   "pdf": "USB%20Type%20C%20Functional%20Test%20Specification%202024%2003%2003.pdf",
+   "pdf_count": 1,
+   "pages": 140,
+   "chars": 457616,
+   "section_count": 30,
+   "shallow_sections": 30,
+   "sequence_errors": 0,
+   "largest_section_lines": 2637,
+   "sample_headings": [
+    "1. CVS starts in Disabled",
+    "11. CVS verifies the PUT and CVS transitions to Attached.SRC and Attached.SNK after",
+    "21. CVS sends Enter Mode for a PUT supported Alternate Mode. If VIF field"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-i3cr-device-class-specification-v11",
+   "pdf": "USB%20I3C%20Device%20Class%20Revision%201.1.pdf",
+   "pdf_count": 1,
+   "pages": 90,
+   "chars": 359017,
+   "section_count": 100,
+   "shallow_sections": 21,
+   "sequence_errors": 0,
+   "largest_section_lines": 561,
+   "sample_headings": [
+    "1    Introduction",
+    "3.3.2.3.4     Disable Hot-Join",
+    "3.4.4     Buffer Available"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "electrical-compliance-test-specification-linear-re-driver-active-cable-lrd",
+   "pdf": "Electrical_Compliance_Test%20Specification_Linear_Re_Driver_Active_Cable_LRD_rev1p0.pdf",
+   "pdf_count": 1,
+   "pages": 44,
+   "chars": 68346,
+   "section_count": 67,
+   "shallow_sections": 22,
+   "sequence_errors": 0,
+   "largest_section_lines": 218,
+   "sample_headings": [
+    "1 Introduction",
+    "6.2.1.4 Periodic Jitter",
+    "8.2 Gen3 Configuration"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb4tm-thunderbolt3tm-compatibility-compliance-test-specification",
+   "pdf": "USB4™ Thunderbolt3™ Compatibility CTS Rev 1.1 - CLEAN.pdf",
+   "pdf_count": 2,
+   "pages": 44,
+   "chars": 101808,
+   "section_count": 28,
+   "shallow_sections": 24,
+   "sequence_errors": 0,
+   "largest_section_lines": 753,
+   "sample_headings": [
+    "1  Introduction",
+    "4.3 Source VBUS Requirements",
+    "5.4           Cable"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-type-c-connectors-and-cable-assemblies-compliance-document",
+   "pdf": "USB Type-C_Compliance Document_Rev_2_1a_June_2021_CB.pdf",
+   "pdf_count": 2,
+   "pages": 86,
+   "chars": 225283,
+   "section_count": 36,
+   "shallow_sections": 21,
+   "sequence_errors": 0,
+   "largest_section_lines": 1231,
+   "sample_headings": [
+    "1 Introduction",
+    "4.5 General Information",
+    "4.10.1.1 Visual Inspection"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-type-cr-port-controller-interface-specification",
+   "pdf": "USB_TCPCI_R2_V1p3_30122_CLEAN.pdf",
+   "pdf_count": 1,
+   "pages": 113,
+   "chars": 384785,
+   "section_count": 133,
+   "shallow_sections": 34,
+   "sequence_errors": 0,
+   "largest_section_lines": 427,
+   "sample_headings": [
+    "1 Introduction",
+    "4.3.3 Writing Two-Byte Registers",
+    "4.4.9.1 DEVICE_CAPABILITIES (Normative)"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-i3c-device-class-specification",
+   "pdf": "USB%20I3C%20Device%20Class%20Revision%201.0.pdf",
+   "pdf_count": 1,
+   "pages": 78,
+   "chars": 297266,
+   "section_count": 91,
+   "shallow_sections": 21,
+   "sequence_errors": 0,
+   "largest_section_lines": 543,
+   "sample_headings": [
+    "1    Introduction",
+    "3.3.2.3.1  Disable I3C Bus",
+    "3.4.3  Address Change Result"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb4tm-thunderbolt3tm-compatibility-requirements-specification",
+   "pdf": "USB4%E2%84%A2%20Thunderbolt3%E2%84%A2%20Compatibility%20Requirements%20Specification%20Rev%201.0%20-%2020210129_0.pdf",
+   "pdf_count": 1,
+   "pages": 16,
+   "chars": 26113,
+   "section_count": 19,
+   "shallow_sections": 15,
+   "sequence_errors": 0,
+   "largest_section_lines": 94,
+   "sample_headings": [
+    "1    Introduction",
+    "4.1  Host Source Power Provisioning",
+    "4.3.1       Electrical"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-battery-charging-12-compliance-plan",
+   "pdf": "USB%20BC%201.2%20Compliance%20Plan%20rev%201.2.pdf",
+   "pdf_count": 1,
+   "pages": 165,
+   "chars": 335010,
+   "section_count": 193,
+   "shallow_sections": 112,
+   "sequence_errors": 0,
+   "largest_section_lines": 382,
+   "sample_headings": [
+    "1 Introduction",
+    "8.1 Submission Materials",
+    "13.1 Submission Materials"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "billboard-device-class-spec-revision-122-and-adopters-agreement",
+   "pdf": "USB Billboard Revision 1.2.2 - CLEAN.pdf",
+   "pdf_count": 3,
+   "pages": 20,
+   "chars": 62559,
+   "section_count": 40,
+   "shallow_sections": 17,
+   "sequence_errors": 0,
+   "largest_section_lines": 175,
+   "sample_headings": [
+    "1 In troduction",
+    "1.5.2.6 Re se rved",
+    "3.1.1 De vice Descriptor"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-class-definition-midi-devices-v20",
+   "pdf": "USB%20MIDI%20v2_0.pdf",
+   "pdf_count": 1,
+   "pages": 47,
+   "chars": 114156,
+   "section_count": 83,
+   "shallow_sections": 43,
+   "sequence_errors": 0,
+   "largest_section_lines": 108,
+   "sample_headings": [
+    "1 Introduction",
+    "5.2 MIDIStreaming Interface Descriptors",
+    "B.2.2 Class-specific AC Interface Descriptor"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "hid-point-sale-usage-tables-102",
+   "pdf": "pos1_02.pdf",
+   "pdf_count": 1,
+   "pages": 69,
+   "chars": 169221,
+   "section_count": 62,
+   "shallow_sections": 32,
+   "sequence_errors": 0,
+   "largest_section_lines": 296,
+   "sample_headings": [
+    "1 Introduction",
+    "3.10.1.1 Price/Weight Check Usages",
+    "6.1.2 Scanned Data Report"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "oaad-arcade-usage-table",
+   "pdf": "oaaddataformatsv6.pdf",
+   "pdf_count": 1,
+   "pages": 27,
+   "chars": 61284,
+   "section_count": 3,
+   "shallow_sections": 3,
+   "sequence_errors": 0,
+   "largest_section_lines": 457,
+   "sample_headings": [
+    "6                           AI06 (Input)",
+    "6.1 Bill acceptors",
+    "6.2 Debit cards"
+   ],
+   "group": "too_few"
+  },
+  {
+   "slug": "monitor-control-class-10",
+   "pdf": "usbmon10_0.pdf",
+   "pdf_count": 1,
+   "pages": 22,
+   "chars": 46138,
+   "section_count": 16,
+   "shallow_sections": 15,
+   "sequence_errors": 0,
+   "largest_section_lines": 452,
+   "sample_headings": [
+    "1. Introduction",
+    "2. Management Overview",
+    "5.2 Monitor Requests"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "device-class-definition-pid-10",
+   "pdf": "pid1_01_0.pdf",
+   "pdf_count": 1,
+   "pages": 52,
+   "chars": 130513,
+   "section_count": 41,
+   "shallow_sections": 32,
+   "sequence_errors": 0,
+   "largest_section_lines": 641,
+   "sample_headings": [
+    "1. Introduction",
+    "5. Physical Input Device Page (0x0F)",
+    "5.8 Vendor Defined Parameter Blocks"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "device-class-definition-hid-111",
+   "pdf": "hid1_11.pdf",
+   "pdf_count": 1,
+   "pages": 97,
+   "chars": 226062,
+   "section_count": 39,
+   "shallow_sections": 39,
+   "sequence_errors": 0,
+   "largest_section_lines": 1565,
+   "sample_headings": [
+    "1. Preface",
+    "4.2 Subclass",
+    "5.9 Orientation"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-3-hub-lvs-test-specification",
+   "pdf": "SSHUB%20LVS%20Specification%202019_11_21.pdf",
+   "pdf_count": 1,
+   "pages": 57,
+   "chars": 191519,
+   "section_count": 17,
+   "shallow_sections": 17,
+   "sequence_errors": 0,
+   "largest_section_lines": 1121,
+   "sample_headings": [
+    "1 Hub Testing Requirements",
+    "6. No Device connected to DFP",
+    "11. Hub Downstream Inactivity Timers reset by non-ITP packet test"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usage-tables-hid-power-devices-11",
+   "pdf": "pdcv11.pdf",
+   "pdf_count": 1,
+   "pages": 66,
+   "chars": 214102,
+   "section_count": 52,
+   "shallow_sections": 22,
+   "sequence_errors": 0,
+   "largest_section_lines": 1667,
+   "sample_headings": [
+    "1. Introduction",
+    "2.3 Implementation Examples",
+    "4.2 Battery System Page (x85)"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-31-legacy-cable-and-connector-revision-10",
+   "pdf": "USB 3.1 Legacy Cable and Connector Revision 1.0.pdf",
+   "pdf_count": 3,
+   "pages": 74,
+   "chars": 130732,
+   "section_count": 90,
+   "shallow_sections": 20,
+   "sequence_errors": 1,
+   "largest_section_lines": 120,
+   "sample_headings": [
+    "1  Introduction",
+    "5.2.3 Raw Cable",
+    "5.6.1.1.2  Intra-Pair Skew"
+   ],
+   "group": "sequence_errors"
+  },
+  {
+   "slug": "battery-charging-v12-spec-and-adopters-agreement",
+   "pdf": "BC1.2 plus errata 2012-3-15.pdf",
+   "pdf_count": 5,
+   "pages": 72,
+   "chars": 167304,
+   "section_count": 105,
+   "shallow_sections": 30,
+   "sequence_errors": 0,
+   "largest_section_lines": 384,
+   "sample_headings": [
+    "1. Allow DCPs to output more than 1.5A. Allows",
+    "3.2.3.3 Data Contact Detect, Not Attached",
+    "4.3.2 Undershoot"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "android-based-targeted-host-compliance-test-specification-v100",
+   "pdf": "Targeted%20Host%20Compliance%20Test%20Specification%20v1.00.pdf",
+   "pdf_count": 1,
+   "pages": 3,
+   "chars": 5739,
+   "section_count": 0,
+   "shallow_sections": 0,
+   "sequence_errors": 0,
+   "largest_section_lines": 0,
+   "sample_headings": [],
+   "group": "too_few"
+  },
+  {
+   "slug": "usb-authentication-specification-rev-10-ecn-and-errata-through-january-7-2019",
+   "pdf": "USB Authentication Mapping Specification 20190118.pdf",
+   "pdf_count": 2,
+   "pages": 53,
+   "chars": 123762,
+   "section_count": 17,
+   "shallow_sections": 17,
+   "sequence_errors": 0,
+   "largest_section_lines": 908,
+   "sample_headings": [
+    "1   Copyright © 2019, USB 3.0 Promoter Group",
+    "6 Bridge function in both the USB Hub and corresponding driver in the USB Host. The USB",
+    "11 Message exchange. To initiate a security transfer, an Authentication Initiator sends a"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-type-cr-bridge-specification-v11",
+   "pdf": "USB-C Bridge Rev 1 1 - Clean.pdf",
+   "pdf_count": 3,
+   "pages": 55,
+   "chars": 141326,
+   "section_count": 71,
+   "shallow_sections": 22,
+   "sequence_errors": 0,
+   "largest_section_lines": 266,
+   "sample_headings": [
+    "1 Introduction",
+    "3.2.1.1 Send PPM Command Request",
+    "4.2.7 Get Capability"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "universal-serial-bus-31-legacy-connectors-and-cable-assemblies-compliance-document",
+   "pdf": "CabConn_Legacy_3_1_Compliance_Rev_1_1.pdf",
+   "pdf_count": 1,
+   "pages": 56,
+   "chars": 111816,
+   "section_count": 30,
+   "shallow_sections": 19,
+   "sequence_errors": 1,
+   "largest_section_lines": 729,
+   "sample_headings": [
+    "1. Introduction",
+    "4.3. Compliance Test Report",
+    "4.9. Sustaining Qualification Approval Testing"
+   ],
+   "group": "sequence_errors"
+  },
+  {
+   "slug": "usb-multiflow-extension-mobile-broadband-interface-model-v10-and-adopters",
+   "pdf": "MBIM MultiFlow v1.0.pdf",
+   "pdf_count": 2,
+   "pages": 28,
+   "chars": 39218,
+   "section_count": 55,
+   "shallow_sections": 19,
+   "sequence_errors": 0,
+   "largest_section_lines": 43,
+   "sample_headings": [
+    "1 OVERVIEW",
+    "5 MBIM-SPECIFIC COMMAND MECHANISM",
+    "5.3.2.7 STATUS CODES"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-31usb-type-ctm-desktop-front-panel-cable-and-connector-implementation-document",
+   "pdf": "USB3p1_Front_Panel_CabCon_Implment_Doc_Rev1p1.pdf",
+   "pdf_count": 1,
+   "pages": 32,
+   "chars": 51388,
+   "section_count": 14,
+   "shallow_sections": 7,
+   "sequence_errors": 0,
+   "largest_section_lines": 279,
+   "sample_headings": [
+    "3. SIGNALS, PIN-OUTS AND WIRING _________________ 18",
+    "3.2.2 Key-B 20-Pin Connector",
+    "4.2.1 Raw Cable"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "electrical-compliance-test-specification-superspeed-usb-10-gbps-rev-10",
+   "pdf": "EnhancedSuperSpeedPHYComplianceTestSpec.pdf",
+   "pdf_count": 1,
+   "pages": 20,
+   "chars": 57159,
+   "section_count": 2,
+   "shallow_sections": 2,
+   "sequence_errors": 0,
+   "largest_section_lines": 670,
+   "sample_headings": [
+    "3. Trigger on the initial LFPS burst sent by the DUT and send LFPS signals to the DUT with the follo",
+    "3.1 Mock Host 7.2” >>       Compliance Load Board"
+   ],
+   "group": "too_few"
+  },
+  {
+   "slug": "usb-power-delivery-firmware-update-specification",
+   "pdf": "pd_fw_update_specification_rev_1_0_20160915b.pdf",
+   "pdf_count": 1,
+   "pages": 74,
+   "chars": 161221,
+   "section_count": 97,
+   "shallow_sections": 26,
+   "sequence_errors": 0,
+   "largest_section_lines": 655,
+   "sample_headings": [
+    "1 Introduction",
+    "2.3.6 Manifestation",
+    "4.1.6.1 PDFU Initiator Manifestation Phase"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-31-command-verifier-compliance-test-specification-version-072",
+   "pdf": null,
+   "pdf_count": 0,
+   "error": "no pdf on disk",
+   "group": "extraction_failure"
+  },
+  {
+   "slug": "media-agnostic-usb-v10a-spec-and-adopters-agreement",
+   "pdf": "MA USB v1.0a-final.pdf",
+   "pdf_count": 2,
+   "pages": 176,
+   "chars": 691698,
+   "section_count": 35,
+   "shallow_sections": 35,
+   "sequence_errors": 0,
+   "largest_section_lines": 1689,
+   "sample_headings": [
+    "1   Table of Contents",
+    "12  NOTE — The TransferReq packet that the MA USB host PAL transmits after not receiving a TransferR",
+    "23  EIP(t): (Expired Isochronous Payload) Transmitted isochronous payload with presentation time"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-31-debug-class-specification-debug-devices-rev-10",
+   "pdf": "usb_debug_class_rev_1_0_final_0.pdf",
+   "pdf_count": 1,
+   "pages": 129,
+   "chars": 387249,
+   "section_count": 74,
+   "shallow_sections": 25,
+   "sequence_errors": 0,
+   "largest_section_lines": 1637,
+   "sample_headings": [
+    "1 Terms and Abbreviations",
+    "3.6 Debug Operational Model",
+    "5.3.2 Request Examples"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "inter-chip-supplement-usb-revision-30-specification-revision-102",
+   "pdf": "superspeed_inter-chip_supplement_1_02_19may2014.pdf",
+   "pdf_count": 1,
+   "pages": 72,
+   "chars": 201047,
+   "section_count": 0,
+   "shallow_sections": 0,
+   "sequence_errors": 0,
+   "largest_section_lines": 0,
+   "sample_headings": [],
+   "group": "too_few"
+  },
+  {
+   "slug": "electrical-compliance-test-specification-superspeed-usb-rev-10a",
+   "pdf": "SuperSpeedPHYComplianceTest_Spec1_0a.pdf",
+   "pdf_count": 1,
+   "pages": 13,
+   "chars": 23537,
+   "section_count": 4,
+   "shallow_sections": 4,
+   "sequence_errors": 0,
+   "largest_section_lines": 329,
+   "sample_headings": [
+    "1 Introduction",
+    "1.1 Related Documents",
+    "1.2 USB 2.0 Compliance"
+   ],
+   "group": "too_few"
+  },
+  {
+   "slug": "compliance-plan-usb-go-and-embedded-host-30",
+   "pdf": "OTG3andEH_Compliance_Plan_1.0.pdf",
+   "pdf_count": 1,
+   "pages": 84,
+   "chars": 206212,
+   "section_count": 114,
+   "shallow_sections": 37,
+   "sequence_errors": 0,
+   "largest_section_lines": 625,
+   "sample_headings": [
+    "1 Introduction",
+    "9.1 Link Initialization Procedure",
+    "9.6.1 TD5.27 OTG Descriptor (Configuration Descriptor)"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-mass-storage-class-specification-uasp-bootability-v10-and-adopters-agreement",
+   "pdf": "UASP Bootability Rev 1.0.pdf",
+   "pdf_count": 2,
+   "pages": 11,
+   "chars": 31103,
+   "section_count": 22,
+   "shallow_sections": 22,
+   "sequence_errors": 0,
+   "largest_section_lines": 40,
+   "sample_headings": [
+    "1 Introduction",
+    "4 Multi-Media Command (MMC) Device Requirements",
+    "5.6 READ CAPACITY Command"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "mbim-compliance-testing-v10",
+   "pdf": "MBIM-Compliance-1.0.pdf",
+   "pdf_count": 1,
+   "pages": 64,
+   "chars": 197523,
+   "section_count": 8,
+   "shallow_sections": 8,
+   "sequence_errors": 0,
+   "largest_section_lines": 2617,
+   "sample_headings": [
+    "1 Introduction",
+    "1.2 Scope",
+    "1.4 Abbreviations"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "mobile-broadband-interface-model-v10-errata-1-and-adopters-agreement",
+   "pdf": "Compare-MBIM-v1.0-to-MBIM-v1.0-errata-1.pdf",
+   "pdf_count": 3,
+   "pages": 230,
+   "chars": 544006,
+   "section_count": 3,
+   "shallow_sections": 3,
+   "sequence_errors": 0,
+   "largest_section_lines": 9436,
+   "sample_headings": [
+    "5 FUNCTIONAL CHARACTERISTICS",
+    "5.1 OVERVIEW",
+    "5.2 COMMUNICATION PIPES"
+   ],
+   "group": "too_few"
+  },
+  {
+   "slug": "ipp-protocol-10",
+   "pdf": "IPP USB Specification.pdf",
+   "pdf_count": 2,
+   "pages": 26,
+   "chars": 48850,
+   "section_count": 24,
+   "shallow_sections": 24,
+   "sequence_errors": 0,
+   "largest_section_lines": 195,
+   "sample_headings": [
+    "1 Introduction",
+    "3.2 Interface Set",
+    "6.2 HTTP Headers"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "errata-updates-cdc-v12-and-wmc-v11-dec-2012",
+   "pdf": "2012-07-31-WMC110_errata.pdf",
+   "pdf_count": 5,
+   "pages": 72,
+   "chars": 188925,
+   "section_count": 150,
+   "shallow_sections": 34,
+   "sequence_errors": 0,
+   "largest_section_lines": 192,
+   "sample_headings": [
+    "1 Introduction",
+    "6.3.2.1 TCM Interface Descriptor",
+    "6.6.1 Functional Topology"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "video-class-v15-document-set",
+   "pdf": "UVC 1.5 Class specification.pdf",
+   "pdf_count": 13,
+   "pages": 184,
+   "chars": 458428,
+   "section_count": 210,
+   "shallow_sections": 50,
+   "sequence_errors": 0,
+   "largest_section_lines": 553,
+   "sample_headings": [
+    "1 Introduction",
+    "3.9.2.3 Payload Format Descriptors",
+    "4.2.2.4.2.1 Sub-bitstream Definition"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-go-and-embedded-host-automated-compliance-plan-go-embedded-host-supplement",
+   "pdf": "otgeh_compliance_plan_1_2.pdf",
+   "pdf_count": 1,
+   "pages": 139,
+   "chars": 303977,
+   "section_count": 143,
+   "shallow_sections": 29,
+   "sequence_errors": 0,
+   "largest_section_lines": 2887,
+   "sample_headings": [
+    "1 Introduction",
+    "6.8.5.1 Test Procedure",
+    "7.3.2.1 Test procedure"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-thin-card-v10-and-adopters-agreement",
+   "pdf": "USB Thin Card Specification Rev1.0 2012-06-21.pdf",
+   "pdf_count": 2,
+   "pages": 14,
+   "chars": 30608,
+   "section_count": 27,
+   "shallow_sections": 21,
+   "sequence_errors": 0,
+   "largest_section_lines": 70,
+   "sample_headings": [
+    "1 Introduction",
+    "2.1 Generic USB Thin Card",
+    "4 Mechanical Compliance Requirements"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-device-class-definition-audiovideo-devices-basic-device-profile-bdp",
+   "pdf": "AV_BDP_v1.0.pdf",
+   "pdf_count": 1,
+   "pages": 28,
+   "chars": 82706,
+   "section_count": 75,
+   "shallow_sections": 11,
+   "sequence_errors": 0,
+   "largest_section_lines": 126,
+   "sample_headings": [
+    "1.    Introduction",
+    "3.2.18. Output Terminal ID18 Requirements",
+    "4.2.1.3.2.6.     AVDD Content Control Descriptor"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "device-class-definition-content-security-devices-20",
+   "pdf": "ContentSecurity_v2.0.pdf",
+   "pdf_count": 1,
+   "pages": 28,
+   "chars": 53817,
+   "section_count": 43,
+   "shallow_sections": 29,
+   "sequence_errors": 0,
+   "largest_section_lines": 55,
+   "sample_headings": [
+    "1.    Introduction",
+    "5.1.      Device Descriptor",
+    "5.5.1.     Change_Channel_Settings Notification"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "content-security-method-5-high-bandwidth-digital-content-protection-21-hdcp-21",
+   "pdf": "CSM-5_v1.0.pdf",
+   "pdf_count": 1,
+   "pages": 25,
+   "chars": 31790,
+   "section_count": 30,
+   "shallow_sections": 26,
+   "sequence_errors": 0,
+   "largest_section_lines": 34,
+   "sample_headings": [
+    "1.    Introduction",
+    "2.2.4.         PUT_RESPONSE",
+    "5.    Authentication Sequence Diagrams"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "go-and-embedded-host-supplement-usb-revision-30-specification-revision-11",
+   "pdf": "usb_otg_and_eh_3-0_release_1_1_10may2012.pdf",
+   "pdf_count": 1,
+   "pages": 74,
+   "chars": 209474,
+   "section_count": 50,
+   "shallow_sections": 26,
+   "sequence_errors": 0,
+   "largest_section_lines": 366,
+   "sample_headings": [
+    "1 Introduction",
+    "2.5.1 RSP Support",
+    "5.4.1 RSP Process"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "audiovideo-device-class-v10-spec-and-adopters-agreement",
+   "pdf": "AVFunction v1.0.pdf",
+   "pdf_count": 5,
+   "pages": 180,
+   "chars": 537978,
+   "section_count": 412,
+   "shallow_sections": 91,
+   "sequence_errors": 0,
+   "largest_section_lines": 282,
+   "sample_headings": [
+    "1.    Introduction",
+    "7.9.2.  Clock Domains and AVData Streaming Interfaces",
+    "9.17.5.       Audio Input Pin Selector Control"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "media-transfer-protocol-v11-spec-and-mtp-v11-adopters-agreement",
+   "pdf": "MTPforUSB-IFv1.1.pdf",
+   "pdf_count": 2,
+   "pages": 282,
+   "chars": 573210,
+   "section_count": 156,
+   "shallow_sections": 36,
+   "sequence_errors": 0,
+   "largest_section_lines": 8228,
+   "sample_headings": [
+    "1 Introduction",
+    "4.3.3 Transaction IDs",
+    "5.1.2.2 Retrieving Device Properties"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "network-control-model-devices-specification-v10-and-errata-and-adopters-agreement",
+   "pdf": "NCM10-20101124-track.pdf",
+   "pdf_count": 3,
+   "pages": 40,
+   "chars": 108111,
+   "section_count": 48,
+   "shallow_sections": 28,
+   "sequence_errors": 0,
+   "largest_section_lines": 240,
+   "sample_headings": [
+    "1                                   Table of Contents",
+    "3.3.3 Datagram Formatting",
+    "5.2.3 Command Set Detail Functional Descriptor"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "mass-storage-class-specification-overview-14",
+   "pdf": "Mass_Storage_Specification_Overview_v1.4_2-19-2010.pdf",
+   "pdf_count": 1,
+   "pages": 14,
+   "chars": 23172,
+   "section_count": 10,
+   "shallow_sections": 10,
+   "sequence_errors": 0,
+   "largest_section_lines": 46,
+   "sample_headings": [
+    "1 Introduction",
+    "1.3 Purpose",
+    "2 Subclass Codes"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "audio-device-class-spec-basic-audio-devices-v10-and-adopters-agreement",
+   "pdf": "BasicAudioDevice-10.pdf",
+   "pdf_count": 2,
+   "pages": 83,
+   "chars": 200952,
+   "section_count": 149,
+   "shallow_sections": 35,
+   "sequence_errors": 0,
+   "largest_section_lines": 311,
+   "sample_headings": [
+    "1 Introduction",
+    "5.4.2.2 Mixer Unit Requests",
+    "7.3.3.1.3 Headset Input Terminal ID1 Descriptor"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-attached-scsi-protocol-uasp-v10-and-adopters-agreement",
+   "pdf": "UASP Rev 1.0.pdf",
+   "pdf_count": 2,
+   "pages": 35,
+   "chars": 80400,
+   "section_count": 7,
+   "shallow_sections": 7,
+   "sequence_errors": 0,
+   "largest_section_lines": 1079,
+   "sample_headings": [
+    "1 Introduction",
+    "1.2 Scope",
+    "2 Management Overview"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "standard-host-side-certified-wireless-usb-connection-context-storage-windows",
+   "pdf": "WUSB_host_connection_context_v1.0.pdf",
+   "pdf_count": 1,
+   "pages": 11,
+   "chars": 20567,
+   "section_count": 11,
+   "shallow_sections": 9,
+   "sequence_errors": 0,
+   "largest_section_lines": 181,
+   "sample_headings": [
+    "1 Document Properties",
+    "3.1 Purpose",
+    "4.2 Host Key(s):"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "personal-healthcare-rev-10",
+   "pdf": "healthcare_1.0.pdf",
+   "pdf_count": 3,
+   "pages": 33,
+   "chars": 84415,
+   "section_count": 41,
+   "shallow_sections": 29,
+   "sequence_errors": 0,
+   "largest_section_lines": 177,
+   "sample_headings": [
+    "1 Introduction",
+    "4 Operational Model",
+    "5.2 Class-Defined Descriptors"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "cables-and-connectors-class-20",
+   "pdf": "CabConn20.pdf",
+   "pdf_count": 1,
+   "pages": 48,
+   "chars": 108264,
+   "section_count": 40,
+   "shallow_sections": 21,
+   "sequence_errors": 0,
+   "largest_section_lines": 469,
+   "sample_headings": [
+    "1 Introduction",
+    "4.5.1 Mated Pairs",
+    "4.10.2 Test Group ‘1’"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "lockable-mass-storage-specification-10-and-adopters-agreement",
+   "pdf": "Msc-lock-1.0.pdf",
+   "pdf_count": 2,
+   "pages": 57,
+   "chars": 103890,
+   "section_count": 54,
+   "shallow_sections": 29,
+   "sequence_errors": 0,
+   "largest_section_lines": 178,
+   "sample_headings": [
+    "1 Introduction",
+    "4.1.2 Cycle Presence",
+    "5.2 Device Descriptor (DD)"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-20-cable-and-connector-class-document",
+   "pdf": "CabConn20.pdf",
+   "pdf_count": 1,
+   "pages": 48,
+   "chars": 108264,
+   "section_count": 40,
+   "shallow_sections": 21,
+   "sequence_errors": 0,
+   "largest_section_lines": 469,
+   "sample_headings": [
+    "1 Introduction",
+    "4.5.1 Mated Pairs",
+    "4.10.2 Test Group ‘1’"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "audio-devices-rev-20-and-adopters-agreement",
+   "pdf": "Audio20 final.pdf",
+   "pdf_count": 4,
+   "pages": 144,
+   "chars": 456245,
+   "section_count": 325,
+   "shallow_sections": 59,
+   "sequence_errors": 0,
+   "largest_section_lines": 221,
+   "sample_headings": [
+    "1 Introduction",
+    "4.10.1 AS Isochronous Audio Data Endpoint Descriptors",
+    "5.2.5.9.2.1 Enable Control"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "video-class-v11-document-set",
+   "pdf": "USB_Video_Class_1.1.pdf",
+   "pdf_count": 15,
+   "pages": 143,
+   "chars": 346476,
+   "section_count": 166,
+   "shallow_sections": 45,
+   "sequence_errors": 0,
+   "largest_section_lines": 427,
+   "sample_headings": [
+    "1 Introduction",
+    "3.7.2.4 Selector Unit Descriptor",
+    "4.2.2.3.1 Backlight Compensation Control"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "smart-card-ccid-version-11",
+   "pdf": "DWG_Smart-Card_CCID_Rev110.pdf",
+   "pdf_count": 1,
+   "pages": 123,
+   "chars": 289196,
+   "section_count": 90,
+   "shallow_sections": 35,
+   "sequence_errors": 0,
+   "largest_section_lines": 488,
+   "sample_headings": [
+    "1 Introduction",
+    "6.1 Command Pipe, Bulk-OUT Messages",
+    "7.4 TPDU Level"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "smart-card-iccd-version-10",
+   "pdf": "DWG_Smart-Card_USB-ICC_ICCD_rev10.pdf",
+   "pdf_count": 1,
+   "pages": 40,
+   "chars": 105387,
+   "section_count": 46,
+   "shallow_sections": 21,
+   "sequence_errors": 0,
+   "largest_section_lines": 286,
+   "sample_headings": [
+    "1 Introduction",
+    "5 Smart Card Device Class",
+    "6.2.1.1 Specific requests"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "cdc-subclass-specification-ethernet-emulation-model-devices-10",
+   "pdf": "CDC_EEM10.pdf",
+   "pdf_count": 1,
+   "pages": 42,
+   "chars": 48860,
+   "section_count": 39,
+   "shallow_sections": 19,
+   "sequence_errors": 0,
+   "largest_section_lines": 244,
+   "sample_headings": [
+    "1 Introduction",
+    "3.3 Device Framework",
+    "5.1.2.2.4 ResponseHint"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "mass-storage-bootability-specification-10",
+   "pdf": "usb_msc_boot_1.0.pdf",
+   "pdf_count": 1,
+   "pages": 19,
+   "chars": 42276,
+   "section_count": 27,
+   "shallow_sections": 19,
+   "sequence_errors": 0,
+   "largest_section_lines": 100,
+   "sample_headings": [
+    "1 Introduction",
+    "1.3.4 CDB",
+    "4.1 MODE SENSE(10) Command"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "device-firmware-upgrade-11-new-version-31-aug-2004",
+   "pdf": "DFU_1.1.pdf",
+   "pdf_count": 1,
+   "pages": 47,
+   "chars": 99517,
+   "section_count": 28,
+   "shallow_sections": 14,
+   "sequence_errors": 0,
+   "largest_section_lines": 1029,
+   "sample_headings": [
+    "1. Introduction",
+    "4.1.3 Run-Time DFU Functional Descriptor",
+    "6.1 Downloading"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-if-full-and-low-speed-electrical-and-interoperability-compliance-test",
+   "pdf": "USB-IFTestProc1_3.pdf",
+   "pdf_count": 1,
+   "pages": 115,
+   "chars": 198722,
+   "section_count": 14,
+   "shallow_sections": 14,
+   "sequence_errors": 0,
+   "largest_section_lines": 2633,
+   "sample_headings": [
+    "1. Device: name of the unit under test",
+    "5. Test Type: system or hub or peripheral",
+    "9. Check scope to make sure waveform has been captured. The scope cursors should bracket the host"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-interface-association-descriptor-device-class-code-and-use-model",
+   "pdf": "iadclasscode_r10.pdf",
+   "pdf_count": 1,
+   "pages": 7,
+   "chars": 15441,
+   "section_count": 1,
+   "shallow_sections": 1,
+   "sequence_errors": 0,
+   "largest_section_lines": 172,
+   "sample_headings": [
+    "1. Overview"
+   ],
+   "group": "too_few"
+  },
+  {
+   "slug": "mass-storage-controlbulkinterrupt-cbi-specification-11",
+   "pdf": "usb_msc_cbi_1.1.pdf",
+   "pdf_count": 1,
+   "pages": 29,
+   "chars": 64160,
+   "section_count": 58,
+   "shallow_sections": 20,
+   "sequence_errors": 0,
+   "largest_section_lines": 86,
+   "sample_headings": [
+    "1. Introduction",
+    "2.3.2.4 Indefinite Delay",
+    "2.5.2 Data Out Transport"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "test-measurement-class-specification",
+   "pdf": "USBTMC_1_00.pdf",
+   "pdf_count": 2,
+   "pages": 40,
+   "chars": 122896,
+   "section_count": 57,
+   "shallow_sections": 22,
+   "sequence_errors": 0,
+   "largest_section_lines": 117,
+   "sample_headings": [
+    "1 Introduction",
+    "3.3 Bulk-IN endpoint",
+    "4.2.1.3 CHECK_ABORT_BULK_OUT_STATUS"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "content-security-method-2-usb-digital-transmission-content-protection",
+   "pdf": "csm2_v1_0.pdf",
+   "pdf_count": 1,
+   "pages": 13,
+   "chars": 26169,
+   "section_count": 26,
+   "shallow_sections": 16,
+   "sequence_errors": 0,
+   "largest_section_lines": 41,
+   "sample_headings": [
+    "1 Introduction",
+    "2.1.1.1 Command Requests",
+    "2.3.4 Content Security Method Descriptor"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "openusbdi-specification-10",
+   "pdf": "usbdi10.pdf",
+   "pdf_count": 1,
+   "pages": 191,
+   "chars": 348119,
+   "section_count": 63,
+   "shallow_sections": 44,
+   "sequence_errors": 0,
+   "largest_section_lines": 1899,
+   "sample_headings": [
+    "1 Introduction",
+    "4.7 Device Driver Flow",
+    "5.8 USB Control Transfer Requests"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "still-image-capture-device-definition-10-and-errata-16-mar-2007",
+   "pdf": "usb_still_img10.pdf",
+   "pdf_count": 2,
+   "pages": 46,
+   "chars": 91061,
+   "section_count": 79,
+   "shallow_sections": 27,
+   "sequence_errors": 0,
+   "largest_section_lines": 267,
+   "sample_headings": [
+    "1 Introduction",
+    "5.1.1 Clear Feature",
+    "6.1.1 Device"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "irda-bridge-device-definition-10",
+   "pdf": "usbir10.pdf",
+   "pdf_count": 1,
+   "pages": 30,
+   "chars": 59118,
+   "section_count": 60,
+   "shallow_sections": 23,
+   "sequence_errors": 0,
+   "largest_section_lines": 137,
+   "sample_headings": [
+    "1. Introduction",
+    "5.4.1. Inbound IrLAP Frame Delivery",
+    "6.1.9. Set Feature"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "content-security-method-1-basic-authentication-protocol-10",
+   "pdf": "ContentSecurity_v2.0.pdf",
+   "pdf_count": 1,
+   "pages": 28,
+   "chars": 53817,
+   "section_count": 43,
+   "shallow_sections": 29,
+   "sequence_errors": 0,
+   "largest_section_lines": 55,
+   "sample_headings": [
+    "1.    Introduction",
+    "5.1.      Device Descriptor",
+    "5.5.1.     Change_Channel_Settings Notification"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "printer-device-class-document-11",
+   "pdf": "usbprint11a021811.pdf",
+   "pdf_count": 1,
+   "pages": 17,
+   "chars": 32275,
+   "section_count": 25,
+   "shallow_sections": 17,
+   "sequence_errors": 0,
+   "largest_section_lines": 45,
+   "sample_headings": [
+    "1. Introduction",
+    "3.3 Status Reporting",
+    "4.2.2 GET_PORT_STATUS (bRequest = 1)"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "usb-midi-devices-10",
+   "pdf": "midi10.pdf",
+   "pdf_count": 1,
+   "pages": 43,
+   "chars": 113092,
+   "section_count": 82,
+   "shallow_sections": 39,
+   "sequence_errors": 0,
+   "largest_section_lines": 144,
+   "sample_headings": [
+    "1 Introduction",
+    "6.1.2.2 MIDI IN Jack Descriptor",
+    "8.1 MIDI: Musical Instrument Digital Interface"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "mass-storage-bulk-only-10",
+   "pdf": "usbmassbulk_10.pdf",
+   "pdf_count": 1,
+   "pages": 22,
+   "chars": 65171,
+   "section_count": 20,
+   "shallow_sections": 16,
+   "sequence_errors": 0,
+   "largest_section_lines": 607,
+   "sample_headings": [
+    "1 Specification Overview and Scope",
+    "3.1 Bulk-Only Mass Storage Reset (class-specific request)",
+    "4.1 Device Descriptor"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "mass-storage-ufi-command-specification-10",
+   "pdf": "usbmass-ufi10.pdf",
+   "pdf_count": 1,
+   "pages": 60,
+   "chars": 129036,
+   "section_count": 61,
+   "shallow_sections": 36,
+   "sequence_errors": 0,
+   "largest_section_lines": 231,
+   "sample_headings": [
+    "1. Introduction",
+    "3.6 Aborting an UFI Command",
+    "4.5.6 Removable Block Access Capabilities Page (1Bh)"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "audio-device-document-10",
+   "pdf": "audio10.pdf",
+   "pdf_count": 1,
+   "pages": 130,
+   "chars": 373952,
+   "section_count": 212,
+   "shallow_sections": 45,
+   "sequence_errors": 0,
+   "largest_section_lines": 492,
+   "sample_headings": [
+    "1 Introduction",
+    "5 Requests",
+    "5.2.4.2 Get Status Request"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "audio-data-formats-10",
+   "pdf": "frmts10.pdf",
+   "pdf_count": 1,
+   "pages": 31,
+   "chars": 83878,
+   "section_count": 54,
+   "shallow_sections": 13,
+   "sequence_errors": 0,
+   "largest_section_lines": 129,
+   "sample_headings": [
+    "1 Introduction",
+    "2.3.2 Audio Bitstreams",
+    "2.3.8.1.2.3.6 High/Low Scaling Control"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "audio-terminal-types-10",
+   "pdf": "termt10.pdf",
+   "pdf_count": 1,
+   "pages": 12,
+   "chars": 23951,
+   "section_count": 13,
+   "shallow_sections": 13,
+   "sequence_errors": 0,
+   "largest_section_lines": 63,
+   "sample_headings": [
+    "1 Introduction",
+    "2 Terminal Types",
+    "2.4 Bi-directional Terminal Types"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "monitor-device-document-10",
+   "pdf": "usbmon10.pdf",
+   "pdf_count": 1,
+   "pages": 22,
+   "chars": 45199,
+   "section_count": 16,
+   "shallow_sections": 15,
+   "sequence_errors": 0,
+   "largest_section_lines": 483,
+   "sample_headings": [
+    "1. Introduction",
+    "2. Management Overview",
+    "5.2 Monitor Requests"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "power-device-class-document-10",
+   "pdf": "pdcv10_0.pdf",
+   "pdf_count": 1,
+   "pages": 66,
+   "chars": 213914,
+   "section_count": 52,
+   "shallow_sections": 22,
+   "sequence_errors": 0,
+   "largest_section_lines": 1667,
+   "sample_headings": [
+    "1. Introduction",
+    "2.3 Implementation Examples",
+    "4.2 Battery System Page (x85)"
+   ],
+   "group": "good"
+  },
+  {
+   "slug": "common-class-base-specification-10",
+   "pdf": "usbccs10.pdf",
+   "pdf_count": 1,
+   "pages": 16,
+   "chars": 44359,
+   "section_count": 41,
+   "shallow_sections": 41,
+   "sequence_errors": 0,
+   "largest_section_lines": 64,
+   "sample_headings": [
+    "1. Introduction",
+    "3.4 Connection versus Functionality",
+    "4.4 Functional Characteristics"
+   ],
+   "group": "good"
+  }
+ ]
+}

@@ -1,0 +1,608 @@
+[
+ {
+  "doc_id": "usb-type-cr-connector-system-software-interface-ucsi-specification",
+  "pages": 120,
+  "sections": 90,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-type-c-and-power-delivery-source-power-requirements-compliance-test",
+  "pages": 75,
+  "sections": 9,
+  "sequence_errors": 1
+ },
+ {
+  "doc_id": "usb-power-delivery",
+  "pages": 431,
+  "sections": 849,
+  "sequence_errors": 1
+ },
+ {
+  "doc_id": "usb-32-revision-11-june-2022",
+  "pages": 569,
+  "sections": 627,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb4cv-compliance-test-specification",
+  "pages": 302,
+  "sections": 36,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-power-delivery-compliance-test-specification-0",
+  "pages": 345,
+  "sections": 68,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-audio-devices-release-40-and-adopters-agreement",
+  "pages": 239,
+  "sections": 353,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through",
+  "pages": 144,
+  "sections": 327,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-20-electrical-compliance-test-specification",
+  "pages": 12,
+  "sections": 37,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-type-cr-cable-and-connector-specification-release-25",
+  "pages": 442,
+  "sections": 625,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb4r-specification-v20",
+  "pages": 839,
+  "sections": 634,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-communications-class-subclass-specifications-network-control-model-devices-v11",
+  "pages": 88,
+  "sections": 101,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb4-electrical-compliance-test-specification",
+  "pages": 126,
+  "sections": 275,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "hid-usage-tables-17",
+  "pages": 441,
+  "sections": 392,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-type-c-shared-capacity-charger-interoperability-compliance-test-specification",
+  "pages": 9,
+  "sections": 6,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb3cv-and-xhcicv-compliance-test-specifications",
+  "pages": 60,
+  "sections": 9,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-20-specification",
+  "pages": 650,
+  "sections": 591,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "class-definitions-communication-devices-12",
+  "pages": 33,
+  "sections": 49,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-active-cable-thermal-compliance-test-specification",
+  "pages": 20,
+  "sections": 21,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b",
+  "pages": 86,
+  "sections": 36,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "embedded-usb2-version-20-supplement-usb-20-specification-eusb2v2",
+  "pages": 65,
+  "sections": 64,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "embedded-usb2-eusb2-physical-layer-supplement-usb-revision-20-specification-rev-12",
+  "pages": 169,
+  "sections": 50,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-type-cr-locking-connector-specification",
+  "pages": 13,
+  "sections": 20,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-32-link-layer-test-specification",
+  "pages": 106,
+  "sections": 8,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-type-c-functional-test-specification",
+  "pages": 140,
+  "sections": 30,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-i3cr-device-class-specification-v11",
+  "pages": 90,
+  "sections": 100,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "electrical-compliance-test-specification-linear-re-driver-active-cable-lrd",
+  "pages": 44,
+  "sections": 67,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb4tm-thunderbolt3tm-compatibility-compliance-test-specification",
+  "pages": 44,
+  "sections": 28,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-type-cr-port-controller-interface-specification",
+  "pages": 113,
+  "sections": 133,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-i3c-device-class-specification",
+  "pages": 78,
+  "sections": 91,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb4tm-thunderbolt3tm-compatibility-requirements-specification",
+  "pages": 16,
+  "sections": 19,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-battery-charging-12-compliance-plan",
+  "pages": 165,
+  "sections": 193,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "billboard-device-class-spec-revision-122-and-adopters-agreement",
+  "pages": 20,
+  "sections": 40,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-class-definition-midi-devices-v20",
+  "pages": 47,
+  "sections": 83,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "hid-point-sale-usage-tables-102",
+  "pages": 69,
+  "sections": 62,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "oaad-arcade-usage-table",
+  "pages": 27,
+  "sections": 3,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "monitor-control-class-10",
+  "pages": 22,
+  "sections": 16,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "device-class-definition-pid-10",
+  "pages": 52,
+  "sections": 41,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "device-class-definition-hid-111",
+  "pages": 97,
+  "sections": 39,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-3-hub-lvs-test-specification",
+  "pages": 57,
+  "sections": 17,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usage-tables-hid-power-devices-11",
+  "pages": 66,
+  "sections": 52,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-31-legacy-cable-and-connector-revision-10",
+  "pages": 74,
+  "sections": 89,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "battery-charging-v12-spec-and-adopters-agreement",
+  "pages": 72,
+  "sections": 105,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "android-based-targeted-host-compliance-test-specification-v100",
+  "pages": 3,
+  "sections": 0,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-authentication-specification-rev-10-ecn-and-errata-through-january-7-2019",
+  "pages": 53,
+  "sections": 17,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-type-cr-bridge-specification-v11",
+  "pages": 55,
+  "sections": 71,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "universal-serial-bus-31-legacy-connectors-and-cable-assemblies-compliance-document",
+  "pages": 56,
+  "sections": 35,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-multiflow-extension-mobile-broadband-interface-model-v10-and-adopters",
+  "pages": 28,
+  "sections": 55,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-31usb-type-ctm-desktop-front-panel-cable-and-connector-implementation-document",
+  "pages": 32,
+  "sections": 14,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "electrical-compliance-test-specification-superspeed-usb-10-gbps-rev-10",
+  "pages": 20,
+  "sections": 2,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-power-delivery-firmware-update-specification",
+  "pages": 74,
+  "sections": 97,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "media-agnostic-usb-v10a-spec-and-adopters-agreement",
+  "pages": 176,
+  "sections": 35,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-31-debug-class-specification-debug-devices-rev-10",
+  "pages": 129,
+  "sections": 74,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "inter-chip-supplement-usb-revision-30-specification-revision-102",
+  "pages": 72,
+  "sections": 88,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "electrical-compliance-test-specification-superspeed-usb-rev-10a",
+  "pages": 13,
+  "sections": 4,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "compliance-plan-usb-go-and-embedded-host-30",
+  "pages": 84,
+  "sections": 114,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-mass-storage-class-specification-uasp-bootability-v10-and-adopters-agreement",
+  "pages": 11,
+  "sections": 22,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "mbim-compliance-testing-v10",
+  "pages": 64,
+  "sections": 8,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "mobile-broadband-interface-model-v10-errata-1-and-adopters-agreement",
+  "pages": 231,
+  "sections": 8,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "ipp-protocol-10",
+  "pages": 26,
+  "sections": 24,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "errata-updates-cdc-v12-and-wmc-v11-dec-2012",
+  "pages": 32,
+  "sections": 49,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "video-class-v15-document-set",
+  "pages": 184,
+  "sections": 210,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-go-and-embedded-host-automated-compliance-plan-go-embedded-host-supplement",
+  "pages": 139,
+  "sections": 145,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-thin-card-v10-and-adopters-agreement",
+  "pages": 14,
+  "sections": 27,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-device-class-definition-audiovideo-devices-basic-device-profile-bdp",
+  "pages": 28,
+  "sections": 75,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "device-class-definition-content-security-devices-20",
+  "pages": 28,
+  "sections": 43,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "content-security-method-5-high-bandwidth-digital-content-protection-21-hdcp-21",
+  "pages": 25,
+  "sections": 30,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "go-and-embedded-host-supplement-usb-revision-30-specification-revision-11",
+  "pages": 74,
+  "sections": 50,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "audiovideo-device-class-v10-spec-and-adopters-agreement",
+  "pages": 180,
+  "sections": 412,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "media-transfer-protocol-v11-spec-and-mtp-v11-adopters-agreement",
+  "pages": 282,
+  "sections": 156,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "network-control-model-devices-specification-v10-and-errata-and-adopters-agreement",
+  "pages": 40,
+  "sections": 48,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "mass-storage-class-specification-overview-14",
+  "pages": 14,
+  "sections": 10,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "audio-device-class-spec-basic-audio-devices-v10-and-adopters-agreement",
+  "pages": 83,
+  "sections": 149,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-attached-scsi-protocol-uasp-v10-and-adopters-agreement",
+  "pages": 35,
+  "sections": 7,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "standard-host-side-certified-wireless-usb-connection-context-storage-windows",
+  "pages": 11,
+  "sections": 11,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "personal-healthcare-rev-10",
+  "pages": 33,
+  "sections": 41,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "cables-and-connectors-class-20",
+  "pages": 48,
+  "sections": 40,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "lockable-mass-storage-specification-10-and-adopters-agreement",
+  "pages": 57,
+  "sections": 54,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "audio-devices-rev-20-and-adopters-agreement",
+  "pages": 144,
+  "sections": 325,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "video-class-v11-document-set",
+  "pages": 143,
+  "sections": 166,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "smart-card-iccd-version-10",
+  "pages": 40,
+  "sections": 46,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "cdc-subclass-specification-ethernet-emulation-model-devices-10",
+  "pages": 42,
+  "sections": 39,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "mass-storage-bootability-specification-10",
+  "pages": 19,
+  "sections": 27,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "device-firmware-upgrade-11-new-version-31-aug-2004",
+  "pages": 47,
+  "sections": 28,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-if-full-and-low-speed-electrical-and-interoperability-compliance-test",
+  "pages": 115,
+  "sections": 14,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-interface-association-descriptor-device-class-code-and-use-model",
+  "pages": 7,
+  "sections": 1,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "mass-storage-controlbulkinterrupt-cbi-specification-11",
+  "pages": 29,
+  "sections": 58,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "test-measurement-class-specification",
+  "pages": 40,
+  "sections": 57,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "content-security-method-2-usb-digital-transmission-content-protection",
+  "pages": 13,
+  "sections": 26,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "openusbdi-specification-10",
+  "pages": 191,
+  "sections": 63,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "still-image-capture-device-definition-10-and-errata-16-mar-2007",
+  "pages": 46,
+  "sections": 79,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "irda-bridge-device-definition-10",
+  "pages": 30,
+  "sections": 60,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "printer-device-class-document-11",
+  "pages": 17,
+  "sections": 25,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "usb-midi-devices-10",
+  "pages": 43,
+  "sections": 82,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "mass-storage-bulk-only-10",
+  "pages": 22,
+  "sections": 20,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "mass-storage-ufi-command-specification-10",
+  "pages": 60,
+  "sections": 61,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "audio-device-document-10",
+  "pages": 130,
+  "sections": 212,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "audio-data-formats-10",
+  "pages": 31,
+  "sections": 54,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "audio-terminal-types-10",
+  "pages": 12,
+  "sections": 13,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "power-device-class-document-10",
+  "pages": 66,
+  "sections": 52,
+  "sequence_errors": 0
+ },
+ {
+  "doc_id": "common-class-base-specification-10",
+  "pages": 16,
+  "sections": 41,
+  "sequence_errors": 0
+ }
+]

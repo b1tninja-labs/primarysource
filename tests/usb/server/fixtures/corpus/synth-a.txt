@@ -1,0 +1,15 @@
+SYNTHETIC DOCUMENT ALPHA
+(fixture text, not a real publication)
+
+1 Introduction
+This synthetic introduction mentions the zebra token once.
+
+2 Widgets
+Widgets are fictional. The quokka widget is round.
+
+2.1 Round widgets
+Round widgets use quokka quokka quokka counters.
+They are fictional.
+
+2.2 Square widgets
+Square widgets are fictional too.

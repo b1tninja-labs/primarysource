@@ -1,0 +1,1986 @@
+{
+  "schema": 1,
+  "source": "data/usb-catalog.json",
+  "entries": [
+    {
+      "slug": "usb-type-cr-connector-system-software-interface-ucsi-specification",
+      "title": "USB Type-C® Connector System Software Interface (UCSI) Specification",
+      "class": "specification",
+      "reason": "UCSI specification; first page \"UCSI Specification Revision 3.2\"",
+      "has_file": true,
+      "revision": "Revision 3.2 (September 2026); package also holds 4 ECNs",
+      "status": "current"
+    },
+    {
+      "slug": "usb-type-c-and-power-delivery-source-power-requirements-compliance-test",
+      "title": "USB Type-C and Power Delivery Source Power Requirements Compliance Test Specification",
+      "class": "specification",
+      "reason": "Compliance test specification for Type-C/PD source power",
+      "has_file": true,
+      "revision": "Revision 1.2 (November 4, 2026)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-power-delivery",
+      "title": "USB Power Delivery",
+      "class": "specification",
+      "reason": "USB PD specification package; R3.3 is the newest first-page revision",
+      "has_file": true,
+      "revision": "R3.3 V1.0 (Oct 16, 2026); package also holds R3.2 V1.2 (Aug 19, 2026, marked Previous_Rev), R2.0 V1.3 (Jan 12, 2017), PDUSB Status and States R1.1",
+      "status": "current",
+      "note": "One catalogue entry carries three PD revisions; R3.2 V1.2 and R2.0 V1.3 are older revisions of the same specification. BMC receiver examples and reorganization guide inside are informative."
+    },
+    {
+      "slug": "usb-32-revision-11-june-2022",
+      "title": "USB 3.2 Revision 1.1 - June 2022",
+      "class": "specification",
+      "reason": "USB 3.2 specification, first page \"Revision 1.1\"",
+      "has_file": true,
+      "revision": "Revision 1.1 (June 2022); package also holds 18 ECNs and Rev 1.1 redline",
+      "status": "current"
+    },
+    {
+      "slug": "usb4cv-compliance-test-specification",
+      "title": "USB4CV Compliance Test Specification",
+      "class": "specification",
+      "reason": "Set of USB4 compliance test specifications defining conformance",
+      "has_file": true,
+      "revision": "Per-part: Logical Layer 2.9 (Oct 2026), Protocol 2.9, PCIe Tunneling 2.1 (draft), TMU 2.7, USB3 Tunneling 2.3, DP Tunneling 2.8, Host Interface 2.4",
+      "status": "current"
+    },
+    {
+      "slug": "usb4cv",
+      "title": "USB4CV",
+      "class": "other",
+      "reason": "Tool page (USB4CV); no file in catalogue",
+      "has_file": false
+    },
+    {
+      "slug": "linux-usb4cv",
+      "title": "Linux USB4CV",
+      "class": "other",
+      "reason": "Linux USB4CV tool package (zip of software)",
+      "has_file": true
+    },
+    {
+      "slug": "xhsett",
+      "title": "XHSETT",
+      "class": "other",
+      "reason": "Tool page (XHSETT); no file",
+      "has_file": false
+    },
+    {
+      "slug": "usb-power-delivery-compliance-test-specification-0",
+      "title": "USB Power Delivery Compliance Test Specification",
+      "class": "specification",
+      "reason": "PD compliance test specification; package also holds ~35 ECNs against Q3/Q4 2026",
+      "has_file": true,
+      "revision": "Q4 2026 OR (October 10, 2026)",
+      "status": "current"
+    },
+    {
+      "slug": "usb3cv",
+      "title": "USB3CV",
+      "class": "other",
+      "reason": "Tool page (USB3CV); no file",
+      "has_file": false
+    },
+    {
+      "slug": "xhcicv",
+      "title": "XHCICV",
+      "class": "other",
+      "reason": "Tool page (XHCICV); no file",
+      "has_file": false
+    },
+    {
+      "slug": "dualhostusb3cv",
+      "title": "DualHostUSB3CV",
+      "class": "other",
+      "reason": "Tool page (DualHostUSB3CV); no file",
+      "has_file": false
+    },
+    {
+      "slug": "usb-audio-devices-release-40-and-adopters-agreement",
+      "title": "USB Audio Devices Release 4.0 and Adopters Agreement",
+      "class": "specification",
+      "reason": "Audio class definition 4.0; zip also holds an adopters agreement (other)",
+      "has_file": true,
+      "revision": "Release 4.0 with Errata and ECN through October 9, 2026 (April 2023 base)",
+      "status": "current",
+      "note": "Audio 4.0 is a distinct release from 2.0; nothing found saying it replaces 2.0."
+    },
+    {
+      "slug": "usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through",
+      "title": "USB Device Class Definition for Audio Devices Release 2.0 with Errata and ECN through September 14, 2026",
+      "class": "specification",
+      "reason": "Audio class definition 2.0, consolidated with errata",
+      "has_file": true,
+      "revision": "Release 2.0 with Errata and ECN through September 14, 2026",
+      "status": "current",
+      "note": "Cumulative version of the Audio 2.0 release in entry 193 (May 31, 2006)."
+    },
+    {
+      "slug": "usb-if-cw142-vendor-hosted-test-suite-form",
+      "title": "USB-IF CW142 Vendor Hosted Test Suite Form",
+      "class": "other",
+      "reason": "Compliance Workshop #142 vendor test room form",
+      "has_file": true
+    },
+    {
+      "slug": "usb-vendor-info-file-generator",
+      "title": "USB Vendor Info File Generator",
+      "class": "other",
+      "reason": "Vendor Info File generator tool (docs are tool documentation)",
+      "has_file": true,
+      "note": "The zip PDFs define a \"Vendor Info File\" format v3.38; treated as tool documentation."
+    },
+    {
+      "slug": "usb4-sigtest",
+      "title": "USB4 SigTest",
+      "class": "other",
+      "reason": "USB4 SigTest tool package and user manual",
+      "has_file": true
+    },
+    {
+      "slug": "usbet20",
+      "title": "USBET20",
+      "class": "other",
+      "reason": "USBET20 tool package",
+      "has_file": true
+    },
+    {
+      "slug": "usb20-dcr-test-procedure",
+      "title": "USB2.0 DCR Test Procedure",
+      "class": "other",
+      "reason": "Test procedure (MOI) for a tool-based DCR measurement, Revision 1.0 Sept 2025",
+      "has_file": true,
+      "note": "Low confidence: title says Test Procedure, not Compliance Test Specification."
+    },
+    {
+      "slug": "list-usb-30-adopters",
+      "title": "List of USB 3.0 Adopters",
+      "class": "other",
+      "reason": "List of USB 3.0 adopting companies",
+      "has_file": true
+    },
+    {
+      "slug": "list-usb-20-adopters",
+      "title": "List of USB 2.0 Adopters",
+      "class": "other",
+      "reason": "List of USB 2.0 adopting companies",
+      "has_file": true
+    },
+    {
+      "slug": "list-usb4-adopters",
+      "title": "List of USB4 Adopters",
+      "class": "other",
+      "reason": "List of USB4 adopting companies",
+      "has_file": true
+    },
+    {
+      "slug": "usb4ett-version-200",
+      "title": "USB4ETT Version 2.0.0",
+      "class": "other",
+      "reason": "USB4 Electrical Test Tool package and documentation",
+      "has_file": true
+    },
+    {
+      "slug": "usb-20-electrical-compliance-test-specification",
+      "title": "USB 2.0 Electrical Compliance Test Specification",
+      "class": "specification",
+      "reason": "USB 2.0 electrical compliance test specification",
+      "has_file": true,
+      "revision": "Version 1.08 (April 2026)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-if-policy-connectorless-xhci-embedded-devices-certification-testing",
+      "title": "USB-IF Policy on Connectorless xHCI with Embedded Device(s) Certification Testing",
+      "class": "other",
+      "reason": "USB-IF certification policy, effective 02/01/2026; not a technical specification",
+      "has_file": true
+    },
+    {
+      "slug": "usb-type-cr-cable-and-connector-specification-release-25",
+      "title": "USB Type-C® Cable and Connector Specification Release 2.5",
+      "class": "specification",
+      "reason": "USB Type-C cable and connector specification, Release 2.5",
+      "has_file": true,
+      "revision": "Release 2.5 (March 2026); package also holds R2.4 ECNs and a compare against R2.4",
+      "status": "current"
+    },
+    {
+      "slug": "usb4r-specification-v20",
+      "title": "USB4® Specification v2.0",
+      "class": "specification",
+      "reason": "USB4 specification v2.0 and companion specifications",
+      "has_file": true,
+      "revision": "Version 2.0 (November 2025); also Re-Timer 2.0 Rev 1.0 RC, Inter-Domain Service 2.0 Rev 1.0, Connection Manager Guide 2.0 Rev 1.2, DROM, DVSEC 1.0, and v1.0 ECNs",
+      "status": "current",
+      "note": "Package also keeps USB4 1.0 ECNs; USB4 1.0 spec itself is not in it."
+    },
+    {
+      "slug": "instructions-run-data-pattern-test-usb-32-tunneling-usb4r-host",
+      "title": "Instructions to Run Data Pattern Test (USB 3.2 Tunneling) on a USB4® Host",
+      "class": "reference",
+      "reason": "Instruction sheet for running a data pattern test with named equipment",
+      "has_file": true
+    },
+    {
+      "slug": "usb-communications-class-subclass-specifications-network-control-model-devices-v11",
+      "title": "USB Communications Class Subclass Specifications for Network Control Model Devices v1.1",
+      "class": "specification",
+      "reason": "NCM class subclass specification; zip also holds errata and an adopters agreement",
+      "has_file": true,
+      "revision": "Revision 1.1 (February 5, 2026)",
+      "status": "current",
+      "note": "Newer than NCM 1.0 (entry 181)."
+    },
+    {
+      "slug": "usb-repeater-and-active-cable-test-matrix",
+      "title": "USB Repeater and Active Cable Test Matrix",
+      "class": "other",
+      "reason": "Test matrix (Version 0.9, Jan 2026)",
+      "has_file": true
+    },
+    {
+      "slug": "usb4-electrical-compliance-test-specification",
+      "title": "USB4 Electrical Compliance Test Specification",
+      "class": "specification",
+      "reason": "USB4 electrical compliance test specifications; zip holds three documents each with clean and redline",
+      "has_file": true,
+      "revision": "Router Assembly v2 GEN4 ECTS Rev 1.0 (Jun 2025; first page shows 0.98 to 1.0 tracked change); v1 Router Assembly Ver 1.04 (Jan 2025); Captive Device Ver 1.02 (Jun 2022)",
+      "status": "current",
+      "note": "Three different documents (v1 router, v2 router, captive device); the 1.04 and 1.02 ones are not superseded by v2."
+    },
+    {
+      "slug": "hid-usage-tables-17",
+      "title": "HID Usage Tables 1.7",
+      "class": "specification",
+      "reason": "HID usage tables",
+      "has_file": true,
+      "revision": "Version 1.7",
+      "status": "current"
+    },
+    {
+      "slug": "usb-type-c-shared-capacity-charger-interoperability-compliance-test-specification",
+      "title": "USB Type-C Shared Capacity Charger Interoperability Compliance Test Specification",
+      "class": "specification",
+      "reason": "Compliance test specification for shared capacity chargers",
+      "has_file": true,
+      "revision": "Version 1.0 (October 20, 2025)",
+      "status": "current"
+    },
+    {
+      "slug": "usb4-product-test-matrix",
+      "title": "USB4 Product Test Matrix",
+      "class": "other",
+      "reason": "Product test matrix (V5)",
+      "has_file": true
+    },
+    {
+      "slug": "usb4-interoperability-test-procedures",
+      "title": "USB4 Interoperability Test Procedures",
+      "class": "other",
+      "reason": "Interoperability test procedures, Rev 1.06 Oct 2025; not a conformance specification",
+      "has_file": true,
+      "note": "Low confidence."
+    },
+    {
+      "slug": "usb3cv-and-xhcicv-compliance-test-specifications",
+      "title": "USB3CV and XHCICV Compliance Test Specifications",
+      "class": "specification",
+      "reason": "Set of compliance test specifications",
+      "has_file": true,
+      "revision": "USB 3.2 CV CTS 1.22 (Jul 2019); Hub CTS 1.21 (Jul 2019); Connector Type Tests 0.73 (Nov 2018); also Video Class compliance, Type-C Authentication CTS v0.9, Type-C Bridge CTS v1.02, USBCVSpec",
+      "status": "current",
+      "note": "Zip mixes several test specs with different revisions; per-document revisions were not all read."
+    },
+    {
+      "slug": "usb4cv-guide",
+      "title": "USB4CV Guide",
+      "class": "reference",
+      "reason": "USB4CV user guide (Rev 2.0, 06/04/2025)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-20-specification",
+      "title": "USB 2.0 Specification",
+      "class": "specification",
+      "reason": "USB 2.0 specification with its ECNs and supplements",
+      "has_file": true,
+      "revision": "Revision 2.0 (April 27, 2000); package also holds ECNs, errata, HSIC 1.0, Inter-Chip 1.0, Micro-USB 1.01, OTG/EH 2.0 v1.1a, LPM ECN",
+      "status": "current"
+    },
+    {
+      "slug": "xhci-interoperability-test-procedures-peripherals-hubs-and-hosts",
+      "title": "xHCI Interoperability Test Procedures For Peripherals, Hubs and Hosts",
+      "class": "other",
+      "reason": "xHCI interoperability test procedures Rev 1.04 June 2025; not a conformance spec",
+      "has_file": true,
+      "note": "Low confidence."
+    },
+    {
+      "slug": "class-definitions-communication-devices-12",
+      "title": "Class definitions for Communication Devices 1.2",
+      "class": "specification",
+      "reason": "CDC 1.2 class definitions",
+      "has_file": true,
+      "revision": "Revision 1.2 (Feb 9, 2007), subclasses ATM, ECM, ISDN, PSTN, WMC 1.1, with errata",
+      "status": "current",
+      "note": "Errata of Dec 2012 are in entry 165."
+    },
+    {
+      "slug": "intel-usb4-evaluation-dock-bkc-files-installer",
+      "title": "Intel USB4 Evaluation Dock BKC Files Installer",
+      "class": "other",
+      "reason": "Intel evaluation dock BKC installer (software)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-active-cable-thermal-compliance-test-specification",
+      "title": "USB Active Cable Thermal Compliance Test Specification",
+      "class": "specification",
+      "reason": "Compliance test specification for active cable thermal",
+      "has_file": true,
+      "revision": "Revision 0.92 (May 15, 2025)",
+      "status": "current",
+      "note": "Version 0.92 reads like a draft; no later version in the catalogue."
+    },
+    {
+      "slug": "usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b",
+      "title": "USB Type-C® Connectors and Cable Assemblies Compliance Document Rev. 2.1b",
+      "class": "specification",
+      "reason": "Type-C connectors and cable assemblies compliance document",
+      "has_file": true,
+      "revision": "Revision 2.1b (June 2021)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-32-embedding-files",
+      "title": "USB 3.2 Embedding Files",
+      "class": "other",
+      "reason": "USB 3.2 embedding files (channel data)",
+      "has_file": true
+    },
+    {
+      "slug": "techguide-xhci-pdk",
+      "title": "TechGuide xHCI PDK",
+      "class": "reference",
+      "reason": "Setup guide for a certification platform kit (Rev 2.6)",
+      "has_file": true,
+      "note": "Could equally be other (tool guide)."
+    },
+    {
+      "slug": "quadramax-pps-test-manual",
+      "title": "QuadraMAX PPS Test Manual",
+      "class": "other",
+      "reason": "Tool test manual for QuadraMAX PPS tests",
+      "has_file": true
+    },
+    {
+      "slug": "quaddraw-quadraview-softwarefirmware-installer",
+      "title": "QuadDraw & QuadraView Software/Firmware Installer",
+      "class": "other",
+      "reason": "Software/firmware installer; no file",
+      "has_file": false
+    },
+    {
+      "slug": "embedded-usb2-version-20-supplement-usb-20-specification-eusb2v2",
+      "title": "Embedded USB2 Version 2.0: Supplement to the USB 2.0 Specification (eUSB2V2)",
+      "class": "specification",
+      "reason": "eUSB2V2 supplement to USB 2.0 specification",
+      "has_file": true,
+      "revision": "Version 2.0",
+      "status": "current"
+    },
+    {
+      "slug": "embedded-usb2-eusb2-physical-layer-supplement-usb-revision-20-specification-rev-12",
+      "title": "Embedded USB2 (eUSB2) Physical Layer Supplement to the USB Revision 2.0 Specification, Rev. 1.2",
+      "class": "specification",
+      "reason": "eUSB2 physical layer supplement",
+      "has_file": true,
+      "revision": "Revision 1.2; zip also holds two ECNs",
+      "status": "current"
+    },
+    {
+      "slug": "mcci-mode-switch",
+      "title": "MCCI Mode Switch",
+      "class": "other",
+      "reason": "Instructions for configuring a vendor test device (MCCI)",
+      "has_file": true
+    },
+    {
+      "slug": "mechanical-modify-rfi-system-level",
+      "title": "Mechanical Modify of RFI System Level",
+      "class": "other",
+      "reason": "Mechanical modification note for RFI fixture; marked internal use confidential",
+      "has_file": true
+    },
+    {
+      "slug": "usb-type-cr-locking-connector-specification",
+      "title": "USB Type-C® Locking Connector Specification",
+      "class": "specification",
+      "reason": "Type-C locking connector specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (March 9, 2016); zip also holds a plug dimensions ECN",
+      "status": "current"
+    },
+    {
+      "slug": "usb-32-link-layer-test-specification",
+      "title": "USB 3.2 Link Layer Test Specification",
+      "class": "specification",
+      "reason": "USB 3.2 link layer test specification (conformance tests)",
+      "has_file": true,
+      "revision": "Revision 1.1 (March 3, 2024)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-type-c-functional-test-specification",
+      "title": "USB Type-C Functional Test Specification",
+      "class": "specification",
+      "reason": "Type-C functional test specification",
+      "has_file": true,
+      "revision": "Revision 0.91 (March 3, 2024), chapters 4 and 5",
+      "status": "current",
+      "note": "Version 0.91 looks like a draft."
+    },
+    {
+      "slug": "usb4enableidlesettings",
+      "title": "USB4EnableIdleSettings",
+      "class": "other",
+      "reason": "Tool settings archive (USB4EnableIdleSettings)",
+      "has_file": true
+    },
+    {
+      "slug": "sink-pps-interoperability-charging-cycle-test-procedure",
+      "title": "SINK PPS Interoperability Charging Cycle Test Procedure",
+      "class": "other",
+      "reason": "Test procedure for a sink PPS charging cycle, Rev 0.82; equipment instructions",
+      "has_file": true,
+      "note": "Low confidence."
+    },
+    {
+      "slug": "ip-agnostic-dual-bdf-vendor-specific-capability-pcipcie",
+      "title": "IP-Agnostic Dual-BDF Vendor-Specific Capability (PCI/PCIe)",
+      "class": "reference",
+      "reason": "White paper on a vendor-specific PCI capability, Version 1.0 May 2023",
+      "has_file": true
+    },
+    {
+      "slug": "sigtest-40232",
+      "title": "SigTest 4.0.23.2",
+      "class": "other",
+      "reason": "Tool page (SigTest 4.0.23.2); no file",
+      "has_file": false
+    },
+    {
+      "slug": "sigtest-32114",
+      "title": "SigTest 3.2.11.4",
+      "class": "other",
+      "reason": "Tool page (SigTest 3.2.11.4); no file",
+      "has_file": false
+    },
+    {
+      "slug": "usb-i3cr-device-class-specification-v11",
+      "title": "USB I3C® Device Class Specification v1.1",
+      "class": "specification",
+      "reason": "USB I3C device class specification",
+      "has_file": true,
+      "revision": "Version 1.1 (January 2023)",
+      "status": "current",
+      "note": "Newer than 1.0 (entry 76)."
+    },
+    {
+      "slug": "usb-upstream-facing-port-powered-hub-white-paper",
+      "title": "USB Upstream Facing Port Powered Hub  White Paper",
+      "class": "reference",
+      "reason": "White paper, Revision 0.9 (May 22, 2023)",
+      "has_file": true
+    },
+    {
+      "slug": "usb4-adopters-agreement",
+      "title": "USB4 Adopters Agreement",
+      "class": "other",
+      "reason": "USB4 adopters agreement",
+      "has_file": true
+    },
+    {
+      "slug": "usb4ett",
+      "title": "USB4ETT",
+      "class": "other",
+      "reason": "USB4 Electrical Test Tool package and documentation",
+      "has_file": true
+    },
+    {
+      "slug": "usb-if-integrators-list-marketing-name-guidance",
+      "title": "USB-IF Integrators List Marketing Name Guidance",
+      "class": "other",
+      "reason": "Marketing name guidance for the integrators list",
+      "has_file": true
+    },
+    {
+      "slug": "usb-80g-phy-layer-analysis",
+      "title": "USB 80G PHY Layer Analysis",
+      "class": "reference",
+      "reason": "USB-IF electrical workgroup analysis, background paper",
+      "has_file": true
+    },
+    {
+      "slug": "electrical-compliance-test-specification-linear-re-driver-active-cable-lrd",
+      "title": "Electrical Compliance Test Specification Linear Re-Driver Active Cable (LRD)",
+      "class": "specification",
+      "reason": "Electrical compliance test specification for linear re-driver active cables",
+      "has_file": true,
+      "revision": "Revision 1.0 (November 10, 2022)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-if-duty-care",
+      "title": "USB-IF Duty of Care",
+      "class": "other",
+      "reason": "Event health and safety statement (Duty of Care)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-if-covid-and-infectious-diseases-agreement-and-waiverrelease",
+      "title": "USB-IF COVID and Infectious Diseases Agreement and Waiver/Release",
+      "class": "other",
+      "reason": "COVID waiver for CW#129",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-thunderbolt3tm-compatibility-compliance-test-specification",
+      "title": "USB4™ Thunderbolt3™ Compatibility Compliance Test Specification",
+      "class": "specification",
+      "reason": "USB4/Thunderbolt 3 compatibility compliance test specification",
+      "has_file": true,
+      "revision": "Revision 1.1 (September 2022)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-if-covid-and-infectious-diseases-agreement-and-waiverrelease-seoul",
+      "title": "USB-IF COVID and Infectious Diseases Agreement and Waiver/Release - Seoul",
+      "class": "other",
+      "reason": "COVID waiver for Seoul DevDays",
+      "has_file": true
+    },
+    {
+      "slug": "usb-devdays-seoul-sponsor-application",
+      "title": "USB DevDays Seoul Sponsor Application",
+      "class": "other",
+      "reason": "Sponsor application form",
+      "has_file": true
+    },
+    {
+      "slug": "usb-devdays-seoul-exhibitor-application",
+      "title": "USB DevDays Seoul Exhibitor Application",
+      "class": "other",
+      "reason": "Exhibitor application form",
+      "has_file": true
+    },
+    {
+      "slug": "usb-type-c-connectors-and-cable-assemblies-compliance-document",
+      "title": "USB Type-C Connectors and Cable Assemblies Compliance Document",
+      "class": "specification",
+      "reason": "Type-C compliance document (zip form)",
+      "has_file": true,
+      "revision": "Revision 2.1b (June 2021); zip also holds 2.1a with change bars",
+      "status": "duplicate",
+      "see": "usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b",
+      "note": "Same document and revision as entry 42; package also keeps 2.1a, which is the older revision."
+    },
+    {
+      "slug": "usb-type-c-product-test-matrix-0",
+      "title": "USB Type-C Product Test Matrix",
+      "class": "other",
+      "reason": "Product test matrix (Rev 0.97, Aug 2022)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-rfi-system-level-test-procedure",
+      "title": "USB RFI System Level Test Procedure",
+      "class": "other",
+      "reason": "RFI system level test procedure Rev 1.5, Jan 2022; test method rather than compliance specification",
+      "has_file": true,
+      "note": "Low confidence."
+    },
+    {
+      "slug": "usb-type-cr-port-controller-interface-specification",
+      "title": "USB Type-C® Port Controller Interface Specification",
+      "class": "specification",
+      "reason": "Type-C port controller interface specification",
+      "has_file": true,
+      "revision": "Revision 2.0, Version 1.3 (January 2022)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-i3c-device-class-specification",
+      "title": "USB I3C Device Class Specification",
+      "class": "specification",
+      "reason": "USB I3C device class specification",
+      "has_file": true,
+      "revision": "Version 1.0 (January 7, 2022)",
+      "status": "older-revision",
+      "see": "usb-i3cr-device-class-specification-v11",
+      "note": "Superseded in the catalogue by v1.1 (entry 59)."
+    },
+    {
+      "slug": "fast-role-swap-switch-user-guide",
+      "title": "Fast Role Swap Switch User Guide",
+      "class": "reference",
+      "reason": "User guide for a hardware switch, Version 1.0",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-thunderbolt3tm-compatibility-requirements-specification",
+      "title": "USB4™ Thunderbolt3™ Compatibility Requirements Specification",
+      "class": "specification",
+      "reason": "USB4 / Thunderbolt 3 compatibility requirements specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (Jan 29, 2021 per file name)",
+      "status": "current"
+    },
+    {
+      "slug": "supermutt-firmware",
+      "title": "SuperMUTT Firmware",
+      "class": "other",
+      "reason": "SuperMUTT firmware package and update procedure",
+      "has_file": true
+    },
+    {
+      "slug": "time-synchronization-files",
+      "title": "Time Synchronization Files",
+      "class": "other",
+      "reason": "Time sync FPGA files (design files)",
+      "has_file": true
+    },
+    {
+      "slug": "cable-matlab-source-code",
+      "title": "Cable Matlab Source Code",
+      "class": "other",
+      "reason": "MATLAB source code",
+      "has_file": true
+    },
+    {
+      "slug": "usb-32-product-test-matrix",
+      "title": "USB 3.2 Product Test Matrix",
+      "class": "other",
+      "reason": "USB 3.2 product test matrix (4/22/2021)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-battery-charging-12-compliance-plan",
+      "title": "USB Battery Charging 1.2 Compliance Plan",
+      "class": "specification",
+      "reason": "Battery charging 1.2 compliance plan (defines compliance tests)",
+      "has_file": true,
+      "revision": "Revision 1.2 (September 30, 2013)",
+      "status": "current"
+    },
+    {
+      "slug": "billboard-device-class-spec-revision-122-and-adopters-agreement",
+      "title": "Billboard Device Class Spec Revision 1.2.2 and Adopters Agreement",
+      "class": "specification",
+      "reason": "Billboard device class definition",
+      "has_file": true,
+      "revision": "Revision 1.2.2 (January 29, 2021)",
+      "status": "current"
+    },
+    {
+      "slug": "usbhset-ehci-32-bit",
+      "title": "USBHSET EHCI 32-bit",
+      "class": "other",
+      "reason": "Tool page (USBHSET EHCI 32-bit); no file",
+      "has_file": false
+    },
+    {
+      "slug": "xhsett-x32",
+      "title": "XHSETT x32",
+      "class": "other",
+      "reason": "Tool page (XHSETT x32); no file",
+      "has_file": false
+    },
+    {
+      "slug": "usb4-gen3-plug-connector-high-speed-design-guide",
+      "title": "USB4 Gen3 Plug Connector High Speed Design Guide",
+      "class": "reference",
+      "reason": "USB4 Gen3 plug connector high speed design guide (white paper, Oct 27, 2020)",
+      "has_file": true
+    },
+    {
+      "slug": "usb4-gen-3-tp3-embedding-file",
+      "title": "USB4 Gen 3 TP3 Embedding File",
+      "class": "other",
+      "reason": "Embedding file (channel data)",
+      "has_file": true
+    },
+    {
+      "slug": "usb4-gen-2-tp3-embedding-file",
+      "title": "USB4 Gen 2 TP3 Embedding File",
+      "class": "other",
+      "reason": "Embedding file (channel data)",
+      "has_file": true
+    },
+    {
+      "slug": "usb4-compliance-test-matrix",
+      "title": "USB4 Compliance Test Matrix",
+      "class": "other",
+      "reason": "USB4 compliance matrix (certification requirements, 2020-06-30)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-class-definition-midi-devices-v20",
+      "title": "USB Class Definition for MIDI Devices v2.0",
+      "class": "specification",
+      "reason": "MIDI device class 2.0",
+      "has_file": true,
+      "revision": "Release 2.0 (May 5, 2020)",
+      "status": "current",
+      "note": "Distinct release from MIDI 1.0 (entry 216)."
+    },
+    {
+      "slug": "hid-point-sale-usage-tables-102",
+      "title": "HID Point of Sale Usage Tables 1.02",
+      "class": "specification",
+      "reason": "HID point of sale usage tables",
+      "has_file": true,
+      "revision": "Version 1.02 (March 5, 2001)",
+      "status": "current"
+    },
+    {
+      "slug": "oaad-arcade-usage-table",
+      "title": "OAAD Arcade Usage Table",
+      "class": "specification",
+      "reason": "Open Arcade Architecture Device data format specification (the usage table)",
+      "has_file": true,
+      "revision": "Release 1.0, Rev 1.100 (November 5, 1998)",
+      "status": "current"
+    },
+    {
+      "slug": "monitor-control-class-10",
+      "title": "Monitor Control Class 1.0",
+      "class": "specification",
+      "reason": "Monitor control class specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (January 5, 1998)",
+      "status": "current"
+    },
+    {
+      "slug": "device-class-definition-pid-10",
+      "title": "Device Class Definition for PID 1.0",
+      "class": "specification",
+      "reason": "PID device class definition",
+      "has_file": true,
+      "revision": "Version 1.0 (9/8/99)",
+      "status": "current"
+    },
+    {
+      "slug": "device-class-definition-hid-111",
+      "title": "Device Class Definition for HID 1.11",
+      "class": "specification",
+      "reason": "HID device class definition",
+      "has_file": true,
+      "revision": "Version 1.11 (27 May 2001)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-3-hub-lvs-test-specification",
+      "title": "USB 3 Hub LVS Test Specification",
+      "class": "specification",
+      "reason": "SuperSpeed hub LVS test specification",
+      "has_file": true,
+      "revision": "Revision 1.15 (November 21, 2019)",
+      "status": "current"
+    },
+    {
+      "slug": "usage-tables-hid-power-devices-11",
+      "title": "Usage Tables for HID Power Devices 1.1",
+      "class": "specification",
+      "reason": "HID power devices usage tables",
+      "has_file": true,
+      "revision": "Release 1.1 (May 29, 2020)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-31-legacy-cable-and-connector-revision-10",
+      "title": "USB 3.1 Legacy Cable and Connector Revision 1.0",
+      "class": "specification",
+      "reason": "USB 3.1 legacy cable and connector specification",
+      "has_file": true,
+      "revision": "Revision 1.0 including errata and ECNs through June 2017",
+      "status": "current"
+    },
+    {
+      "slug": "usb-devdays-2019-welcome-keynote",
+      "title": "USB DevDays 2019 - Welcome Keynote",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb-type-cr-system-overview",
+      "title": "USB Type-C(R) System Overview",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-system-overview",
+      "title": "USB4(TM) System Overview",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-electricals-layer",
+      "title": "USB4(TM) Electricals Layer",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-logical-layer-re-timer-and-transport-layer",
+      "title": "USB4(TM) Logical Layer, Re-timer and Transport Layer",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb-branding-session",
+      "title": "USB Branding Session",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-windows",
+      "title": "USB4(TM) on Windows",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "ctvpds-and-making-your-own-usb-cr-thingamajig",
+      "title": "CTVPDs and Making Your Own USB-C(R) Thingamajig",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "demystifying-usb-cr-using-linuxs-usb-type-cr-connector-class",
+      "title": "Demystifying USB-C(R) using Linux's USB Type-C(R) Connector Class",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-configuration-layer-usb3-tunneling-dp-tunneling-and-pcie-tunneling",
+      "title": "USB4(TM) Configuration Layer, USB3 Tunneling, DP Tunneling, and PCIe Tunneling",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-compliance-and-certification",
+      "title": "USB4(TM) Compliance and Certification",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-time-synchronization-host-interface-connection-manager-and-thunderbolttm-3",
+      "title": "USB4(TM) Time Synchronization, Host Interface, Connection Manager and Thunderbolt(TM) 3 Compatibility",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "vesa-displayporttm-alternate-mode-usb-cr",
+      "title": "VESA - DisplayPort(TM) Alternate Mode on USB-C(R)",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb-power-delivery-0",
+      "title": "USB Power Delivery",
+      "class": "reference",
+      "reason": "DevDays presentation (Power Delivery overview slides, not the specification)",
+      "has_file": true
+    },
+    {
+      "slug": "usb4tm-cable-electricals-and-system-design",
+      "title": "USB4(TM) Cable Electricals and System Design",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usb-type-cr-active-cable",
+      "title": "USB Type-C(R) Active Cable",
+      "class": "reference",
+      "reason": "DevDays presentation slides",
+      "has_file": true
+    },
+    {
+      "slug": "usbhset-ehci-64-bit",
+      "title": "USBHSET for EHCI 64-bit",
+      "class": "other",
+      "reason": "Tool page (USBHSET EHCI 64-bit); no file",
+      "has_file": false
+    },
+    {
+      "slug": "battery-charging-v12-spec-and-adopters-agreement",
+      "title": "Battery Charging v1.2 Spec and Adopters Agreement",
+      "class": "specification",
+      "reason": "Battery charging 1.2 specification",
+      "has_file": true,
+      "revision": "Revision 1.2 (Dec 7, 2010; errata to Oct 12, 2011 and Mar 15, 2012); zip holds spec with and without errata",
+      "status": "current"
+    },
+    {
+      "slug": "usb-if-cw117-vendor-hosted-test-suite-form",
+      "title": "USB-IF CW117 Vendor Hosted Test Suite Form",
+      "class": "other",
+      "reason": "Compliance Workshop #117 form",
+      "has_file": true
+    },
+    {
+      "slug": "usb3cv-21132-installer-x64-release",
+      "title": "USB3CV 2.1.13.2 Installer - x64 Release",
+      "class": "other",
+      "reason": "Installer; no file",
+      "has_file": false
+    },
+    {
+      "slug": "embedded-host-target-peripheral-list-tpl-form",
+      "title": "Embedded Host Target Peripheral List (TPL) Form",
+      "class": "other",
+      "reason": "Embedded host targeted peripheral list form",
+      "has_file": true
+    },
+    {
+      "slug": "android-based-targeted-host-compliance-test-specification-v100",
+      "title": "Android Based Targeted Host Compliance Test Specification v1.00",
+      "class": "specification",
+      "reason": "Targeted host compliance test specification",
+      "has_file": true,
+      "revision": "v1.00 (Feb 27, 2019)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-20-test-matrix",
+      "title": "USB 2.0 Test Matrix",
+      "class": "other",
+      "reason": "USB 2.0 test matrix",
+      "has_file": true
+    },
+    {
+      "slug": "usb20cv-version-1497-xp-version",
+      "title": "USB20CV Version 1.4.9.7 (XP Version)",
+      "class": "other",
+      "reason": "Tool page (USB20CV); no file",
+      "has_file": false
+    },
+    {
+      "slug": "usb20cv-64-bit-version-1497-xp-version",
+      "title": "USB20CV 64 Bit Version 1.4.9.7 (XP Version)",
+      "class": "other",
+      "reason": "Tool page (USB20CV 64 bit); no file",
+      "has_file": false
+    },
+    {
+      "slug": "quadramax-manual",
+      "title": "QuadraMAX Manual",
+      "class": "other",
+      "reason": "Test manual for QuadraMAX (Feb 13, 2019)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-authentication-specification-rev-10-ecn-and-errata-through-january-7-2019",
+      "title": "USB Authentication Specification Rev. 1.0 with ECN and Errata through January 7, 2019",
+      "class": "specification",
+      "reason": "USB Type-C authentication specification and security foundation specification (two documents in the zip)",
+      "has_file": true,
+      "revision": "Release 1.0 with ECN and errata through January 7, 2019",
+      "status": "current"
+    },
+    {
+      "slug": "pidvid-usb-20-high-speed-electrical-embedded-host-and-otg-moi",
+      "title": "PIDVID USB 2.0 High Speed Electrical Embedded Host and OTG MOI",
+      "class": "other",
+      "reason": "Embedded host HS electrical test procedure (Rev 1.01 Dec 2018) for a test tool",
+      "has_file": true,
+      "note": "Low confidence; same title as entry 194."
+    },
+    {
+      "slug": "usb-type-cr-bridge-specification-v11",
+      "title": "USB Type-C® Bridge Specification v1.1",
+      "class": "specification",
+      "reason": "Type-C bridge class specification",
+      "has_file": true,
+      "revision": "Revision 1.1 (October 10, 2017)",
+      "status": "current"
+    },
+    {
+      "slug": "xhsett-x32-version-1120-xp-version",
+      "title": "XHSETT x32 Version 1.1.2.0 (XP Version)",
+      "class": "other",
+      "reason": "Tool page (XHSETT x32 XP); no file",
+      "has_file": false
+    },
+    {
+      "slug": "xhsett-x64-version-1120-xp-version",
+      "title": "Xhsett x64 Version 1.1.2.0 (XP Version)",
+      "class": "other",
+      "reason": "Tool page (XHSETT x64 XP); no file",
+      "has_file": false
+    },
+    {
+      "slug": "usbhtt-ver-1203",
+      "title": "USBHTT Ver 1.2.0.3",
+      "class": "other",
+      "reason": "Tool page (USBHTT); no file",
+      "has_file": false
+    },
+    {
+      "slug": "hid-descriptor-tool",
+      "title": "HID Descriptor Tool",
+      "class": "other",
+      "reason": "HID descriptor tool package",
+      "has_file": true
+    },
+    {
+      "slug": "usbhset-version-1212-ehci-32-bit-xp-version",
+      "title": "USBHSET version 1.2.1.2 for EHCI 32-bit (XP Version)",
+      "class": "other",
+      "reason": "Tool page (USBHSET 32 XP); no file",
+      "has_file": false
+    },
+    {
+      "slug": "usbhset-version-1212-ehci-64-bit-xp-version",
+      "title": "USBHSET version 1.2.1.2 for EHCI 64-bit (XP Version)",
+      "class": "other",
+      "reason": "Tool page (USBHSET 64 XP); no file",
+      "has_file": false
+    },
+    {
+      "slug": "usb2032bc12-drop-droop-test-non-usb-type-cr-products",
+      "title": "USB2.0/3.2/BC1.2 Drop Droop Test for non-USB Type-C® Products",
+      "class": "other",
+      "reason": "Drop/droop test procedure, Version 1.4.1 (June 2018); test method",
+      "has_file": true,
+      "note": "Low confidence."
+    },
+    {
+      "slug": "universal-serial-bus-31-legacy-connectors-and-cable-assemblies-compliance-document",
+      "title": "Universal Serial Bus 3.1 Legacy Connectors and Cable Assemblies Compliance Document",
+      "class": "specification",
+      "reason": "USB 3.1 legacy connectors and cable assemblies compliance document",
+      "has_file": true,
+      "revision": "Revision 1.1 (April 3, 2018)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-31-peripheral-development-kit-usb-31-xhci-based-certification-platform",
+      "title": "USB 3.1 Peripheral Development Kit:\nUSB 3.1 xHCI-based Certification Platform",
+      "class": "reference",
+      "reason": "Technical guide for a certification platform kit, Rev 2.1",
+      "has_file": true,
+      "note": "Could equally be other (tool guide)."
+    },
+    {
+      "slug": "power-delivery-design-issues-hi-speed-usb-motherboards",
+      "title": "Power Delivery Design Issues for Hi-Speed USB on Motherboards",
+      "class": "reference",
+      "reason": "Design issues paper from Intel",
+      "has_file": true
+    },
+    {
+      "slug": "usb-type-c-cable-assembly-signal-integrity-test-fixture-gerber-files",
+      "title": "USB Type-C cable assembly signal integrity test fixture Gerber files",
+      "class": "other",
+      "reason": "Gerber files for a test fixture",
+      "has_file": true
+    },
+    {
+      "slug": "usb-multiflow-extension-mobile-broadband-interface-model-v10-and-adopters",
+      "title": "USB Multiflow Extension for Mobile Broadband Interface Model v1.0 and Adopters Agreement",
+      "class": "specification",
+      "reason": "MBIM Multiflow extension specification; zip also holds adopters agreement",
+      "has_file": true,
+      "revision": "Revision 1.0 (July 23, 2017)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-31usb-type-ctm-desktop-front-panel-cable-and-connector-implementation-document",
+      "title": "USB 3.1/USB Type-C(TM) Desktop Front Panel Cable and Connector Implementation Document",
+      "class": "specification",
+      "reason": "Implementation document for front panel cable and connector",
+      "has_file": true,
+      "revision": "Revision 1.1 (July 14, 2017)",
+      "status": "current",
+      "note": "Titled an implementation document, so a reference under a stricter reading; kept as specification because it carries normative-style requirements (not read in full)."
+    },
+    {
+      "slug": "board-usb-connections-digital-media-devices-vs-removable-media-and-readers",
+      "title": "On-Board USB connections for Digital Media Devices vs. Removable Media and Readers",
+      "class": "reference",
+      "reason": "White paper (May 2001)",
+      "has_file": true
+    },
+    {
+      "slug": "electrical-compliance-test-specification-superspeed-usb-10-gbps-rev-10",
+      "title": "Electrical Compliance Test Specification for SuperSpeed USB 10 Gbps Rev. 1.0",
+      "class": "specification",
+      "reason": "Electrical compliance test specification, SuperSpeed 10 Gbps",
+      "has_file": true,
+      "revision": "Revision 1.0 (February 14, 2017)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-31-reference-channel-models",
+      "title": "USB 3.1 Reference Channel Models",
+      "class": "other",
+      "reason": "Reference channel models (embedding files)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-power-delivery-firmware-update-specification",
+      "title": "USB Power Delivery Firmware Update Specification",
+      "class": "specification",
+      "reason": "USB PD firmware update specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (September 15, 2016)",
+      "status": "current"
+    },
+    {
+      "slug": "xhci-backwards-compatibility-test-procedures-hosts-rev-17",
+      "title": "xHCI Backwards Compatibility Test Procedures For Hosts Rev 1.7",
+      "class": "other",
+      "reason": "xHCI backwards compatibility test procedures Rev 1.7 June 2016",
+      "has_file": true,
+      "note": "Low confidence."
+    },
+    {
+      "slug": "usb-type-c-end-product-cable-test-plan",
+      "title": "USB Type-C End Product Cable Test Plan",
+      "class": "other",
+      "reason": "Type-C end product cable test plan, Rev 0.7 (March 14, 2016)",
+      "has_file": true,
+      "note": "Low confidence: a test plan, not titled compliance."
+    },
+    {
+      "slug": "usb-31-command-verifier-compliance-test-specification-version-072",
+      "title": "USB 3.1 Command Verifier Compliance Test Specification Version 0.72",
+      "class": "specification",
+      "reason": "Title is a compliance test specification (Version 0.72) but the catalogue has no file for it",
+      "has_file": false,
+      "revision": null,
+      "status": "no-file",
+      "note": "Revision 0.72 taken from the title only; no first page available."
+    },
+    {
+      "slug": "media-agnostic-usb-v10a-spec-and-adopters-agreement",
+      "title": "Media Agnostic USB v1.0a Spec and Adopters Agreement",
+      "class": "specification",
+      "reason": "Media Agnostic USB specification; zip also holds an adopters agreement",
+      "has_file": true,
+      "revision": "Release 1.0a (July 29, 2015)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-31-debug-class-specification-debug-devices-rev-10",
+      "title": "USB 3.1 Debug Class Specification for Debug Devices, Rev. 1.0",
+      "class": "specification",
+      "reason": "USB 3.1 debug class specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (July 14, 2015)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-30-adopters-agreement",
+      "title": "USB 3.0 Adopters Agreement",
+      "class": "other",
+      "reason": "USB 3.0 adopters agreement",
+      "has_file": true
+    },
+    {
+      "slug": "propagation-delay-between-host-transceivers-and-downstream-ports",
+      "title": "Propagation Delay between Host Transceivers and Downstream Ports",
+      "class": "reference",
+      "reason": "Technical white paper (May 11, 2015)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-31-channel-loss-budgets",
+      "title": "USB 3.1 Channel Loss Budgets",
+      "class": "reference",
+      "reason": "Channel loss budget paper, Rev 1.0 (2015-03-02)",
+      "has_file": true,
+      "note": "Could be normative for channel budgets; first page has no statement either way."
+    },
+    {
+      "slug": "inter-chip-supplement-usb-revision-30-specification-revision-102",
+      "title": "Inter-Chip Supplement to the USB Revision 3.0 Specification, Revision 1.02",
+      "class": "specification",
+      "reason": "Inter-chip supplement to USB 3.0",
+      "has_file": true,
+      "revision": "Revision 1.02 (May 19, 2014)",
+      "status": "current"
+    },
+    {
+      "slug": "interoperability-test-procedures-pc-pc-bridge-rev-12",
+      "title": "Interoperability Test Procedures For PC to PC Bridge Rev 1.2",
+      "class": "other",
+      "reason": "PC to PC bridge interoperability test procedures Rev 1.2 (May 2014)",
+      "has_file": true,
+      "note": "Low confidence."
+    },
+    {
+      "slug": "usb-ps-interface-white-paper",
+      "title": "USB PS Interface White Paper",
+      "class": "reference",
+      "reason": "White paper, Revision 1.00 (April 14, 2014)",
+      "has_file": true
+    },
+    {
+      "slug": "electrical-compliance-test-specification-superspeed-usb-rev-10a",
+      "title": "Electrical Compliance Test Specification for SuperSpeed USB Rev. 1.0a",
+      "class": "specification",
+      "reason": "SuperSpeed electrical compliance test specification",
+      "has_file": true,
+      "revision": "Revision 1.0a (March 10, 2015)",
+      "status": "current"
+    },
+    {
+      "slug": "compliance-plan-usb-go-and-embedded-host-30",
+      "title": "Compliance Plan for USB On-The-Go and Embedded Host 3.0",
+      "class": "specification",
+      "reason": "Compliance plan for OTG and Embedded Host 3.0",
+      "has_file": true,
+      "revision": "Release 1.0 (5/10/2013)",
+      "status": "current"
+    },
+    {
+      "slug": "methodology-used-determine-superspeed-usb-10-gbps-usb-31-gen2-channel-and-cable",
+      "title": "Methodology Used to Determine SuperSpeed USB 10 Gbps (USB 3.1) - Gen2 Channel and Cable Assembly High Speed Compliance",
+      "class": "reference",
+      "reason": "Methodology paper by named authors (April 23, 2013)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-mass-storage-class-specification-uasp-bootability-v10-and-adopters-agreement",
+      "title": "USB Mass Storage Class Specification for UASP Bootability v1.0 and Adopters Agreement",
+      "class": "specification",
+      "reason": "UASP bootability class specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (March 4, 2013)",
+      "status": "current"
+    },
+    {
+      "slug": "mbim-compliance-testing-v10",
+      "title": "MBIM Compliance Testing v1.0",
+      "class": "specification",
+      "reason": "MBIM compliance testing specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (February 7, 2013)",
+      "status": "current"
+    },
+    {
+      "slug": "managing-connector-and-cable-assembly-performance-usb-superspeed",
+      "title": "Managing Connector and Cable Assembly Performance for USB SuperSpeed",
+      "class": "reference",
+      "reason": "White paper, Revision 1.0 (Feb 1, 2013)",
+      "has_file": true
+    },
+    {
+      "slug": "mobile-broadband-interface-model-v10-errata-1-and-adopters-agreement",
+      "title": "Mobile Broadband Interface Model v1.0 Errata -1 and Adopters Agreement",
+      "class": "specification",
+      "reason": "MBIM 1.0 with errata; zip also holds a compare document and adopters agreement",
+      "has_file": true,
+      "revision": "Revision 1.0 Errata-1 (May 1, 2013)",
+      "status": "current"
+    },
+    {
+      "slug": "ipp-protocol-10",
+      "title": "IPP Protocol 1.0",
+      "class": "specification",
+      "reason": "IPP over USB print interface class specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (December 5, 2012)",
+      "status": "current"
+    },
+    {
+      "slug": "errata-updates-cdc-v12-and-wmc-v11-dec-2012",
+      "title": "Errata updates for CDC v1.2 and WMC v1.1 as of DEC-2012",
+      "class": "specification",
+      "reason": "Errata updates to CDC 1.2 and WMC 1.1",
+      "has_file": true,
+      "revision": "CDC 1.2 errata (Dec 6, 2012) and WMC 1.1 errata (Jul 31, 2012)",
+      "status": "current",
+      "note": "Errata documents applying to entry 39; classified specification because they alter normative text."
+    },
+    {
+      "slug": "high-speed-inter-chip-adopters-agreement-amendment",
+      "title": "High-Speed Inter-Chip Adopters Agreement Amendment",
+      "class": "other",
+      "reason": "Adopters agreement amendment letter",
+      "has_file": true
+    },
+    {
+      "slug": "video-class-v15-document-set",
+      "title": "Video Class v1.5 document set",
+      "class": "specification",
+      "reason": "Video class 1.5 document set (payload specs and class document)",
+      "has_file": true,
+      "revision": "Revision 1.5 (August 9, 2012)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-go-and-embedded-host-automated-compliance-plan-go-embedded-host-supplement",
+      "title": "USB On-The-Go and Embedded Host Automated Compliance Plan for the On-The-Go & Embedded Host Supplement Revision 2.0 Version 1.2",
+      "class": "specification",
+      "reason": "OTG and EH automated compliance plan",
+      "has_file": true,
+      "revision": "Version 1.2 (July 27, 2012) for OTG and EH Supplement Rev 2.0",
+      "status": "current"
+    },
+    {
+      "slug": "usb-thin-card-v10-and-adopters-agreement",
+      "title": "USB Thin Card v1.0 and Adopters Agreement",
+      "class": "specification",
+      "reason": "USB Thin Card specification; zip also holds an adopters agreement",
+      "has_file": true,
+      "revision": "Revision 1.0 (June 21, 2012)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-device-class-definition-audiovideo-devices-basic-device-profile-bdp",
+      "title": "USB Device Class Definition for Audio/Video Devices Basic Device Profile (BDP)",
+      "class": "specification",
+      "reason": "Audio/Video devices Basic Device Profile",
+      "has_file": true,
+      "revision": "Release 1.0 (June 12, 2012)",
+      "status": "current"
+    },
+    {
+      "slug": "device-class-definition-content-security-devices-20",
+      "title": "Device Class Definition for Content Security Devices 2.0",
+      "class": "specification",
+      "reason": "Content Security class framework",
+      "has_file": true,
+      "revision": "Release 2.0 (June 12, 2012)",
+      "status": "current"
+    },
+    {
+      "slug": "content-security-method-5-high-bandwidth-digital-content-protection-21-hdcp-21",
+      "title": "Content Security Method 5 - High-bandwidth Digital Content Protection 2.1 (HDCP 2.1) Implementation",
+      "class": "specification",
+      "reason": "Content Security Method 5 (HDCP 2.1) implementation",
+      "has_file": true,
+      "revision": "Release 1.0 (June 12, 2012)",
+      "status": "current"
+    },
+    {
+      "slug": "go-and-embedded-host-supplement-usb-revision-30-specification-revision-11",
+      "title": "On-The-Go and Embedded Host Supplement to the USB Revision 3.0 Specification, Revision 1.1",
+      "class": "specification",
+      "reason": "OTG and Embedded Host supplement to USB 3.0",
+      "has_file": true,
+      "revision": "Revision 1.1 (May 10, 2012)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-30-radio-frequency-interference-impact-24-ghz-wireless-devices",
+      "title": "USB 3.0 Radio Frequency Interference Impact on 2.4 GHz Wireless Devices",
+      "class": "reference",
+      "reason": "White paper (April 2012)",
+      "has_file": true
+    },
+    {
+      "slug": "avdd-creator-user-manual",
+      "title": "AVDD Creator User Manual",
+      "class": "other",
+      "reason": "User manual for a software tool (AVDD Creator)",
+      "has_file": true
+    },
+    {
+      "slug": "ehci-and-xhci-high-speed-electrical-test-tool-setup-instruction",
+      "title": "EHCI and xHCI High-Speed Electrical Test Tool Setup Instruction",
+      "class": "other",
+      "reason": "HSETT tool setup instruction",
+      "has_file": true
+    },
+    {
+      "slug": "hset-documentation-version-041-ehci-and-xhci",
+      "title": "HSET Documentation version 0.41 for EHCI and xHCI",
+      "class": "other",
+      "reason": "HSETT tool setup instruction; same file as entry 176",
+      "has_file": true
+    },
+    {
+      "slug": "audiovideo-device-class-v10-spec-and-adopters-agreement",
+      "title": "Audio/Video Device Class v1.0 Spec and Adopters Agreement",
+      "class": "specification",
+      "reason": "Audio/Video device class 1.0 documents; zip also holds an adopters agreement",
+      "has_file": true,
+      "revision": "Release 1.0 (AVFormat 1/2/3 and AVFunction documents)",
+      "status": "current",
+      "note": "Different from AV Basic Device Profile 1.0 (entry 170, June 2012); relationship not stated on pages read."
+    },
+    {
+      "slug": "usb-30-superspeed-equalizer-design-guidelines",
+      "title": "USB 3.0 SuperSpeed Equalizer Design Guidelines",
+      "class": "reference",
+      "reason": "Design guidelines paper (2011-06-10)",
+      "has_file": true
+    },
+    {
+      "slug": "media-transfer-protocol-v11-spec-and-mtp-v11-adopters-agreement",
+      "title": "Media Transfer Protocol v.1.1 Spec and MTP v.1.1 Adopters Agreement",
+      "class": "specification",
+      "reason": "Media Transfer Protocol specification; zip also holds an adopters agreement",
+      "has_file": true,
+      "revision": "Revision 1.1 (April 6, 2011)",
+      "status": "current"
+    },
+    {
+      "slug": "network-control-model-devices-specification-v10-and-errata-and-adopters-agreement",
+      "title": "Network Control Model Devices Specification v1.0 and errata and Adopters Agreement",
+      "class": "specification",
+      "reason": "NCM 1.0 class specification with errata",
+      "has_file": true,
+      "revision": "Revision 1.0 (Errata 1, November 24, 2010)",
+      "status": "older-revision",
+      "see": "usb-communications-class-subclass-specifications-network-control-model-devices-v11",
+      "note": "Superseded by NCM 1.1 (entry 28) by revision number."
+    },
+    {
+      "slug": "mass-storage-class-specification-overview-14",
+      "title": "Mass Storage Class Specification Overview 1.4",
+      "class": "specification",
+      "reason": "Mass storage class overview",
+      "has_file": true,
+      "revision": "Revision 1.4 (February 19, 2010)",
+      "status": "current"
+    },
+    {
+      "slug": "audio-device-class-spec-basic-audio-devices-v10-and-adopters-agreement",
+      "title": "Audio Device Class Spec for Basic Audio Devices v1.0 and Adopters Agreement",
+      "class": "specification",
+      "reason": "Basic audio devices class specification; zip also holds an adopters agreement",
+      "has_file": true,
+      "revision": "Release 1.0 (November 24, 2009)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-attached-scsi-protocol-uasp-v10-and-adopters-agreement",
+      "title": "USB Attached SCSI Protocol (UASP) v1.0 and Adopters Agreement",
+      "class": "specification",
+      "reason": "UASP specification; zip also holds an adopters agreement",
+      "has_file": true,
+      "revision": "Revision 1.0 (June 24, 2009)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-20-go-specification-supplement-adopters-agreement",
+      "title": "USB 2.0 On-The-Go Specification Supplement Adopters Agreement",
+      "class": "other",
+      "reason": "Adopters agreement amendment letter for OTG 2.0 supplement",
+      "has_file": true
+    },
+    {
+      "slug": "usb-30-cdr-model",
+      "title": "USB 3.0 CDR Model",
+      "class": "reference",
+      "reason": "White paper, Revision 0.5 (January 15, 2009)",
+      "has_file": true
+    },
+    {
+      "slug": "standard-host-side-certified-wireless-usb-connection-context-storage-windows",
+      "title": "A Standard for Host-Side Certified Wireless USB Connection Context Storage on Windows Operating Systems",
+      "class": "specification",
+      "reason": "Titled \"A Standard for Host-Side Certified Wireless USB Connection Context Storage\"",
+      "has_file": true,
+      "revision": "Revision 1.0 (January 16, 2009)",
+      "status": "current",
+      "note": "Low confidence: Windows-specific host convention, kept as specification because the title calls it a standard."
+    },
+    {
+      "slug": "electrical-isolation-and-improved-electromagnetic-compatibility-personal",
+      "title": "Electrical Isolation and Improved Electromagnetic Compatibility for Personal Healthcare Devices using USB",
+      "class": "reference",
+      "reason": "Informative white paper",
+      "has_file": true
+    },
+    {
+      "slug": "personal-healthcare-rev-10",
+      "title": "Personal Healthcare Rev. 1.0",
+      "class": "specification",
+      "reason": "Personal healthcare device class definition",
+      "has_file": true,
+      "revision": "Release 1.0 (November 8, 2007); zip also holds errata (Feb 15, 2008)",
+      "status": "current"
+    },
+    {
+      "slug": "cables-and-connectors-class-20",
+      "title": "Cables and Connectors Class 2.0",
+      "class": "specification",
+      "reason": "Cables and connectors class document",
+      "has_file": true,
+      "revision": "Revision 2.0 (August 2007)",
+      "status": "current"
+    },
+    {
+      "slug": "lockable-mass-storage-specification-10-and-adopters-agreement",
+      "title": "Lockable Mass Storage Specification 1.0 and Adopters Agreement",
+      "class": "specification",
+      "reason": "Lockable storage devices feature specification; zip also holds an adopters agreement",
+      "has_file": true,
+      "revision": "Revision 1.0 (August 1, 2007)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-20-cable-and-connector-class-document",
+      "title": "USB 2.0 Cable and Connector Class Document",
+      "class": "specification",
+      "reason": "USB 2.0 cable and connector class document; same file as entry 190",
+      "has_file": true,
+      "revision": "Revision 2.0 (August 2007)",
+      "status": "duplicate",
+      "see": "cables-and-connectors-class-20",
+      "note": "Same file name and first page as entry 190."
+    },
+    {
+      "slug": "audio-devices-rev-20-and-adopters-agreement",
+      "title": "Audio Devices Rev. 2.0 and Adopters Agreement",
+      "class": "specification",
+      "reason": "Audio 2.0 class documents; zip also holds an adopters agreement",
+      "has_file": true,
+      "revision": "Release 2.0 (May 31, 2006); Audio20, Frmts20 and Termt20 documents",
+      "status": "older-revision",
+      "see": "usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through",
+      "note": "Entry 13 is the same release 2.0 consolidated with errata through Sep 2026."
+    },
+    {
+      "slug": "embedded-high-speed-host-electrical-test-procedure-version-101",
+      "title": "Embedded High-speed Host Electrical Test Procedure Version 1.01",
+      "class": "other",
+      "reason": "Embedded high-speed host electrical test procedure Rev 1.01 (May 5, 2006); test method",
+      "has_file": true,
+      "note": "Low confidence; same title as entry 127."
+    },
+    {
+      "slug": "low-voltage-inter-chip-adopters-agreement-amendment",
+      "title": "Low Voltage Inter-Chip Adopters Agreement Amendment",
+      "class": "other",
+      "reason": "Adopters agreement amendment letter",
+      "has_file": true
+    },
+    {
+      "slug": "video-class-v11-document-set",
+      "title": "Video Class v1.1 document set",
+      "class": "specification",
+      "reason": "Video class 1.1 document set",
+      "has_file": true,
+      "revision": "Revision 1.1 (June 1, 2005); 15 documents",
+      "status": "older-revision",
+      "see": "video-class-v15-document-set",
+      "note": "Superseded in the catalogue by video class 1.5 (entry 167); both remain listed."
+    },
+    {
+      "slug": "smart-card-ccid-version-11",
+      "title": "Smart Card CCID version 1.1",
+      "class": "specification",
+      "reason": "Smart card CCID specification",
+      "has_file": true,
+      "revision": "Revision 1.1 (April 22, 2005)",
+      "status": "current"
+    },
+    {
+      "slug": "smart-card-iccd-version-10",
+      "title": "Smart Card ICCD version 1.0",
+      "class": "specification",
+      "reason": "Smart card ICCD specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (April 22, 2005)",
+      "status": "current"
+    },
+    {
+      "slug": "series-plug-form-factor-guideline-10",
+      "title": "Series 'A' Plug form factor Guideline 1.0",
+      "class": "reference",
+      "reason": "Form factor guideline for embedded A plug, Revision 1.0",
+      "has_file": true,
+      "note": "Called a guideline on its first page."
+    },
+    {
+      "slug": "cdc-subclass-specification-ethernet-emulation-model-devices-10",
+      "title": "CDC Subclass Specification for Ethernet Emulation Model Devices 1.0",
+      "class": "specification",
+      "reason": "CDC EEM subclass specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (February 2, 2005)",
+      "status": "current"
+    },
+    {
+      "slug": "mass-storage-bootability-specification-10",
+      "title": "Mass Storage Bootability Specification 1.0",
+      "class": "specification",
+      "reason": "Mass storage bootability specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (October 25, 2004)",
+      "status": "current"
+    },
+    {
+      "slug": "device-firmware-upgrade-11-new-version-31-aug-2004",
+      "title": "Device Firmware Upgrade 1.1 (new version 31-Aug-2004)",
+      "class": "specification",
+      "reason": "Device Firmware Upgrade class specification",
+      "has_file": true,
+      "revision": "Version 1.1 (Aug 5, 2004)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-if-full-and-low-speed-electrical-and-interoperability-compliance-test",
+      "title": "USB-IF Full and Low Speed Electrical and Interoperability Compliance Test Procedure",
+      "class": "specification",
+      "reason": "Full and low speed electrical and interoperability compliance test procedure",
+      "has_file": true,
+      "revision": "Revision 1.3 (February 2004)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-interface-association-descriptor-device-class-code-and-use-model",
+      "title": "USB Interface Association Descriptor Device Class Code and Use Model",
+      "class": "specification",
+      "reason": "Interface Association Descriptor class code and use model (ECN-derived)",
+      "has_file": true,
+      "revision": "Revision 1.0 (July 23, 2003)",
+      "status": "current"
+    },
+    {
+      "slug": "mass-storage-controlbulkinterrupt-cbi-specification-11",
+      "title": "Mass Storage Control/Bulk/Interrupt (CBI) Specification 1.1",
+      "class": "specification",
+      "reason": "Mass storage CBI transport specification",
+      "has_file": true,
+      "revision": "Revision 1.1 (June 23, 2003)",
+      "status": "current"
+    },
+    {
+      "slug": "test-measurement-class-specification",
+      "title": "Test & Measurement Class Specification",
+      "class": "specification",
+      "reason": "Test and Measurement class specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (April 14, 2003); also USB488 subclass 1.0",
+      "status": "current"
+    },
+    {
+      "slug": "content-security-method-2-usb-digital-transmission-content-protection",
+      "title": "Content Security Method 2 - USB Digital Transmission Content Protection Implementation 1.0",
+      "class": "specification",
+      "reason": "Content Security Method 2 (DTCP) implementation",
+      "has_file": true,
+      "revision": "Revision 1.0 (22 August 2000)",
+      "status": "current"
+    },
+    {
+      "slug": "understanding-wdm-power-management-v11",
+      "title": "Understanding WDM Power Management v1.1",
+      "class": "reference",
+      "reason": "White paper (Aug 7, 2000)",
+      "has_file": true
+    },
+    {
+      "slug": "openusbdi-specification-10",
+      "title": "OpenUSBDI Specification 1.0",
+      "class": "specification",
+      "reason": "OpenUSBDI specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (July 17, 2000)",
+      "status": "current",
+      "note": "Low confidence: a driver interface rather than a bus specification."
+    },
+    {
+      "slug": "still-image-capture-device-definition-10-and-errata-16-mar-2007",
+      "title": "Still Image Capture Device Definition 1.0 and Errata as of 16-Mar-2007",
+      "class": "specification",
+      "reason": "Still image capture device definition",
+      "has_file": true,
+      "revision": "Revision 1.0 (July 11, 2000); zip also holds errata to Mar 16, 2007",
+      "status": "current"
+    },
+    {
+      "slug": "usb-20-adopters-agreement",
+      "title": "USB 2.0 Adopters Agreement",
+      "class": "other",
+      "reason": "USB 2.0 adopters agreement",
+      "has_file": true
+    },
+    {
+      "slug": "irda-bridge-device-definition-10",
+      "title": "IrDA Bridge Device Definition 1.0",
+      "class": "specification",
+      "reason": "IrDA bridge device definition",
+      "has_file": true,
+      "revision": "Revision 1.0 (March 23, 2000)",
+      "status": "current",
+      "note": "First page says 'For Review and Discussion Only / Draft Document'; low confidence."
+    },
+    {
+      "slug": "hid-parser-error-checking",
+      "title": "HID Parser Error Checking",
+      "class": "reference",
+      "reason": "List of error checks for HID parsers; informative guidance",
+      "has_file": true,
+      "note": "Low confidence."
+    },
+    {
+      "slug": "content-security-method-1-basic-authentication-protocol-10",
+      "title": "Content Security Method 1 - Basic Authentication Protocol 1.0",
+      "class": "specification",
+      "reason": "Title says Method 1 but file is ContentSecurity_v2.0.pdf, identical to entry 171",
+      "has_file": true,
+      "revision": "Release 2.0 (June 12, 2012), Content Security Framework",
+      "status": "duplicate",
+      "see": "device-class-definition-content-security-devices-20",
+      "note": "Catalogue link for Content Security Method 1 points to the Framework document; the real Method 1 document was not acquired."
+    },
+    {
+      "slug": "printer-device-class-document-11",
+      "title": "Printer Device Class Document 1.1",
+      "class": "specification",
+      "reason": "Printer class definition",
+      "has_file": true,
+      "revision": "Version 1.1 (January 2000)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-midi-devices-10",
+      "title": "USB MIDI Devices 1.0",
+      "class": "specification",
+      "reason": "MIDI devices 1.0",
+      "has_file": true,
+      "revision": "Release 1.0 (Nov 1, 1999)",
+      "status": "older-revision",
+      "see": "usb-class-definition-midi-devices-v20",
+      "note": "MIDI 2.0 (entry 91) is a distinct release; not stated as superseding 1.0."
+    },
+    {
+      "slug": "mass-storage-bulk-only-10",
+      "title": "Mass Storage Bulk Only 1.0",
+      "class": "specification",
+      "reason": "Mass storage bulk-only transport",
+      "has_file": true,
+      "revision": "Revision 1.0 (September 31, 1999 as printed)",
+      "status": "current"
+    },
+    {
+      "slug": "mass-storage-ufi-command-specification-10",
+      "title": "Mass Storage UFI Command Specification 1.0",
+      "class": "specification",
+      "reason": "Mass storage UFI command specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (December 14, 1998)",
+      "status": "current"
+    },
+    {
+      "slug": "audio-device-document-10",
+      "title": "Audio Device Document 1.0",
+      "class": "specification",
+      "reason": "Audio 1.0 class definition",
+      "has_file": true,
+      "revision": "Release 1.0 (March 18, 1998)",
+      "status": "older-revision",
+      "see": "audio-devices-rev-20-and-adopters-agreement",
+      "note": "Audio 2.0 and 4.0 are later releases; withdrawn status not stated."
+    },
+    {
+      "slug": "audio-data-formats-10",
+      "title": "Audio Data Formats 1.0",
+      "class": "specification",
+      "reason": "Audio data formats 1.0",
+      "has_file": true,
+      "revision": "Release 1.0 (March 18, 1998)",
+      "status": "older-revision",
+      "see": "audio-devices-rev-20-and-adopters-agreement",
+      "note": "Audio 2.0 has its own Frmts20 document."
+    },
+    {
+      "slug": "audio-terminal-types-10",
+      "title": "Audio Terminal Types 1.0",
+      "class": "specification",
+      "reason": "Audio terminal types 1.0",
+      "has_file": true,
+      "revision": "Release 1.0 (March 18, 1998)",
+      "status": "older-revision",
+      "see": "audio-devices-rev-20-and-adopters-agreement",
+      "note": "Audio 2.0 has its own Termt20 document."
+    },
+    {
+      "slug": "hid-parser-error-checking-0",
+      "title": "HID Parser Error Checking",
+      "class": "reference",
+      "reason": "Same file as entry 213",
+      "has_file": true,
+      "note": "Duplicate of entry 213."
+    },
+    {
+      "slug": "monitor-device-document-10",
+      "title": "Monitor Device Document 1.0",
+      "class": "specification",
+      "reason": "Monitor device document (same text as entry 94)",
+      "has_file": true,
+      "revision": "Revision 1.0 (January 5, 1998)",
+      "status": "duplicate",
+      "see": "monitor-control-class-10",
+      "note": "usbmon10.pdf versus usbmon10_0.pdf in entry 94; same title page."
+    },
+    {
+      "slug": "power-device-class-document-10",
+      "title": "Power Device Class Document 1.0",
+      "class": "specification",
+      "reason": "HID power devices usage tables 1.0",
+      "has_file": true,
+      "revision": "Release 1.0 (November 1, 1997)",
+      "status": "older-revision",
+      "see": "usage-tables-hid-power-devices-11",
+      "note": "Superseded by Release 1.1 (entry 98)."
+    },
+    {
+      "slug": "usb-apm-interactions",
+      "title": "USB - APM Interactions",
+      "class": "reference",
+      "reason": "White paper (Sept 5, 1997)",
+      "has_file": true
+    },
+    {
+      "slug": "analysis-wireless-device-implementations-usb",
+      "title": "An Analysis of Wireless Device Implementations on USB",
+      "class": "reference",
+      "reason": "Analysis paper (6/3/97)",
+      "has_file": true
+    },
+    {
+      "slug": "analysis-wireless-device-implementations-universal-serial-bus",
+      "title": "An Analysis of Wireless Device Implementations on Universal Serial Bus",
+      "class": "reference",
+      "reason": "Same file as entry 226",
+      "has_file": true,
+      "note": "Duplicate of entry 226."
+    },
+    {
+      "slug": "usb-latency-requirements-and-effect-video-adapter-pci-retry-condition-maintaining",
+      "title": "USB Latency Requirements and the Effect of Video Adapter PCI Retry Condition on Maintaining USB Streaming Pipelines",
+      "class": "reference",
+      "reason": "Research paper by university authors",
+      "has_file": true
+    },
+    {
+      "slug": "usb-bandwidth-analysis",
+      "title": "USB Bandwidth Analysis",
+      "class": "reference",
+      "reason": "Throughput analysis paper",
+      "has_file": true
+    },
+    {
+      "slug": "design-guide-low-speed-buffer-usb",
+      "title": "Design Guide for a low speed buffer for USB",
+      "class": "reference",
+      "reason": "Design guide",
+      "has_file": true
+    },
+    {
+      "slug": "avschema-documentation",
+      "title": "AVSchema Documentation",
+      "class": "other",
+      "reason": "Documentation page for a schema; no file",
+      "has_file": false
+    },
+    {
+      "slug": "avschema-files-httpavschemasusborgv1avschemaxsd-and",
+      "title": "AVSchema Files:  http://avschemas.usb.org/v1/avschema.xsd and http://avschemas.usb.org/v1/avtypes.xsd",
+      "class": "other",
+      "reason": "Schema files (xsd); no file",
+      "has_file": false
+    },
+    {
+      "slug": "avdd-creator-installer",
+      "title": "AVDD Creator Installer",
+      "class": "other",
+      "reason": "Software installer (documents are licence notices)",
+      "has_file": true
+    },
+    {
+      "slug": "usb-connector-mezzanine-applications-guidelines-rev-10",
+      "title": "USB Connector for Mezzanine Applications Guidelines Rev. 1.0",
+      "class": "reference",
+      "reason": "Mezzanine connector guidelines Rev 1.0",
+      "has_file": true,
+      "note": "Title says Guidelines; first page is a licence disclaimer."
+    },
+    {
+      "slug": "common-class-base-specification-10",
+      "title": "Common Class Base Specification 1.0",
+      "class": "specification",
+      "reason": "Common class base specification",
+      "has_file": true,
+      "revision": "Revision 1.0 (December 16, 1997)",
+      "status": "current"
+    },
+    {
+      "slug": "usb-30-electrical-compliance-methodology",
+      "title": "USB 3.0 Electrical Compliance Methodology",
+      "class": "reference",
+      "reason": "White paper, Revision 0.5",
+      "has_file": true
+    },
+    {
+      "slug": "usb-30-jitter-budgeting",
+      "title": "USB 3.0 Jitter Budgeting",
+      "class": "reference",
+      "reason": "White paper, Revision 0.5",
+      "has_file": true
+    },
+    {
+      "slug": "cyclic-redundancy-checks-usb",
+      "title": "Cyclic Redundancy Checks in USB",
+      "class": "reference",
+      "reason": "Draft explanatory note on CRCs in USB",
+      "has_file": true
+    },
+    {
+      "slug": "designing-robust-usb-serial-interface-engine-sie",
+      "title": "Designing a Robust USB Serial Interface Engine (SIE)",
+      "class": "reference",
+      "reason": "Draft white paper",
+      "has_file": true
+    },
+    {
+      "slug": "handling-irpmnstartdevice-pnp-irp-v10",
+      "title": "Handling The IRP_MN_START_DEVICE PnP IRP v.1.0",
+      "class": "reference",
+      "reason": "White paper primer for a Windows driver call",
+      "has_file": true
+    },
+    {
+      "slug": "system-test-implementers-forum",
+      "title": "System Test Implementers Forum",
+      "class": "reference",
+      "reason": "Presentation slides (System Test Implementers Forum)",
+      "has_file": true
+    },
+    {
+      "slug": "introduction-hi-speed-usb",
+      "title": "An Introduction to Hi-Speed USB",
+      "class": "reference",
+      "reason": "Technical introduction to USB 2.0",
+      "has_file": true
+    }
+  ]
+}

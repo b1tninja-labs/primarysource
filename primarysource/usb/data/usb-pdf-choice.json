@@ -1,0 +1,839 @@
+{
+ "schema": 1,
+ "choices": [
+  {
+   "doc_id": "usb-type-cr-connector-system-software-interface-ucsi-specification",
+   "file": "data/raw/usb-type-cr-connector-system-software-interface-ucsi-specification/pdf/USB Type-C Connector System Software Interface Revision_3.2 OR Clean.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 3.2 (September 2026); package also holds 4 ECNs",
+   "first_page": "Revision 3.2 -1- UCSI Specification September 2026 USB Type-C® Connector System Software Interface (UCSI) Specification Apple Inc. HP Inc. Intel Corporation Microsoft Corporation Renesas Corporation S",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-type-c-and-power-delivery-source-power-requirements-compliance-test",
+   "file": "data/raw/usb-type-c-and-power-delivery-source-power-requirements-compliance-test/USB-C%20Source%20Power%20Test%20Specification%20V1.2%202026%2011%2004.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.2 (November 4, 2026)",
+   "first_page": "Universal Serial Bus Type-C and Power Delivery Source Power Requirements Compliance Test Specification Date: November 4, 2026 Revision: 1.2",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-power-delivery",
+   "file": "data/raw/usb-power-delivery/pdf/USB_PD_R3.3_V1.0_2026_10_16.pdf",
+   "reason": "entry revision is R3.3 V1.0; the package also holds the R2.0 and R3.2 PDFs",
+   "revision": "R3.3 V1.0 (Oct 16, 2026); package also holds R3.2 V1.2 (Aug 19, 2026, marked Previous_Rev), R2.0 V1.3 (Jan 12, 2017), PDUSB Status and States R1.1",
+   "first_page": "Universal Serial Bus Power Delivery Specification Release 3.3, Version 1.0 October 16, 2026 r3.3 v1.0 Oct 2026 USB Power Delivery Specification 1",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-32-revision-11-june-2022",
+   "file": "data/raw/usb-32-revision-11-june-2022/pdf/USB 3.2 Revision 1.1.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.1 (June 2022); package also holds 18 ECNs and Rev 1.1 redline",
+   "first_page": "Universal Serial Bus 3.2 Specification Apple Inc. Hewlett-Packard Inc. Intel Corporation Microsoft Corporation Renesas Corporation STMicroelectronics Texas Instruments Revision 1.1 June 2022 Copyright",
+   "confident": true
+  },
+  {
+   "doc_id": "usb4cv-compliance-test-specification",
+   "file": "data/raw/usb4cv-compliance-test-specification/pdf/USB4 Logical Layer CTS Rev 2.9 - CLEAN.pdf",
+   "reason": "UNSURE: package is eight per-part USB4 CTS documents; the Logical Layer CTS is listed first in the entry revision",
+   "revision": "Per-part: Logical Layer 2.9 (Oct 2026), Protocol 2.9, PCIe Tunneling 2.1 (draft), TMU 2.7, USB3 Tunneling 2.3, DP Tunneling 2.8, Host Interface 2.4",
+   "first_page": "USB4™ Logical Layer Compliance Test Specification for Router Assemblies Date: October 2026 Revision: 2.9",
+   "confident": false
+  },
+  {
+   "doc_id": "usb-power-delivery-compliance-test-specification-0",
+   "file": "data/raw/usb-power-delivery-compliance-test-specification-0/pdf/USB PD3 CTS Q4 2026 OR.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Q4 2026 OR (October 10, 2026)",
+   "first_page": "USB Power Delivery Compliance Test Specification Revision: Q4, 2026 OR Release date: October 10, 2026 USB Power Delivery Compliance Test Specification, Q4 2026 Page 1",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-audio-devices-release-40-and-adopters-agreement",
+   "file": "data/raw/usb-audio-devices-release-40-and-adopters-agreement/pdf/Audio4_with_Errata_and ECN_through_October_09_2026.pdf",
+   "reason": "Audio 4.0 with errata and ECN merged in; the other PDF is the adopters agreement",
+   "revision": "Release 4.0 with Errata and ECN through October 9, 2026 (April 2023 base)",
+   "first_page": "UNIVERSAL SERIAL BUS DEVICE CLASS DEFINITION FOR AUDIO DEVICES Release 4.0 with Errata and ECN through October 9, 2026 April 2023",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through",
+   "file": "data/raw/usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through/Audio2_with_Errata_and_ECN_through_Sep_14_2026.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 2.0 with Errata and ECN through September 14, 2026",
+   "first_page": "USB Device Class Definition for Audio Devices Universal Serial Bus Device Class Definition for Audio Devices Release 2.0 with Errata and ECN through September 14, 2026 Release 2.0 September 2026 1",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-20-electrical-compliance-test-specification",
+   "file": "data/raw/usb-20-electrical-compliance-test-specification/USB2%20Electrical%20Compliance%20Specification%20v1.08.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.08 (April 2026)",
+   "first_page": "USB 2.0 Electrical Compliance Test Specification Version 1.08 April 2026 1",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-type-cr-cable-and-connector-specification-release-25",
+   "file": "data/raw/usb-type-cr-cable-and-connector-specification-release-25/pdf/USB Type-C Spec R2.5 - March 2026.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Release 2.5 (March 2026); package also holds R2.4 ECNs and a compare against R2.4",
+   "first_page": "Release 2.5 -1- USB Type-C® Cable and March 2026 Connector Specification Universal Serial Bus Type-C Cable and Connector Specification Release 2.5 March 2026 Copyright © 2026 USB 3.0 Promoter Group. A",
+   "confident": true
+  },
+  {
+   "doc_id": "usb4r-specification-v20",
+   "file": "data/raw/usb4r-specification-v20/pdf/USB4 Specification 2.0 November 2025 - CLEAN.pdf",
+   "reason": "the USB4 Specification 2.0 proper; the package also holds Re-Timer, DROM, DVSEC, Inter-Domain and Connection Manager documents",
+   "revision": "Version 2.0 (November 2025); also Re-Timer 2.0 Rev 1.0 RC, Inter-Domain Service 2.0 Rev 1.0, Connection Manager Guide 2.0 Rev 1.2, DROM, DVSEC 1.0, and v1.0 ECNs",
+   "first_page": "Universal Serial Bus 4 (USB4®) Specification Apple Inc. HP Inc. Intel Corporation Microsoft Corporation Renesas Corporation STMicroelectronics Texas Instruments Version 2.0 November 2025 Copyright © 2",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-communications-class-subclass-specifications-network-control-model-devices-v11",
+   "file": "data/raw/usb-communications-class-subclass-specifications-network-control-model-devices-v11/pdf/NCM11_20260205.pdf",
+   "reason": "NCM 1.1 specification; the other live PDFs are mDNS TCP keepalive notes",
+   "revision": "Revision 1.1 (February 5, 2026)",
+   "first_page": "Universal Serial Bus Communications Class Subclass Specifications for Network Control Model Devices Revision 1.1 February 5, 2026",
+   "confident": true
+  },
+  {
+   "doc_id": "usb4-electrical-compliance-test-specification",
+   "file": "data/raw/usb4-electrical-compliance-test-specification/pdf/USB4  Electrical Compliance Test Specification Ver2 1p0 no watermark official release clean.pdf",
+   "reason": "entry revision is the Router Assembly v2 GEN4 ECTS Rev 1.0; the package also holds the older 1.02 and 1.04 documents",
+   "revision": "Router Assembly v2 GEN4 ECTS Rev 1.0 (Jun 2025; first page shows 0.98 to 1.0 tracked change); v1 Router Assembly Ver 1.04 (Jan 2025); Captive Device Ver 1.02 (Jun 2022)",
+   "first_page": "Universal Serial Bus 4 (USB4®) Version 2 GEN4 Electrical Compliance Test Specification Date: Jun , 2025 Revision: 1.0",
+   "confident": true
+  },
+  {
+   "doc_id": "hid-usage-tables-17",
+   "file": "data/raw/hid-usage-tables-17/hut1_7.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.7",
+   "first_page": "HID Usage Tables FOR Universal Serial Bus (USB) Version 1.7 1996-2026 USB Implementers’ Forum - All rights reserved.",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-type-c-shared-capacity-charger-interoperability-compliance-test-specification",
+   "file": "data/raw/usb-type-c-shared-capacity-charger-interoperability-compliance-test-specification/USB_Type-C_Shared_Capacity_Interoperabiltiy_CTS_1.0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.0 (October 20, 2025)",
+   "first_page": "USB Type-C Shared Capacity IOP CTS Universal Serial Bus Type-C Shared Capacity Charger Interoperability Compliance Test Specification Version 1.0 October 20, 2025 1",
+   "confident": true
+  },
+  {
+   "doc_id": "usb3cv-and-xhcicv-compliance-test-specifications",
+   "file": "data/raw/usb3cv-and-xhcicv-compliance-test-specifications/pdf/USB 3.2 CV Compliance Tests-ver 1.22.pdf",
+   "reason": "UNSURE: thirteen CTS documents; USB 3.2 CV CTS 1.22 is listed first in the entry revision, xHCI CTS r1.20 is the other half of the title",
+   "revision": "USB 3.2 CV CTS 1.22 (Jul 2019); Hub CTS 1.21 (Jul 2019); Connector Type Tests 0.73 (Nov 2018); also Video Class compliance, Type-C Authentication CTS v0.9, Type-C Bridge CTS v1.02, USBCVSpec",
+   "first_page": "USB Command Verifier Compliance Test Specification for the USB 3.2 Architecture Universal Serial Bus Revision 3.2 USB Command Verifier Compliance Test Specification Revision 1.22 Date: July 10, 2019 R",
+   "confident": false
+  },
+  {
+   "doc_id": "usb-20-specification",
+   "file": "data/raw/usb-20-specification/pdf/usb_20.pdf",
+   "reason": "the USB 2.0 base specification (Revision 2.0, April 27, 2000); the rest are supplements, errata and amendments",
+   "revision": "Revision 2.0 (April 27, 2000); package also holds ECNs, errata, HSIC 1.0, Inter-Chip 1.0, Micro-USB 1.01, OTG/EH 2.0 v1.1a, LPM ECN",
+   "first_page": "Universal Serial Bus Specification Compaq Hewlett-Packard Intel Lucent Microsoft NEC Philips Revision 2.0 April 27, 2000",
+   "confident": true
+  },
+  {
+   "doc_id": "class-definitions-communication-devices-12",
+   "file": "data/raw/class-definitions-communication-devices-12/pdf/CDC120_with_Errata_and_ECN_through_Apr_3_2025.pdf",
+   "reason": "UNSURE: CDC 1.2 base class definition with errata merged; alternative is CDC120-20101103-track.pdf (Errata 1, tracked changes)",
+   "revision": "Revision 1.2 (Feb 9, 2007), subclasses ATM, ECM, ISDN, PSTN, WMC 1.1, with errata",
+   "first_page": "Universal Serial Bus Class Definitions for Communications Devices Revision 1.2 with Errata and ECN through April 3, 2025",
+   "confident": false
+  },
+  {
+   "doc_id": "usb-active-cable-thermal-compliance-test-specification",
+   "file": "data/raw/usb-active-cable-thermal-compliance-test-specification/USB%20Active%20Cable%20Thermal%20Compliance%20Test%20Specification%20v0.92%20May%2015th.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 0.92 (May 15, 2025)",
+   "first_page": "USB Active Cable Thermal Compliance Test Specification Date: May 15, 2025 Revision: 0.92",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b",
+   "file": "data/raw/usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b/USB%20Type-C_Compliance%20Document_Rev_2_1b_June_2021.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 2.1b (June 2021)",
+   "first_page": "-1- Revision 2.1b Compliance Document Universal Serial Bus Type-C Connectors and Cable Assemblies Compliance Document Revision 2.1b June 2021 June 2021",
+   "confident": true
+  },
+  {
+   "doc_id": "embedded-usb2-version-20-supplement-usb-20-specification-eusb2v2",
+   "file": "data/raw/embedded-usb2-version-20-supplement-usb-20-specification-eusb2v2/Embedded%20USB2%20Version%202.0%20Supplement%20to%20the%20USB%202.0%20Specification_0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 2.0",
+   "first_page": "Embedded USB2 Version 2.0: Supplement to the USB 2.0 Specification (eUSB2V2) Apple Inc. HP Inc. Intel Corporation Microsoft Corporation Renesas Corporation STMicroelectronics Texas Instruments Version",
+   "confident": true
+  },
+  {
+   "doc_id": "embedded-usb2-eusb2-physical-layer-supplement-usb-revision-20-specification-rev-12",
+   "file": "data/raw/embedded-usb2-eusb2-physical-layer-supplement-usb-revision-20-specification-rev-12/pdf/eUSB2_1p2_20211217.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.2; zip also holds two ECNs",
+   "first_page": "Embedded USB2 (eUSB2) Physical Layer Supplement to the USB Revision 2.0 Specification Revision 1.2",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-type-cr-locking-connector-specification",
+   "file": "data/raw/usb-type-cr-locking-connector-specification/pdf/usb_type-c_locking_connector_specification_rev_1_0_20160309.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.0 (March 9, 2016); zip also holds a plug dimensions ECN",
+   "first_page": "USB-IF Device Working Group -1- USB Type-C Locking Connector Revision 1.0 Universal Serial Bus Type-C Locking Connector Specification Revision 1.0 March 9, 2016 Copyright © 2016 USB-IF. All rights res",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-32-link-layer-test-specification",
+   "file": "data/raw/usb-32-link-layer-test-specification/USB%203%202%20Link%20Layer%20Test%20Specification%202024%2003%2003.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.1 (March 3, 2024)",
+   "first_page": "Universal Serial Bus 3.2 Link Layer Test Specification Date: March 3, 2024 Revision: 1.1",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-type-c-functional-test-specification",
+   "file": "data/raw/usb-type-c-functional-test-specification/USB%20Type%20C%20Functional%20Test%20Specification%202024%2003%2003.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 0.91 (March 3, 2024), chapters 4 and 5",
+   "first_page": "Universal Serial Bus Type-C (USB Type-C) Functional Test Specification Chapters 4 and 5 Date: March 3, 2024 Revision: 0.91",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-i3cr-device-class-specification-v11",
+   "file": "data/raw/usb-i3cr-device-class-specification-v11/USB%20I3C%20Device%20Class%20Revision%201.1.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.1 (January 2023)",
+   "first_page": "Version 1.1 -1- USB I3C Device Class January 2023 Specification Universal Serial Bus I3C® Device Class Specification Version 1.1 January 2023 I3C® is a registered service mark of MIPI Alliance, Inc. U",
+   "confident": true
+  },
+  {
+   "doc_id": "electrical-compliance-test-specification-linear-re-driver-active-cable-lrd",
+   "file": "data/raw/electrical-compliance-test-specification-linear-re-driver-active-cable-lrd/Electrical_Compliance_Test%20Specification_Linear_Re_Driver_Active_Cable_LRD_rev1p0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (November 10, 2022)",
+   "first_page": "Electrical Compliance Test Specification Linear Re-Driver Active Cable (LRD) Date: November 10, 2022 Revision: 1.0 1",
+   "confident": true
+  },
+  {
+   "doc_id": "usb4tm-thunderbolt3tm-compatibility-compliance-test-specification",
+   "file": "data/raw/usb4tm-thunderbolt3tm-compatibility-compliance-test-specification/pdf/USB4™ Thunderbolt3™ Compatibility CTS Rev 1.1 - CLEAN.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.1 (September 2022)",
+   "first_page": "USB4™ Thunderbolt3™ Compatibility Compliance Test Specification Date: September 2022 Revision: 1.1 Copyright © 2022 USB Implementers Forum, Inc. All rights reserved.",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-type-cr-port-controller-interface-specification",
+   "file": "data/raw/usb-type-cr-port-controller-interface-specification/USB_TCPCI_R2_V1p3_30122_CLEAN.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 2.0, Version 1.3 (January 2022)",
+   "first_page": "Revision 2.0, Version 1.3 -1- USB Type-C® Port Controller January, 2022 Interface Specification Universal Serial Bus Type-C® Port Controller Interface Specification Revision 2.0, Version 1.3 January 2",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-i3c-device-class-specification",
+   "file": "data/raw/usb-i3c-device-class-specification/USB%20I3C%20Device%20Class%20Revision%201.0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.0 (January 7, 2022)",
+   "first_page": "Version 1.0 -1- USB I3C Device Class January 07, 2022 Specification Universal Serial Bus I3C® Device Class Specification Version 1.0 January 07, 2022 I3C® is a registered service mark of MIPI Alliance",
+   "confident": true
+  },
+  {
+   "doc_id": "usb4tm-thunderbolt3tm-compatibility-requirements-specification",
+   "file": "data/raw/usb4tm-thunderbolt3tm-compatibility-requirements-specification/USB4%E2%84%A2%20Thunderbolt3%E2%84%A2%20Compatibility%20Requirements%20Specification%20Rev%201.0%20-%2020210129_0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (Jan 29, 2021 per file name)",
+   "first_page": "USB4™ Thunderbolt3™ Compatibility Requirements Specification Apple Inc. HP Inc. Intel Corporation Microsoft Corporation Renesas Corporation STMicroelectronics Texas Instruments Version 1.0 January 202",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-battery-charging-12-compliance-plan",
+   "file": "data/raw/usb-battery-charging-12-compliance-plan/USB%20BC%201.2%20Compliance%20Plan%20rev%201.2.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.2 (September 30, 2013)",
+   "first_page": "USB Battery Charging 1.2 Compliance Plan Revision 1.2 September 30, 2013",
+   "confident": true
+  },
+  {
+   "doc_id": "billboard-device-class-spec-revision-122-and-adopters-agreement",
+   "file": "data/raw/billboard-device-class-spec-revision-122-and-adopters-agreement/pdf/USB Billboard Revision 1.2.2 - CLEAN.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.2.2 (January 29, 2021)",
+   "first_page": "RELEASE 1. 2.2 -1- USB D evice Class Definition January 29, 2021 for Billboard Devices Universal Serial Bus Device Class Definition for Billboard Devices Revision 1.2.2 January 29, 2021 Copy right © 2",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-class-definition-midi-devices-v20",
+   "file": "data/raw/usb-class-definition-midi-devices-v20/USB%20MIDI%20v2_0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 2.0 (May 5, 2020)",
+   "first_page": "USB Device Class Definition for MIDI Devices, Version 2.0 Universal Serial Bus Device Class Definition for MIDI Devices Release 2.0 May 5, 2020 1",
+   "confident": true
+  },
+  {
+   "doc_id": "hid-point-sale-usage-tables-102",
+   "file": "data/raw/hid-point-sale-usage-tables-102/pos1_02.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.02 (March 5, 2001)",
+   "first_page": "Universal Serial Bus (USB) HID Point of Sale Usage Tables 5 March 2001 Version 1.02 Please send comments via electronic mail to: hidcomments@usb.org ©1998, 1999, 2001 USB Implementers’ Forum—All right",
+   "confident": true
+  },
+  {
+   "doc_id": "oaad-arcade-usage-table",
+   "file": "data/raw/oaad-arcade-usage-table/oaaddataformatsv6.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.0, Rev 1.100 (November 5, 1998)",
+   "first_page": "OAAD Data Format Specification 01/29/99 Page 1 of 27 Release 1.0 Open Arcade Architecture Device Data Format Specification Rev. 1.100 November 5, 1998 Copyright © 1998, USB Implementers Forum, Inc. Al",
+   "confident": true
+  },
+  {
+   "doc_id": "monitor-control-class-10",
+   "file": "data/raw/monitor-control-class-10/usbmon10_0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (January 5, 1998)",
+   "first_page": "USB Monitor Control Class Specification Revision 1.0 January 5, 1998",
+   "confident": true
+  },
+  {
+   "doc_id": "device-class-definition-pid-10",
+   "file": "data/raw/device-class-definition-pid-10/pid1_01_0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.0 (9/8/99)",
+   "first_page": "Device Class Definition for Physical Interface Devices (PID) Version 1.0 Universal Serial Bus (USB) Device Class Definition for Physical Interface Devices (PID) 9/8/99 Version 1.0 Please send comments",
+   "confident": true
+  },
+  {
+   "doc_id": "device-class-definition-hid-111",
+   "file": "data/raw/device-class-definition-hid-111/hid1_11.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.11 (27 May 2001)",
+   "first_page": "Universal Serial Bus (USB) Device Class Definition for Human Interface Devices (HID) Firmware Specification—5/27/01 Version 1.11 Please send comments via electronic mail to: hidcomments@usb.org ©1996-",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-3-hub-lvs-test-specification",
+   "file": "data/raw/usb-3-hub-lvs-test-specification/SSHUB%20LVS%20Specification%202019_11_21.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.15 (November 21, 2019)",
+   "first_page": "Universal Serial Bus Revision 3.1 SuperSpeed Hub LVS Test Specification Revision 1.15 Date: November 21, 2019 Revision: 1.15",
+   "confident": true
+  },
+  {
+   "doc_id": "usage-tables-hid-power-devices-11",
+   "file": "data/raw/usage-tables-hid-power-devices-11/pdcv11.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.1 (May 29, 2020)",
+   "first_page": "Universal Serial Bus Usage Tables for HID Power Devices Release 1.1 May 29, 2020",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-31-legacy-cable-and-connector-revision-10",
+   "file": "data/raw/usb-31-legacy-cable-and-connector-revision-10/pdf/USB 3.1 Legacy Cable and Connector Revision 1.0.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.0 including errata and ECNs through June 2017",
+   "first_page": "USB 3.1 Legacy Cable and Connector Specification Hewlett-Packard Inc. Intel Corporation Microsoft Corporation Renesas Corporation STMicroelectronics Texas Instruments Revision 1.0 including all errata",
+   "confident": true
+  },
+  {
+   "doc_id": "battery-charging-v12-spec-and-adopters-agreement",
+   "file": "data/raw/battery-charging-v12-spec-and-adopters-agreement/pdf/BC1.2 plus errata 2012-3-15.pdf",
+   "reason": "BC 1.2 with errata and ECNs through March 15, 2012 merged in; the other PDFs are the 2010 original and errata-only notes",
+   "revision": "Revision 1.2 (Dec 7, 2010; errata to Oct 12, 2011 and Mar 15, 2012); zip holds spec with and without errata",
+   "first_page": "Battery Charging Specification (Including errata and ECNs through March 15, 2012) Revision 1.2 March 15, 2012",
+   "confident": true
+  },
+  {
+   "doc_id": "android-based-targeted-host-compliance-test-specification-v100",
+   "file": "data/raw/android-based-targeted-host-compliance-test-specification-v100/Targeted%20Host%20Compliance%20Test%20Specification%20v1.00.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "v1.00 (Feb 27, 2019)",
+   "first_page": "Targeted Host Compliance Test Specification Date: Feb 27, 2019 Revision: 1.00 Purpose An Embedded Host is defined as a Targeted Host that provides Targeted Host functionality over Standard-A or Micro-",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-authentication-specification-rev-10-ecn-and-errata-through-january-7-2019",
+   "file": "data/raw/usb-authentication-specification-rev-10-ecn-and-errata-through-january-7-2019/pdf/USB Authentication Mapping Specification 20190118.pdf",
+   "reason": "UNSURE: first page of this file is the USB Type-C Authentication Specification; alternative is the USB Security Foundation Specification",
+   "revision": "Release 1.0 with ECN and errata through January 7, 2019",
+   "first_page": "RELEASE 1.0 with ECN and Errata - 1 - USB Type-C Authentication Specification Through January 7, 2019 1 2 3 4 5 6 7 8 9 Universal Serial Bus 10 Type-C™ Authentication 11 Specification 12 13 14 15 16 R",
+   "confident": false
+  },
+  {
+   "doc_id": "usb-type-cr-bridge-specification-v11",
+   "file": "data/raw/usb-type-cr-bridge-specification-v11/pdf/USB-C Bridge Rev 1 1 - Clean.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.1 (October 10, 2017)",
+   "first_page": "RELEASE 1.1 -1- USB Type-C Bridge Class Specification October 10, 2017 Universal Serial Bus Type-C Bridge Class Specification Revision 1.1 October 10, 2017 Copyright © 2017 USB 3.0 Promoters. All righ",
+   "confident": true
+  },
+  {
+   "doc_id": "universal-serial-bus-31-legacy-connectors-and-cable-assemblies-compliance-document",
+   "file": "data/raw/universal-serial-bus-31-legacy-connectors-and-cable-assemblies-compliance-document/CabConn_Legacy_3_1_Compliance_Rev_1_1.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.1 (April 3, 2018)",
+   "first_page": "Universal Serial Bus 3.1 Legacy Connectors and Cable Assemblies Compliance Document Revision 1.1 April 3, 2018",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-multiflow-extension-mobile-broadband-interface-model-v10-and-adopters",
+   "file": "data/raw/usb-multiflow-extension-mobile-broadband-interface-model-v10-and-adopters/pdf/MBIM MultiFlow v1.0.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.0 (July 23, 2017)",
+   "first_page": "Universal Serial Bus MultiFlow Extension for Mobile Broadband Interface Model Revision 1.0 July 23, 2017",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-31usb-type-ctm-desktop-front-panel-cable-and-connector-implementation-document",
+   "file": "data/raw/usb-31usb-type-ctm-desktop-front-panel-cable-and-connector-implementation-document/USB3p1_Front_Panel_CabCon_Implment_Doc_Rev1p1.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.1 (July 14, 2017)",
+   "first_page": "USB 3.1 FRONT-PANEL INTERNAL CABLE AND CONNECTOR USB 3.1 / USB TYPE-CTM DESKTOP FRONT PANEL CABLE AND CONNECTOR IMPLEMENTATION DOCUMENT Revision 1.1 July 14, 2017 Copyright © 2016 USB Implementers For",
+   "confident": true
+  },
+  {
+   "doc_id": "electrical-compliance-test-specification-superspeed-usb-10-gbps-rev-10",
+   "file": "data/raw/electrical-compliance-test-specification-superspeed-usb-10-gbps-rev-10/EnhancedSuperSpeedPHYComplianceTestSpec.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (February 14, 2017)",
+   "first_page": "Electrical Compliance Test Specification Enhanced SuperSpeed Universal Serial Bus Date: February 14, 2017 Revision: 1.0 Enhanced SuperSpeed Electrical Compliance i",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-power-delivery-firmware-update-specification",
+   "file": "data/raw/usb-power-delivery-firmware-update-specification/pd_fw_update_specification_rev_1_0_20160915b.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (September 15, 2016)",
+   "first_page": "Revision 1.0 -1- USB PD Firmware Update Specification September 15, 2016 Universal Serial Bus Power Delivery Firmware Update Specification Revision 1.0 September 15, 2016 Copyright © 2016 USB 3.0 Prom",
+   "confident": true
+  },
+  {
+   "doc_id": "media-agnostic-usb-v10a-spec-and-adopters-agreement",
+   "file": "data/raw/media-agnostic-usb-v10a-spec-and-adopters-agreement/pdf/MA USB v1.0a-final.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Release 1.0a (July 29, 2015)",
+   "first_page": "Media Agnostic Universal Serial Bus Specification Release 1.0a July 29, 2015",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-31-debug-class-specification-debug-devices-rev-10",
+   "file": "data/raw/usb-31-debug-class-specification-debug-devices-rev-10/usb_debug_class_rev_1_0_final_0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (July 14, 2015)",
+   "first_page": "USB 3.1 Debug Class 7/14/2015 USB 3.1 Device Class Specification for Debug Devices Revision 1.0 – July 14, 2015 -1-",
+   "confident": true
+  },
+  {
+   "doc_id": "inter-chip-supplement-usb-revision-30-specification-revision-102",
+   "file": "data/raw/inter-chip-supplement-usb-revision-30-specification-revision-102/superspeed_inter-chip_supplement_1_02_19may2014.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.02 (May 19, 2014)",
+   "first_page": "Inter-Chip Supplement to the USB Revision 3.0 Specification Revision 1.02 May 19, 2014",
+   "confident": true
+  },
+  {
+   "doc_id": "electrical-compliance-test-specification-superspeed-usb-rev-10a",
+   "file": "data/raw/electrical-compliance-test-specification-superspeed-usb-rev-10a/SuperSpeedPHYComplianceTest_Spec1_0a.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0a (March 10, 2015)",
+   "first_page": "Electrical Compliance Test Specification SuperSpeed Universal Serial Bus Date: March 10, 2015 Revision: 1.0a SuperSpeed Electrical Compliance i",
+   "confident": true
+  },
+  {
+   "doc_id": "compliance-plan-usb-go-and-embedded-host-30",
+   "file": "data/raw/compliance-plan-usb-go-and-embedded-host-30/OTG3andEH_Compliance_Plan_1.0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.0 (5/10/2013)",
+   "first_page": "Compliance Plan for USB On-The-Go and Embedded Host 3.0 Release 1.0 USB-IF OTG & EH 3.0 Working Group 5/10/2013 Compliance Plan for OTG&EH3.0 ii",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-mass-storage-class-specification-uasp-bootability-v10-and-adopters-agreement",
+   "file": "data/raw/usb-mass-storage-class-specification-uasp-bootability-v10-and-adopters-agreement/pdf/UASP Bootability Rev 1.0.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.0 (March 4, 2013)",
+   "first_page": "USB-IF Device Working Group -1- UASP Bootability Class Specification Revision 1.0 Universal Serial Bus Mass Storage Class Specification For UASP Bootability Revision 1.0 March 04, 2013 Copyright © 201",
+   "confident": true
+  },
+  {
+   "doc_id": "mbim-compliance-testing-v10",
+   "file": "data/raw/mbim-compliance-testing-v10/MBIM-Compliance-1.0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (February 7, 2013)",
+   "first_page": "Universal Serial Bus Communication Class MBIM Compliance Testing Revision 1.0 February 7, 2013",
+   "confident": true
+  },
+  {
+   "doc_id": "mobile-broadband-interface-model-v10-errata-1-and-adopters-agreement",
+   "file": "data/raw/mobile-broadband-interface-model-v10-errata-1-and-adopters-agreement/pdf/MBIM v1 0 - errata-1.pdf",
+   "reason": "the specification at Errata-1 (May 1, 2013), not the Compare PDF",
+   "revision": "Revision 1.0 Errata-1 (May 1, 2013)",
+   "first_page": "Universal Serial Bus Communications Class Subclass Specification for Mobile Broadband Interface Model Revision 1.0 Errata-1 May 1, 2013",
+   "confident": true
+  },
+  {
+   "doc_id": "ipp-protocol-10",
+   "file": "data/raw/ipp-protocol-10/pdf/IPP USB Specification.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.0 (December 5, 2012)",
+   "first_page": "USB Print Interface Class IPP Protocol Specification Revision 1.0 Revision 1.0 released on December 5, 2012",
+   "confident": true
+  },
+  {
+   "doc_id": "errata-updates-cdc-v12-and-wmc-v11-dec-2012",
+   "file": "data/raw/errata-updates-cdc-v12-and-wmc-v11-dec-2012/pdf/2012-08-02-CDC120_errata.pdf",
+   "reason": "UNSURE: CDC 1.2 as of December 6, 2012 with errata merged; alternative is 2012-07-31-WMC110_errata.pdf (WMC 1.1, July 31, 2012)",
+   "revision": "CDC 1.2 errata (Dec 6, 2012) and WMC 1.1 errata (Jul 31, 2012)",
+   "first_page": "Universal Serial Bus Class Definitions for Communications Devices Revision 1.2 December 6, 2012",
+   "confident": false
+  },
+  {
+   "doc_id": "video-class-v15-document-set",
+   "file": "data/raw/video-class-v15-document-set/pdf/UVC 1.5 Class specification.pdf",
+   "reason": "the UVC 1.5 class specification; the rest are payload, transport and example documents",
+   "revision": "Revision 1.5 (August 9, 2012)",
+   "first_page": "Universal Serial Bus Device Class Definition for Video Devices Revision 1.5 August 9, 2012",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-go-and-embedded-host-automated-compliance-plan-go-embedded-host-supplement",
+   "file": "data/raw/usb-go-and-embedded-host-automated-compliance-plan-go-embedded-host-supplement/otgeh_compliance_plan_1_2.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.2 (July 27, 2012) for OTG and EH Supplement Rev 2.0",
+   "first_page": "USB On-The-Go and Embedded Host Automated Compliance Plan for the On-The-Go& Embedded Host Supplement Revision2.0 Version 1.2 July 27, 2012",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-thin-card-v10-and-adopters-agreement",
+   "file": "data/raw/usb-thin-card-v10-and-adopters-agreement/pdf/USB Thin Card Specification Rev1.0 2012-06-21.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.0 (June 21, 2012)",
+   "first_page": "USB Thin Card Specification Revision 1.0 June 21, 2012",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-device-class-definition-audiovideo-devices-basic-device-profile-bdp",
+   "file": "data/raw/usb-device-class-definition-audiovideo-devices-basic-device-profile-bdp/AV_BDP_v1.0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.0 (June 12, 2012)",
+   "first_page": "Universal Serial Bus Device Class Definition for Audio/Video Devices Basic Device Profile (BDP) Release 1.0 June 12th, 2012 1",
+   "confident": true
+  },
+  {
+   "doc_id": "device-class-definition-content-security-devices-20",
+   "file": "data/raw/device-class-definition-content-security-devices-20/ContentSecurity_v2.0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 2.0 (June 12, 2012)",
+   "first_page": "Universal Serial Bus Device Class Definition for Content Security Devices Content Security Framework Release 2.0 June 12, 2012 1",
+   "confident": true
+  },
+  {
+   "doc_id": "content-security-method-5-high-bandwidth-digital-content-protection-21-hdcp-21",
+   "file": "data/raw/content-security-method-5-high-bandwidth-digital-content-protection-21-hdcp-21/CSM-5_v1.0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.0 (June 12, 2012)",
+   "first_page": "Universal Serial Bus Device Class Definition for Content Security Devices Content Security Method 5 High-bandwidth Digital Content Protection 2.1 (HDCP 2.1) Implementation Release 1.0 June 12, 2012 1",
+   "confident": true
+  },
+  {
+   "doc_id": "go-and-embedded-host-supplement-usb-revision-30-specification-revision-11",
+   "file": "data/raw/go-and-embedded-host-supplement-usb-revision-30-specification-revision-11/usb_otg_and_eh_3-0_release_1_1_10may2012.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.1 (May 10, 2012)",
+   "first_page": "On-The-Go and Embedded Host Supplement to the USB Revision 3.0 Specification Revision 1.1 May 10, 2012",
+   "confident": true
+  },
+  {
+   "doc_id": "audiovideo-device-class-v10-spec-and-adopters-agreement",
+   "file": "data/raw/audiovideo-device-class-v10-spec-and-adopters-agreement/pdf/AVFunction v1.0.pdf",
+   "reason": "UNSURE: AV class function document; alternatives are the AVFormat 1, 2 and 3 documents",
+   "revision": "Release 1.0 (AVFormat 1/2/3 and AVFunction documents)",
+   "first_page": "Universal Serial Bus Device Class Definition for Audio/Video Devices (Developed pursuant to USB-IF IP agreement for Video Display and subsequently renamed as above) AV Device Class Overview & AVFuncti",
+   "confident": false
+  },
+  {
+   "doc_id": "media-transfer-protocol-v11-spec-and-mtp-v11-adopters-agreement",
+   "file": "data/raw/media-transfer-protocol-v11-spec-and-mtp-v11-adopters-agreement/pdf/MTPforUSB-IFv1.1.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.1 (April 6, 2011)",
+   "first_page": "Media Transfer Protocol Revision 1.1 April 6th, 2011 Revision 1.1 April 6th, 2011 1 USB Media Transfer Protocol Specification Copyright © 2011, USB Implementers Forum All Rights Reserved",
+   "confident": true
+  },
+  {
+   "doc_id": "network-control-model-devices-specification-v10-and-errata-and-adopters-agreement",
+   "file": "data/raw/network-control-model-devices-specification-v10-and-errata-and-adopters-agreement/pdf/NCM10-20101124-track.pdf",
+   "reason": "NCM 1.0 Errata 1 full text (tracked changes), the only full specification in the package",
+   "revision": "Revision 1.0 (Errata 1, November 24, 2010)",
+   "first_page": "Universal Serial Bus Communications Class Subclass Specifications for Network Control Model Devices Revision 1.0 (Errata 1) November 24, 2010",
+   "confident": true
+  },
+  {
+   "doc_id": "mass-storage-class-specification-overview-14",
+   "file": "data/raw/mass-storage-class-specification-overview-14/Mass_Storage_Specification_Overview_v1.4_2-19-2010.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.4 (February 19, 2010)",
+   "first_page": "Universal Serial Bus Mass Storage Class Specification Overview Revision 1.4 February 19, 2010",
+   "confident": true
+  },
+  {
+   "doc_id": "audio-device-class-spec-basic-audio-devices-v10-and-adopters-agreement",
+   "file": "data/raw/audio-device-class-spec-basic-audio-devices-v10-and-adopters-agreement/pdf/BasicAudioDevice-10.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Release 1.0 (November 24, 2009)",
+   "first_page": "USB Audio Device Class Specification for Basic Audio Devices Universal Serial Bus Audio Device Class Specification for Basic Audio Devices Release 1.0 November 24, 2009 Release 1.0 November 24, 2009 1",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-attached-scsi-protocol-uasp-v10-and-adopters-agreement",
+   "file": "data/raw/usb-attached-scsi-protocol-uasp-v10-and-adopters-agreement/pdf/UASP Rev 1.0.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.0 (June 24, 2009)",
+   "first_page": "Universal Serial Bus Mass Storage Class USB Attached SCSI Protocol (UASP) Revision 1.0 June 24, 2009",
+   "confident": true
+  },
+  {
+   "doc_id": "standard-host-side-certified-wireless-usb-connection-context-storage-windows",
+   "file": "data/raw/standard-host-side-certified-wireless-usb-connection-context-storage-windows/WUSB_host_connection_context_v1.0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (January 16, 2009)",
+   "first_page": "August 15, 2008 WUSB Connection Context Storage v1.0 A Standard for Host-Side Certified Wireless USB Connection Context Storage on Windows Operating Systems January 16, 2009 Revision 1.0",
+   "confident": true
+  },
+  {
+   "doc_id": "personal-healthcare-rev-10",
+   "file": "data/raw/personal-healthcare-rev-10/pdf/healthcare_1.0.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Release 1.0 (November 8, 2007); zip also holds errata (Feb 15, 2008)",
+   "first_page": "USB Device Class Definition for Personal Healthcare Devices Universal Serial Bus Device Class Definition for Personal Healthcare Devices Release 1.0 November 8, 2007 1",
+   "confident": true
+  },
+  {
+   "doc_id": "cables-and-connectors-class-20",
+   "file": "data/raw/cables-and-connectors-class-20/CabConn20.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 2.0 (August 2007)",
+   "first_page": "Universal Serial Bus Cables and Connectors Class Document Revision 2.0 August 2007",
+   "confident": true
+  },
+  {
+   "doc_id": "lockable-mass-storage-specification-10-and-adopters-agreement",
+   "file": "data/raw/lockable-mass-storage-specification-10-and-adopters-agreement/pdf/Msc-lock-1.0.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.0 (August 1, 2007)",
+   "first_page": "Universal Serial Bus Lockable Storage Devices Feature Specification Revision 1.0 August 1, 2007",
+   "confident": true
+  },
+  {
+   "doc_id": "audio-devices-rev-20-and-adopters-agreement",
+   "file": "data/raw/audio-devices-rev-20-and-adopters-agreement/pdf/Audio20 final.pdf",
+   "reason": "the Audio 2.0 class definition; Frmts20 and Termt20 are companions",
+   "revision": "Release 2.0 (May 31, 2006); Audio20, Frmts20 and Termt20 documents",
+   "first_page": "USB Device Class Definition for Audio Devices Universal Serial Bus Device Class Definition for Audio Devices Release 2.0 May 31, 2006 Release 2.0 May 31, 2006 1",
+   "confident": true
+  },
+  {
+   "doc_id": "video-class-v11-document-set",
+   "file": "data/raw/video-class-v11-document-set/pdf/USB_Video_Class_1.1.pdf",
+   "reason": "the UVC 1.1 class specification; the rest are payload, transport and example documents",
+   "revision": "Revision 1.1 (June 1, 2005); 15 documents",
+   "first_page": "Universal Serial Bus Device Class Definition for Video Devices Revision 1.1 June 1, 2005",
+   "confident": true
+  },
+  {
+   "doc_id": "smart-card-iccd-version-10",
+   "file": "data/raw/smart-card-iccd-version-10/DWG_Smart-Card_USB-ICC_ICCD_rev10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (April 22, 2005)",
+   "first_page": "DWG Smart-Card USB Integrated Circuit(s) Card Devices Universal Serial Bus Device Class: Smart Card ICCD Specification for USB Integrated Circuit(s) Card Devices Revision 1.0 April 22nd 2005 USB-ICC I",
+   "confident": true
+  },
+  {
+   "doc_id": "cdc-subclass-specification-ethernet-emulation-model-devices-10",
+   "file": "data/raw/cdc-subclass-specification-ethernet-emulation-model-devices-10/CDC_EEM10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (February 2, 2005)",
+   "first_page": "Universal Serial Bus Communications Class Subclass Specification for Ethernet Emulation Model Devices Revision 1.0 February 2, 2005",
+   "confident": true
+  },
+  {
+   "doc_id": "mass-storage-bootability-specification-10",
+   "file": "data/raw/mass-storage-bootability-specification-10/usb_msc_boot_1.0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (October 25, 2004)",
+   "first_page": "Universal Serial Bus Mass Storage Specification For Bootability Revision 1.0 October 25, 2004",
+   "confident": true
+  },
+  {
+   "doc_id": "device-firmware-upgrade-11-new-version-31-aug-2004",
+   "file": "data/raw/device-firmware-upgrade-11-new-version-31-aug-2004/DFU_1.1.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.1 (Aug 5, 2004)",
+   "first_page": "Universal Serial Bus Device Class Specification for Device Firmware Upgrade Version 1.1 Aug 5, 2004",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-if-full-and-low-speed-electrical-and-interoperability-compliance-test",
+   "file": "data/raw/usb-if-full-and-low-speed-electrical-and-interoperability-compliance-test/USB-IFTestProc1_3.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.3 (February 2004)",
+   "first_page": "Universal Serial Bus Implementers Forum Full and Low Speed Electrical and Interoperability Compliance Test Procedure *High Speed Electrical Test Procedures Are Documented Separately Revision 1.3 Febru",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-interface-association-descriptor-device-class-code-and-use-model",
+   "file": "data/raw/usb-interface-association-descriptor-device-class-code-and-use-model/iadclasscode_r10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (July 23, 2003)",
+   "first_page": "USB Interface Association Descriptor Device Class Code and Use Model Revision 1.0 July 23, 2003",
+   "confident": true
+  },
+  {
+   "doc_id": "mass-storage-controlbulkinterrupt-cbi-specification-11",
+   "file": "data/raw/mass-storage-controlbulkinterrupt-cbi-specification-11/usb_msc_cbi_1.1.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.1 (June 23, 2003)",
+   "first_page": "Universal Serial Bus Mass Storage Class Control/Bulk/Interrupt (CBI) Transport Revision 1.1 June 23, 2003",
+   "confident": true
+  },
+  {
+   "doc_id": "test-measurement-class-specification",
+   "file": "data/raw/test-measurement-class-specification/pdf/USBTMC_1_00.pdf",
+   "reason": "UNSURE: USBTMC base class; alternative is the USB488 subclass document (also Revision 1.0)",
+   "revision": "Revision 1.0 (April 14, 2003); also USB488 subclass 1.0",
+   "first_page": "Universal Serial Bus Test and Measurement Class Specification (USBTMC) Revision 1.0 April 14, 2003",
+   "confident": false
+  },
+  {
+   "doc_id": "content-security-method-2-usb-digital-transmission-content-protection",
+   "file": "data/raw/content-security-method-2-usb-digital-transmission-content-protection/csm2_v1_0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (22 August 2000)",
+   "first_page": "USB CSM-2 USB DTCP Implementation, Revision 1.0 Universal Serial Bus Content Security Method 2 USB Digital Transmission Content Protection Implementation INTEL CORPORATION Revision 1.0 22 August 2000 ",
+   "confident": true
+  },
+  {
+   "doc_id": "openusbdi-specification-10",
+   "file": "data/raw/openusbdi-specification-10/usbdi10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (July 17, 2000)",
+   "first_page": "Open Universal Serial Bus Driver Interface (OpenUSBDI) Specification Revision 1.0 July 17, 2000",
+   "confident": true
+  },
+  {
+   "doc_id": "still-image-capture-device-definition-10-and-errata-16-mar-2007",
+   "file": "data/raw/still-image-capture-device-definition-10-and-errata-16-mar-2007/pdf/usb_still_img10.pdf",
+   "reason": "only PDF left after setting aside redlines, ECNs, errata, adopter agreements and comparisons",
+   "revision": "Revision 1.0 (July 11, 2000); zip also holds errata to Mar 16, 2007",
+   "first_page": "Universal Serial Bus Still Image Capture Device Definition Revision 1.0 July 11, 2000",
+   "confident": true
+  },
+  {
+   "doc_id": "irda-bridge-device-definition-10",
+   "file": "data/raw/irda-bridge-device-definition-10/usbir10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (March 23, 2000)",
+   "first_page": "Universal Serial Bus IrDA Bridge Device Definition AMP Incorporated SystemSoft Corporation Revision 1.0 March 23, 2000 For Review and Discussion Only Draft Document Subject to Revision or Rejection No",
+   "confident": true
+  },
+  {
+   "doc_id": "printer-device-class-document-11",
+   "file": "data/raw/printer-device-class-document-11/usbprint11a021811.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Version 1.1 (January 2000)",
+   "first_page": "Universal Serial Bus Device Class Definition for Printing Devices Version 1.1 January 2000",
+   "confident": true
+  },
+  {
+   "doc_id": "usb-midi-devices-10",
+   "file": "data/raw/usb-midi-devices-10/midi10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.0 (Nov 1, 1999)",
+   "first_page": "Universal Serial Bus Device Class Definition for MIDI Devices Releas e 1.0 Nov 1, 1999",
+   "confident": true
+  },
+  {
+   "doc_id": "mass-storage-bulk-only-10",
+   "file": "data/raw/mass-storage-bulk-only-10/usbmassbulk_10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (September 31, 1999 as printed)",
+   "first_page": "Universal Serial Bus Mass Storage Class Bulk-Only Transport Revision 1.0 September 31, 1999",
+   "confident": true
+  },
+  {
+   "doc_id": "mass-storage-ufi-command-specification-10",
+   "file": "data/raw/mass-storage-ufi-command-specification-10/usbmass-ufi10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (December 14, 1998)",
+   "first_page": "Universal Serial Bus Mass Storage Class UFI Command Specification Revision 1.0 December 14, 1998",
+   "confident": true
+  },
+  {
+   "doc_id": "audio-device-document-10",
+   "file": "data/raw/audio-device-document-10/audio10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.0 (March 18, 1998)",
+   "first_page": "Universal Serial Bus Device Class Definition for Audio Devices Release 1.0 March 18, 1998",
+   "confident": true
+  },
+  {
+   "doc_id": "audio-data-formats-10",
+   "file": "data/raw/audio-data-formats-10/frmts10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.0 (March 18, 1998)",
+   "first_page": "Universal Serial Bus Device Class Definition for Audio Data Formats Release 1.0 March 18, 1998",
+   "confident": true
+  },
+  {
+   "doc_id": "audio-terminal-types-10",
+   "file": "data/raw/audio-terminal-types-10/termt10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.0 (March 18, 1998)",
+   "first_page": "Universal Serial Bus Device Class Definition for Terminal Types Release 1.0 March 18, 1998",
+   "confident": true
+  },
+  {
+   "doc_id": "power-device-class-document-10",
+   "file": "data/raw/power-device-class-document-10/pdcv10_0.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Release 1.0 (November 1, 1997)",
+   "first_page": "Universal Serial Bus Usage Tables for HID Power Devices Release 1.0 November 1, 1997",
+   "confident": true
+  },
+  {
+   "doc_id": "common-class-base-specification-10",
+   "file": "data/raw/common-class-base-specification-10/usbccs10.pdf",
+   "reason": "only PDF for the entry",
+   "revision": "Revision 1.0 (December 16, 1997)",
+   "first_page": "Universal Serial Bus Common Class Specification SYSTEMSOFT\u0001 CORPORATION INTEL\u0001 CORPORATION Revision 1.0 December 16, 1997",
+   "confident": true
+  }
+ ],
+ "skipped": [
+  {
+   "slug": "usb-type-c-connectors-and-cable-assemblies-compliance-document",
+   "status": "duplicate"
+  },
+  {
+   "slug": "usb-31-command-verifier-compliance-test-specification-version-072",
+   "status": "no-file"
+  },
+  {
+   "slug": "usb-20-cable-and-connector-class-document",
+   "status": "duplicate"
+  },
+  {
+   "slug": "content-security-method-1-basic-authentication-protocol-10",
+   "status": "duplicate"
+  },
+  {
+   "slug": "monitor-device-document-10",
+   "status": "duplicate"
+  },
+  {
+   "slug": "smart-card-ccid-version-11",
+   "status": "already indexed as usb-ccid-1-1"
+  }
+ ]
+}

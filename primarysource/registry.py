@@ -32,6 +32,8 @@ ENTRY_POINT_GROUP = "primarysource.collections"
 # one extra (posix and ieee802 in `[ieee]`) both name it.
 BUILTIN: dict[str, str] = {
     "rfc": "primarysource.rfc.collection:COLLECTION [rfc]",
+    "nist": "primarysource.nist.collection:COLLECTION",
+    "usb": "primarysource.usb.collection:COLLECTION",
 }
 
 _NAME = re.compile(r"[a-z][a-z0-9]*")

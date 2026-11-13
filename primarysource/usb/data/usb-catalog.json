@@ -1,0 +1,1663 @@
+{
+  "schema": 1,
+  "source": "https://www.usb.org/documents?page=N",
+  "entries": [
+    {
+      "slug": "usb-type-cr-connector-system-software-interface-ucsi-specification",
+      "title": "USB Type-C\u00ae Connector System Software Interface (UCSI) Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20Type-C%20Connector%20System%20Software%20Interface%20Revision_3.2%20OR.zip"
+      ]
+    },
+    {
+      "slug": "usb-type-c-and-power-delivery-source-power-requirements-compliance-test",
+      "title": "USB Type-C and Power Delivery Source Power Requirements Compliance Test Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB-C%20Source%20Power%20Test%20Specification%20V1.2%202026%2011%2004.pdf"
+      ]
+    },
+    {
+      "slug": "usb-power-delivery",
+      "title": "USB Power Delivery",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_PD_R3.3_V1.0.zip"
+      ]
+    },
+    {
+      "slug": "usb-32-revision-11-june-2022",
+      "title": "USB 3.2 Revision 1.1 - June 2022",
+      "files": [
+        "https://www.usb.org/sites/default/files/usb_32_202206_1.zip"
+      ]
+    },
+    {
+      "slug": "usb4cv-compliance-test-specification",
+      "title": "USB4CV Compliance Test Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4_CTSs_2026_10.zip"
+      ]
+    },
+    {
+      "slug": "usb4cv",
+      "title": "USB4CV",
+      "files": []
+    },
+    {
+      "slug": "linux-usb4cv",
+      "title": "Linux USB4CV",
+      "files": [
+        "https://www.usb.org/sites/default/files/usb4cv-1.10.0.0.tar__0.zip"
+      ]
+    },
+    {
+      "slug": "xhsett",
+      "title": "XHSETT",
+      "files": []
+    },
+    {
+      "slug": "usb-power-delivery-compliance-test-specification-0",
+      "title": "USB Power Delivery Compliance Test Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20PD3%20CTS%20Q4%202026%20OR.zip"
+      ]
+    },
+    {
+      "slug": "usb3cv",
+      "title": "USB3CV",
+      "files": []
+    },
+    {
+      "slug": "xhcicv",
+      "title": "XHCICV",
+      "files": []
+    },
+    {
+      "slug": "dualhostusb3cv",
+      "title": "DualHostUSB3CV",
+      "files": []
+    },
+    {
+      "slug": "usb-audio-devices-release-40-and-adopters-agreement",
+      "title": "USB Audio Devices Release 4.0 and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20Audio%20v4.0_0_0.zip"
+      ]
+    },
+    {
+      "slug": "usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through",
+      "title": "USB Device Class Definition for Audio Devices Release 2.0 with Errata and ECN through September 14, 2026",
+      "files": [
+        "https://www.usb.org/sites/default/files/Audio2_with_Errata_and_ECN_through_Sep_14_2026.pdf"
+      ]
+    },
+    {
+      "slug": "usb-if-cw142-vendor-hosted-test-suite-form",
+      "title": "USB-IF CW142 Vendor Hosted Test Suite Form",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB-IF%20CW142%20Vendor%20Hosted%20Test%20Room%20Form.pdf"
+      ]
+    },
+    {
+      "slug": "usb-vendor-info-file-generator",
+      "title": "USB Vendor Info File Generator",
+      "files": [
+        "https://www.usb.org/sites/default/files/Vendor_Info_File_v3.38.zip"
+      ]
+    },
+    {
+      "slug": "usb4-sigtest",
+      "title": "USB4 SigTest",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4%20SigTest_1.0_0.zip"
+      ]
+    },
+    {
+      "slug": "usbet20",
+      "title": "USBET20",
+      "files": [
+        "https://www.usb.org/sites/default/files/USBET20_2_20_E.zip"
+      ]
+    },
+    {
+      "slug": "usb20-dcr-test-procedure",
+      "title": "USB2.0 DCR Test Procedure",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%202.0%20DCR%20MOI%201.0.pdf"
+      ]
+    },
+    {
+      "slug": "list-usb-30-adopters",
+      "title": "List of USB 3.0 Adopters",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB3.0Adopters05072026_0.pdf"
+      ]
+    },
+    {
+      "slug": "list-usb-20-adopters",
+      "title": "List of USB 2.0 Adopters",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB2.0Adopters05072026.pdf"
+      ]
+    },
+    {
+      "slug": "list-usb4-adopters",
+      "title": "List of USB4 Adopters",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4Adopters05072026.pdf"
+      ]
+    },
+    {
+      "slug": "usb4ett-version-200",
+      "title": "USB4ETT Version 2.0.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4ETT_2.0.0_eng51_0.zip"
+      ]
+    },
+    {
+      "slug": "usb-20-electrical-compliance-test-specification",
+      "title": "USB 2.0 Electrical Compliance Test Specification",
+      "files": [
+        "https://usb.org/sites/default/files/USB2%20Electrical%20Compliance%20Specification%20v1.08.pdf"
+      ]
+    },
+    {
+      "slug": "usb-if-policy-connectorless-xhci-embedded-devices-certification-testing",
+      "title": "USB-IF Policy on Connectorless xHCI with Embedded Device(s) Certification Testing",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB-IF%20Policy-Connectorless%20xHCI-10092025.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-cr-cable-and-connector-specification-release-25",
+      "title": "USB Type-C\u00ae Cable and Connector Specification Release 2.5",
+      "files": [
+        "https://usb.org/sites/default/files/USB%20Type-C%202.5%20Release%20202603.zip"
+      ]
+    },
+    {
+      "slug": "usb4r-specification-v20",
+      "title": "USB4\u00ae Specification v2.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4%20Specification%20November%202025.zip"
+      ]
+    },
+    {
+      "slug": "instructions-run-data-pattern-test-usb-32-tunneling-usb4r-host",
+      "title": "Instructions to Run Data Pattern Test (USB 3.2 Tunneling) on a USB4\u00ae Host",
+      "files": [
+        "https://www.usb.org/sites/default/files/Instructions%20to%20Run%20Data%20Pattern%20Test.pdf"
+      ]
+    },
+    {
+      "slug": "usb-communications-class-subclass-specifications-network-control-model-devices-v11",
+      "title": "USB Communications Class Subclass Specifications for Network Control Model Devices v1.1",
+      "files": [
+        "https://www.usb.org/sites/default/files/NCM11_20260205.zip"
+      ]
+    },
+    {
+      "slug": "usb-repeater-and-active-cable-test-matrix",
+      "title": "USB Repeater and Active Cable Test Matrix",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Type_C_Active_Cable_Test_Matrix.pdf"
+      ]
+    },
+    {
+      "slug": "usb4-electrical-compliance-test-specification",
+      "title": "USB4 Electrical Compliance Test Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4%20Electrical%20Test%20Specifications_02.2026.zip"
+      ]
+    },
+    {
+      "slug": "hid-usage-tables-17",
+      "title": "HID Usage Tables 1.7",
+      "files": [
+        "https://usb.org/sites/default/files/hut1_7.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-c-shared-capacity-charger-interoperability-compliance-test-specification",
+      "title": "USB Type-C Shared Capacity Charger Interoperability Compliance Test Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Type-C_Shared_Capacity_Interoperabiltiy_CTS_1.0.pdf"
+      ]
+    },
+    {
+      "slug": "usb4-product-test-matrix",
+      "title": "USB4 Product Test Matrix",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4%20Product%20Test%20Matrix%20-%20V5.pdf"
+      ]
+    },
+    {
+      "slug": "usb4-interoperability-test-procedures",
+      "title": "USB4 Interoperability Test Procedures",
+      "files": [
+        "https://usb.org/sites/default/files/USB4%20Interoperability%20Testing%20v1.06.pdf"
+      ]
+    },
+    {
+      "slug": "usb3cv-and-xhcicv-compliance-test-specifications",
+      "title": "USB3CV and XHCICV Compliance Test Specifications",
+      "files": [
+        "https://usb.org/sites/default/files/USB3CV_XHCICV_CTSs_August_2025%201_0.zip"
+      ]
+    },
+    {
+      "slug": "usb4cv-guide",
+      "title": "USB4CV Guide",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4%20CV%20Guide-rev06042025.pdf"
+      ]
+    },
+    {
+      "slug": "usb-20-specification",
+      "title": "USB 2.0 Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/usb_20_20250603.zip"
+      ]
+    },
+    {
+      "slug": "xhci-interoperability-test-procedures-peripherals-hubs-and-hosts",
+      "title": "xHCI Interoperability Test Procedures For Peripherals, Hubs and Hosts",
+      "files": [
+        "https://www.usb.org/sites/default/files/3.2%20Interoperability%20Testing%20v1.04%20w%20USB%20Type-C.pdf"
+      ]
+    },
+    {
+      "slug": "class-definitions-communication-devices-12",
+      "title": "Class definitions for Communication Devices 1.2",
+      "files": [
+        "https://www.usb.org/sites/default/files/CDC1.2_WMC1.1_012011_0.zip"
+      ]
+    },
+    {
+      "slug": "intel-usb4-evaluation-dock-bkc-files-installer",
+      "title": "Intel USB4 Evaluation Dock BKC Files Installer",
+      "files": [
+        "https://www.usb.org/sites/default/files/IntelUSB4V2EvaluationDockBKCFilesInstallerWW212025.zip"
+      ]
+    },
+    {
+      "slug": "usb-active-cable-thermal-compliance-test-specification",
+      "title": "USB Active Cable Thermal Compliance Test Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20Active%20Cable%20Thermal%20Compliance%20Test%20Specification%20v0.92%20May%2015th.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b",
+      "title": "USB Type-C\u00ae Connectors and Cable Assemblies Compliance Document Rev. 2.1b",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20Type-C_Compliance%20Document_Rev_2_1b_June_2021.pdf"
+      ]
+    },
+    {
+      "slug": "usb-32-embedding-files",
+      "title": "USB 3.2 Embedding Files",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB32_Embedding_Files_03182025.zip"
+      ]
+    },
+    {
+      "slug": "techguide-xhci-pdk",
+      "title": "TechGuide xHCI PDK",
+      "files": [
+        "https://www.usb.org/sites/default/files/SetupGuide_xHCI_SSUSB_PDK_Ver2.6.pdf"
+      ]
+    },
+    {
+      "slug": "quadramax-pps-test-manual",
+      "title": "QuadraMAX PPS Test Manual",
+      "files": [
+        "https://www.usb.org/sites/default/files/QuadraMAX%20PPS%20Test%20Manual%2020240814.pdf"
+      ]
+    },
+    {
+      "slug": "quaddraw-quadraview-softwarefirmware-installer",
+      "title": "QuadDraw &amp; QuadraView Software/Firmware Installer",
+      "files": []
+    },
+    {
+      "slug": "embedded-usb2-version-20-supplement-usb-20-specification-eusb2v2",
+      "title": "Embedded USB2 Version 2.0: Supplement to the USB 2.0 Specification (eUSB2V2)",
+      "files": [
+        "https://usb.org/sites/default/files/Embedded%20USB2%20Version%202.0%20Supplement%20to%20the%20USB%202.0%20Specification_0.pdf"
+      ]
+    },
+    {
+      "slug": "embedded-usb2-eusb2-physical-layer-supplement-usb-revision-20-specification-rev-12",
+      "title": "Embedded USB2 (eUSB2) Physical Layer Supplement to the USB Revision 2.0 Specification, Rev. 1.2",
+      "files": [
+        "https://www.usb.org/sites/default/files/eUSB2_0_20240927.zip"
+      ]
+    },
+    {
+      "slug": "mcci-mode-switch",
+      "title": "MCCI Mode Switch",
+      "files": [
+        "https://www.usb.org/sites/default/files/MCCI%203411%20-%20Mode%20Switch%20v1.1.pdf"
+      ]
+    },
+    {
+      "slug": "mechanical-modify-rfi-system-level",
+      "title": "Mechanical Modify of RFI System Level",
+      "files": [
+        "https://www.usb.org/sites/default/files/RFI%20system%20level%20test%20fixture%20-%20modify%20for%20Monitor_20230830.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-cr-locking-connector-specification",
+      "title": "USB Type-C\u00ae Locking Connector Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20Type-C%20Locking%20Connector%20Specification.zip"
+      ]
+    },
+    {
+      "slug": "usb-32-link-layer-test-specification",
+      "title": "USB 3.2 Link Layer Test Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%203%202%20Link%20Layer%20Test%20Specification%202024%2003%2003.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-c-functional-test-specification",
+      "title": "USB Type-C Functional Test Specification",
+      "files": [
+        "https://usb.org/sites/default/files/USB%20Type%20C%20Functional%20Test%20Specification%202024%2003%2003.pdf"
+      ]
+    },
+    {
+      "slug": "usb4enableidlesettings",
+      "title": "USB4EnableIdleSettings",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4EnableIdleSettings.zip"
+      ]
+    },
+    {
+      "slug": "sink-pps-interoperability-charging-cycle-test-procedure",
+      "title": "SINK PPS Interoperability Charging Cycle Test Procedure",
+      "files": [
+        "https://www.usb.org/sites/default/files/SINK%20PPS%20Interoperability%20Charging%20Cycle%20Test%20Procedure_Rev0.82.pdf"
+      ]
+    },
+    {
+      "slug": "ip-agnostic-dual-bdf-vendor-specific-capability-pcipcie",
+      "title": "IP-Agnostic Dual-BDF Vendor-Specific Capability (PCI/PCIe)",
+      "files": [
+        "https://www.usb.org/sites/default/files/Generic_Dual_BDF_TechDoc_PCIDevice.pdf"
+      ]
+    },
+    {
+      "slug": "sigtest-40232",
+      "title": "SigTest 4.0.23.2",
+      "files": []
+    },
+    {
+      "slug": "sigtest-32114",
+      "title": "SigTest 3.2.11.4",
+      "files": []
+    },
+    {
+      "slug": "usb-i3cr-device-class-specification-v11",
+      "title": "USB I3C\u00ae Device Class Specification v1.1",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20I3C%20Device%20Class%20Revision%201.1.pdf"
+      ]
+    },
+    {
+      "slug": "usb-upstream-facing-port-powered-hub-white-paper",
+      "title": "USB Upstream Facing Port Powered Hub  White Paper",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Upstream_Facing_Port_Powered_Hub_White_Paper_0.9.pdf"
+      ]
+    },
+    {
+      "slug": "usb4-adopters-agreement",
+      "title": "USB4 Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4%20Adopters%20Agreement%20PDF%20Submission%20Update%2020230223_0.pdf"
+      ]
+    },
+    {
+      "slug": "usb4ett",
+      "title": "USB4ETT",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4ETT%20V.1.1.2.zip"
+      ]
+    },
+    {
+      "slug": "usb-if-integrators-list-marketing-name-guidance",
+      "title": "USB-IF Integrators List Marketing Name Guidance",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB-IF%20Integrators%20List%20Marketing%20Name%20Guidance_January%202023.pdf"
+      ]
+    },
+    {
+      "slug": "usb-80g-phy-layer-analysis",
+      "title": "USB 80G PHY Layer Analysis",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%2080G%20PHY%20background.pdf"
+      ]
+    },
+    {
+      "slug": "electrical-compliance-test-specification-linear-re-driver-active-cable-lrd",
+      "title": "Electrical Compliance Test Specification Linear Re-Driver Active Cable (LRD)",
+      "files": [
+        "https://www.usb.org/sites/default/files/Electrical_Compliance_Test%20Specification_Linear_Re_Driver_Active_Cable_LRD_rev1p0.pdf"
+      ]
+    },
+    {
+      "slug": "usb-if-duty-care",
+      "title": "USB-IF Duty of Care",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB-IF%20Duty%20of%20Care_1.pdf"
+      ]
+    },
+    {
+      "slug": "usb-if-covid-and-infectious-diseases-agreement-and-waiverrelease",
+      "title": "USB-IF COVID and Infectious Diseases Agreement and Waiver/Release",
+      "files": [
+        "https://www.usb.org/sites/default/files/COVID%20Waiver%20and%20Release_CW%23129.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-thunderbolt3tm-compatibility-compliance-test-specification",
+      "title": "USB4\u2122 Thunderbolt3\u2122 Compatibility Compliance Test Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4%20TBT3-Compatibility%20CTS%20Rev%201.1.zip"
+      ]
+    },
+    {
+      "slug": "usb-if-covid-and-infectious-diseases-agreement-and-waiverrelease-seoul",
+      "title": "USB-IF COVID and Infectious Diseases Agreement and Waiver/Release - Seoul",
+      "files": [
+        "https://www.usb.org/sites/default/files/COVID%20Waiver%20and%20Release_3.pdf"
+      ]
+    },
+    {
+      "slug": "usb-devdays-seoul-sponsor-application",
+      "title": "USB DevDays Seoul Sponsor Application",
+      "files": [
+        "https://www.usb.org/sites/default/files/USBDevDaysSeoul%202022SponsorApplication.pdf"
+      ]
+    },
+    {
+      "slug": "usb-devdays-seoul-exhibitor-application",
+      "title": "USB DevDays Seoul Exhibitor Application",
+      "files": [
+        "https://www.usb.org/sites/default/files/USBDevDaysSeoul2022ExhibitorApplication.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-c-connectors-and-cable-assemblies-compliance-document",
+      "title": "USB Type-C Connectors and Cable Assemblies Compliance Document",
+      "files": [
+        "https://usb.org/sites/default/files/USB%20Type-C%20Connectors%20and%20Cable%20Assemblies%20Compliance%20Document%20Rev%202.1b.zip"
+      ]
+    },
+    {
+      "slug": "usb-type-c-product-test-matrix-0",
+      "title": "USB Type-C Product Test Matrix",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB-C%20Product%20Matrix%202022%2008%2003.pdf"
+      ]
+    },
+    {
+      "slug": "usb-rfi-system-level-test-procedure",
+      "title": "USB RFI System Level Test Procedure",
+      "files": [
+        "https://www.usb.org/sites/default/files/RFI%20system%20level%20test%20procedure%20Rev1.5%2008012022.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-cr-port-controller-interface-specification",
+      "title": "USB Type-C\u00ae Port Controller Interface Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_TCPCI_R2_V1p3_30122_CLEAN.pdf"
+      ]
+    },
+    {
+      "slug": "usb-i3c-device-class-specification",
+      "title": "USB I3C Device Class Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20I3C%20Device%20Class%20Revision%201.0.pdf"
+      ]
+    },
+    {
+      "slug": "fast-role-swap-switch-user-guide",
+      "title": "Fast Role Swap Switch User Guide",
+      "files": [
+        "https://usb.org/sites/default/files/FRS%20Switch%20Documentation.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-thunderbolt3tm-compatibility-requirements-specification",
+      "title": "USB4\u2122 Thunderbolt3\u2122 Compatibility Requirements Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4%E2%84%A2%20Thunderbolt3%E2%84%A2%20Compatibility%20Requirements%20Specification%20Rev%201.0%20-%2020210129_0.pdf"
+      ]
+    },
+    {
+      "slug": "supermutt-firmware",
+      "title": "SuperMUTT Firmware",
+      "files": [
+        "https://www.usb.org/sites/default/files/SuperMUTT%20firmware%20version%2057%20with%20update%20procedure.zip"
+      ]
+    },
+    {
+      "slug": "time-synchronization-files",
+      "title": "Time Synchronization Files",
+      "files": [
+        "https://www.usb.org/sites/default/files/TMU_FPGA.zip"
+      ]
+    },
+    {
+      "slug": "cable-matlab-source-code",
+      "title": "Cable Matlab Source Code",
+      "files": [
+        "https://www.usb.org/sites/default/files/IntePar1p6_Codes.zip"
+      ]
+    },
+    {
+      "slug": "usb-32-product-test-matrix",
+      "title": "USB 3.2 Product Test Matrix",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%203.2%20Test%20Matrix_2.pdf"
+      ]
+    },
+    {
+      "slug": "usb-battery-charging-12-compliance-plan",
+      "title": "USB Battery Charging 1.2 Compliance Plan",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20BC%201.2%20Compliance%20Plan%20rev%201.2.pdf"
+      ]
+    },
+    {
+      "slug": "billboard-device-class-spec-revision-122-and-adopters-agreement",
+      "title": "Billboard Device Class Spec Revision 1.2.2 and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20Billboard%20Rev%201.2.2%2020210209.zip"
+      ]
+    },
+    {
+      "slug": "usbhset-ehci-32-bit",
+      "title": "USBHSET EHCI 32-bit",
+      "files": []
+    },
+    {
+      "slug": "xhsett-x32",
+      "title": "XHSETT x32",
+      "files": []
+    },
+    {
+      "slug": "usb4-gen3-plug-connector-high-speed-design-guide",
+      "title": "USB4 Gen3 Plug Connector High Speed Design Guide",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4_Gen3_plug_HS_design_guide_white_paper_2020_10_27.pdf"
+      ]
+    },
+    {
+      "slug": "usb4-gen-3-tp3-embedding-file",
+      "title": "USB4 Gen 3 TP3 Embedding File",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4_Gen3_0p8m.zip"
+      ]
+    },
+    {
+      "slug": "usb4-gen-2-tp3-embedding-file",
+      "title": "USB4 Gen 2 TP3 Embedding File",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB4_Gen2_2m.zip"
+      ]
+    },
+    {
+      "slug": "usb4-compliance-test-matrix",
+      "title": "USB4 Compliance Test Matrix",
+      "files": [
+        "https://usb.org/sites/default/files/USB4%20Compliance%20Matrix%2020200630.pdf"
+      ]
+    },
+    {
+      "slug": "usb-class-definition-midi-devices-v20",
+      "title": "USB Class Definition for MIDI Devices v2.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20MIDI%20v2_0.pdf"
+      ]
+    },
+    {
+      "slug": "hid-point-sale-usage-tables-102",
+      "title": "HID Point of Sale Usage Tables 1.02",
+      "files": [
+        "https://usb.org/sites/default/files/pos1_02.pdf"
+      ]
+    },
+    {
+      "slug": "oaad-arcade-usage-table",
+      "title": "OAAD Arcade Usage Table",
+      "files": [
+        "https://www.usb.org/sites/default/files/oaaddataformatsv6.pdf"
+      ]
+    },
+    {
+      "slug": "monitor-control-class-10",
+      "title": "Monitor Control Class 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/usbmon10_0.pdf"
+      ]
+    },
+    {
+      "slug": "device-class-definition-pid-10",
+      "title": "Device Class Definition for PID 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/pid1_01_0.pdf"
+      ]
+    },
+    {
+      "slug": "device-class-definition-hid-111",
+      "title": "Device Class Definition for HID 1.11",
+      "files": [
+        "https://www.usb.org/sites/default/files/hid1_11.pdf"
+      ]
+    },
+    {
+      "slug": "usb-3-hub-lvs-test-specification",
+      "title": "USB 3 Hub LVS Test Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/SSHUB%20LVS%20Specification%202019_11_21.pdf"
+      ]
+    },
+    {
+      "slug": "usage-tables-hid-power-devices-11",
+      "title": "Usage Tables for HID Power Devices 1.1",
+      "files": [
+        "https://www.usb.org/sites/default/files/pdcv11.pdf"
+      ]
+    },
+    {
+      "slug": "usb-31-legacy-cable-and-connector-revision-10",
+      "title": "USB 3.1 Legacy Cable and Connector Revision 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%203.1%20Legacy%20Cable%20and%20Connector%20Revision%201.0.zip"
+      ]
+    },
+    {
+      "slug": "usb-devdays-2019-welcome-keynote",
+      "title": "USB DevDays 2019 - Welcome Keynote",
+      "files": [
+        "https://www.usb.org/sites/default/files/D1T1-1%20-%20Welcome%20Keynote%20Taipei.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-cr-system-overview",
+      "title": "USB Type-C(R) System Overview",
+      "files": [
+        "https://www.usb.org/sites/default/files/D1T1-2%20-%20USB%20Type-C%20System%20Overview.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-system-overview",
+      "title": "USB4(TM) System Overview",
+      "files": [
+        "https://www.usb.org/sites/default/files/D1T1-3%20-%20USB4%20System%20Overview.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-electricals-layer",
+      "title": "USB4(TM) Electricals Layer",
+      "files": [
+        "https://www.usb.org/sites/default/files/D1T1-4%20-%20USB4%20Electrical%20Layer.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-logical-layer-re-timer-and-transport-layer",
+      "title": "USB4(TM) Logical Layer, Re-timer and Transport Layer",
+      "files": [
+        "https://usb.org/sites/default/files/D1T1-5%20-%20USB4%20Logical%20Layer%20-%20Retimer%20-%20Transport.pdf"
+      ]
+    },
+    {
+      "slug": "usb-branding-session",
+      "title": "USB Branding Session",
+      "files": [
+        "https://www.usb.org/sites/default/files/D1T2-1%20-%20USB%20Branding%20Session.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-windows",
+      "title": "USB4(TM) on Windows",
+      "files": [
+        "https://www.usb.org/sites/default/files/D1T2-2%20-%20USB4%20on%20Windows.pdf"
+      ]
+    },
+    {
+      "slug": "ctvpds-and-making-your-own-usb-cr-thingamajig",
+      "title": "CTVPDs and Making Your Own USB-C(R) Thingamajig",
+      "files": [
+        "https://www.usb.org/sites/default/files/D1T2-3a%20-%20CTVPDs%20and%20Making%20Your%20Own%20USB-C%20Thingamajig.pdf"
+      ]
+    },
+    {
+      "slug": "demystifying-usb-cr-using-linuxs-usb-type-cr-connector-class",
+      "title": "Demystifying USB-C(R) using Linux&#039;s USB Type-C(R) Connector Class",
+      "files": [
+        "https://www.usb.org/sites/default/files/D1T2-3b%20-%20USB%20Type-C%20Linux%20Connector%20Class.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-configuration-layer-usb3-tunneling-dp-tunneling-and-pcie-tunneling",
+      "title": "USB4(TM) Configuration Layer, USB3 Tunneling, DP Tunneling, and PCIe Tunneling",
+      "files": [
+        "https://www.usb.org/sites/default/files/D2T1-1%20-%20USB4%20Configuration%20Layer%20-%20Protocol%20Tunneling.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-compliance-and-certification",
+      "title": "USB4(TM) Compliance and Certification",
+      "files": [
+        "https://www.usb.org/sites/default/files/D2T1-2%20-%20USB4%20Compliance%20and%20Certification.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-time-synchronization-host-interface-connection-manager-and-thunderbolttm-3",
+      "title": "USB4(TM) Time Synchronization, Host Interface, Connection Manager and Thunderbolt(TM) 3 Compatibility",
+      "files": [
+        "https://www.usb.org/sites/default/files/D2T1-3%20-%20USB4%20Time%20Sync%20-%20Host%20Interface%20-%20CM%20-%20TBT3.pdf"
+      ]
+    },
+    {
+      "slug": "vesa-displayporttm-alternate-mode-usb-cr",
+      "title": "VESA - DisplayPort(TM) Alternate Mode on USB-C(R)",
+      "files": [
+        "https://www.usb.org/sites/default/files/D2T1-4%20-%20VESA%20DP%20Alt%20Mode%20over%20USB%20Type-C.pdf"
+      ]
+    },
+    {
+      "slug": "usb-power-delivery-0",
+      "title": "USB Power Delivery",
+      "files": [
+        "https://www.usb.org/sites/default/files/D2T2-1%20-%20USB%20Power%20Delivery.pdf"
+      ]
+    },
+    {
+      "slug": "usb4tm-cable-electricals-and-system-design",
+      "title": "USB4(TM) Cable Electricals and System Design",
+      "files": [
+        "https://www.usb.org/sites/default/files/D2T2-2%20-%20USB4%20Cable%20and%20System.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-cr-active-cable",
+      "title": "USB Type-C(R) Active Cable",
+      "files": [
+        "https://www.usb.org/sites/default/files/D2T2-3%20-%20USB%20Type-C%20Active%20Cables.pdf"
+      ]
+    },
+    {
+      "slug": "usbhset-ehci-64-bit",
+      "title": "USBHSET for EHCI 64-bit",
+      "files": []
+    },
+    {
+      "slug": "battery-charging-v12-spec-and-adopters-agreement",
+      "title": "Battery Charging v1.2 Spec and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/BCv1.2_070312_0.zip"
+      ]
+    },
+    {
+      "slug": "usb-if-cw117-vendor-hosted-test-suite-form",
+      "title": "USB-IF CW117 Vendor Hosted Test Suite Form",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB-IF%20CW117%20Vendor%20Hosted%20Test%20Room%20Form.pdf"
+      ]
+    },
+    {
+      "slug": "usb3cv-21132-installer-x64-release",
+      "title": "USB3CV 2.1.13.2 Installer - x64 Release",
+      "files": []
+    },
+    {
+      "slug": "embedded-host-target-peripheral-list-tpl-form",
+      "title": "Embedded Host Target Peripheral List (TPL) Form",
+      "files": [
+        "https://www.usb.org/sites/default/files/Embedded%20Host%20Targeted%20Peripheral%20List%20%28TPL%29%20Form.pdf"
+      ]
+    },
+    {
+      "slug": "android-based-targeted-host-compliance-test-specification-v100",
+      "title": "Android Based Targeted Host Compliance Test Specification v1.00",
+      "files": [
+        "https://www.usb.org/sites/default/files/Targeted%20Host%20Compliance%20Test%20Specification%20v1.00.pdf"
+      ]
+    },
+    {
+      "slug": "usb-20-test-matrix",
+      "title": "USB 2.0 Test Matrix",
+      "files": [
+        "https://usb.org/sites/default/files/USB_2.0_Test_Matrix.pdf"
+      ]
+    },
+    {
+      "slug": "usb20cv-version-1497-xp-version",
+      "title": "USB20CV Version 1.4.9.7 (XP Version)",
+      "files": []
+    },
+    {
+      "slug": "usb20cv-64-bit-version-1497-xp-version",
+      "title": "USB20CV 64 Bit Version 1.4.9.7 (XP Version)",
+      "files": []
+    },
+    {
+      "slug": "quadramax-manual",
+      "title": "QuadraMAX Manual",
+      "files": [
+        "https://www.usb.org/sites/default/files/QuadraMAX%20USB%20Type-C%20Tests%20Manual.pdf"
+      ]
+    },
+    {
+      "slug": "usb-authentication-specification-rev-10-ecn-and-errata-through-january-7-2019",
+      "title": "USB Authentication Specification Rev. 1.0 with ECN and Errata through January 7, 2019",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%20Authentication%20Specification%20Rev%201.0%20with%20ECN%20and%20Errata%20through%20January%207%2C%202019.zip"
+      ]
+    },
+    {
+      "slug": "pidvid-usb-20-high-speed-electrical-embedded-host-and-otg-moi",
+      "title": "PIDVID USB 2.0 High Speed Electrical Embedded Host and OTG MOI",
+      "files": [
+        "https://www.usb.org/sites/default/files/PIDVID%20USB%202.0%20High%20Speed%20Electrical%20Embedded%20Host%20and%20OTG%20MOI%201.01.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-cr-bridge-specification-v11",
+      "title": "USB Type-C\u00ae Bridge Specification v1.1",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Type-C_Bridge_Spec110117.zip"
+      ]
+    },
+    {
+      "slug": "xhsett-x32-version-1120-xp-version",
+      "title": "XHSETT x32 Version 1.1.2.0 (XP Version)",
+      "files": []
+    },
+    {
+      "slug": "xhsett-x64-version-1120-xp-version",
+      "title": "Xhsett x64 Version 1.1.2.0 (XP Version)",
+      "files": []
+    },
+    {
+      "slug": "usbhtt-ver-1203",
+      "title": "USBHTT Ver 1.2.0.3",
+      "files": []
+    },
+    {
+      "slug": "hid-descriptor-tool",
+      "title": "HID Descriptor Tool",
+      "files": [
+        "https://www.usb.org/sites/default/files/documents/dt2_4.zip"
+      ]
+    },
+    {
+      "slug": "usbhset-version-1212-ehci-32-bit-xp-version",
+      "title": "USBHSET version 1.2.1.2 for EHCI 32-bit (XP Version)",
+      "files": []
+    },
+    {
+      "slug": "usbhset-version-1212-ehci-64-bit-xp-version",
+      "title": "USBHSET version 1.2.1.2 for EHCI 64-bit (XP Version)",
+      "files": []
+    },
+    {
+      "slug": "usb2032bc12-drop-droop-test-non-usb-type-cr-products",
+      "title": "USB2.0/3.2/BC1.2 Drop Droop Test for non-USB Type-C\u00ae Products",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB20_32_BC12_Drop_Droop_1_4_1.pdf"
+      ]
+    },
+    {
+      "slug": "universal-serial-bus-31-legacy-connectors-and-cable-assemblies-compliance-document",
+      "title": "Universal Serial Bus 3.1 Legacy Connectors and Cable Assemblies Compliance Document",
+      "files": [
+        "https://www.usb.org/sites/default/files/CabConn_Legacy_3_1_Compliance_Rev_1_1.pdf"
+      ]
+    },
+    {
+      "slug": "usb-31-peripheral-development-kit-usb-31-xhci-based-certification-platform",
+      "title": "USB 3.1 Peripheral Development Kit:\nUSB 3.1 xHCI-based Certification Platform",
+      "files": [
+        "https://www.usb.org/sites/default/files/TechGuide_xHCI_SSUSB_PDK_Ver2.1.pdf"
+      ]
+    },
+    {
+      "slug": "power-delivery-design-issues-hi-speed-usb-motherboards",
+      "title": "Power Delivery Design Issues for Hi-Speed USB on Motherboards",
+      "files": [
+        "https://www.usb.org/sites/default/files/power_delivery_motherboards.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-c-cable-assembly-signal-integrity-test-fixture-gerber-files",
+      "title": "USB Type-C cable assembly signal integrity test fixture Gerber files",
+      "files": [
+        "https://www.usb.org/sites/default/files/20150704_USB_Type-C_Fixture_Gerber_File.zip"
+      ]
+    },
+    {
+      "slug": "usb-multiflow-extension-mobile-broadband-interface-model-v10-and-adopters",
+      "title": "USB Multiflow Extension for Mobile Broadband Interface Model v1.0 and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/MBIMMultiflow10.zip"
+      ]
+    },
+    {
+      "slug": "usb-31usb-type-ctm-desktop-front-panel-cable-and-connector-implementation-document",
+      "title": "USB 3.1/USB Type-C(TM) Desktop Front Panel Cable and Connector Implementation Document",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB3p1_Front_Panel_CabCon_Implment_Doc_Rev1p1.pdf"
+      ]
+    },
+    {
+      "slug": "board-usb-connections-digital-media-devices-vs-removable-media-and-readers",
+      "title": "On-Board USB connections for Digital Media Devices vs. Removable Media and Readers",
+      "files": [
+        "https://www.usb.org/sites/default/files/remedia_vs_direct.pdf"
+      ]
+    },
+    {
+      "slug": "electrical-compliance-test-specification-superspeed-usb-10-gbps-rev-10",
+      "title": "Electrical Compliance Test Specification for SuperSpeed USB 10 Gbps Rev. 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/EnhancedSuperSpeedPHYComplianceTestSpec.pdf"
+      ]
+    },
+    {
+      "slug": "usb-31-reference-channel-models",
+      "title": "USB 3.1 Reference Channel Models",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB31_Embedding_Files_12222016.zip"
+      ]
+    },
+    {
+      "slug": "usb-power-delivery-firmware-update-specification",
+      "title": "USB Power Delivery Firmware Update Specification",
+      "files": [
+        "https://www.usb.org/sites/default/files/documents/pd_fw_update_specification_rev_1_0_20160915b.pdf"
+      ]
+    },
+    {
+      "slug": "xhci-backwards-compatibility-test-procedures-hosts-rev-17",
+      "title": "xHCI Backwards Compatibility Test Procedures For Hosts Rev 1.7",
+      "files": [
+        "https://www.usb.org/sites/default/files/xHCI_Backwards_Compatibility_Testing_v1_7.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-c-end-product-cable-test-plan",
+      "title": "USB Type-C End Product Cable Test Plan",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Type-C_End_Product_Cable_Test_Plan_2016_3_14.pdf"
+      ]
+    },
+    {
+      "slug": "usb-31-command-verifier-compliance-test-specification-version-072",
+      "title": "USB 3.1 Command Verifier Compliance Test Specification Version 0.72",
+      "files": []
+    },
+    {
+      "slug": "media-agnostic-usb-v10a-spec-and-adopters-agreement",
+      "title": "Media Agnostic USB v1.0a Spec and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/Media_Agnostic_USB_v1.0a.zip"
+      ]
+    },
+    {
+      "slug": "usb-31-debug-class-specification-debug-devices-rev-10",
+      "title": "USB 3.1 Debug Class Specification for Debug Devices, Rev. 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/documents/usb_debug_class_rev_1_0_final_0.pdf"
+      ]
+    },
+    {
+      "slug": "usb-30-adopters-agreement",
+      "title": "USB 3.0 Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%203_0%20Adopters%20Agreement%20PDF%20Submission%20Update%2020230219_0.pdf"
+      ]
+    },
+    {
+      "slug": "propagation-delay-between-host-transceivers-and-downstream-ports",
+      "title": "Propagation Delay between Host Transceivers and Downstream Ports",
+      "files": [
+        "https://www.usb.org/sites/default/files/Propagation_Delay_between_Host_Transcievers_and_Downstream_Ports.pdf"
+      ]
+    },
+    {
+      "slug": "usb-31-channel-loss-budgets",
+      "title": "USB 3.1 Channel Loss Budgets",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_3.1_Loss_Budget_Rev_1.0_-_2015-03-02.pdf"
+      ]
+    },
+    {
+      "slug": "inter-chip-supplement-usb-revision-30-specification-revision-102",
+      "title": "Inter-Chip Supplement to the USB Revision 3.0 Specification, Revision 1.02",
+      "files": [
+        "https://www.usb.org/sites/default/files/documents/superspeed_inter-chip_supplement_1_02_19may2014.pdf"
+      ]
+    },
+    {
+      "slug": "interoperability-test-procedures-pc-pc-bridge-rev-12",
+      "title": "Interoperability Test Procedures For PC to PC Bridge Rev 1.2",
+      "files": [
+        "https://www.usb.org/sites/default/files/PC-PC_Bridge_Interop_Procedure_v1_2.pdf"
+      ]
+    },
+    {
+      "slug": "usb-ps-interface-white-paper",
+      "title": "USB PS Interface White Paper",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_PS_Interface_V1_00_20140414.pdf"
+      ]
+    },
+    {
+      "slug": "electrical-compliance-test-specification-superspeed-usb-rev-10a",
+      "title": "Electrical Compliance Test Specification for SuperSpeed USB Rev. 1.0a",
+      "files": [
+        "https://www.usb.org/sites/default/files/SuperSpeedPHYComplianceTest_Spec1_0a.pdf"
+      ]
+    },
+    {
+      "slug": "compliance-plan-usb-go-and-embedded-host-30",
+      "title": "Compliance Plan for USB On-The-Go and Embedded Host 3.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/OTG3andEH_Compliance_Plan_1.0.pdf"
+      ]
+    },
+    {
+      "slug": "methodology-used-determine-superspeed-usb-10-gbps-usb-31-gen2-channel-and-cable",
+      "title": "Methodology Used to Determine SuperSpeed USB 10 Gbps (USB 3.1) - Gen2 Channel and Cable Assembly High Speed Compliance",
+      "files": [
+        "https://www.usb.org/sites/default/files/Establishing_USB_SuperSpeed_Gen2_Channel_and_Cable_Assembly_High_Speed_C....pdf"
+      ]
+    },
+    {
+      "slug": "usb-mass-storage-class-specification-uasp-bootability-v10-and-adopters-agreement",
+      "title": "USB Mass Storage Class Specification for UASP Bootability v1.0 and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/UASP_Bootability_Rev_1_0.zip"
+      ]
+    },
+    {
+      "slug": "mbim-compliance-testing-v10",
+      "title": "MBIM Compliance Testing v1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/MBIM-Compliance-1.0.pdf"
+      ]
+    },
+    {
+      "slug": "managing-connector-and-cable-assembly-performance-usb-superspeed",
+      "title": "Managing Connector and Cable Assembly Performance for USB SuperSpeed",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_SuperSpeed_CabCon_Whitepaper.pdf"
+      ]
+    },
+    {
+      "slug": "mobile-broadband-interface-model-v10-errata-1-and-adopters-agreement",
+      "title": "Mobile Broadband Interface Model v1.0 Errata -1 and Adopters Agreement",
+      "files": [
+        "https://usb.org/sites/default/files/MBIM10Errata1_073013.zip"
+      ]
+    },
+    {
+      "slug": "ipp-protocol-10",
+      "title": "IPP Protocol 1.0",
+      "files": [
+        "https://usb.org/sites/default/files/IPP_0.zip"
+      ]
+    },
+    {
+      "slug": "errata-updates-cdc-v12-and-wmc-v11-dec-2012",
+      "title": "Errata updates for CDC v1.2 and WMC v1.1 as of DEC-2012",
+      "files": [
+        "https://www.usb.org/sites/default/files/CDC1.2_WMC1.1_052013.zip"
+      ]
+    },
+    {
+      "slug": "high-speed-inter-chip-adopters-agreement-amendment",
+      "title": "High-Speed Inter-Chip Adopters Agreement Amendment",
+      "files": [
+        "https://www.usb.org/sites/default/files/High_Speed_Inter-Chip_Amendment_20230224.pdf"
+      ]
+    },
+    {
+      "slug": "video-class-v15-document-set",
+      "title": "Video Class v1.5 document set",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Video_Class_1_5.zip"
+      ]
+    },
+    {
+      "slug": "usb-go-and-embedded-host-automated-compliance-plan-go-embedded-host-supplement",
+      "title": "USB On-The-Go and Embedded Host Automated Compliance Plan for the On-The-Go &amp; Embedded Host Supplement Revision 2.0 Version 1.2",
+      "files": [
+        "https://www.usb.org/sites/default/files/otgeh_compliance_plan_1_2.pdf"
+      ]
+    },
+    {
+      "slug": "usb-thin-card-v10-and-adopters-agreement",
+      "title": "USB Thin Card v1.0 and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Thin_Card.zip"
+      ]
+    },
+    {
+      "slug": "usb-device-class-definition-audiovideo-devices-basic-device-profile-bdp",
+      "title": "USB Device Class Definition for Audio/Video Devices Basic Device Profile (BDP)",
+      "files": [
+        "https://www.usb.org/sites/default/files/AV_BDP_v1.0.pdf"
+      ]
+    },
+    {
+      "slug": "device-class-definition-content-security-devices-20",
+      "title": "Device Class Definition for Content Security Devices 2.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/ContentSecurity_v2.0.pdf"
+      ]
+    },
+    {
+      "slug": "content-security-method-5-high-bandwidth-digital-content-protection-21-hdcp-21",
+      "title": "Content Security Method 5 - High-bandwidth Digital Content Protection 2.1 (HDCP 2.1) Implementation",
+      "files": [
+        "https://www.usb.org/sites/default/files/CSM-5_v1.0.pdf"
+      ]
+    },
+    {
+      "slug": "go-and-embedded-host-supplement-usb-revision-30-specification-revision-11",
+      "title": "On-The-Go and Embedded Host Supplement to the USB Revision 3.0 Specification, Revision 1.1",
+      "files": [
+        "https://usb.org/sites/default/files/documents/usb_otg_and_eh_3-0_release_1_1_10may2012.pdf"
+      ]
+    },
+    {
+      "slug": "usb-30-radio-frequency-interference-impact-24-ghz-wireless-devices",
+      "title": "USB 3.0 Radio Frequency Interference Impact on 2.4 GHz Wireless Devices",
+      "files": [
+        "https://www.usb.org/sites/default/files/327216.pdf"
+      ]
+    },
+    {
+      "slug": "avdd-creator-user-manual",
+      "title": "AVDD Creator User Manual",
+      "files": [
+        "https://www.usb.org/sites/default/files/AVDD_Creator_User_Manual.pdf"
+      ]
+    },
+    {
+      "slug": "ehci-and-xhci-high-speed-electrical-test-tool-setup-instruction",
+      "title": "EHCI and xHCI High-Speed Electrical Test Tool Setup Instruction",
+      "files": [
+        "https://www.usb.org/sites/default/files/HSETT_Instruction_0_4_1.pdf"
+      ]
+    },
+    {
+      "slug": "hset-documentation-version-041-ehci-and-xhci",
+      "title": "HSET Documentation version 0.41 for EHCI and xHCI",
+      "files": [
+        "https://www.usb.org/sites/default/files/HSETT_Instruction_0_4_1.pdf"
+      ]
+    },
+    {
+      "slug": "audiovideo-device-class-v10-spec-and-adopters-agreement",
+      "title": "Audio/Video Device Class v1.0 Spec and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_AV_Specification_Rev_1.0.zip"
+      ]
+    },
+    {
+      "slug": "usb-30-superspeed-equalizer-design-guidelines",
+      "title": "USB 3.0 SuperSpeed Equalizer Design Guidelines",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Superspeed_Equalizer_Design_Guidelines_2011-06-10.pdf"
+      ]
+    },
+    {
+      "slug": "media-transfer-protocol-v11-spec-and-mtp-v11-adopters-agreement",
+      "title": "Media Transfer Protocol v.1.1 Spec and MTP v.1.1 Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/MTPv1_1.zip"
+      ]
+    },
+    {
+      "slug": "network-control-model-devices-specification-v10-and-errata-and-adopters-agreement",
+      "title": "Network Control Model Devices Specification v1.0 and errata and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/NCM10_012011.zip"
+      ]
+    },
+    {
+      "slug": "mass-storage-class-specification-overview-14",
+      "title": "Mass Storage Class Specification Overview 1.4",
+      "files": [
+        "https://www.usb.org/sites/default/files/Mass_Storage_Specification_Overview_v1.4_2-19-2010.pdf"
+      ]
+    },
+    {
+      "slug": "audio-device-class-spec-basic-audio-devices-v10-and-adopters-agreement",
+      "title": "Audio Device Class Spec for Basic Audio Devices v1.0 and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/BasicAudioDevice-10.zip"
+      ]
+    },
+    {
+      "slug": "usb-attached-scsi-protocol-uasp-v10-and-adopters-agreement",
+      "title": "USB Attached SCSI Protocol (UASP) v1.0 and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/uasp_1_0.zip"
+      ]
+    },
+    {
+      "slug": "usb-20-go-specification-supplement-adopters-agreement",
+      "title": "USB 2.0 On-The-Go Specification Supplement Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_OTG_v2.0_Amendment_final_052609.pdf"
+      ]
+    },
+    {
+      "slug": "usb-30-cdr-model",
+      "title": "USB 3.0 CDR Model",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_3_0_SuperSpeed_CDR_0p5_whitepaper.pdf"
+      ]
+    },
+    {
+      "slug": "standard-host-side-certified-wireless-usb-connection-context-storage-windows",
+      "title": "A Standard for Host-Side Certified Wireless USB Connection Context Storage on Windows Operating Systems",
+      "files": [
+        "https://www.usb.org/sites/default/files/WUSB_host_connection_context_v1.0.pdf"
+      ]
+    },
+    {
+      "slug": "electrical-isolation-and-improved-electromagnetic-compatibility-personal",
+      "title": "Electrical Isolation and Improved Electromagnetic Compatibility for Personal Healthcare Devices using USB",
+      "files": [
+        "https://www.usb.org/sites/default/files/Isolation_Electromagnetic_Compatibility_1_0.pdf"
+      ]
+    },
+    {
+      "slug": "personal-healthcare-rev-10",
+      "title": "Personal Healthcare Rev. 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/Personal_Healthcare_1.zip"
+      ]
+    },
+    {
+      "slug": "cables-and-connectors-class-20",
+      "title": "Cables and Connectors Class 2.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/CabConn20.pdf"
+      ]
+    },
+    {
+      "slug": "lockable-mass-storage-specification-10-and-adopters-agreement",
+      "title": "Lockable Mass Storage Specification 1.0 and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/Lockable_Mass_Storage_Spec_and_Adopters_Agreement.zip"
+      ]
+    },
+    {
+      "slug": "usb-20-cable-and-connector-class-document",
+      "title": "USB 2.0 Cable and Connector Class Document",
+      "files": [
+        "https://www.usb.org/sites/default/files/CabConn20.pdf"
+      ]
+    },
+    {
+      "slug": "audio-devices-rev-20-and-adopters-agreement",
+      "title": "Audio Devices Rev. 2.0 and Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/Audio2.0_final.zip"
+      ]
+    },
+    {
+      "slug": "embedded-high-speed-host-electrical-test-procedure-version-101",
+      "title": "Embedded High-speed Host Electrical Test Procedure Version 1.01",
+      "files": [
+        "https://usb.org/sites/default/files/EHSET_v1.01%281%29.pdf"
+      ]
+    },
+    {
+      "slug": "low-voltage-inter-chip-adopters-agreement-amendment",
+      "title": "Low Voltage Inter-Chip Adopters Agreement Amendment",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Low_Voltage_InterChip_Amendment_final_20060320.pdf"
+      ]
+    },
+    {
+      "slug": "video-class-v11-document-set",
+      "title": "Video Class v1.1 document set",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_Video_Class_1_1_090711.zip"
+      ]
+    },
+    {
+      "slug": "smart-card-ccid-version-11",
+      "title": "Smart Card CCID version 1.1",
+      "files": [
+        "https://www.usb.org/sites/default/files/DWG_Smart-Card_CCID_Rev110.pdf"
+      ]
+    },
+    {
+      "slug": "smart-card-iccd-version-10",
+      "title": "Smart Card ICCD version 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/DWG_Smart-Card_USB-ICC_ICCD_rev10.pdf"
+      ]
+    },
+    {
+      "slug": "series-plug-form-factor-guideline-10",
+      "title": "Series &#039;A&#039; Plug form factor Guideline 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/CCWG_A_Plug_Form_Factor_Guideline_Revision_1.0_.pdf"
+      ]
+    },
+    {
+      "slug": "cdc-subclass-specification-ethernet-emulation-model-devices-10",
+      "title": "CDC Subclass Specification for Ethernet Emulation Model Devices 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/CDC_EEM10.pdf"
+      ]
+    },
+    {
+      "slug": "mass-storage-bootability-specification-10",
+      "title": "Mass Storage Bootability Specification 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/usb_msc_boot_1.0.pdf"
+      ]
+    },
+    {
+      "slug": "device-firmware-upgrade-11-new-version-31-aug-2004",
+      "title": "Device Firmware Upgrade 1.1 (new version 31-Aug-2004)",
+      "files": [
+        "https://www.usb.org/sites/default/files/DFU_1.1.pdf"
+      ]
+    },
+    {
+      "slug": "usb-if-full-and-low-speed-electrical-and-interoperability-compliance-test",
+      "title": "USB-IF Full and Low Speed Electrical and Interoperability Compliance Test Procedure",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB-IFTestProc1_3.pdf"
+      ]
+    },
+    {
+      "slug": "usb-interface-association-descriptor-device-class-code-and-use-model",
+      "title": "USB Interface Association Descriptor Device Class Code and Use Model",
+      "files": [
+        "https://www.usb.org/sites/default/files/iadclasscode_r10.pdf"
+      ]
+    },
+    {
+      "slug": "mass-storage-controlbulkinterrupt-cbi-specification-11",
+      "title": "Mass Storage Control/Bulk/Interrupt (CBI) Specification 1.1",
+      "files": [
+        "https://usb.org/sites/default/files/usb_msc_cbi_1.1.pdf"
+      ]
+    },
+    {
+      "slug": "test-measurement-class-specification",
+      "title": "Test &amp; Measurement Class Specification",
+      "files": [
+        "https://usb.org/sites/default/files/USBTMC_1_006a.zip"
+      ]
+    },
+    {
+      "slug": "content-security-method-2-usb-digital-transmission-content-protection",
+      "title": "Content Security Method 2 - USB Digital Transmission Content Protection Implementation 1.0",
+      "files": [
+        "https://usb.org/sites/default/files/csm2_v1_0.pdf"
+      ]
+    },
+    {
+      "slug": "understanding-wdm-power-management-v11",
+      "title": "Understanding WDM Power Management v1.1",
+      "files": [
+        "https://www.usb.org/sites/default/files/wdm_pm11.pdf"
+      ]
+    },
+    {
+      "slug": "openusbdi-specification-10",
+      "title": "OpenUSBDI Specification 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/usbdi10.pdf"
+      ]
+    },
+    {
+      "slug": "still-image-capture-device-definition-10-and-errata-16-mar-2007",
+      "title": "Still Image Capture Device Definition 1.0 and Errata as of 16-Mar-2007",
+      "files": [
+        "https://www.usb.org/sites/default/files/usb_still_img10.zip"
+      ]
+    },
+    {
+      "slug": "usb-20-adopters-agreement",
+      "title": "USB 2.0 Adopters Agreement",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB%202_0%20Adopters%20Agreement%20-%20PDF%20Submission%20Update%2020230216.pdf"
+      ]
+    },
+    {
+      "slug": "irda-bridge-device-definition-10",
+      "title": "IrDA Bridge Device Definition 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/usbir10.pdf"
+      ]
+    },
+    {
+      "slug": "hid-parser-error-checking",
+      "title": "HID Parser Error Checking",
+      "files": [
+        "https://usb.org/sites/default/files/hidpar.pdf"
+      ]
+    },
+    {
+      "slug": "content-security-method-1-basic-authentication-protocol-10",
+      "title": "Content Security Method 1 - Basic Authentication Protocol 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/ContentSecurity_v2.0.pdf"
+      ]
+    },
+    {
+      "slug": "printer-device-class-document-11",
+      "title": "Printer Device Class Document 1.1",
+      "files": [
+        "https://www.usb.org/sites/default/files/usbprint11a021811.pdf"
+      ]
+    },
+    {
+      "slug": "usb-midi-devices-10",
+      "title": "USB MIDI Devices 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/midi10.pdf"
+      ]
+    },
+    {
+      "slug": "mass-storage-bulk-only-10",
+      "title": "Mass Storage Bulk Only 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/usbmassbulk_10.pdf"
+      ]
+    },
+    {
+      "slug": "mass-storage-ufi-command-specification-10",
+      "title": "Mass Storage UFI Command Specification 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/usbmass-ufi10.pdf"
+      ]
+    },
+    {
+      "slug": "audio-device-document-10",
+      "title": "Audio Device Document 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/audio10.pdf"
+      ]
+    },
+    {
+      "slug": "audio-data-formats-10",
+      "title": "Audio Data Formats 1.0",
+      "files": [
+        "https://usb.org/sites/default/files/frmts10.pdf"
+      ]
+    },
+    {
+      "slug": "audio-terminal-types-10",
+      "title": "Audio Terminal Types 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/termt10.pdf"
+      ]
+    },
+    {
+      "slug": "hid-parser-error-checking-0",
+      "title": "HID Parser Error Checking",
+      "files": [
+        "https://www.usb.org/sites/default/files/documents/hidpar.pdf"
+      ]
+    },
+    {
+      "slug": "monitor-device-document-10",
+      "title": "Monitor Device Document 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/usbmon10.pdf"
+      ]
+    },
+    {
+      "slug": "power-device-class-document-10",
+      "title": "Power Device Class Document 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/pdcv10_0.pdf"
+      ]
+    },
+    {
+      "slug": "usb-apm-interactions",
+      "title": "USB - APM Interactions",
+      "files": [
+        "https://www.usb.org/sites/default/files/white-4c.pdf"
+      ]
+    },
+    {
+      "slug": "analysis-wireless-device-implementations-usb",
+      "title": "An Analysis of Wireless Device Implementations on USB",
+      "files": [
+        "https://usb.org/sites/default/files/usbwire.pdf"
+      ]
+    },
+    {
+      "slug": "analysis-wireless-device-implementations-universal-serial-bus",
+      "title": "An Analysis of Wireless Device Implementations on Universal Serial Bus",
+      "files": [
+        "https://www.usb.org/sites/default/files/documents/usbwire.pdf"
+      ]
+    },
+    {
+      "slug": "usb-latency-requirements-and-effect-video-adapter-pci-retry-condition-maintaining",
+      "title": "USB Latency Requirements and the Effect of Video Adapter PCI Retry Condition on Maintaining USB Streaming Pipelines",
+      "files": [
+        "https://www.usb.org/sites/default/files/usblat3.pdf"
+      ]
+    },
+    {
+      "slug": "usb-bandwidth-analysis",
+      "title": "USB Bandwidth Analysis",
+      "files": [
+        "https://www.usb.org/sites/default/files/bwpaper2.pdf"
+      ]
+    },
+    {
+      "slug": "design-guide-low-speed-buffer-usb",
+      "title": "Design Guide for a low speed buffer for USB",
+      "files": [
+        "https://www.usb.org/sites/default/files/alsbuf.pdf"
+      ]
+    },
+    {
+      "slug": "avschema-documentation",
+      "title": "AVSchema Documentation",
+      "files": []
+    },
+    {
+      "slug": "avschema-files-httpavschemasusborgv1avschemaxsd-and",
+      "title": "AVSchema Files:  http://avschemas.usb.org/v1/avschema.xsd and http://avschemas.usb.org/v1/avtypes.xsd",
+      "files": []
+    },
+    {
+      "slug": "avdd-creator-installer",
+      "title": "AVDD Creator Installer",
+      "files": [
+        "https://www.usb.org/sites/default/files/AVDD_Creator_Installer.zip"
+      ]
+    },
+    {
+      "slug": "usb-connector-mezzanine-applications-guidelines-rev-10",
+      "title": "USB Connector for Mezzanine Applications Guidelines Rev. 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/MezzanineConnectorFinal.pdf"
+      ]
+    },
+    {
+      "slug": "common-class-base-specification-10",
+      "title": "Common Class Base Specification 1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/usbccs10.pdf"
+      ]
+    },
+    {
+      "slug": "usb-30-electrical-compliance-methodology",
+      "title": "USB 3.0 Electrical Compliance Methodology",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_3_0_e-Compliance_methodology_0p5_whitepaper.pdf"
+      ]
+    },
+    {
+      "slug": "usb-30-jitter-budgeting",
+      "title": "USB 3.0 Jitter Budgeting",
+      "files": [
+        "https://www.usb.org/sites/default/files/USB_3_0_Jitter_Budgeting_0p5_whitepaper.pdf"
+      ]
+    },
+    {
+      "slug": "cyclic-redundancy-checks-usb",
+      "title": "Cyclic Redundancy Checks in USB",
+      "files": [
+        "https://www.usb.org/sites/default/files/crcdes.pdf"
+      ]
+    },
+    {
+      "slug": "designing-robust-usb-serial-interface-engine-sie",
+      "title": "Designing a Robust USB Serial Interface Engine (SIE)",
+      "files": [
+        "https://www.usb.org/sites/default/files/siewp.pdf"
+      ]
+    },
+    {
+      "slug": "handling-irpmnstartdevice-pnp-irp-v10",
+      "title": "Handling The IRP_MN_START_DEVICE PnP IRP v.1.0",
+      "files": [
+        "https://www.usb.org/sites/default/files/irp_mn.pdf"
+      ]
+    },
+    {
+      "slug": "system-test-implementers-forum",
+      "title": "System Test Implementers Forum",
+      "files": [
+        "https://www.usb.org/sites/default/files/stif.pdf"
+      ]
+    },
+    {
+      "slug": "introduction-hi-speed-usb",
+      "title": "An Introduction to Hi-Speed USB",
+      "files": [
+        "https://www.usb.org/sites/default/files/usb_20g.pdf"
+      ]
+    }
+  ]
+}

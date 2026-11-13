@@ -1,0 +1,1996 @@
+# Publications nistlib-fetch may download. Each URL was checked to answer with a PDF whose first page
+# names the publication. sha256 is optional: when absent, the first fetch records it in corpus/index.json.
+
+[[source]]
+doc_id = "sp800-73pt2-5"
+number = "NIST SP 800-73pt2-5"
+title = "Interfaces for Personal Identity Verification: Part 2 — PIV Card Application Card Command Interface"
+date = "2024-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-73pt2-5.pdf"
+
+[[source]]
+doc_id = "fips201-3"
+number = "NIST FIPS 201-3"
+title = "Personal Identity Verification (PIV) of Federal Employees and Contractors"
+date = "2022-01"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.201-3.pdf"
+
+[[source]]
+doc_id = "sp800-78-5"
+number = "NIST SP 800-78-5"
+title = "Cryptographic Algorithms and Key Sizes for Personal Identity Verification"
+date = "2024-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-78-5.pdf"
+
+[[source]]
+doc_id = "sp800-76-2"
+number = "NIST SP 800-76-2"
+title = "Biometric Specifications for Personal Identity Verification"
+date = "2013-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-76-2.pdf"
+
+[[source]]
+doc_id = "sp800-73pt1-5"
+number = "NIST SP 800-73pt1-5"
+title = "Interfaces for Personal Identity Verification: Part 1 — PIV Card Application Namespace, Data Model and Representation"
+date = "2024-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-73pt1-5.pdf"
+
+[[source]]
+doc_id = "sp800-73pt3-5"
+number = "NIST SP 800-73pt3-5"
+title = "Interfaces for Personal Identity Verification: Part 3 — PIV Client Application Programming Interface"
+date = "2024-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-73pt3-5.pdf"
+
+[[source]]
+doc_id = "sp800-157"
+number = "NIST SP 800-157"
+title = "Guidelines for Derived Personal Identity Verification (PIV) Credentials"
+date = "2014-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-157.pdf"
+
+[[source]]
+doc_id = "fips140-3"
+number = "NIST FIPS 140-3"
+title = "Security Requirements for Cryptographic Modules"
+date = "2019-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.140-3.pdf"
+
+[[source]]
+doc_id = "fips180-4"
+number = "NIST FIPS 180-4"
+title = "Secure Hash Standard (SHS)"
+date = "2015-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf"
+
+[[source]]
+doc_id = "fips186-5"
+number = "NIST FIPS 186-5"
+title = "Digital Signature Standard (DSS)"
+date = "2023-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-5.pdf"
+
+[[source]]
+doc_id = "fips197"
+number = "NIST FIPS 197"
+title = "Advanced Encryption Standard (AES)"
+date = "2023-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197-upd1.pdf"
+
+[[source]]
+doc_id = "fips198-1"
+number = "NIST FIPS 198-1"
+title = "The Keyed-Hash Message Authentication Code (HMAC)"
+date = "2008-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.198-1.pdf"
+
+[[source]]
+doc_id = "fips199"
+number = "NIST FIPS 199"
+title = "Standards for Security Categorization of Federal Information and Information Systems"
+date = "2004-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.199.pdf"
+
+[[source]]
+doc_id = "fips200"
+number = "NIST FIPS 200"
+title = "Minimum Security Requirements for Federal Information and Information Systems"
+date = "2006-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.200.pdf"
+
+[[source]]
+doc_id = "fips202"
+number = "NIST FIPS 202"
+title = "SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions"
+date = "2015-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf"
+
+[[source]]
+doc_id = "fips203"
+number = "NIST FIPS 203"
+title = "Module-Lattice-Based Key-Encapsulation Mechanism Standard"
+date = "2024-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf"
+
+[[source]]
+doc_id = "fips204"
+number = "NIST FIPS 204"
+title = "Module-Lattice-Based Digital Signature Standard"
+date = "2024-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf"
+
+[[source]]
+doc_id = "fips205"
+number = "NIST FIPS 205"
+title = "Stateless Hash-Based Digital Signature Standard"
+date = "2024-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.205.pdf"
+
+[[source]]
+doc_id = "sp800-12r1"
+number = "NIST SP 800-12 Rev. 1"
+title = "An Introduction to Information Security"
+date = "2017-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-12r1.pdf"
+
+[[source]]
+doc_id = "sp800-18r2"
+number = "NIST SP 800-18 Rev. 2"
+title = "Developing Security, Privacy, and Cybersecurity Supply Chain Risk Management Plans for Systems"
+date = "2026-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-18r2.pdf"
+
+[[source]]
+doc_id = "sp800-22r1"
+number = "NIST SP 800-22 Rev. 1"
+title = "A Statistical Test Suite for Random and Pseudorandom Number Generators for Cryptographic Applications"
+date = "2010-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-22r1a.pdf"
+
+[[source]]
+doc_id = "sp800-28ver2"
+number = "NIST SP 800-28 Version 2"
+title = "Guidelines on Active Content and Mobile Code"
+date = "2008-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-28ver2.pdf"
+
+[[source]]
+doc_id = "sp800-30r1"
+number = "NIST SP 800-30 Rev. 1"
+title = "Guide for Conducting Risk Assessments"
+date = "2012-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-30r1.pdf"
+
+[[source]]
+doc_id = "sp800-34r1"
+number = "NIST SP 800-34 Rev. 1"
+title = "Contingency Planning Guide for Federal Information Systems"
+date = "2010-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-34r1.pdf"
+
+[[source]]
+doc_id = "sp800-35"
+number = "NIST SP 800-35"
+title = "Guide to Information Technology Security Services"
+date = "2003-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-35.pdf"
+
+[[source]]
+doc_id = "sp800-37r2"
+number = "NIST SP 800-37 Rev. 2"
+title = "Risk Management Framework for Information Systems and Organizations: A System Life Cycle Approach for Security and Privacy"
+date = "2018-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-37r2.pdf"
+
+[[source]]
+doc_id = "sp800-38a-add"
+number = "NIST SP 800-38A"
+title = "Recommendation for Block Cipher Modes of Operation: Three Variants of Ciphertext Stealing for CBC Mode"
+date = "2010-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38a-add.pdf"
+
+[[source]]
+doc_id = "sp800-38a"
+number = "NIST SP 800-38A"
+title = "Recommendation for Block Cipher Modes of Operation: Methods and Techniques"
+date = "2001-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38a.pdf"
+
+[[source]]
+doc_id = "sp800-38b"
+number = "NIST SP 800-38B"
+title = "Recommendation for Block Cipher Modes of Operation: the CMAC Mode for Authentication"
+date = "2016-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38B.pdf"
+
+[[source]]
+doc_id = "sp800-38c"
+number = "NIST SP 800-38C"
+title = "Recommendation for Block Cipher Modes of Operation: the CCM Mode for Authentication and Confidentiality"
+date = "2007-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38c.pdf"
+
+[[source]]
+doc_id = "sp800-38d"
+number = "NIST SP 800-38D"
+title = "Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC"
+date = "2007-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf"
+
+[[source]]
+doc_id = "sp800-38e"
+number = "NIST SP 800-38E"
+title = "Recommendation for Block Cipher Modes of Operation: the XTS-AES Mode for Confidentiality on Storage Devices"
+date = "2010-01"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38e.pdf"
+
+[[source]]
+doc_id = "sp800-38f"
+number = "NIST SP 800-38F"
+title = "Recommendation for Block Cipher Modes of Operation: Methods for Key Wrapping"
+date = "2012-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38F.pdf"
+
+[[source]]
+doc_id = "sp800-38g"
+number = "NIST SP 800-38G"
+title = "Recommendation for Block Cipher Modes of Operation: Methods for Format-Preserving Encryption"
+date = "2016-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38G.pdf"
+
+[[source]]
+doc_id = "sp800-39"
+number = "NIST SP 800-39"
+title = "Managing Information Security Risk: Organization, Mission, and Information System View"
+date = "2011-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-39.pdf"
+
+[[source]]
+doc_id = "sp800-40r4"
+number = "NIST SP 800-40 Rev. 4"
+title = "Guide to Enterprise Patch Management Planning: Preventive Maintenance for Technology"
+date = "2022-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-40r4.pdf"
+
+[[source]]
+doc_id = "sp800-41r1"
+number = "NIST SP 800-41 Rev. 1"
+title = "Guidelines on Firewalls and Firewall Policy"
+date = "2009-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-41r1.pdf"
+
+[[source]]
+doc_id = "sp800-44ver2"
+number = "NIST SP 800-44 Version 2"
+title = "Guidelines on Securing Public Web Servers"
+date = "2007-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-44ver2.pdf"
+
+[[source]]
+doc_id = "sp800-45ver2"
+number = "NIST SP 800-45 Version 2"
+title = "Guidelines on Electronic Mail Security"
+date = "2007-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-45ver2.pdf"
+
+[[source]]
+doc_id = "sp800-46r2"
+number = "NIST SP 800-46 Rev. 2"
+title = "Guide to Enterprise Telework, Remote Access, and Bring Your Own Device (BYOD) Security"
+date = "2016-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-46r2.pdf"
+
+[[source]]
+doc_id = "sp800-47r1"
+number = "NIST SP 800-47 Rev. 1"
+title = "Managing the Security of Information Exchanges"
+date = "2021-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-47r1.pdf"
+
+[[source]]
+doc_id = "sp800-49"
+number = "NIST SP 800-49"
+title = "Federal S/MIME V3 Client Profile"
+date = "2002-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-49.pdf"
+
+[[source]]
+doc_id = "sp800-50r1"
+number = "NIST SP 800-50 Rev. 1"
+title = "Building a Cybersecurity and Privacy Learning Program"
+date = "2024-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-50r1.pdf"
+
+[[source]]
+doc_id = "sp800-51r1"
+number = "NIST SP 800-51 Rev. 1"
+title = "Guide to Using Vulnerability Naming Schemes"
+date = "2011-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-51r1.pdf"
+
+[[source]]
+doc_id = "sp800-52r2"
+number = "NIST SP 800-52 Rev. 2"
+title = "Guidelines for the Selection, Configuration, and Use of Transport Layer Security (TLS) Implementations"
+date = "2019-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-52r2.pdf"
+
+[[source]]
+doc_id = "sp800-53ar5"
+number = "NIST SP 800-53A Rev. 5"
+title = "Assessing Security and Privacy Controls in Information Systems and Organizations"
+date = "2022-01"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53Ar5.pdf"
+
+[[source]]
+doc_id = "sp800-53b"
+number = "NIST SP 800-53B"
+title = "Control Baselines for Information Systems and Organizations"
+date = "2020-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53B.pdf"
+
+[[source]]
+doc_id = "sp800-53r5"
+number = "NIST SP 800-53 Rev. 5"
+title = "Security and Privacy Controls for Information Systems and Organizations"
+date = "2020-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf"
+splitter = "controls"
+
+
+[[source]]
+doc_id = "sp800-55v1"
+number = "NIST SP 800-55 Vol. 1"
+title = "Measurement Guide for Information Security: Volume 1 — Identifying and Selecting Measures"
+date = "2024-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-55v1.pdf"
+
+[[source]]
+doc_id = "sp800-55v2"
+number = "NIST SP 800-55 Vol. 2"
+title = "Measurement Guide for Information Security: Volume 2 — Developing an Information Security Measurement Program"
+date = "2024-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-55v2.pdf"
+
+[[source]]
+doc_id = "sp800-56ar3"
+number = "NIST SP 800-56A Rev. 3"
+title = "Recommendation for Pair-Wise Key-Establishment Schemes Using Discrete Logarithm Cryptography"
+date = "2018-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Ar3.pdf"
+
+[[source]]
+doc_id = "sp800-56br2"
+number = "NIST SP 800-56B Rev. 2"
+title = "Recommendation for Pair-Wise Key-Establishment Using Integer Factorization Cryptography"
+date = "2019-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Br2.pdf"
+
+[[source]]
+doc_id = "sp800-56cr2"
+number = "NIST SP 800-56C Rev. 2"
+title = "Recommendation for Key-Derivation Methods in Key-Establishment Schemes"
+date = "2020-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Cr2.pdf"
+
+[[source]]
+doc_id = "sp800-57pt1r5"
+number = "NIST SP 800-57 Part 1 Rev. 5"
+title = "Recommendation for Key Management: Part 1 – General"
+date = "2020-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf"
+
+[[source]]
+doc_id = "sp800-57pt2r1"
+number = "NIST SP 800-57 Part 2 Rev. 1"
+title = "Recommendation for Key Management: Part 2 – Best Practices for Key Management Organizations"
+date = "2019-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt2r1.pdf"
+
+[[source]]
+doc_id = "sp800-57pt3r1"
+number = "NIST SP 800-57 Part 3 Rev. 1"
+title = "Recommendation for Key Management, Part 3: Application-Specific Key Management Guidance"
+date = "2015-01"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57Pt3r1.pdf"
+
+[[source]]
+doc_id = "sp800-58"
+number = "NIST SP 800-58"
+title = "Security Considerations for Voice Over IP Systems"
+date = "2005-01"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-58.pdf"
+
+[[source]]
+doc_id = "sp800-59"
+number = "NIST SP 800-59"
+title = "Guideline for Identifying an Information System as a National Security System"
+date = "2003-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-59.pdf"
+
+[[source]]
+doc_id = "sp800-60v1r1"
+number = "NIST SP 800-60 Vol. 1 Rev. 1"
+title = "Guide for Mapping Types of Information and Information Systems to Security Categories"
+date = "2008-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-60v1r1.pdf"
+
+[[source]]
+doc_id = "sp800-60v2r1"
+number = "NIST SP 800-60 Vol. 2 Rev. 1"
+title = "Guide for Mapping Types of Information and Information Systems to Security Categories: Appendices"
+date = "2008-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-60v2r1.pdf"
+
+[[source]]
+doc_id = "sp800-61r3"
+number = "NIST SP 800-61 Rev. 3"
+title = "Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile"
+date = "2025-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+
+[[source]]
+doc_id = "sp800-63a-4"
+number = "NIST SP 800-63A-4"
+title = "Digital Identity Guidelines: Identity Proofing and Enrollment"
+date = "2025-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63a-4.pdf"
+
+[[source]]
+doc_id = "sp800-63b-4"
+number = "NIST SP 800-63B-4"
+title = "Digital Identity Guidelines: Authentication and Authenticator Management"
+date = "2025-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b-4.pdf"
+
+[[source]]
+doc_id = "sp800-63c-4"
+number = "NIST SP 800-63C-4"
+title = "Digital Identity Guidelines: Federation and Assertions"
+date = "2025-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63c-4.pdf"
+
+[[source]]
+doc_id = "sp800-63-4"
+number = "NIST SP 800-63-4"
+title = "Digital Identity Guidelines"
+date = "2025-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63-4.pdf"
+
+[[source]]
+doc_id = "sp800-66r2"
+number = "NIST SP 800-66 Rev. 2"
+title = "Implementing the Health Insurance Portability and Accountability Act (HIPAA) Security Rule: A Cybersecurity Resource Guide"
+date = "2024-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-66r2.pdf"
+
+[[source]]
+doc_id = "sp800-70r5"
+number = "NIST SP 800-70 Rev. 5"
+title = "National Checklist Program for IT Products: Guidelines for Checklist Users and Developers"
+date = "2026-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-70r5.pdf"
+
+[[source]]
+doc_id = "sp800-72"
+number = "NIST SP 800-72"
+title = "Guidelines on PDA Forensics"
+date = "2004-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-72.pdf"
+
+[[source]]
+doc_id = "sp800-77r1"
+number = "NIST SP 800-77 Rev. 1"
+title = "Guide to IPsec VPNs"
+date = "2020-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-77r1.pdf"
+
+[[source]]
+doc_id = "sp800-79-2"
+number = "NIST SP 800-79-2"
+title = "Guidelines for the Authorization of Personal Identity Verification Card Issuers (PCI) and Derived PIV Credential Issuers (DPCI)"
+date = "2015-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-79-2.pdf"
+
+[[source]]
+doc_id = "sp800-81r3"
+number = "NIST SP 800-81 Rev. 3"
+title = "Secure Domain Name System (DNS) Deployment Guide"
+date = "2026-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-81r3.pdf"
+
+[[source]]
+doc_id = "sp800-82r3"
+number = "NIST SP 800-82 Rev. 3"
+title = "Guide to Operational Technology (OT) Security"
+date = "2023-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-82r3.pdf"
+
+[[source]]
+doc_id = "sp800-83r1"
+number = "NIST SP 800-83 Rev. 1"
+title = "Guide to Malware Incident Prevention and Handling for Desktops and Laptops"
+date = "2013-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-83r1.pdf"
+
+[[source]]
+doc_id = "sp800-84"
+number = "NIST SP 800-84"
+title = "Guide to Test, Training, and Exercise Programs for IT Plans and Capabilities"
+date = "2006-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-84.pdf"
+
+[[source]]
+doc_id = "sp800-85a-4"
+number = "NIST SP 800-85A-4"
+title = "PIV Card Application and Middleware Interface Test Guidelines (SP 800-73-4 Compliance)"
+date = "2016-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-85A-4.pdf"
+
+[[source]]
+doc_id = "sp800-85b"
+number = "NIST SP 800-85B"
+title = "PIV Data Model Test Guidelines"
+date = "2006-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-85b.pdf"
+
+[[source]]
+doc_id = "sp800-86"
+number = "NIST SP 800-86"
+title = "Guide to Integrating Forensic Techniques into Incident Response"
+date = "2006-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+
+[[source]]
+doc_id = "sp800-87r2"
+number = "NIST SP 800-87 Rev. 2"
+title = "Codes for Identification of Federal and Federally-Assisted Organizations"
+date = "2018-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-87r2.pdf"
+
+[[source]]
+doc_id = "sp800-88r2"
+number = "NIST SP 800-88 Rev. 2"
+title = "Guidelines for Media Sanitization"
+date = "2025-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-88r2.pdf"
+
+[[source]]
+doc_id = "sp800-89"
+number = "NIST SP 800-89"
+title = "Recommendation for Obtaining Assurances for Digital Signature Applications"
+date = "2006-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-89.pdf"
+
+[[source]]
+doc_id = "sp800-90ar1"
+number = "NIST SP 800-90A Rev. 1"
+title = "Recommendation for Random Number Generation Using Deterministic Random Bit Generators"
+date = "2015-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-90Ar1.pdf"
+
+[[source]]
+doc_id = "sp800-90b"
+number = "NIST SP 800-90B"
+title = "Recommendation for the Entropy Sources Used for Random Bit Generation"
+date = "2018-01"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-90B.pdf"
+
+[[source]]
+doc_id = "sp800-90c"
+number = "NIST SP 800-90C"
+title = "Recommendation for Random Bit Generator (RBG) Constructions"
+date = "2025-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-90C.pdf"
+
+[[source]]
+doc_id = "sp800-92"
+number = "NIST SP 800-92"
+title = "Guide to Computer Security Log Management"
+date = "2006-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-92.pdf"
+
+[[source]]
+doc_id = "sp800-94"
+number = "NIST SP 800-94"
+title = "Guide to Intrusion Detection and Prevention Systems (IDPS)"
+date = "2007-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+
+[[source]]
+doc_id = "sp800-95"
+number = "NIST SP 800-95"
+title = "Guide to Secure Web Services"
+date = "2007-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-95.pdf"
+
+[[source]]
+doc_id = "sp800-96"
+number = "NIST SP 800-96"
+title = "PIV Card to Reader Interoperability Guidelines"
+date = "2006-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-96.pdf"
+
+[[source]]
+doc_id = "sp800-98"
+number = "NIST SP 800-98"
+title = "Guidelines for Securing Radio Frequency Identification (RFID) Systems"
+date = "2007-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-98.pdf"
+
+[[source]]
+doc_id = "sp800-100"
+number = "NIST SP 800-100"
+title = "Information Security Handbook: A Guide for Managers"
+date = "2007-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-100.pdf"
+
+[[source]]
+doc_id = "sp800-101r1"
+number = "NIST SP 800-101 Rev. 1"
+title = "Guidelines on Mobile Device Forensics"
+date = "2014-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-101r1.pdf"
+
+[[source]]
+doc_id = "sp800-107r1"
+number = "NIST SP 800-107 Rev. 1"
+title = "Recommendation for Applications Using Approved Hash Algorithms"
+date = "2012-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-107r1.pdf"
+
+[[source]]
+doc_id = "sp800-108r1"
+number = "NIST SP 800-108 Rev. 1"
+title = "Recommendation for Key Derivation Using Pseudorandom Functions"
+date = "2024-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-108r1-upd1.pdf"
+
+[[source]]
+doc_id = "sp800-111"
+number = "NIST SP 800-111"
+title = "Guide to Storage Encryption Technologies for End User Devices"
+date = "2007-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-111.pdf"
+
+[[source]]
+doc_id = "sp800-113"
+number = "NIST SP 800-113"
+title = "Guide to SSL VPNs"
+date = "2008-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-113.pdf"
+
+[[source]]
+doc_id = "sp800-114r1"
+number = "NIST SP 800-114 Rev. 1"
+title = "User's Guide to Telework and Bring Your Own Device (BYOD) Security"
+date = "2016-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-114r1.pdf"
+
+[[source]]
+doc_id = "sp800-115"
+number = "NIST SP 800-115"
+title = "Technical Guide to Information Security Testing and Assessment"
+date = "2008-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-115.pdf"
+
+[[source]]
+doc_id = "sp800-116r1"
+number = "NIST SP 800-116 Rev. 1"
+title = "Guidelines for the Use of PIV Credentials in Facility Access"
+date = "2018-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-116r1.pdf"
+
+[[source]]
+doc_id = "sp800-119"
+number = "NIST SP 800-119"
+title = "Guidelines for the Secure Deployment of IPv6"
+date = "2010-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-119.pdf"
+
+[[source]]
+doc_id = "sp800-121r2"
+number = "NIST SP 800-121 Rev. 2"
+title = "Guide to Bluetooth Security"
+date = "2022-01"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-121r2-upd1.pdf"
+
+[[source]]
+doc_id = "sp800-122"
+number = "NIST SP 800-122"
+title = "Guide to Protecting the Confidentiality of Personally Identifiable Information (PII)"
+date = "2010-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-122.pdf"
+
+[[source]]
+doc_id = "sp800-123"
+number = "NIST SP 800-123"
+title = "Guide to General Server Security"
+date = "2008-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-123.pdf"
+
+[[source]]
+doc_id = "sp800-124r2"
+number = "NIST SP 800-124 Rev. 2"
+title = "Guidelines for Managing the Security of Mobile Devices in the Enterprise"
+date = "2023-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-124r2.pdf"
+
+[[source]]
+doc_id = "sp800-125"
+number = "NIST SP 800-125"
+title = "Guide to Security for Full Virtualization Technologies"
+date = "2011-01"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-125.pdf"
+
+[[source]]
+doc_id = "sp800-125ar1"
+number = "NIST SP 800-125A Rev. 1"
+title = "Security Recommendations for Server-based Hypervisor Platforms"
+date = "2018-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-125Ar1.pdf"
+
+[[source]]
+doc_id = "sp800-125b"
+number = "NIST SP 800-125B"
+title = "Secure Virtual Network Configuration for Virtual Machine (VM) Protection"
+date = "2016-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-125B.pdf"
+
+[[source]]
+doc_id = "sp800-126ar4"
+number = "NIST SP 800-126A Rev. 4"
+title = "SCAP 1.4 Component Specification Version Updates: An Annex to NIST SP 800-126r4"
+date = "2026-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-126Ar4.pdf"
+
+[[source]]
+doc_id = "sp800-126r4"
+number = "NIST SP 800-126 Rev. 4"
+title = "Technical Specification for the Security Content Automation Protocol (SCAP): SCAP Version 1.4"
+date = "2026-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-126r4.pdf"
+
+[[source]]
+doc_id = "sp800-128"
+number = "NIST SP 800-128"
+title = "Guide for Security-Focused Configuration Management of Information Systems"
+date = "2019-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-128.pdf"
+
+[[source]]
+doc_id = "sp800-130"
+number = "NIST SP 800-130"
+title = "A Framework for Designing Cryptographic Key Management Systems"
+date = "2013-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-130.pdf"
+
+[[source]]
+doc_id = "sp800-131ar2"
+number = "NIST SP 800-131A Rev. 2"
+title = "Transitioning the Use of Cryptographic Algorithms and Key Lengths"
+date = "2019-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-131Ar2.pdf"
+
+[[source]]
+doc_id = "sp800-132"
+number = "NIST SP 800-132"
+title = "Recommendation for Password-Based Key Derivation: Part 1: Storage Applications"
+date = "2010-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf"
+
+[[source]]
+doc_id = "sp800-133r2"
+number = "NIST SP 800-133 Rev. 2"
+title = "Recommendation for Cryptographic Key Generation"
+date = "2020-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-133r2.pdf"
+
+[[source]]
+doc_id = "sp800-135r1"
+number = "NIST SP 800-135 Rev. 1"
+title = "Recommendation for Existing Application-Specific Key Derivation Functions"
+date = "2011-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-135r1.pdf"
+
+[[source]]
+doc_id = "sp800-137"
+number = "NIST SP 800-137"
+title = "Information Security Continuous Monitoring (ISCM) for Federal Information Systems and Organizations"
+date = "2011-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-137.pdf"
+
+[[source]]
+doc_id = "sp800-137a"
+number = "NIST SP 800-137A"
+title = "Assessing Information Security Continuous Monitoring (ISCM) Programs: Developing an ISCM Program Assessment"
+date = "2020-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-137A.pdf"
+
+[[source]]
+doc_id = "sp800-140"
+number = "NIST SP 800-140"
+title = "FIPS 140-3 Derived Test Requirements (DTR): CMVP Validation Authority Updates to ISO/IEC 24759"
+date = "2020-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-140.pdf"
+
+[[source]]
+doc_id = "sp800-140a"
+number = "NIST SP 800-140A"
+title = "CMVP Documentation Requirements: CMVP Validation Authority Updates to ISO/IEC 24759"
+date = "2020-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-140A.pdf"
+
+[[source]]
+doc_id = "sp800-140br1"
+number = "NIST SP 800-140B Rev. 1"
+title = "Cryptographic Module Validation Program (CMVP) Security Policy Requirements: CMVP Validation Authority Updates to ISO/IEC 24759 and ISO/IEC 19790 Annex B"
+date = "2023-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-140Br1.pdf"
+
+[[source]]
+doc_id = "sp800-140cr2"
+number = "NIST SP 800-140C Rev. 2"
+title = "Cryptographic Module Validation Program (CMVP)-Approved Security Functions: CMVP Validation Authority Updates to ISO/IEC 24759"
+date = "2023-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-140Cr2.pdf"
+
+[[source]]
+doc_id = "sp800-140dr2"
+number = "NIST SP 800-140D Rev. 2"
+title = "Cryptographic Module Validation Program (CMVP)-Approved Sensitive Security Parameter Generation and Establishment Methods: CMVP Validation Authority Updates to ISO/IEC 24759"
+date = "2023-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-140Dr2.pdf"
+
+[[source]]
+doc_id = "sp800-140e"
+number = "NIST SP 800-140E"
+title = "CMVP Approved Authentication Mechanisms: CMVP Validation Authority Requirements for ISO/IEC 19790 Annex E and ISO/IEC 24579 Section 6.17"
+date = "2020-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-140E.pdf"
+
+[[source]]
+doc_id = "sp800-140f"
+number = "NIST SP 800-140F"
+title = "CMVP Approved Non-Invasive Attack Mitigation Test Metrics: CMVP Validation Authority Updates to ISO/IEC 24759"
+date = "2020-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-140F.pdf"
+
+[[source]]
+doc_id = "sp800-142"
+number = "NIST SP 800-142"
+title = "Practical Combinatorial Testing"
+date = "2010-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-142.pdf"
+
+[[source]]
+doc_id = "sp800-144"
+number = "NIST SP 800-144"
+title = "Guidelines on Security and Privacy in Public Cloud Computing"
+date = "2011-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-144.pdf"
+
+[[source]]
+doc_id = "sp800-145"
+number = "NIST SP 800-145"
+title = "The NIST Definition of Cloud Computing"
+date = "2011-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf"
+
+[[source]]
+doc_id = "sp800-146"
+number = "NIST SP 800-146"
+title = "Cloud Computing Synopsis and Recommendations"
+date = "2012-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-146.pdf"
+
+[[source]]
+doc_id = "sp800-147"
+number = "NIST SP 800-147"
+title = "BIOS Protection Guidelines"
+date = "2011-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-147.pdf"
+
+[[source]]
+doc_id = "sp800-147b"
+number = "NIST SP 800-147B"
+title = "BIOS Protection Guidelines for Servers"
+date = "2014-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-147B.pdf"
+
+[[source]]
+doc_id = "sp800-150"
+number = "NIST SP 800-150"
+title = "Guide to Cyber Threat Information Sharing"
+date = "2016-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+
+[[source]]
+doc_id = "sp800-152"
+number = "NIST SP 800-152"
+title = "A Profile for U.S. Federal Cryptographic Key Management Systems (CKMS)"
+date = "2015-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-152.pdf"
+
+[[source]]
+doc_id = "sp800-153"
+number = "NIST SP 800-153"
+title = "Guidelines for Securing Wireless Local Area Networks (WLANs)"
+date = "2012-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-153.pdf"
+
+[[source]]
+doc_id = "sp800-156"
+number = "NIST SP 800-156"
+title = "Representation of PIV Chain-of-Trust for Import and Export"
+date = "2016-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-156.pdf"
+
+[[source]]
+doc_id = "sp800-160v1r1"
+number = "NIST SP 800-160 Vol. 1 Rev. 1"
+title = "Engineering Trustworthy Secure Systems"
+date = "2022-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-160v1r1.pdf"
+
+[[source]]
+doc_id = "sp800-160v2r1"
+number = "NIST SP 800-160 Vol. 2 Rev. 1"
+title = "Developing Cyber-Resilient Systems: A Systems Security Engineering Approach"
+date = "2021-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-160v2r1.pdf"
+
+[[source]]
+doc_id = "sp800-161r1"
+number = "NIST SP 800-161 Rev. 1"
+title = "Cybersecurity Supply Chain Risk Management Practices for Systems and Organizations"
+date = "2024-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-161r1-upd1.pdf"
+
+[[source]]
+doc_id = "sp800-162"
+number = "NIST SP 800-162"
+title = "Guide to Attribute Based Access Control (ABAC) Definition and Considerations"
+date = "2019-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-162.pdf"
+
+[[source]]
+doc_id = "sp800-163r1"
+number = "NIST SP 800-163 Rev. 1"
+title = "Vetting the Security of Mobile Applications"
+date = "2019-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-163r1.pdf"
+
+[[source]]
+doc_id = "sp800-165"
+number = "NIST SP 800-165"
+title = "Computer Security Division 2012 Annual Report"
+date = "2013-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-165.pdf"
+
+[[source]]
+doc_id = "sp800-166"
+number = "NIST SP 800-166"
+title = "Derived PIV Application and Data Model Test Guidelines"
+date = "2016-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-166.pdf"
+
+[[source]]
+doc_id = "sp800-167"
+number = "NIST SP 800-167"
+title = "Guide to Application Whitelisting"
+date = "2015-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-167.pdf"
+
+[[source]]
+doc_id = "sp800-168"
+number = "NIST SP 800-168"
+title = "Approximate Matching: Definition and Terminology"
+date = "2014-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-168.pdf"
+
+[[source]]
+doc_id = "sp800-170"
+number = "NIST SP 800-170"
+title = "Computer Security Division 2013 Annual Report"
+date = "2014-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-170.pdf"
+
+[[source]]
+doc_id = "sp800-171ar3"
+number = "NIST SP 800-171A Rev. 3"
+title = "Assessing Security Requirements for Controlled Unclassified Information"
+date = "2024-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171Ar3.pdf"
+
+[[source]]
+doc_id = "sp800-171r3"
+number = "NIST SP 800-171 Rev. 3"
+title = "Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations"
+date = "2024-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-171r3.pdf"
+
+[[source]]
+doc_id = "sp800-172ar3"
+number = "NIST SP 800-172A Rev. 3"
+title = "Assessing Enhanced Security Requirements for Controlled Unclassified Information"
+date = "2026-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-172Ar3.pdf"
+
+[[source]]
+doc_id = "sp800-172r3"
+number = "NIST SP 800-172 Rev. 3"
+title = "Enhanced Security Requirements for Protecting Controlled Unclassified Information"
+date = "2026-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-172r3.pdf"
+
+[[source]]
+doc_id = "sp800-175a"
+number = "NIST SP 800-175A"
+title = "Guideline for Using Cryptographic Standards in the Federal Government: Directives, Mandates and Policies"
+date = "2016-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-175A.pdf"
+
+[[source]]
+doc_id = "sp800-175br1"
+number = "NIST SP 800-175B Rev. 1"
+title = "Guideline for Using Cryptographic Standards in the Federal Government: Cryptographic Mechanisms"
+date = "2020-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-175Br1.pdf"
+
+[[source]]
+doc_id = "sp800-176"
+number = "NIST SP 800-176"
+title = "Computer Security Division 2014 Annual Report"
+date = "2015-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-176.pdf"
+
+[[source]]
+doc_id = "sp800-177r1"
+number = "NIST SP 800-177 Rev. 1"
+title = "Trustworthy Email"
+date = "2019-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-177r1.pdf"
+
+[[source]]
+doc_id = "sp800-178"
+number = "NIST SP 800-178"
+title = "A Comparison of Attribute Based Access Control (ABAC) Standards for Data Service Applications: Extensible Access Control Markup Language (XACML) and Next Generation Access Control (NGAC)"
+date = "2016-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-178.pdf"
+
+[[source]]
+doc_id = "sp800-181r1"
+number = "NIST SP 800-181 Rev. 1"
+title = "Workforce Framework for Cybersecurity (NICE Framework)"
+date = "2020-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-181r1.pdf"
+
+[[source]]
+doc_id = "sp800-182"
+number = "NIST SP 800-182"
+title = "Computer Security Division 2015 Annual Report"
+date = "2016-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-182.pdf"
+
+[[source]]
+doc_id = "sp800-183"
+number = "NIST SP 800-183"
+title = "Networks of 'Things'"
+date = "2016-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-183.pdf"
+
+[[source]]
+doc_id = "sp800-184"
+number = "NIST SP 800-184"
+title = "Guide for Cybersecurity Event Recovery"
+date = "2016-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-184.pdf"
+
+[[source]]
+doc_id = "sp800-185"
+number = "NIST SP 800-185"
+title = "SHA-3 Derived Functions: cSHAKE, KMAC, TupleHash, and ParallelHash"
+date = "2016-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-185.pdf"
+
+[[source]]
+doc_id = "sp800-186"
+number = "NIST SP 800-186"
+title = "Recommendations for Discrete Logarithm-based Cryptography: Elliptic Curve Domain Parameters"
+date = "2023-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-186.pdf"
+
+[[source]]
+doc_id = "sp800-187"
+number = "NIST SP 800-187"
+title = "Guide to LTE Security"
+date = "2017-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-187.pdf"
+
+[[source]]
+doc_id = "sp800-188"
+number = "NIST SP 800-188"
+title = "De-Identifying Government Datasets: Techniques and Governance"
+date = "2023-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-188.pdf"
+
+[[source]]
+doc_id = "sp800-189"
+number = "NIST SP 800-189"
+title = "Resilient Interdomain Traffic Exchange: BGP Security and DDoS Mitigation"
+date = "2019-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-189.pdf"
+
+[[source]]
+doc_id = "sp800-190"
+number = "NIST SP 800-190"
+title = "Application Container Security Guide"
+date = "2017-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf"
+
+[[source]]
+doc_id = "sp800-192"
+number = "NIST SP 800-192"
+title = "Verification and Test Methods for Access Control Policies/Models"
+date = "2017-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-192.pdf"
+
+[[source]]
+doc_id = "sp800-193"
+number = "NIST SP 800-193"
+title = "Platform Firmware Resiliency Guidelines"
+date = "2018-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-193.pdf"
+
+[[source]]
+doc_id = "sp800-195"
+number = "NIST SP 800-195"
+title = "2016 NIST/ITL Cybersecurity Program Annual Report"
+date = "2017-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-195.pdf"
+
+[[source]]
+doc_id = "sp800-201"
+number = "NIST SP 800-201"
+title = "NIST Cloud Computing Forensic Reference Architecture"
+date = "2024-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-201.pdf"
+
+[[source]]
+doc_id = "sp800-202"
+number = "NIST SP 800-202"
+title = "Quick Start Guide for Populating Mobile Test Devices"
+date = "2018-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-202.pdf"
+
+[[source]]
+doc_id = "sp800-203"
+number = "NIST SP 800-203"
+title = "2017 NIST/ITL Cybersecurity Program Annual Report"
+date = "2018-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-203.pdf"
+
+[[source]]
+doc_id = "sp800-204"
+number = "NIST SP 800-204"
+title = "Security Strategies for Microservices-based Application Systems"
+date = "2019-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204.pdf"
+
+[[source]]
+doc_id = "sp800-204a"
+number = "NIST SP 800-204A"
+title = "Building Secure Microservices-based Applications Using Service-Mesh Architecture"
+date = "2020-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204A.pdf"
+
+[[source]]
+doc_id = "sp800-204b"
+number = "NIST SP 800-204B"
+title = "Attribute-based Access Control for Microservices-based Applications using a Service Mesh"
+date = "2021-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204B.pdf"
+
+[[source]]
+doc_id = "sp800-204c"
+number = "NIST SP 800-204C"
+title = "Implementation of DevSecOps for a Microservices-based Application with Service Mesh"
+date = "2022-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204C.pdf"
+
+[[source]]
+doc_id = "sp800-204d"
+number = "NIST SP 800-204D"
+title = "Strategies for the Integration of Software Supply Chain Security in DevSecOps CI/CD Pipelines"
+date = "2024-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204D.pdf"
+
+[[source]]
+doc_id = "sp800-205"
+number = "NIST SP 800-205"
+title = "Attribute Considerations for Access Control Systems"
+date = "2019-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-205.pdf"
+
+[[source]]
+doc_id = "sp800-206"
+number = "NIST SP 800-206"
+title = "Annual Report 2018: NIST/ITL Cybersecurity Program"
+date = "2020-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-206.pdf"
+
+[[source]]
+doc_id = "sp800-207"
+number = "NIST SP 800-207"
+title = "Zero Trust Architecture"
+date = "2020-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf"
+
+[[source]]
+doc_id = "sp800-207a"
+number = "NIST SP 800-207A"
+title = "A Zero Trust Architecture Model for Access Control in Cloud-Native Applications in Multi-Cloud Environments"
+date = "2023-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207A.pdf"
+
+[[source]]
+doc_id = "sp800-208"
+number = "NIST SP 800-208"
+title = "Recommendation for Stateful Hash-Based Signature Schemes"
+date = "2020-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-208.pdf"
+
+[[source]]
+doc_id = "sp800-209"
+number = "NIST SP 800-209"
+title = "Security Guidelines for Storage Infrastructure"
+date = "2020-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-209.pdf"
+
+[[source]]
+doc_id = "sp800-210"
+number = "NIST SP 800-210"
+title = "General Access Control Guidance for Cloud Systems"
+date = "2020-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-210.pdf"
+
+[[source]]
+doc_id = "sp800-211"
+number = "NIST SP 800-211"
+title = "2019 NIST/ITL Cybersecurity Program Annual Report"
+date = "2020-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-211.pdf"
+
+[[source]]
+doc_id = "sp800-213"
+number = "NIST SP 800-213"
+title = "IoT Device Cybersecurity Guidance for the Federal Government: Establishing IoT Device Cybersecurity Requirements"
+date = "2021-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-213.pdf"
+
+[[source]]
+doc_id = "sp800-213a"
+number = "NIST SP 800-213A"
+title = "IoT Device Cybersecurity Guidance for the Federal Government: IoT Device Cybersecurity Requirement Catalog"
+date = "2021-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-213A.pdf"
+
+[[source]]
+doc_id = "sp800-214"
+number = "NIST SP 800-214"
+title = "2020 Cybersecurity and Privacy Annual Report"
+date = "2021-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-214.pdf"
+
+[[source]]
+doc_id = "sp800-215"
+number = "NIST SP 800-215"
+title = "Guide to a Secure Enterprise Network Landscape"
+date = "2022-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-215.pdf"
+
+[[source]]
+doc_id = "sp800-216"
+number = "NIST SP 800-216"
+title = "Recommendations for Federal Vulnerability Disclosure Guidelines"
+date = "2023-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-216.pdf"
+
+[[source]]
+doc_id = "sp800-218"
+number = "NIST SP 800-218"
+title = "Secure Software Development Framework (SSDF) Version 1.1: Recommendations for Mitigating the Risk of Software Vulnerabilities"
+date = "2022-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf"
+
+[[source]]
+doc_id = "sp800-218a"
+number = "NIST SP 800-218A"
+title = "Secure Software Development Practices for Generative AI and Dual-Use Foundation Models: An SSDF Community Profile"
+date = "2024-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218A.pdf"
+
+[[source]]
+doc_id = "sp800-219r1"
+number = "NIST SP 800-219 Rev. 1"
+title = "Automated Secure Configuration Guidance from the macOS Security Compliance Project (mSCP)"
+date = "2023-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-219r1.pdf"
+
+[[source]]
+doc_id = "sp800-220"
+number = "NIST SP 800-220"
+title = "Fiscal Year 2021 Cybersecurity and Privacy Annual Report"
+date = "2022-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-220.pdf"
+
+[[source]]
+doc_id = "sp800-221"
+number = "NIST SP 800-221"
+title = "Enterprise Impact of Information and Communications Technology Risk: Governing and Managing ICT Risk Programs Within an Enterprise Risk Portfolio"
+date = "2023-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-221.pdf"
+
+[[source]]
+doc_id = "sp800-221a"
+number = "NIST SP 800-221A"
+title = "Information and Communications Technology (ICT) Risk Outcomes: Integrating ICT Risk Management Programs with the Enterprise Risk Portfolio"
+date = "2023-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-221A.pdf"
+
+[[source]]
+doc_id = "sp800-223"
+number = "NIST SP 800-223"
+title = "High-Performance Computing Security: Architecture, Threat Analysis, and Security Posture"
+date = "2024-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-223.pdf"
+
+[[source]]
+doc_id = "sp800-225"
+number = "NIST SP 800-225"
+title = "Fiscal Year 2022 Cybersecurity and Privacy Annual Report"
+date = "2023-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-225.pdf"
+
+[[source]]
+doc_id = "sp800-226"
+number = "NIST SP 800-226"
+title = "Guidelines for Evaluating Differential Privacy Guarantees"
+date = "2025-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-226.pdf"
+
+[[source]]
+doc_id = "sp800-227"
+number = "NIST SP 800-227"
+title = "Recommendations for Key-Encapsulation Mechanisms"
+date = "2025-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-227.pdf"
+
+[[source]]
+doc_id = "sp800-228"
+number = "NIST SP 800-228"
+title = "Guidelines for API Protection for Cloud-Native Systems"
+date = "2026-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-228-upd1.pdf"
+
+[[source]]
+doc_id = "sp800-229"
+number = "NIST SP 800-229"
+title = "Fiscal Year 2023 Cybersecurity and Privacy Annual Report"
+date = "2024-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-229.pdf"
+
+[[source]]
+doc_id = "sp800-231"
+number = "NIST SP 800-231"
+title = "Bug Framework (BF): Formalizing Cybersecurity Weaknesses and Vulnerabilities"
+date = "2024-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-231.pdf"
+
+[[source]]
+doc_id = "sp800-232"
+number = "NIST SP 800-232"
+title = "Ascon-Based Lightweight Cryptography Standards for Constrained Devices: Authenticated Encryption, Hash, and Extendable Output Functions"
+date = "2025-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-232.pdf"
+
+[[source]]
+doc_id = "sp800-233"
+number = "NIST SP 800-233"
+title = "Service Mesh Proxy Models for Cloud-Native Applications"
+date = "2024-10"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-233.pdf"
+
+[[source]]
+doc_id = "sp800-234"
+number = "NIST SP 800-234"
+title = "High-Performance Computing (HPC) Security Overlay"
+date = "2026-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-234.pdf"
+
+[[source]]
+doc_id = "sp800-236"
+number = "NIST SP 800-236"
+title = "Fiscal Year 2024 Cybersecurity and Privacy Annual Report"
+date = "2025-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-236.pdf"
+
+[[source]]
+doc_id = "sp800-238"
+number = "NIST SP 800-238"
+title = "Fiscal Year 2025 Cybersecurity and Privacy Annual Report"
+date = "2026-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-238.pdf"
+
+[[source]]
+doc_id = "sp1800-1"
+number = "NIST SP 1800-1"
+title = "Securing Electronic Health Records on Mobile Devices"
+date = "2018-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-1.pdf"
+
+[[source]]
+doc_id = "sp1800-2"
+number = "NIST SP 1800-2"
+title = "Identity and Access Management for Electric Utilities"
+date = "2018-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-2.pdf"
+
+[[source]]
+doc_id = "sp1800-4"
+number = "NIST SP 1800-4"
+title = "Mobile Device Security: Cloud and Hybrid Builds"
+date = "2019-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-4.pdf"
+
+[[source]]
+doc_id = "sp1800-5"
+number = "NIST SP 1800-5"
+title = "IT Asset Management"
+date = "2018-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-5.pdf"
+
+[[source]]
+doc_id = "sp1800-6"
+number = "NIST SP 1800-6"
+title = "Domain Name System-Based Electronic Mail Security"
+date = "2018-01"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-6.pdf"
+
+[[source]]
+doc_id = "sp1800-7"
+number = "NIST SP 1800-7"
+title = "Situational Awareness for Electric Utilities"
+date = "2019-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-7.pdf"
+
+[[source]]
+doc_id = "sp1800-8"
+number = "NIST SP 1800-8"
+title = "Securing Wireless Infusion Pumps in Healthcare Delivery Organizations"
+date = "2018-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-8.pdf"
+
+[[source]]
+doc_id = "sp1800-10"
+number = "NIST SP 1800-10"
+title = "Protecting Information and System Integrity in Industrial Control System Environments: Cybersecurity for the Manufacturing Sector"
+date = "2022-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-10.pdf"
+
+[[source]]
+doc_id = "sp1800-11"
+number = "NIST SP 1800-11"
+title = "Data Integrity: Recovering from Ransomware and Other Destructive Events"
+date = "2020-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-11.pdf"
+
+[[source]]
+doc_id = "sp1800-12"
+number = "NIST SP 1800-12"
+title = "Derived Personal Identity Verification (PIV) Credentials"
+date = "2019-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-12.pdf"
+
+[[source]]
+doc_id = "sp1800-13"
+number = "NIST SP 1800-13"
+title = "Mobile Application Single Sign-On: Improving Authentication for Public Safety First Responders"
+date = "2021-08"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-13.pdf"
+
+[[source]]
+doc_id = "sp1800-14"
+number = "NIST SP 1800-14"
+title = "Protecting the Integrity of Internet Routing: Border Gateway Protocol (BGP) Route Origin Validation"
+date = "2019-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-14.pdf"
+
+[[source]]
+doc_id = "sp1800-15"
+number = "NIST SP 1800-15"
+title = "Securing Small-Business and Home Internet of Things (IoT) Devices: Mitigating Network-Based Attacks Using Manufacturer Usage Description (MUD)"
+date = "2021-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-15.pdf"
+
+[[source]]
+doc_id = "sp1800-16"
+number = "NIST SP 1800-16"
+title = "Securing Web Transactions: TLS Server Certificate Management"
+date = "2020-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-16.pdf"
+
+[[source]]
+doc_id = "sp1800-17"
+number = "NIST SP 1800-17"
+title = "Multifactor Authentication for E-Commerce: Risk-Based, FIDO Universal Second Factor Implementations for Purchasers"
+date = "2019-07"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-17.pdf"
+
+[[source]]
+doc_id = "sp1800-19"
+number = "NIST SP 1800-19"
+title = "Trusted Cloud: Security Practice Guide for VMware Hybrid Cloud Infrastructure as a Service (IaaS) Environments"
+date = "2022-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-19.pdf"
+
+[[source]]
+doc_id = "sp1800-21"
+number = "NIST SP 1800-21"
+title = "Mobile Device Security: Corporate-Owned Personally-Enabled (COPE)"
+date = "2020-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-21.pdf"
+
+[[source]]
+doc_id = "sp1800-22"
+number = "NIST SP 1800-22"
+title = "Mobile Device Security: Bring Your Own Device (BYOD)"
+date = "2023-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-22.pdf"
+
+[[source]]
+doc_id = "sp1800-23"
+number = "NIST SP 1800-23"
+title = "Energy Sector Asset Management: For Electric Utilities, Oil & Gas Industry"
+date = "2020-05"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-23.pdf"
+
+[[source]]
+doc_id = "sp1800-24"
+number = "NIST SP 1800-24"
+title = "Securing Picture Archiving and Communication System (PACS): Cybersecurity for the Healthcare Sector"
+date = "2020-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-24.pdf"
+
+[[source]]
+doc_id = "sp1800-25"
+number = "NIST SP 1800-25"
+title = "Data Integrity: Identifying and Protecting Assets Against Ransomware and Other Destructive Events"
+date = "2020-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-25.pdf"
+
+[[source]]
+doc_id = "sp1800-26"
+number = "NIST SP 1800-26"
+title = "Data Integrity: Detecting and Responding to Ransomware and Other Destructive Events"
+date = "2020-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-26.pdf"
+
+[[source]]
+doc_id = "sp1800-27"
+number = "NIST SP 1800-27"
+title = "Securing Property Management Systems"
+date = "2021-03"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-27.pdf"
+
+[[source]]
+doc_id = "sp1800-28"
+number = "NIST SP 1800-28"
+title = "Data Confidentiality: Identifying and Protecting Assets Against Data Breaches"
+date = "2024-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-28.pdf"
+
+[[source]]
+doc_id = "sp1800-29"
+number = "NIST SP 1800-29"
+title = "Data Confidentiality: Detect, Respond to, and Recover from Data Breaches"
+date = "2024-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-29.pdf"
+
+[[source]]
+doc_id = "sp1800-30"
+number = "NIST SP 1800-30"
+title = "Securing Telehealth Remote Patient Monitoring Ecosystem"
+date = "2022-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-30.pdf"
+
+[[source]]
+doc_id = "sp1800-31"
+number = "NIST SP 1800-31"
+title = "Improving Enterprise Patching for General IT Systems: Utilizing Existing Tools and Performing Processes in Better Ways"
+date = "2022-04"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-31.pdf"
+
+[[source]]
+doc_id = "sp1800-32"
+number = "NIST SP 1800-32"
+title = "Securing Distributed Energy Resources: An Example of Industrial Internet of Things Cybersecurity"
+date = "2022-02"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-32.pdf"
+
+[[source]]
+doc_id = "sp1800-34"
+number = "NIST SP 1800-34"
+title = "Validating the Integrity of Computing Devices"
+date = "2022-12"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-34.pdf"
+
+[[source]]
+doc_id = "sp1800-35"
+number = "NIST SP 1800-35"
+title = "Implementing a Zero Trust Architecture: High-Level Document"
+date = "2025-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-35.pdf"
+
+[[source]]
+doc_id = "sp1800-36"
+number = "NIST SP 1800-36"
+title = "Trusted Internet of Things (IoT) Device Network-Layer Onboarding and Lifecycle Management: Enhancing Internet Protocol-Based IoT Device and Network Security"
+date = "2025-11"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-36.pdf"
+
+[[source]]
+doc_id = "sp1800-37"
+number = "NIST SP 1800-37"
+title = "Addressing Visibility Challenges with TLS 1.3 within the Enterprise: High-Level Document"
+date = "2025-09"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-37.pdf"
+
+[[source]]
+doc_id = "sp1800-45"
+number = "NIST SP 1800-45"
+title = "Cybersecurity for the Water and Wastewater Sector: Build Architecture (Operational Technology Remote Access)"
+date = "2026-06"
+status = "final"
+url = "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1800-45.pdf"
+
+# OSCAL catalogues from usnistgov/oscal-content (XML), rendered by `python -m nistlib.ingest.oscal`.
+# Each is pinned to a commit and to the git blob sha of the file. title, date and status are the catalogue's own
+# metadata (status is its publication-status prop, or "unspecified" when it has none) and are checked at render time.
+
+[[oscal]]
+doc_id = "sp800-53r5-oscal"
+number = "NIST SP 800-53 Rev. 5 (OSCAL)"
+title = "Electronic (OSCAL) Version of NIST SP 800-53 Rev 5.2.0 Controls and SP 800-53A Rev 5.2.0 Assessment Procedures"
+date = "2026-10"
+status = "unspecified"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/SP800-53/rev5/xml/NIST_SP-800-53_rev5_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "228fb3e68fcc23bb861bf5510c2db3b95a7d8441"
+
+[[oscal]]
+doc_id = "sp800-53r5-low-oscal"
+number = "NIST SP 800-53 Rev. 5 LOW baseline (OSCAL)"
+title = "Electronic (OSCAL) Version of NIST Special Publication 800-53 Revision 5.2.0 LOW IMPACT BASELINE"
+date = "2026-10"
+status = "unspecified"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/SP800-53/rev5/xml/NIST_SP-800-53_rev5_LOW-baseline-resolved-profile_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "978be3880ff290946df17b4a74cac2a4b2863955"
+
+[[oscal]]
+doc_id = "sp800-53r5-moderate-oscal"
+number = "NIST SP 800-53 Rev. 5 MODERATE baseline (OSCAL)"
+title = "Electronic (OSCAL) Version of NIST Special Publication 800-53 Revision 5.2.0 MODERATE IMPACT BASELINE"
+date = "2026-10"
+status = "unspecified"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/SP800-53/rev5/xml/NIST_SP-800-53_rev5_MODERATE-baseline-resolved-profile_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "95a29f129142f45b93a4a88d5eb24947b93c8bcb"
+
+[[oscal]]
+doc_id = "sp800-53r5-high-oscal"
+number = "NIST SP 800-53 Rev. 5 HIGH baseline (OSCAL)"
+title = "Electronic (OSCAL) Version of NIST Special Publication 800-53 Revision 5.1.1 HIGH IMPACT BASELINE"
+date = "2026-10"
+status = "unspecified"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/SP800-53/rev5/xml/NIST_SP-800-53_rev5_HIGH-baseline-resolved-profile_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "d1762773a68fa65d247db4a7b62742a2d3a877db"
+
+[[oscal]]
+doc_id = "sp800-53r5-privacy-oscal"
+number = "NIST SP 800-53 Rev. 5 PRIVACY baseline (OSCAL)"
+title = "Electronic (OSCAL) Version of NIST Special Publication 800-53 Revision 5.2.0 PRIVACY BASELINE"
+date = "2026-10"
+status = "unspecified"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/SP800-53/rev5/xml/NIST_SP-800-53_rev5_PRIVACY-baseline-resolved-profile_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "92c56c54cd9fa052d7d2ecde0077d246331bd923"
+
+[[oscal]]
+doc_id = "sp800-171r3-oscal"
+number = "NIST SP 800-171 Rev. 3 (OSCAL)"
+title = "Electronic (OSCAL) Version of Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations"
+date = "2026-10"
+status = "final"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/SP800-171/rev3/xml/NIST_SP800-171_rev3_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "936ab6eaadd62ac4b0141ee1e046f645d0db78a5"
+
+[[oscal]]
+doc_id = "sp800-172r3-oscal"
+number = "NIST SP 800-172 Rev. 3 (OSCAL)"
+title = "Electronic (OSCAL) Version of Enhanced Security Requirements for Protecting Controlled Unclassified Information v3.0.0"
+date = "2026-10"
+status = "unspecified"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/SP800-172/rev3/xml/NIST_SP800-172_rev3_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "8513947f9e7d2c226a315f2ce6f9c8eef664a547"
+
+[[oscal]]
+doc_id = "sp800-218-oscal"
+number = "NIST SP 800-218 (OSCAL)"
+title = "Electronic (OSCAL) Version of Secure Software Development Framework (SSDF): Recommendations for Mitigating the Risk of Software Vulnerabilities"
+date = "2026-10"
+status = "final"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/SP800-218/ver1/xml/NIST_SP800-218_ver1_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "c8ccde2a4c6ff7df1183eb606565b602c35c7db6"
+
+[[oscal]]
+doc_id = "csf2-oscal"
+number = "NIST CSF 2.0 (OSCAL)"
+title = "Electronic Version of NIST Cybersecurity Framework 2.0"
+date = "2026-10"
+status = "final"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/CSF/v2.0/xml/NIST_CSF_v2.0_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "8e536fafb735cc96f695b0c527900aa7e22bdfc2"
+
+[[oscal]]
+doc_id = "ai100-1-oscal"
+number = "NIST AI 100-1 (OSCAL)"
+title = "Artificial Intelligence Risk Management Framework (AI RMF 1.0)"
+date = "2026-10"
+status = "final"
+url = "https://raw.githubusercontent.com/usnistgov/oscal-content/f0de6d8d8c059d374f15e0ae07508d82e370fc1d/nist.gov/AI100-1/ver1/xml/NIST_AI-RMF_v1_catalog.xml"
+commit = "f0de6d8d8c059d374f15e0ae07508d82e370fc1d"
+blob = "bff68423caf029624cdd417c37f92297dcc1937a"

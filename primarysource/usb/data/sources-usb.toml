@@ -1,0 +1,852 @@
+# USB-IF specifications indexed by usblib, chosen by scripts/build_usb_corpus.py from
+# data/usb-classification.json (class specification, status current or older-revision).
+# A comment above an entry says the URL is a zip and names the PDF inside it. The choice of PDF and
+# the reason for it are in data/usb-pdf-choice.json. sha256 is recorded in corpus/index.json.
+
+# member 'USB Type-C Connector System Software Interface Revision_3.2 OR Clean.pdf' of the zip
+[[source]]
+doc_id = "usb-type-cr-connector-system-software-interface-ucsi-specification"
+number = "USB-IF USB Type-C Connector System Software Interface (UCSI) Specification Rev 3.2"
+title = "USB Type-C Connector System Software Interface (UCSI) Specification"
+date = "2026-09"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20Type-C%20Connector%20System%20Software%20Interface%20Revision_3.2%20OR.zip"
+
+[[source]]
+doc_id = "usb-type-c-and-power-delivery-source-power-requirements-compliance-test"
+number = "USB-IF USB Type-C and Power Delivery Source Power Requirements Compliance Test Specification Rev 1.2"
+title = "USB Type-C and Power Delivery Source Power Requirements Compliance Test Specification"
+date = "2026-11"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB-C%20Source%20Power%20Test%20Specification%20V1.2%202026%2011%2004.pdf"
+
+# member 'USB_PD_R3.3_V1.0_2026_10_16.pdf' of the zip
+[[source]]
+doc_id = "usb-power-delivery"
+number = "USB-IF USB Power Delivery R3.3 V1.0"
+title = "USB Power Delivery"
+date = "2026-10"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB_PD_R3.3_V1.0.zip"
+
+# member 'USB 3.2 Revision 1.1.pdf' of the zip
+[[source]]
+doc_id = "usb-32-revision-11-june-2022"
+number = "USB-IF USB 3.2 Revision 1.1 - June 2022"
+title = "USB 3.2 Revision 1.1 - June 2022"
+date = "2022-06"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usb_32_202206_1.zip"
+
+# member 'USB4 Logical Layer CTS Rev 2.9 - CLEAN.pdf' of the zip
+[[source]]
+doc_id = "usb4cv-compliance-test-specification"
+number = "USB-IF USB4CV Compliance Test Specification Per-part: Logical Layer 2.9"
+title = "USB4CV Compliance Test Specification"
+date = "2026-10"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB4_CTSs_2026_10.zip"
+
+# member 'USB PD3 CTS Q4 2026 OR.pdf' of the zip
+[[source]]
+doc_id = "usb-power-delivery-compliance-test-specification-0"
+number = "USB-IF USB Power Delivery Compliance Test Specification Q4 2026 OR"
+title = "USB Power Delivery Compliance Test Specification"
+date = "2026-10"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20PD3%20CTS%20Q4%202026%20OR.zip"
+
+# member 'Audio4_with_Errata_and ECN_through_October_09_2026.pdf' of the zip
+[[source]]
+doc_id = "usb-audio-devices-release-40-and-adopters-agreement"
+number = "USB-IF USB Audio Devices Release 4.0 and Adopters Agreement"
+title = "USB Audio Devices Release 4.0 and Adopters Agreement"
+date = "2026-10"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20Audio%20v4.0_0_0.zip"
+
+[[source]]
+doc_id = "usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through"
+number = "USB-IF USB Device Class Definition for Audio Devices Release 2.0 with Errata and ECN through September 14, 2026"
+title = "USB Device Class Definition for Audio Devices Release 2.0 with Errata and ECN through September 14, 2026"
+date = "2026-09"
+status = "final"
+url = "https://www.usb.org/sites/default/files/Audio2_with_Errata_and_ECN_through_Sep_14_2026.pdf"
+
+[[source]]
+doc_id = "usb-20-electrical-compliance-test-specification"
+number = "USB-IF USB 2.0 Electrical Compliance Test Specification Version 1.08"
+title = "USB 2.0 Electrical Compliance Test Specification"
+date = "2026-04"
+status = "final"
+url = "https://usb.org/sites/default/files/USB2%20Electrical%20Compliance%20Specification%20v1.08.pdf"
+
+# member 'USB Type-C Spec R2.5 - March 2026.pdf' of the zip
+[[source]]
+doc_id = "usb-type-cr-cable-and-connector-specification-release-25"
+number = "USB-IF USB Type-C Cable and Connector Specification Release 2.5"
+title = "USB Type-C Cable and Connector Specification Release 2.5"
+date = "2026-03"
+status = "final"
+url = "https://usb.org/sites/default/files/USB%20Type-C%202.5%20Release%20202603.zip"
+
+# member 'USB4 Specification 2.0 November 2025 - CLEAN.pdf' of the zip
+[[source]]
+doc_id = "usb4r-specification-v20"
+number = "USB-IF USB4 Specification v2.0"
+title = "USB4 Specification v2.0"
+date = "2025-11"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB4%20Specification%20November%202025.zip"
+
+# member 'NCM11_20260205.pdf' of the zip
+[[source]]
+doc_id = "usb-communications-class-subclass-specifications-network-control-model-devices-v11"
+number = "USB-IF USB Communications Class Subclass Specifications for Network Control Model Devices v1.1"
+title = "USB Communications Class Subclass Specifications for Network Control Model Devices v1.1"
+date = "2026-02"
+status = "final"
+url = "https://www.usb.org/sites/default/files/NCM11_20260205.zip"
+
+# member 'USB4  Electrical Compliance Test Specification Ver2 1p0 no watermark official release clean.pdf' of the zip
+[[source]]
+doc_id = "usb4-electrical-compliance-test-specification"
+number = "USB-IF USB4 Electrical Compliance Test Specification Router Assembly v2 GEN4 ECTS Rev 1.0"
+title = "USB4 Electrical Compliance Test Specification"
+date = "2025-06"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB4%20Electrical%20Test%20Specifications_02.2026.zip"
+
+[[source]]
+doc_id = "hid-usage-tables-17"
+number = "USB-IF HID Usage Tables 1.7"
+title = "HID Usage Tables 1.7"
+date = "2026-01"
+status = "final"
+url = "https://usb.org/sites/default/files/hut1_7.pdf"
+
+[[source]]
+doc_id = "usb-type-c-shared-capacity-charger-interoperability-compliance-test-specification"
+number = "USB-IF USB Type-C Shared Capacity Charger Interoperability Compliance Test Specification Version 1.0"
+title = "USB Type-C Shared Capacity Charger Interoperability Compliance Test Specification"
+date = "2025-10"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB_Type-C_Shared_Capacity_Interoperabiltiy_CTS_1.0.pdf"
+
+# member 'USB 3.2 CV Compliance Tests-ver 1.22.pdf' of the zip
+[[source]]
+doc_id = "usb3cv-and-xhcicv-compliance-test-specifications"
+number = "USB-IF USB3CV and XHCICV Compliance Test Specifications USB 3.2 CV CTS 1.22"
+title = "USB3CV and XHCICV Compliance Test Specifications"
+date = "2019-07"
+status = "final"
+url = "https://usb.org/sites/default/files/USB3CV_XHCICV_CTSs_August_2025%201_0.zip"
+
+# member 'usb_20.pdf' of the zip
+[[source]]
+doc_id = "usb-20-specification"
+number = "USB-IF USB 2.0 Specification"
+title = "USB 2.0 Specification"
+date = "2000-04"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usb_20_20250603.zip"
+
+# member 'CDC120_with_Errata_and_ECN_through_Apr_3_2025.pdf' of the zip
+[[source]]
+doc_id = "class-definitions-communication-devices-12"
+number = "USB-IF Class definitions for Communication Devices 1.2"
+title = "Class definitions for Communication Devices 1.2"
+date = "2007-02"
+status = "final"
+url = "https://www.usb.org/sites/default/files/CDC1.2_WMC1.1_012011_0.zip"
+
+[[source]]
+doc_id = "usb-active-cable-thermal-compliance-test-specification"
+number = "USB-IF USB Active Cable Thermal Compliance Test Specification Rev 0.92"
+title = "USB Active Cable Thermal Compliance Test Specification"
+date = "2025-05"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20Active%20Cable%20Thermal%20Compliance%20Test%20Specification%20v0.92%20May%2015th.pdf"
+
+[[source]]
+doc_id = "usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b"
+number = "USB-IF USB Type-C Connectors and Cable Assemblies Compliance Document Rev. 2.1b"
+title = "USB Type-C Connectors and Cable Assemblies Compliance Document Rev. 2.1b"
+date = "2021-06"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20Type-C_Compliance%20Document_Rev_2_1b_June_2021.pdf"
+
+[[source]]
+doc_id = "embedded-usb2-version-20-supplement-usb-20-specification-eusb2v2"
+number = "USB-IF Embedded USB2 Version 2.0: Supplement to the USB 2.0 Specification (eUSB2V2)"
+title = "Embedded USB2 Version 2.0: Supplement to the USB 2.0 Specification (eUSB2V2)"
+date = "2024-08"
+status = "final"
+url = "https://usb.org/sites/default/files/Embedded%20USB2%20Version%202.0%20Supplement%20to%20the%20USB%202.0%20Specification_0.pdf"
+
+# member 'eUSB2_1p2_20211217.pdf' of the zip
+[[source]]
+doc_id = "embedded-usb2-eusb2-physical-layer-supplement-usb-revision-20-specification-rev-12"
+number = "USB-IF Embedded USB2 (eUSB2) Physical Layer Supplement to the USB Revision 2.0 Specification, Rev. 1.2"
+title = "Embedded USB2 (eUSB2) Physical Layer Supplement to the USB Revision 2.0 Specification, Rev. 1.2"
+date = "2021-12"
+status = "final"
+url = "https://www.usb.org/sites/default/files/eUSB2_0_20240927.zip"
+
+# member 'usb_type-c_locking_connector_specification_rev_1_0_20160309.pdf' of the zip
+[[source]]
+doc_id = "usb-type-cr-locking-connector-specification"
+number = "USB-IF USB Type-C Locking Connector Specification Rev 1.0"
+title = "USB Type-C Locking Connector Specification"
+date = "2016-03"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20Type-C%20Locking%20Connector%20Specification.zip"
+
+[[source]]
+doc_id = "usb-32-link-layer-test-specification"
+number = "USB-IF USB 3.2 Link Layer Test Specification Rev 1.1"
+title = "USB 3.2 Link Layer Test Specification"
+date = "2024-03"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%203%202%20Link%20Layer%20Test%20Specification%202024%2003%2003.pdf"
+
+[[source]]
+doc_id = "usb-type-c-functional-test-specification"
+number = "USB-IF USB Type-C Functional Test Specification Rev 0.91"
+title = "USB Type-C Functional Test Specification"
+date = "2024-03"
+status = "final"
+url = "https://usb.org/sites/default/files/USB%20Type%20C%20Functional%20Test%20Specification%202024%2003%2003.pdf"
+
+[[source]]
+doc_id = "usb-i3cr-device-class-specification-v11"
+number = "USB-IF USB I3C Device Class Specification v1.1"
+title = "USB I3C Device Class Specification v1.1"
+date = "2023-01"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20I3C%20Device%20Class%20Revision%201.1.pdf"
+
+[[source]]
+doc_id = "electrical-compliance-test-specification-linear-re-driver-active-cable-lrd"
+number = "USB-IF Electrical Compliance Test Specification Linear Re-Driver Active Cable (LRD) Rev 1.0"
+title = "Electrical Compliance Test Specification Linear Re-Driver Active Cable (LRD)"
+date = "2022-11"
+status = "final"
+url = "https://www.usb.org/sites/default/files/Electrical_Compliance_Test%20Specification_Linear_Re_Driver_Active_Cable_LRD_rev1p0.pdf"
+
+# member 'USB4™ Thunderbolt3™ Compatibility CTS Rev 1.1 - CLEAN.pdf' of the zip
+[[source]]
+doc_id = "usb4tm-thunderbolt3tm-compatibility-compliance-test-specification"
+number = "USB-IF USB4 Thunderbolt3 Compatibility Compliance Test Specification Rev 1.1"
+title = "USB4 Thunderbolt3 Compatibility Compliance Test Specification"
+date = "2022-09"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB4%20TBT3-Compatibility%20CTS%20Rev%201.1.zip"
+
+[[source]]
+doc_id = "usb-type-cr-port-controller-interface-specification"
+number = "USB-IF USB Type-C Port Controller Interface Specification Rev 2.0"
+title = "USB Type-C Port Controller Interface Specification"
+date = "2022-01"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB_TCPCI_R2_V1p3_30122_CLEAN.pdf"
+
+[[source]]
+doc_id = "usb-i3c-device-class-specification"
+number = "USB-IF USB I3C Device Class Specification Version 1.0"
+title = "USB I3C Device Class Specification"
+date = "2022-01"
+status = "superseded"
+url = "https://www.usb.org/sites/default/files/USB%20I3C%20Device%20Class%20Revision%201.0.pdf"
+
+[[source]]
+doc_id = "usb4tm-thunderbolt3tm-compatibility-requirements-specification"
+number = "USB-IF USB4 Thunderbolt3 Compatibility Requirements Specification Rev 1.0"
+title = "USB4 Thunderbolt3 Compatibility Requirements Specification"
+date = "2021-01"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB4%E2%84%A2%20Thunderbolt3%E2%84%A2%20Compatibility%20Requirements%20Specification%20Rev%201.0%20-%2020210129_0.pdf"
+
+[[source]]
+doc_id = "usb-battery-charging-12-compliance-plan"
+number = "USB-IF USB Battery Charging 1.2 Compliance Plan"
+title = "USB Battery Charging 1.2 Compliance Plan"
+date = "2013-09"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20BC%201.2%20Compliance%20Plan%20rev%201.2.pdf"
+
+# member 'USB Billboard Revision 1.2.2 - CLEAN.pdf' of the zip
+[[source]]
+doc_id = "billboard-device-class-spec-revision-122-and-adopters-agreement"
+number = "USB-IF Billboard Device Class Spec Revision 1.2.2 and Adopters Agreement"
+title = "Billboard Device Class Spec Revision 1.2.2 and Adopters Agreement"
+date = "2021-01"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20Billboard%20Rev%201.2.2%2020210209.zip"
+
+[[source]]
+doc_id = "usb-class-definition-midi-devices-v20"
+number = "USB-IF USB Class Definition for MIDI Devices v2.0"
+title = "USB Class Definition for MIDI Devices v2.0"
+date = "2020-05"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20MIDI%20v2_0.pdf"
+
+[[source]]
+doc_id = "hid-point-sale-usage-tables-102"
+number = "USB-IF HID Point of Sale Usage Tables 1.02"
+title = "HID Point of Sale Usage Tables 1.02"
+date = "2001-03"
+status = "final"
+url = "https://usb.org/sites/default/files/pos1_02.pdf"
+
+[[source]]
+doc_id = "oaad-arcade-usage-table"
+number = "USB-IF OAAD Arcade Usage Table Release 1.0"
+title = "OAAD Arcade Usage Table"
+date = "1998-11"
+status = "final"
+url = "https://www.usb.org/sites/default/files/oaaddataformatsv6.pdf"
+
+[[source]]
+doc_id = "monitor-control-class-10"
+number = "USB-IF Monitor Control Class 1.0"
+title = "Monitor Control Class 1.0"
+date = "1998-01"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usbmon10_0.pdf"
+
+[[source]]
+doc_id = "device-class-definition-pid-10"
+number = "USB-IF Device Class Definition for PID 1.0"
+title = "Device Class Definition for PID 1.0"
+date = "1999-09"
+status = "final"
+url = "https://www.usb.org/sites/default/files/pid1_01_0.pdf"
+
+[[source]]
+doc_id = "device-class-definition-hid-111"
+number = "USB-IF Device Class Definition for HID 1.11"
+title = "Device Class Definition for HID 1.11"
+date = "2001-05"
+status = "final"
+url = "https://www.usb.org/sites/default/files/hid1_11.pdf"
+
+[[source]]
+doc_id = "usb-3-hub-lvs-test-specification"
+number = "USB-IF USB 3 Hub LVS Test Specification Rev 1.15"
+title = "USB 3 Hub LVS Test Specification"
+date = "2019-11"
+status = "final"
+url = "https://www.usb.org/sites/default/files/SSHUB%20LVS%20Specification%202019_11_21.pdf"
+
+[[source]]
+doc_id = "usage-tables-hid-power-devices-11"
+number = "USB-IF Usage Tables for HID Power Devices 1.1"
+title = "Usage Tables for HID Power Devices 1.1"
+date = "2020-05"
+status = "final"
+url = "https://www.usb.org/sites/default/files/pdcv11.pdf"
+
+# member 'USB 3.1 Legacy Cable and Connector Revision 1.0.pdf' of the zip
+[[source]]
+doc_id = "usb-31-legacy-cable-and-connector-revision-10"
+number = "USB-IF USB 3.1 Legacy Cable and Connector Revision 1.0"
+title = "USB 3.1 Legacy Cable and Connector Revision 1.0"
+date = "2017-06"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%203.1%20Legacy%20Cable%20and%20Connector%20Revision%201.0.zip"
+
+# member 'BC1.2 plus errata 2012-3-15.pdf' of the zip
+[[source]]
+doc_id = "battery-charging-v12-spec-and-adopters-agreement"
+number = "USB-IF Battery Charging v1.2 Spec and Adopters Agreement"
+title = "Battery Charging v1.2 Spec and Adopters Agreement"
+date = "2010-12"
+status = "final"
+url = "https://www.usb.org/sites/default/files/BCv1.2_070312_0.zip"
+
+[[source]]
+doc_id = "android-based-targeted-host-compliance-test-specification-v100"
+number = "USB-IF Android Based Targeted Host Compliance Test Specification v1.00"
+title = "Android Based Targeted Host Compliance Test Specification v1.00"
+date = "2019-02"
+status = "final"
+url = "https://www.usb.org/sites/default/files/Targeted%20Host%20Compliance%20Test%20Specification%20v1.00.pdf"
+
+# member 'USB Authentication Mapping Specification 20190118.pdf' of the zip
+[[source]]
+doc_id = "usb-authentication-specification-rev-10-ecn-and-errata-through-january-7-2019"
+number = "USB-IF USB Authentication Specification Rev. 1.0 with ECN and Errata through January 7, 2019"
+title = "USB Authentication Specification Rev. 1.0 with ECN and Errata through January 7, 2019"
+date = "2019-01"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB%20Authentication%20Specification%20Rev%201.0%20with%20ECN%20and%20Errata%20through%20January%207%2C%202019.zip"
+
+# member 'USB-C Bridge Rev 1 1 - Clean.pdf' of the zip
+[[source]]
+doc_id = "usb-type-cr-bridge-specification-v11"
+number = "USB-IF USB Type-C Bridge Specification v1.1"
+title = "USB Type-C Bridge Specification v1.1"
+date = "2017-10"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB_Type-C_Bridge_Spec110117.zip"
+
+[[source]]
+doc_id = "universal-serial-bus-31-legacy-connectors-and-cable-assemblies-compliance-document"
+number = "USB-IF Universal Serial Bus 3.1 Legacy Connectors and Cable Assemblies Compliance Document Rev 1.1"
+title = "Universal Serial Bus 3.1 Legacy Connectors and Cable Assemblies Compliance Document"
+date = "2018-04"
+status = "final"
+url = "https://www.usb.org/sites/default/files/CabConn_Legacy_3_1_Compliance_Rev_1_1.pdf"
+
+# member 'MBIM MultiFlow v1.0.pdf' of the zip
+[[source]]
+doc_id = "usb-multiflow-extension-mobile-broadband-interface-model-v10-and-adopters"
+number = "USB-IF USB Multiflow Extension for Mobile Broadband Interface Model v1.0 and Adopters Agreement"
+title = "USB Multiflow Extension for Mobile Broadband Interface Model v1.0 and Adopters Agreement"
+date = "2017-07"
+status = "final"
+url = "https://www.usb.org/sites/default/files/MBIMMultiflow10.zip"
+
+[[source]]
+doc_id = "usb-31usb-type-ctm-desktop-front-panel-cable-and-connector-implementation-document"
+number = "USB-IF USB 3.1/USB Type-C(TM) Desktop Front Panel Cable and Connector Implementation Document Rev 1.1"
+title = "USB 3.1/USB Type-C(TM) Desktop Front Panel Cable and Connector Implementation Document"
+date = "2017-07"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB3p1_Front_Panel_CabCon_Implment_Doc_Rev1p1.pdf"
+
+[[source]]
+doc_id = "electrical-compliance-test-specification-superspeed-usb-10-gbps-rev-10"
+number = "USB-IF Electrical Compliance Test Specification for SuperSpeed USB 10 Gbps Rev. 1.0"
+title = "Electrical Compliance Test Specification for SuperSpeed USB 10 Gbps Rev. 1.0"
+date = "2017-02"
+status = "final"
+url = "https://www.usb.org/sites/default/files/EnhancedSuperSpeedPHYComplianceTestSpec.pdf"
+
+[[source]]
+doc_id = "usb-power-delivery-firmware-update-specification"
+number = "USB-IF USB Power Delivery Firmware Update Specification Rev 1.0"
+title = "USB Power Delivery Firmware Update Specification"
+date = "2016-09"
+status = "final"
+url = "https://www.usb.org/sites/default/files/documents/pd_fw_update_specification_rev_1_0_20160915b.pdf"
+
+# member 'MA USB v1.0a-final.pdf' of the zip
+[[source]]
+doc_id = "media-agnostic-usb-v10a-spec-and-adopters-agreement"
+number = "USB-IF Media Agnostic USB v1.0a Spec and Adopters Agreement"
+title = "Media Agnostic USB v1.0a Spec and Adopters Agreement"
+date = "2015-07"
+status = "final"
+url = "https://www.usb.org/sites/default/files/Media_Agnostic_USB_v1.0a.zip"
+
+[[source]]
+doc_id = "usb-31-debug-class-specification-debug-devices-rev-10"
+number = "USB-IF USB 3.1 Debug Class Specification for Debug Devices, Rev. 1.0"
+title = "USB 3.1 Debug Class Specification for Debug Devices, Rev. 1.0"
+date = "2015-07"
+status = "final"
+url = "https://www.usb.org/sites/default/files/documents/usb_debug_class_rev_1_0_final_0.pdf"
+
+[[source]]
+doc_id = "inter-chip-supplement-usb-revision-30-specification-revision-102"
+number = "USB-IF Inter-Chip Supplement to the USB Revision 3.0 Specification, Revision 1.02"
+title = "Inter-Chip Supplement to the USB Revision 3.0 Specification, Revision 1.02"
+date = "2014-05"
+status = "final"
+url = "https://www.usb.org/sites/default/files/documents/superspeed_inter-chip_supplement_1_02_19may2014.pdf"
+
+[[source]]
+doc_id = "electrical-compliance-test-specification-superspeed-usb-rev-10a"
+number = "USB-IF Electrical Compliance Test Specification for SuperSpeed USB Rev. 1.0a"
+title = "Electrical Compliance Test Specification for SuperSpeed USB Rev. 1.0a"
+date = "2015-03"
+status = "final"
+url = "https://www.usb.org/sites/default/files/SuperSpeedPHYComplianceTest_Spec1_0a.pdf"
+
+[[source]]
+doc_id = "compliance-plan-usb-go-and-embedded-host-30"
+number = "USB-IF Compliance Plan for USB On-The-Go and Embedded Host 3.0 Release 1.0"
+title = "Compliance Plan for USB On-The-Go and Embedded Host 3.0"
+date = "2013-05"
+status = "final"
+url = "https://www.usb.org/sites/default/files/OTG3andEH_Compliance_Plan_1.0.pdf"
+
+# member 'UASP Bootability Rev 1.0.pdf' of the zip
+[[source]]
+doc_id = "usb-mass-storage-class-specification-uasp-bootability-v10-and-adopters-agreement"
+number = "USB-IF USB Mass Storage Class Specification for UASP Bootability v1.0 and Adopters Agreement"
+title = "USB Mass Storage Class Specification for UASP Bootability v1.0 and Adopters Agreement"
+date = "2013-03"
+status = "final"
+url = "https://www.usb.org/sites/default/files/UASP_Bootability_Rev_1_0.zip"
+
+[[source]]
+doc_id = "mbim-compliance-testing-v10"
+number = "USB-IF MBIM Compliance Testing v1.0"
+title = "MBIM Compliance Testing v1.0"
+date = "2013-02"
+status = "final"
+url = "https://www.usb.org/sites/default/files/MBIM-Compliance-1.0.pdf"
+
+# member 'MBIM v1 0 - errata-1.pdf' of the zip
+[[source]]
+doc_id = "mobile-broadband-interface-model-v10-errata-1-and-adopters-agreement"
+number = "USB-IF Mobile Broadband Interface Model v1.0 Errata -1 and Adopters Agreement"
+title = "Mobile Broadband Interface Model v1.0 Errata -1 and Adopters Agreement"
+date = "2013-05"
+status = "final"
+url = "https://usb.org/sites/default/files/MBIM10Errata1_073013.zip"
+
+# member 'IPP USB Specification.pdf' of the zip
+[[source]]
+doc_id = "ipp-protocol-10"
+number = "USB-IF IPP Protocol 1.0"
+title = "IPP Protocol 1.0"
+date = "2012-12"
+status = "final"
+url = "https://usb.org/sites/default/files/IPP_0.zip"
+
+# member '2012-08-02-CDC120_errata.pdf' of the zip
+[[source]]
+doc_id = "errata-updates-cdc-v12-and-wmc-v11-dec-2012"
+number = "USB-IF Errata updates for CDC v1.2 and WMC v1.1 as of DEC-2012"
+title = "Errata updates for CDC v1.2 and WMC v1.1 as of DEC-2012"
+date = "2012-12"
+status = "final"
+url = "https://www.usb.org/sites/default/files/CDC1.2_WMC1.1_052013.zip"
+
+# member 'UVC 1.5 Class specification.pdf' of the zip
+[[source]]
+doc_id = "video-class-v15-document-set"
+number = "USB-IF Video Class v1.5 document set"
+title = "Video Class v1.5 document set"
+date = "2012-08"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB_Video_Class_1_5.zip"
+
+[[source]]
+doc_id = "usb-go-and-embedded-host-automated-compliance-plan-go-embedded-host-supplement"
+number = "USB-IF USB On-The-Go and Embedded Host Automated Compliance Plan for the On-The-Go & Embedded Host Supplement Revision 2.0 Version 1.2"
+title = "USB On-The-Go and Embedded Host Automated Compliance Plan for the On-The-Go & Embedded Host Supplement Revision 2.0 Version 1.2"
+date = "2012-07"
+status = "final"
+url = "https://www.usb.org/sites/default/files/otgeh_compliance_plan_1_2.pdf"
+
+# member 'USB Thin Card Specification Rev1.0 2012-06-21.pdf' of the zip
+[[source]]
+doc_id = "usb-thin-card-v10-and-adopters-agreement"
+number = "USB-IF USB Thin Card v1.0 and Adopters Agreement"
+title = "USB Thin Card v1.0 and Adopters Agreement"
+date = "2012-06"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB_Thin_Card.zip"
+
+[[source]]
+doc_id = "usb-device-class-definition-audiovideo-devices-basic-device-profile-bdp"
+number = "USB-IF USB Device Class Definition for Audio/Video Devices Basic Device Profile (BDP) Release 1.0"
+title = "USB Device Class Definition for Audio/Video Devices Basic Device Profile (BDP)"
+date = "2012-06"
+status = "final"
+url = "https://www.usb.org/sites/default/files/AV_BDP_v1.0.pdf"
+
+[[source]]
+doc_id = "device-class-definition-content-security-devices-20"
+number = "USB-IF Device Class Definition for Content Security Devices 2.0"
+title = "Device Class Definition for Content Security Devices 2.0"
+date = "2012-06"
+status = "final"
+url = "https://www.usb.org/sites/default/files/ContentSecurity_v2.0.pdf"
+
+[[source]]
+doc_id = "content-security-method-5-high-bandwidth-digital-content-protection-21-hdcp-21"
+number = "USB-IF Content Security Method 5 - High-bandwidth Digital Content Protection 2.1 (HDCP 2.1) Implementation Release 1.0"
+title = "Content Security Method 5 - High-bandwidth Digital Content Protection 2.1 (HDCP 2.1) Implementation"
+date = "2012-06"
+status = "final"
+url = "https://www.usb.org/sites/default/files/CSM-5_v1.0.pdf"
+
+[[source]]
+doc_id = "go-and-embedded-host-supplement-usb-revision-30-specification-revision-11"
+number = "USB-IF On-The-Go and Embedded Host Supplement to the USB Revision 3.0 Specification, Revision 1.1"
+title = "On-The-Go and Embedded Host Supplement to the USB Revision 3.0 Specification, Revision 1.1"
+date = "2012-05"
+status = "final"
+url = "https://usb.org/sites/default/files/documents/usb_otg_and_eh_3-0_release_1_1_10may2012.pdf"
+
+# member 'AVFunction v1.0.pdf' of the zip
+[[source]]
+doc_id = "audiovideo-device-class-v10-spec-and-adopters-agreement"
+number = "USB-IF Audio/Video Device Class v1.0 Spec and Adopters Agreement"
+title = "Audio/Video Device Class v1.0 Spec and Adopters Agreement"
+date = "2011-12"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB_AV_Specification_Rev_1.0.zip"
+
+# member 'MTPforUSB-IFv1.1.pdf' of the zip
+[[source]]
+doc_id = "media-transfer-protocol-v11-spec-and-mtp-v11-adopters-agreement"
+number = "USB-IF Media Transfer Protocol v.1.1 Spec and MTP v.1.1 Adopters Agreement"
+title = "Media Transfer Protocol v.1.1 Spec and MTP v.1.1 Adopters Agreement"
+date = "2011-04"
+status = "final"
+url = "https://www.usb.org/sites/default/files/MTPv1_1.zip"
+
+# member 'NCM10-20101124-track.pdf' of the zip
+[[source]]
+doc_id = "network-control-model-devices-specification-v10-and-errata-and-adopters-agreement"
+number = "USB-IF Network Control Model Devices Specification v1.0 and errata and Adopters Agreement"
+title = "Network Control Model Devices Specification v1.0 and errata and Adopters Agreement"
+date = "2010-11"
+status = "superseded"
+url = "https://www.usb.org/sites/default/files/NCM10_012011.zip"
+
+[[source]]
+doc_id = "mass-storage-class-specification-overview-14"
+number = "USB-IF Mass Storage Class Specification Overview 1.4"
+title = "Mass Storage Class Specification Overview 1.4"
+date = "2010-02"
+status = "final"
+url = "https://www.usb.org/sites/default/files/Mass_Storage_Specification_Overview_v1.4_2-19-2010.pdf"
+
+# member 'BasicAudioDevice-10.pdf' of the zip
+[[source]]
+doc_id = "audio-device-class-spec-basic-audio-devices-v10-and-adopters-agreement"
+number = "USB-IF Audio Device Class Spec for Basic Audio Devices v1.0 and Adopters Agreement"
+title = "Audio Device Class Spec for Basic Audio Devices v1.0 and Adopters Agreement"
+date = "2009-11"
+status = "final"
+url = "https://www.usb.org/sites/default/files/BasicAudioDevice-10.zip"
+
+# member 'UASP Rev 1.0.pdf' of the zip
+[[source]]
+doc_id = "usb-attached-scsi-protocol-uasp-v10-and-adopters-agreement"
+number = "USB-IF USB Attached SCSI Protocol (UASP) v1.0 and Adopters Agreement"
+title = "USB Attached SCSI Protocol (UASP) v1.0 and Adopters Agreement"
+date = "2009-06"
+status = "final"
+url = "https://www.usb.org/sites/default/files/uasp_1_0.zip"
+
+[[source]]
+doc_id = "standard-host-side-certified-wireless-usb-connection-context-storage-windows"
+number = "USB-IF A Standard for Host-Side Certified Wireless USB Connection Context Storage on Windows Operating Systems Rev 1.0"
+title = "A Standard for Host-Side Certified Wireless USB Connection Context Storage on Windows Operating Systems"
+date = "2009-01"
+status = "final"
+url = "https://www.usb.org/sites/default/files/WUSB_host_connection_context_v1.0.pdf"
+
+# member 'healthcare_1.0.pdf' of the zip
+[[source]]
+doc_id = "personal-healthcare-rev-10"
+number = "USB-IF Personal Healthcare Rev. 1.0"
+title = "Personal Healthcare Rev. 1.0"
+date = "2007-11"
+status = "final"
+url = "https://www.usb.org/sites/default/files/Personal_Healthcare_1.zip"
+
+[[source]]
+doc_id = "cables-and-connectors-class-20"
+number = "USB-IF Cables and Connectors Class 2.0"
+title = "Cables and Connectors Class 2.0"
+date = "2007-08"
+status = "final"
+url = "https://www.usb.org/sites/default/files/CabConn20.pdf"
+
+# member 'Msc-lock-1.0.pdf' of the zip
+[[source]]
+doc_id = "lockable-mass-storage-specification-10-and-adopters-agreement"
+number = "USB-IF Lockable Mass Storage Specification 1.0 and Adopters Agreement"
+title = "Lockable Mass Storage Specification 1.0 and Adopters Agreement"
+date = "2007-08"
+status = "final"
+url = "https://www.usb.org/sites/default/files/Lockable_Mass_Storage_Spec_and_Adopters_Agreement.zip"
+
+# member 'Audio20 final.pdf' of the zip
+[[source]]
+doc_id = "audio-devices-rev-20-and-adopters-agreement"
+number = "USB-IF Audio Devices Rev. 2.0 and Adopters Agreement"
+title = "Audio Devices Rev. 2.0 and Adopters Agreement"
+date = "2006-05"
+status = "superseded"
+url = "https://www.usb.org/sites/default/files/Audio2.0_final.zip"
+
+# member 'USB_Video_Class_1.1.pdf' of the zip
+[[source]]
+doc_id = "video-class-v11-document-set"
+number = "USB-IF Video Class v1.1 document set"
+title = "Video Class v1.1 document set"
+date = "2005-06"
+status = "superseded"
+url = "https://www.usb.org/sites/default/files/USB_Video_Class_1_1_090711.zip"
+
+[[source]]
+doc_id = "smart-card-iccd-version-10"
+number = "USB-IF Smart Card ICCD version 1.0"
+title = "Smart Card ICCD version 1.0"
+date = "2005-04"
+status = "final"
+url = "https://www.usb.org/sites/default/files/DWG_Smart-Card_USB-ICC_ICCD_rev10.pdf"
+
+[[source]]
+doc_id = "cdc-subclass-specification-ethernet-emulation-model-devices-10"
+number = "USB-IF CDC Subclass Specification for Ethernet Emulation Model Devices 1.0"
+title = "CDC Subclass Specification for Ethernet Emulation Model Devices 1.0"
+date = "2005-02"
+status = "final"
+url = "https://www.usb.org/sites/default/files/CDC_EEM10.pdf"
+
+[[source]]
+doc_id = "mass-storage-bootability-specification-10"
+number = "USB-IF Mass Storage Bootability Specification 1.0"
+title = "Mass Storage Bootability Specification 1.0"
+date = "2004-10"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usb_msc_boot_1.0.pdf"
+
+[[source]]
+doc_id = "device-firmware-upgrade-11-new-version-31-aug-2004"
+number = "USB-IF Device Firmware Upgrade 1.1 (new version 31-Aug-2004)"
+title = "Device Firmware Upgrade 1.1 (new version 31-Aug-2004)"
+date = "2004-08"
+status = "final"
+url = "https://www.usb.org/sites/default/files/DFU_1.1.pdf"
+
+[[source]]
+doc_id = "usb-if-full-and-low-speed-electrical-and-interoperability-compliance-test"
+number = "USB-IF USB-IF Full and Low Speed Electrical and Interoperability Compliance Test Procedure Rev 1.3"
+title = "USB-IF Full and Low Speed Electrical and Interoperability Compliance Test Procedure"
+date = "2004-02"
+status = "final"
+url = "https://www.usb.org/sites/default/files/USB-IFTestProc1_3.pdf"
+
+[[source]]
+doc_id = "usb-interface-association-descriptor-device-class-code-and-use-model"
+number = "USB-IF USB Interface Association Descriptor Device Class Code and Use Model Rev 1.0"
+title = "USB Interface Association Descriptor Device Class Code and Use Model"
+date = "2003-07"
+status = "final"
+url = "https://www.usb.org/sites/default/files/iadclasscode_r10.pdf"
+
+[[source]]
+doc_id = "mass-storage-controlbulkinterrupt-cbi-specification-11"
+number = "USB-IF Mass Storage Control/Bulk/Interrupt (CBI) Specification 1.1"
+title = "Mass Storage Control/Bulk/Interrupt (CBI) Specification 1.1"
+date = "2003-06"
+status = "final"
+url = "https://usb.org/sites/default/files/usb_msc_cbi_1.1.pdf"
+
+# member 'USBTMC_1_00.pdf' of the zip
+[[source]]
+doc_id = "test-measurement-class-specification"
+number = "USB-IF Test & Measurement Class Specification Rev 1.0"
+title = "Test & Measurement Class Specification"
+date = "2003-04"
+status = "final"
+url = "https://usb.org/sites/default/files/USBTMC_1_006a.zip"
+
+[[source]]
+doc_id = "content-security-method-2-usb-digital-transmission-content-protection"
+number = "USB-IF Content Security Method 2 - USB Digital Transmission Content Protection Implementation 1.0"
+title = "Content Security Method 2 - USB Digital Transmission Content Protection Implementation 1.0"
+date = "2000-08"
+status = "final"
+url = "https://usb.org/sites/default/files/csm2_v1_0.pdf"
+
+[[source]]
+doc_id = "openusbdi-specification-10"
+number = "USB-IF OpenUSBDI Specification 1.0"
+title = "OpenUSBDI Specification 1.0"
+date = "2000-07"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usbdi10.pdf"
+
+# member 'usb_still_img10.pdf' of the zip
+[[source]]
+doc_id = "still-image-capture-device-definition-10-and-errata-16-mar-2007"
+number = "USB-IF Still Image Capture Device Definition 1.0 and Errata as of 16-Mar-2007"
+title = "Still Image Capture Device Definition 1.0 and Errata as of 16-Mar-2007"
+date = "2000-07"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usb_still_img10.zip"
+
+[[source]]
+doc_id = "irda-bridge-device-definition-10"
+number = "USB-IF IrDA Bridge Device Definition 1.0"
+title = "IrDA Bridge Device Definition 1.0"
+date = "2000-03"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usbir10.pdf"
+
+[[source]]
+doc_id = "printer-device-class-document-11"
+number = "USB-IF Printer Device Class Document 1.1"
+title = "Printer Device Class Document 1.1"
+date = "2000-01"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usbprint11a021811.pdf"
+
+[[source]]
+doc_id = "usb-midi-devices-10"
+number = "USB-IF USB MIDI Devices 1.0"
+title = "USB MIDI Devices 1.0"
+date = "1999-11"
+status = "superseded"
+url = "https://www.usb.org/sites/default/files/midi10.pdf"
+
+[[source]]
+doc_id = "mass-storage-bulk-only-10"
+number = "USB-IF Mass Storage Bulk Only 1.0"
+title = "Mass Storage Bulk Only 1.0"
+date = "1999-09"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usbmassbulk_10.pdf"
+
+[[source]]
+doc_id = "mass-storage-ufi-command-specification-10"
+number = "USB-IF Mass Storage UFI Command Specification 1.0"
+title = "Mass Storage UFI Command Specification 1.0"
+date = "1998-12"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usbmass-ufi10.pdf"
+
+[[source]]
+doc_id = "audio-device-document-10"
+number = "USB-IF Audio Device Document 1.0"
+title = "Audio Device Document 1.0"
+date = "1998-03"
+status = "superseded"
+url = "https://www.usb.org/sites/default/files/audio10.pdf"
+
+[[source]]
+doc_id = "audio-data-formats-10"
+number = "USB-IF Audio Data Formats 1.0"
+title = "Audio Data Formats 1.0"
+date = "1998-03"
+status = "superseded"
+url = "https://usb.org/sites/default/files/frmts10.pdf"
+
+[[source]]
+doc_id = "audio-terminal-types-10"
+number = "USB-IF Audio Terminal Types 1.0"
+title = "Audio Terminal Types 1.0"
+date = "1998-03"
+status = "superseded"
+url = "https://www.usb.org/sites/default/files/termt10.pdf"
+
+[[source]]
+doc_id = "power-device-class-document-10"
+number = "USB-IF Power Device Class Document 1.0"
+title = "Power Device Class Document 1.0"
+date = "1997-11"
+status = "superseded"
+url = "https://www.usb.org/sites/default/files/pdcv10_0.pdf"
+
+[[source]]
+doc_id = "common-class-base-specification-10"
+number = "USB-IF Common Class Base Specification 1.0"
+title = "Common Class Base Specification 1.0"
+date = "1997-12"
+status = "final"
+url = "https://www.usb.org/sites/default/files/usbccs10.pdf"

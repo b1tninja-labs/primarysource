@@ -1,0 +1,2025 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "slug": "usb-type-cr-connector-system-software-interface-ucsi-specification",
+      "url": "https://www.usb.org/sites/default/files/USB%20Type-C%20Connector%20System%20Software%20Interface%20Revision_3.2%20OR.zip",
+      "path": "raw\\usb-type-cr-connector-system-software-interface-ucsi-specification\\USB%20Type-C%20Connector%20System%20Software%20Interface%20Revision_3.2%20OR.zip",
+      "size": 9343367,
+      "sha256": "4fd483f38087a27585a00199b3b65f7e97bd9b79da81e2b3cf0d92b60619e3f0",
+      "pdfs": [
+        "USB Type-C Connector System Software Interface Revision_3.2 OR Clean.pdf",
+        "USB Type-C Connector System Software Interface Revision_3.2 OR - Redlined.pdf",
+        "UCSI_ECR_GET_LPM_PPM_INFO_CORRECT_OFFSET_V1_ECN.pdf",
+        "UCSI_ECR - Add DRP Try_ preference to Set_CCOM_v2_ECN.pdf",
+        "UCSI_3.0_PPM_RESET_ECN.pdf",
+        "UCSI 3.2 R 2 SET_USB_DEBUG_MODE Command_ECN.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-c-and-power-delivery-source-power-requirements-compliance-test",
+      "url": "https://www.usb.org/sites/default/files/USB-C%20Source%20Power%20Test%20Specification%20V1.2%202026%2011%2004.pdf",
+      "path": "raw\\usb-type-c-and-power-delivery-source-power-requirements-compliance-test\\USB-C%20Source%20Power%20Test%20Specification%20V1.2%202026%2011%2004.pdf",
+      "size": 1069354,
+      "sha256": "c575c75aa9698e8866947e9916c183dfa2b9835abf067f0d3adc0ba2872d2e93"
+    },
+    {
+      "slug": "usb-power-delivery",
+      "url": "https://www.usb.org/sites/default/files/USB_PD_R3.3_V1.0.zip",
+      "path": "raw\\usb-power-delivery\\USB_PD_R3.3_V1.0.zip",
+      "size": 22801668,
+      "sha256": "a7d5f2ddfc8410e66c2c66af0e8a617c1fa60ceb105d2f6186e308ccd5e11699",
+      "pdfs": [
+        "PDUSB_Status_and_States_R1.1_2026_01_01.pdf",
+        "USB_PD_R2_0 V1.3 - 20170112.pdf",
+        "USB_PD_R3.2_V1.2_2026_08_19_Previous_Rev.pdf",
+        "USB PD R3.2 V1.2 ECN - Add Deprecated VDO tables for Passive and Active Cables, and AMA.pdf",
+        "USB PD R3.2 V1.2 ECN - Adding Vconn to Sink Mode Sources.pdf",
+        "USB PD R3.2 V1.2 ECN - Allow BUSY Response to Enter Mode Command.pdf",
+        "USB PD R3.2 V1.2 ECN - BIST Shared Test Mode Deprecation.pdf",
+        "USB PD R3.2 V1.2 ECN - Clarify language around VDM requirements.pdf",
+        "USB PD R3.2 V1.2 ECN - Clean up Alternate Mode alias language.pdf",
+        "USB PD R3.2 V1.2 ECN - Data Reset Vconn Power Cycling Timing.pdf",
+        "USB PD R3.2 V1.2 ECN - Defer AVS and PPS APDOs.pdf",
+        "USB PD R3.2 V1.2 ECN - Deprecate VDMBusyCounter and Remove nBusyCount Limit.pdf",
+        "USB PD R3.2 V1.2 ECN - Disallow Source_cap PPS APDO without AVS APDO.pdf",
+        "USB PD R3.2 V1.2 ECN - Discovery Identify Applicability and Port Number.pdf",
+        "USB PD R3.2 V1.2 ECN - EPR clarification.pdf",
+        "USB PD R3.2 V1.2 ECN - IppsCLMin.pdf",
+        "USB PD R3.2 V1.2 ECN - Make Variable Supply Useful in Sink Capabilities.pdf",
+        "USB PD R3.2 V1.2 ECN - MessageID counter behavior after Power Role Swap or Fast Role Swap.pdf",
+        "USB PD R3.2 V1.2 ECN - Minor clarifications.pdf",
+        "USB PD R3.2 V1.2 ECN - Negative AMS Acknowledgement.pdf",
+        "USB PD R3.2 V1.2 ECN - PPS Behavior Clarification.pdf",
+        "USB PD R3.2 V1.2 ECN - PPS Constant Power Clarification.pdf",
+        "USB PD R3.2 V1.2 ECN - Remove Sink OVP Continuous Cycling Requirements.pdf",
+        "USB PD R3.2 V1.2 ECN - Remove VDEM Unstructured Field.pdf",
+        "USB PD R3.2 V1.2 ECN - Require Source Capabilities Extended when source has batteries.pdf",
+        "USB PD R3.2 V1.2 ECN - Restore the AMC Product Type, and DFP VDO fixes and additions.pdf",
+        "USB PD R3.2 V1.2 ECN - Rounding Conflicts.pdf",
+        "USB PD R3.2 V1.2 ECN - Source Type Power Rules.pdf",
+        "USB PD R3.2 V1.2 ECN - SPR Sink AVS deprecation.pdf",
+        "USB PD R3.2 V1.2 ECN - Standardize AMS Repetition.pdf",
+        "USB PD R3.2 V1.2 ECN - tSrcTransition.pdf",
+        "USB PD R3.2 V1.2 ECN - UFP VDO fixes, Number of USB lanes, and UFP VDO Legacy Tables.pdf",
+        "USB PD R3.2 V1.2 ECN - Update Capabilities.pdf",
+        "USB PD R3.2 V1.2 ECN - Update EPR Entry Flow.pdf",
+        "USB PD R3.2 V1.2 ECN - Updates and clarifications on source and sink requirements during transitions.pdf",
+        "USB PD R3.2 V1.2 ECN - VCONN Ownership.pdf",
+        "USB PD R3.2 V1.2 ECN - VCONN Removal Allowance for Non-Data-Capable Sources.pdf",
+        "USB PD R3.2 V1.2 ECN - Zero Negotiated Power.pdf",
+        "USB 2_0 Adopters Agreement - PDF Submission Update 20230216.pdf",
+        "USB 3_0 Adopters Agreement 20150622.pdf",
+        "USB PD - USB 2.0 Amendment 20120709.pdf",
+        "USB_PD_R3.2_V1.2_reorg_guide_2026_10_16.pdf",
+        "USB_PD_R3.3_V1.0_2026_10_16.pdf",
+        "USB_PD_R3.3_V1.0_2026_10_16_redline.pdf",
+        "BMC_Receiver_Design_Examples_R1.1_2026_01_01.pdf"
+      ]
+    },
+    {
+      "slug": "usb-32-revision-11-june-2022",
+      "url": "https://www.usb.org/sites/default/files/usb_32_202206_1.zip",
+      "path": "raw\\usb-32-revision-11-june-2022\\usb_32_202206_1.zip",
+      "size": 25150630,
+      "sha256": "a0bd7833e466f8be4e7b2466efa8d051fc6934e4651d588efb72d98144755ddd",
+      "pdfs": [
+        "USB 3 2 ECN Gen 1x2 SKP OS Correction.pdf",
+        "USB 3.2 ECN BLR JTF - Jitter Gain limit change .pdf",
+        "USB 3.2 ECN Gen1 Passthrough Loopback.pdf",
+        "USB 3.2 ECN Gen1 SSCdf_dt Limit.pdf",
+        "USB 3.2 ECN Gen2 SKP OS Insertion in PollingRxEQ.pdf",
+        "USB 3.2 ECN NRDY ERDY Behavior.pdf",
+        "USB 3.2 ECN Re-timer tPollingSCDLFPSTimeout Timer Update.pdf",
+        "USB 3.2 ECN Remove WiMax Friendly SSC.pdf",
+        "USB 3.2 ECN Retimer Gen1 Clock Switch SSCdf dt.pdf",
+        "USB 3.2 ECN Retimer tPollingSCDLFPSTimeout timer.pdf",
+        "USB 3.2 ECN RetimerEditorial.pdf",
+        "USB 3.2 ECN SSP Partially Nullified DPP CRC32.pdf",
+        "USB 3.2 ECN System RFI spec_add CP0.pdf",
+        "USB 3.2 ECN TSx Symbols14_15 No_Check.pdf",
+        "USB 3.2 ECN TxEQ Equalization Settings.pdf",
+        "USB 3.2 ECN UFP Exit Condition Clarification.pdf",
+        "USB 3.2 ECN USB FW Update.pdf",
+        "USB 3.2 ECN VCM & TXDetect.pdf",
+        "USB 3.2 Updated Appendix E REDLINE.pdf",
+        "USB 3.2 Revision 1.1 Redline against 3.2 R1.0.pdf",
+        "USB 3.2 Revision 1.1.pdf",
+        "USB 3.2 Specification Welcome Message - September 2017.pdf",
+        "USB 3_0 Adopters Agreement PDF Submission Update 20230219.pdf"
+      ]
+    },
+    {
+      "slug": "usb4cv-compliance-test-specification",
+      "url": "https://www.usb.org/sites/default/files/USB4_CTSs_2026_10.zip",
+      "path": "raw\\usb4cv-compliance-test-specification\\USB4_CTSs_2026_10.zip",
+      "size": 28928303,
+      "sha256": "9aad91b94eeaa29c7d56c801ff422472ad0d3fa50a57adc539406369f774e11d",
+      "pdfs": [
+        "USB4 Logical Layer CTS Rev 2.9 - CLEAN.pdf",
+        "USB4 Logical Layer CTS Rev 2.9 - REDLINE.pdf",
+        "USB4 PCIe Tunneling CTS Rev 2.1 - CLEAN.pdf",
+        "USB4 Protocol CTS Rev 2.9 - CLEAN.pdf",
+        "USB4 Protocol CTS Rev 2.9 - REDLINE.pdf",
+        "USB4 TMU CTS 2.7 - CLEAN.pdf",
+        "USB4 TMU CTS 2.7 - REDLINE.pdf",
+        "USB4 USB3 Tunneling CTS Rev 2.3 - CLEAN.pdf",
+        "Tests Implemented in USB4 CV 1.10.0.0 (1).pdf",
+        "USB4 DP Tunneling CTS Rev 2.8 - CLEAN.pdf",
+        "USB4 DP Tunneling CTS Rev 2.8 - REDLINE.pdf",
+        "USB4 Host Interface CTS Rev 2.4 - CLEAN.pdf",
+        "USB4 Host Interface CTS Rev 2.4 - REDLINE.pdf"
+      ]
+    },
+    {
+      "slug": "linux-usb4cv",
+      "url": "https://www.usb.org/sites/default/files/usb4cv-1.10.0.0.tar__0.zip",
+      "path": "raw\\linux-usb4cv\\usb4cv-1.10.0.0.tar__0.zip",
+      "size": 60619321,
+      "sha256": "128ae5d4c72dbc18b060c69e06b04f6b429183108e92c39e21c309b2486cdb72",
+      "pdfs": []
+    },
+    {
+      "slug": "usb-power-delivery-compliance-test-specification-0",
+      "url": "https://www.usb.org/sites/default/files/USB%20PD3%20CTS%20Q4%202026%20OR.zip",
+      "path": "raw\\usb-power-delivery-compliance-test-specification-0\\USB%20PD3%20CTS%20Q4%202026%20OR.zip",
+      "size": 16622542,
+      "sha256": "bf46e5518e7860219389e9de3cb4ef91cc0653c6e8c2747ae470da9457da6a7a",
+      "pdfs": [
+        "USB PD3 CTS Q4 2026 OR.pdf",
+        "PD3_CTS_Q32026_COMMONCHKPD2_MsgID_ECN.pdf",
+        "PD3_CTS_Q32026_SVDM_LowerVersionResponse_CheckECN.pdf",
+        "PD3_CTS_Q32026_TEST_PD_EPR_SNK3_13_ECN.pdf",
+        "PD3_CTS_Q32026_TEST_PD_PROT_ALL3p6_SoftResetCheck_ECN.pdf",
+        "PD3_CTS_Q32026_TEST_PD_PROT_ALL_4_ResetSignals_MsgID_ECN.pdf",
+        "PD3_CTS_Q32026_TEST_PD_PROT_SRC3_14_ECN.pdf",
+        "PD3_CTS_Q32026_TEST_PD_PROT_SRC3_14_Q3_ECN.pdf",
+        "PD3_CTS_Q32026_TEST_PD_PS_SRC3_ECN.pdf",
+        "PD3_CTS_Q32026_TEST_PD_Request_Oper_MaxCurr_ECN.pdf",
+        "PD3_CTS_Q32026_TEST_PD_USB4_EUSB4_ECN.pdf",
+        "PD3_CTS_Q32026_TEST_PD_VDM_CBL_1_ECN.pdf",
+        "PD3_CTS_Q32026_VPD_NA_Tests_BringupUpdate_ECN.pdf",
+        "PD3_CTS_Q32026_VPD_NA_Tests_ECN.pdf",
+        "PD3_CTS_Q3_2026_COMMON_CHECK_PD_12_Update_ECN.pdf",
+        "PD3_CTS_Q3_2026_COMMON_CHECK_PD_7_SPRAVSUpdate_ECN.pdf",
+        "PD3_CTS_Q3_2026_ECR_TEST.PD.EPR.SNK3.14_ECN.pdf",
+        "PD3_CTS_Q3_2026_ECR_TEST.PD.PS.SRC.1_ECN.pdf",
+        "PD3_CTS_Q3_2026_ECR_TEST.PD.PS.SRC.3_ECN.pdf",
+        "PD3_CTS_Q3_2026_Sink_EPR_capable_bit_requirement_EPR_ECN.pdf",
+        "PD3_CTS_Q3_2026_SnkTxNG_for_Alert_ECN.pdf",
+        "PD3_CTS_Q3_2026_SNK_AVS_Deprecation_ECN.pdf",
+        "PD3_CTS_Q3_2026_SRC_EPR_entry_behavior_ECN.pdf",
+        "PD3_CTS_Q3_2026_TEST.PD.EPR.SNK3.12_ECN.pdf",
+        "PD3_CTS_Q3_2026_TEST.PD.EPR.SRC3.17_ECN.pdf",
+        "PD3_CTS_Q3_2026_TEST.PD.PROT.SNK3.5_ECN.pdf",
+        "PD3_CTS_Q3_2026_TEST.PD.PROT.SNK3.5_rev2_ECN.pdf",
+        "PD3_CTS_Q3_2026_TEST.PD.PS.SNK.2_ECN.pdf",
+        "PD3_CTS_Q3_2026_tSrcSettle_deprecation_ECN.pdf",
+        "PD3_CTS_Q4_2026-TEST.PD.PROT.SNK.13 PR_Swap_ECN.pdf",
+        "PD3_CTS_Q4_2026_COMMON.CHECK.PD.5_ECN.pdf",
+        "PD3_CTS_Q4_2026_TEST.PD.EPR.SRC3.1_ECN.pdf",
+        "PD3_CTS_Q4_2026_TEST.PD.EPR.SRC3.2_ECN.pdf",
+        "PD3_CTS_Q4_2026_USB4_UFP_VDO_ECN.pdf",
+        "USB PD3 CTS Q3 2026 Source_Cap_Extended Changes for a Battery Powered Port_ECN.pdf",
+        "USB PD3 CTS Q4 2026 Get_Status Timing Changes-0.96_ECN.pdf"
+      ]
+    },
+    {
+      "slug": "usb-audio-devices-release-40-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/USB%20Audio%20v4.0_0_0.zip",
+      "path": "raw\\usb-audio-devices-release-40-and-adopters-agreement\\USB%20Audio%20v4.0_0_0.zip",
+      "size": 7917930,
+      "sha256": "15551c040c40992045a689498bcc010fc3420ee2d13508a0e476430651f25a63",
+      "pdfs": [
+        "Audio4_with_Errata_and ECN_through_October_09_2026.pdf",
+        "USB Audio v4.0 ADOPTERS AGREEMENT - Device Class.pdf"
+      ]
+    },
+    {
+      "slug": "usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through",
+      "url": "https://www.usb.org/sites/default/files/Audio2_with_Errata_and_ECN_through_Sep_14_2026.pdf",
+      "path": "raw\\usb-device-class-definition-audio-devices-release-20-errata-and-ecn-through\\Audio2_with_Errata_and_ECN_through_Sep_14_2026.pdf",
+      "size": 1755636,
+      "sha256": "14ced91eaaf64eedeb11c93babbcb2459b84a9d1160ed3925de9fdf08e00bd1d"
+    },
+    {
+      "slug": "usb-if-cw142-vendor-hosted-test-suite-form",
+      "url": "https://www.usb.org/sites/default/files/USB-IF%20CW142%20Vendor%20Hosted%20Test%20Room%20Form.pdf",
+      "path": "raw\\usb-if-cw142-vendor-hosted-test-suite-form\\USB-IF%20CW142%20Vendor%20Hosted%20Test%20Room%20Form.pdf",
+      "size": 602063,
+      "sha256": "1e7f60c8348d4526610b718ec14412b53dca4fb3ee844e8cfea81c86c38b765a"
+    },
+    {
+      "slug": "usb-vendor-info-file-generator",
+      "url": "https://www.usb.org/sites/default/files/Vendor_Info_File_v3.38.zip",
+      "path": "raw\\usb-vendor-info-file-generator\\Vendor_Info_File_v3.38.zip",
+      "size": 2585823,
+      "sha256": "ddafcb40445a1e07f3cf727a4c41ba07d3b2b7c39320cd2c37d8712073feea66",
+      "pdfs": [
+        "Vendor_Info_File_v3.38 - CLEAN.pdf",
+        "Vendor_Info_File_v3.38 - REDLINE.pdf"
+      ]
+    },
+    {
+      "slug": "usb4-sigtest",
+      "url": "https://www.usb.org/sites/default/files/USB4%20SigTest_1.0_0.zip",
+      "path": "raw\\usb4-sigtest\\USB4%20SigTest_1.0_0.zip",
+      "size": 14812294,
+      "sha256": "361d899ffbe54d170da9eff7d57260b744ab37a406d5614d1807db1259dbbfbf",
+      "pdfs": [
+        "License.pdf",
+        "USB4_SigTest1p0_User_Manual_Clean.pdf",
+        "USB4_SigTest1p0_User_Manual_RedLine.pdf"
+      ]
+    },
+    {
+      "slug": "usbet20",
+      "url": "https://www.usb.org/sites/default/files/USBET20_2_20_E.zip",
+      "path": "raw\\usbet20\\USBET20_2_20_E.zip",
+      "size": 423815,
+      "sha256": "b43895bee897c0d533583ad79beb77dd835f3200150677937ac55e8478a92c4b",
+      "pdfs": []
+    },
+    {
+      "slug": "usb20-dcr-test-procedure",
+      "url": "https://www.usb.org/sites/default/files/USB%202.0%20DCR%20MOI%201.0.pdf",
+      "path": "raw\\usb20-dcr-test-procedure\\USB%202.0%20DCR%20MOI%201.0.pdf",
+      "size": 1082153,
+      "sha256": "b5fd8476b0eb1d4d10830c36a186a9ec4338e4b53c6afa330fde24afa7a97a5a"
+    },
+    {
+      "slug": "list-usb-30-adopters",
+      "url": "https://www.usb.org/sites/default/files/USB3.0Adopters05072026_0.pdf",
+      "path": "raw\\list-usb-30-adopters\\USB3.0Adopters05072026_0.pdf",
+      "size": 447492,
+      "sha256": "2b90415f992cb324f11b79b32394ac1650b6758e21bdea1e356e1613c30dabf9"
+    },
+    {
+      "slug": "list-usb-20-adopters",
+      "url": "https://www.usb.org/sites/default/files/USB2.0Adopters05072026.pdf",
+      "path": "raw\\list-usb-20-adopters\\USB2.0Adopters05072026.pdf",
+      "size": 475688,
+      "sha256": "1f97a92d1f53d6dda0b7368f83c4b283fe3564392b9360cf143b5557ac98cb3c"
+    },
+    {
+      "slug": "list-usb4-adopters",
+      "url": "https://www.usb.org/sites/default/files/USB4Adopters05072026.pdf",
+      "path": "raw\\list-usb4-adopters\\USB4Adopters05072026.pdf",
+      "size": 409540,
+      "sha256": "f0121f9dd66ced22dc6ee15cfc4c70f2f0bf8649d65b727e82ee1a1b5c96868b"
+    },
+    {
+      "slug": "usb4ett-version-200",
+      "url": "https://www.usb.org/sites/default/files/USB4ETT_2.0.0_eng51_0.zip",
+      "path": "raw\\usb4ett-version-200\\USB4ETT_2.0.0_eng51_0.zip",
+      "size": 73209155,
+      "sha256": "f8daf13803784bbc9f6fcd054361de99031004a615f1a7be9d932f39d356dce6",
+      "pdfs": [
+        "USB4ETT_Documentation.pdf"
+      ]
+    },
+    {
+      "slug": "usb-20-electrical-compliance-test-specification",
+      "url": "https://usb.org/sites/default/files/USB2%20Electrical%20Compliance%20Specification%20v1.08.pdf",
+      "path": "raw\\usb-20-electrical-compliance-test-specification\\USB2%20Electrical%20Compliance%20Specification%20v1.08.pdf",
+      "size": 836863,
+      "sha256": "04c8f4bd54fd8669b538cf648d9b41eb3417771ac0544877272bc207ce543508"
+    },
+    {
+      "slug": "usb-if-policy-connectorless-xhci-embedded-devices-certification-testing",
+      "url": "https://www.usb.org/sites/default/files/USB-IF%20Policy-Connectorless%20xHCI-10092025.pdf",
+      "path": "raw\\usb-if-policy-connectorless-xhci-embedded-devices-certification-testing\\USB-IF%20Policy-Connectorless%20xHCI-10092025.pdf",
+      "size": 182875,
+      "sha256": "adf6f9d49f3fe2cad185ebe9f48d7a46dafe46862520ce448c549a88f622d889"
+    },
+    {
+      "slug": "usb-type-cr-cable-and-connector-specification-release-25",
+      "url": "https://usb.org/sites/default/files/USB%20Type-C%202.5%20Release%20202603.zip",
+      "path": "raw\\usb-type-cr-cable-and-connector-specification-release-25\\USB%20Type-C%202.5%20Release%20202603.zip",
+      "size": 29756254,
+      "sha256": "603c2cb0ea356d367fea61f8747a21981f0da9abae4d8ec15556e0063edb81b5",
+      "pdfs": [
+        "USB Type-C R2.4 ECN Attached.SRC Clarification on Vbus duration.pdf",
+        "USB Type-C R2.4 ECN Clarify Assured and Shared Capacity Definitions 20250403.pdf",
+        "USB Type-C R2.4 ECN Clarify PDP in Section 4.6.2.4 20260205.pdf",
+        "USB Type-C R2.4 ECN LRD Cleanup r2.pdf",
+        "USB Type-C R2.4 ECN Ra Requirements 20250313.pdf",
+        "USB Type-C R2.4 ECN Section 4.5.2.4 Updates 20250313.pdf",
+        "USB Type-C R2.4 ECN Sink CC Pin Voltages Revised_11-25.pdf",
+        "USB Type-C R2.4 ECN Sink with Accessory Support State Transition.pdf",
+        "USB Type-C R2.4 ECN Source Rp Clarification r1.pdf",
+        "USB 3_0 Adopters Agreement PDF Submission Update 20230219.pdf",
+        "USB Type-C Spec R2.5 - March 2026 Compared to R2.4.pdf",
+        "USB Type-C Spec R2.5 - March 2026.pdf"
+      ]
+    },
+    {
+      "slug": "usb4r-specification-v20",
+      "url": "https://www.usb.org/sites/default/files/USB4%20Specification%20November%202025.zip",
+      "path": "raw\\usb4r-specification-v20\\USB4%20Specification%20November%202025.zip",
+      "size": 43408034,
+      "sha256": "007fa225b7821938c7daf49bf51b913d10453cb7788d5ad776ba853970919cb3",
+      "pdfs": [
+        "USB4 Adopters Agreement PDF Submission Update 20230223.pdf",
+        "USB4 Connection Manager Guide 2.0 November 2025.pdf",
+        "USB4 DROM Specification November 2025.pdf",
+        "USB4 DVSEC Version 1.0.pdf",
+        "USB4 Inter-Domain Service Specification 2.0 November 2025.pdf",
+        "USB4 2.0 ECN - Adding Minimum SLOS time on CLx Exit .pdf",
+        "USB4 2.0 ECN - Adding Timing Requirements for CLx Exit.pdf",
+        "USB4 2.0 ECN - CLx Latency Tolerance Enhancement.pdf",
+        "USB4 2.0 ECN - LFPS Handshake on CLx Exit Flow.pdf",
+        "USB4 Re-Timer Specification 2.0 November 2025 - CLEAN.pdf",
+        "USB4 Re-Timer Specification 2.0 November 2025 - REDLINE.pdf",
+        "USB4 Specification 2.0 November 2025 - CLEAN.pdf",
+        "USB4 Specification 2.0 November 2025 - REDLINE.pdf",
+        "USB4 1.0 ECN - Adding Minimum SLOS time on CLx Exit .pdf",
+        "USB4 1.0 ECN - Clarification about TMU on Low Power States.pdf",
+        "USB4 1.0 ECN - CLx Exit Timeouts.pdf",
+        "USB4 1.0 ECN - Converting NVM Router Operation to Optional.pdf",
+        "USB4 1.0 ECN - Error Cases and Recovery.pdf",
+        "USB4 1.0 ECN - Receiver Multi Error-Bursts Test Adjustments (Gen2& Gen3 only).pdf",
+        "USB4 1.0 ECN - Removing Requirement to Check ReturnBounce Bit.pdf",
+        "USB4 1.0 ECN - Reset Router Operation Index.pdf",
+        "USB4 1.0 ECN- Removing Requirement to Check ReturnBounce Bit - Update.pdf",
+        "USB4 1.0 ECN- SLOS1 Pattern in SET_TX_COMPLIANCE to Optional.pdf",
+        "USB4 2.0 ECN - Adding Minimum SLOS time on CLx Exit .pdf",
+        "USB4 2.0 ECN - Adding Timing Requirements for CLx Exit.pdf",
+        "USB4 2.0 ECN - Change the conditions to clear Start TxFFE bit.pdf",
+        "USB4 2.0 ECN - Clarification about TMU on Low Power States.pdf",
+        "USB4 2.0 ECN - CLx Exit Timeouts.pdf",
+        "USB4 2.0 ECN - CLx Latency Tolerance Enhancement.pdf",
+        "USB4 2.0 ECN - Configuration and Behavior When TMU is Disabled.pdf",
+        "USB4 2.0 ECN - Converting NVM Router Operation to Optional.pdf",
+        "USB4 2.0 ECN - DP Clock Sync Window Count ppm.pdf",
+        "USB4 2.0 ECN - Error Cases and Recovery.pdf",
+        "USB4 2.0 ECN - Gen T Objections Integration.pdf",
+        "USB4 2.0 ECN - Gen T Path Enable on Disconnect.pdf",
+        "USB4 2.0 ECN - Gen4 Link Recovery Timing Constraints.pdf",
+        "USB4 2.0 ECN - LFPS Handshake on CLx Exit Flow.pdf",
+        "USB4 2.0 ECN - Notification Packet Retry Limit.pdf",
+        "USB4 2.0 ECN - PCIe Segment in Downstream Entry Mapping.pdf",
+        "USB4 2.0 ECN - Receiver Multi Error-Bursts Test Adjustments (Gen2& Gen3 only).pdf",
+        "USB4 2.0 ECN - Removing Requirement to Check ReturnBounce Bit - Update.pdf",
+        "USB4 2.0 ECN - Removing Requirement to Check ReturnBounce Bit.pdf",
+        "USB4 2.0 ECN - Reset Router Operation Index.pdf",
+        "USB4 2.0 ECN - SET_RX_COMPLIANCE Operation Data for Re-timer.pdf",
+        "USB4 2.0 ECN - TMU asymmetric correction wording simplification.pdf",
+        "USB4 2.0 ECN - Updating Sideband Register 12 on Asymmetric Transitions.pdf",
+        "USB4 2.0 ECN - USB3 Gen T Isochronous Deprecation.pdf",
+        "USB4 2.0 ECN- SLOS1 Pattern in SET_TX_COMPLIANCE to Optional.pdf"
+      ]
+    },
+    {
+      "slug": "instructions-run-data-pattern-test-usb-32-tunneling-usb4r-host",
+      "url": "https://www.usb.org/sites/default/files/Instructions%20to%20Run%20Data%20Pattern%20Test.pdf",
+      "path": "raw\\instructions-run-data-pattern-test-usb-32-tunneling-usb4r-host\\Instructions%20to%20Run%20Data%20Pattern%20Test.pdf",
+      "size": 370812,
+      "sha256": "fcf075d61fca9220da7cad3dbf1b69a4dd8c278c73732c7da3f2fef4de6ea58a"
+    },
+    {
+      "slug": "usb-communications-class-subclass-specifications-network-control-model-devices-v11",
+      "url": "https://www.usb.org/sites/default/files/NCM11_20260205.zip",
+      "path": "raw\\usb-communications-class-subclass-specifications-network-control-model-devices-v11\\NCM11_20260205.zip",
+      "size": 7308208,
+      "sha256": "20d09ac688ea78696aa5ff0ae6dd176434d3ba87529950982a616950715bed72",
+      "pdfs": [
+        "Changes - NCM11_20250522 and NCM11_20260205.pdf",
+        "mdns-tcpka-captures-for-usb.pdf",
+        "mdns-tcpka-for-usb.pdf",
+        "NCM v1.1 ADOPTERS AGREEMENT - Device Class.pdf",
+        "NCM11-Errata_20260205.pdf",
+        "NCM11_20260205.pdf"
+      ]
+    },
+    {
+      "slug": "usb-repeater-and-active-cable-test-matrix",
+      "url": "https://www.usb.org/sites/default/files/USB_Type_C_Active_Cable_Test_Matrix.pdf",
+      "path": "raw\\usb-repeater-and-active-cable-test-matrix\\USB_Type_C_Active_Cable_Test_Matrix.pdf",
+      "size": 407207,
+      "sha256": "8881a5e5a1ae27e8ee5372eeb2b9a995e9ee1fd9a9c31ee918addeb53f163b80"
+    },
+    {
+      "slug": "usb4-electrical-compliance-test-specification",
+      "url": "https://www.usb.org/sites/default/files/USB4%20Electrical%20Test%20Specifications_02.2026.zip",
+      "path": "raw\\usb4-electrical-compliance-test-specification\\USB4%20Electrical%20Test%20Specifications_02.2026.zip",
+      "size": 12139366,
+      "sha256": "4c082cec479d3be96216eb03c139e728081d04aa2449e9ec6800d42941922fe8",
+      "pdfs": [
+        "USB4  Electrical - Captive Device Compliance Test Specification Ver 1.02 CLEAN.pdf",
+        "USB4  Electrical - Captive Device Compliance Test Specification Ver 1.02 REDLINE.pdf",
+        "USB4  Electrical Compliance Test Specification Ver 1.04 20250120 -Clean.pdf",
+        "USB4  Electrical Compliance Test Specification Ver 1.04 20250120 -Redline.pdf",
+        "USB4  Electrical Compliance Test Specification Ver2 1p0 no watermark official release clean.pdf",
+        "USB4  Electrical Compliance Test Specification Ver2 1p0 no watermark official release redline.pdf"
+      ]
+    },
+    {
+      "slug": "hid-usage-tables-17",
+      "url": "https://usb.org/sites/default/files/hut1_7.pdf",
+      "path": "raw\\hid-usage-tables-17\\hut1_7.pdf",
+      "size": 4528416,
+      "sha256": "65e85bd8cb146a7ee5c905bf5ab0a12a6d6925d1c866bad609a772fbdfeb8df5"
+    },
+    {
+      "slug": "usb-type-c-shared-capacity-charger-interoperability-compliance-test-specification",
+      "url": "https://www.usb.org/sites/default/files/USB_Type-C_Shared_Capacity_Interoperabiltiy_CTS_1.0.pdf",
+      "path": "raw\\usb-type-c-shared-capacity-charger-interoperability-compliance-test-specification\\USB_Type-C_Shared_Capacity_Interoperabiltiy_CTS_1.0.pdf",
+      "size": 426250,
+      "sha256": "86830668053fc80e004b1abd8200400ad0f1a553a1e6c9a732722e8fa4aa7488"
+    },
+    {
+      "slug": "usb4-product-test-matrix",
+      "url": "https://www.usb.org/sites/default/files/USB4%20Product%20Test%20Matrix%20-%20V5.pdf",
+      "path": "raw\\usb4-product-test-matrix\\USB4%20Product%20Test%20Matrix%20-%20V5.pdf",
+      "size": 113631,
+      "sha256": "caebc3941641b673b9383e4eb74dfc8f76f1d3b983147d8f699ad01c39986207"
+    },
+    {
+      "slug": "usb4-interoperability-test-procedures",
+      "url": "https://usb.org/sites/default/files/USB4%20Interoperability%20Testing%20v1.06.pdf",
+      "path": "raw\\usb4-interoperability-test-procedures\\USB4%20Interoperability%20Testing%20v1.06.pdf",
+      "size": 1050732,
+      "sha256": "f455486133a2587d7353d8f46b192ba558be8f40607d00892e637f27422e22e0"
+    },
+    {
+      "slug": "usb3cv-and-xhcicv-compliance-test-specifications",
+      "url": "https://usb.org/sites/default/files/USB3CV_XHCICV_CTSs_August_2025%201_0.zip",
+      "path": "raw\\usb3cv-and-xhcicv-compliance-test-specifications\\USB3CV_XHCICV_CTSs_August_2025%201_0.zip",
+      "size": 13048363,
+      "sha256": "40ef18bad3a113cbf413d0b0018a854a7d745325111f2ff5be53f3524083dae3",
+      "pdfs": [
+        "USB 3.2 CV Compliance Tests-ver 1.22.pdf",
+        "USB 3.2 Hub Compliance Tests-ver 1.21.pdf",
+        "USB Connector Type Tests-v0.73.pdf",
+        "USB_Video_Class_Compliance_1 1.pdf",
+        "USB_Video_Class_Compliance_UVC_1.5_Addendum_M1.pdf",
+        "USBCVSpec.pdf",
+        "USBTypeCAuthentication-ComplianceTestSpec-v0.9.pdf",
+        "USBTypeCBridge-ComplianceTestSpec-v1.02.pdf",
+        "xHCI-ComplianceTestSpec-r1_20 REDLINE.pdf",
+        "xHCI-ComplianceTestSpec-r1_20 CLEAN.pdf",
+        "Billboard Class CV Compliance Tests-ver 1.1.pdf",
+        "MSC-compliance-1.1a.pdf",
+        "UAC3-ComplianceTestSpec-v1.10.pdf",
+        "UASP-ComplianceTestSpec-v0.9b.pdf"
+      ]
+    },
+    {
+      "slug": "usb4cv-guide",
+      "url": "https://www.usb.org/sites/default/files/USB4%20CV%20Guide-rev06042025.pdf",
+      "path": "raw\\usb4cv-guide\\USB4%20CV%20Guide-rev06042025.pdf",
+      "size": 13502989,
+      "sha256": "52059723347f0ddf752638b1415539afeaba47baddb71534a352937c62410764"
+    },
+    {
+      "slug": "usb-20-specification",
+      "url": "https://www.usb.org/sites/default/files/usb_20_20250603.zip",
+      "path": "raw\\usb-20-specification\\usb_20_20250603.zip",
+      "size": 14489344,
+      "sha256": "5fe9c53c04033818af396e8852b3acbca5c3a76ba92fab549fd81cd0ea7b3692",
+      "pdfs": [
+        "2002_05_28_errata.pdf",
+        "5V Short Circuit Withstand ECN.pdf",
+        "Connect Timing ECN.pdf",
+        "Device Capacitance ECN.pdf",
+        "Disconnect_Supplement_HSIC_v1.0_18Sep2013.pdf",
+        "ECN for Core Spec TEST_MODE selector values.pdf",
+        "ecn1-usb20-miniB-revd.pdf",
+        "errata-092800-1207001.pdf",
+        "High Speed Inter-Chip_1_0 final.pdf",
+        "HSIC_ECN_21May2012.pdf",
+        "Inter-Chip USB Supplement to the USB 2.0 Specification_1.0.pdf",
+        "InterfaceAssociationDescriptor_ecn.pdf",
+        "Clarification on the Chamfer on USB 2 0 Micro Connectors ECN .pdf",
+        "Maximum Unmating Force Value Definition to USB 2 0 Micro Connectors ECN.pdf",
+        "Micro-USB Cables and Connectors ADOPTERS AGREEMENT - Device Class Spec.pdf",
+        "Micro-USB ECN for Cable R3.pdf",
+        "MicroUSB ECN.pdf",
+        "Micro-USB_1_01.pdf",
+        "XV-4687C ECN Proposal for Micro USB.pdf",
+        "XV-4687C_Supplement Quad cable R1.pdf",
+        "resistor_ecn.pdf",
+        "rnd_chmfr_ECNFINAL.pdf",
+        "Suspend Current ECN.pdf",
+        "UnicodeECN.pdf",
+        "USB 2 0 Material Change ECN.pdf",
+        "USB 2.0 DCR ECN.pdf",
+        "USB 2.0 Double Isochronous IN ECN.pdf",
+        "USB 2.0 ECN VBUS Max Limit.pdf",
+        "USB 2.0 eUSB2 Repeater ECN.pdf",
+        "USB 2.0 Phase-Locked SOFs ECN.pdf",
+        "USB 2_0 Adopters Agreement - PDF Submission Update 20230216.pdf",
+        "USB OTGEH ECN Maximum Vbus Voltage OTGEH2.0.1.1A.001.pdf",
+        "USB OTG v2.0_ Amendment final_052609.pdf",
+        "USB_OTG_and_EH_2-0-version 1_1a.pdf",
+        "usb_20.pdf",
+        "USB2_LinkPowerMangement_ECN[final].pdf",
+        "USB2-LPM-Errata-final.pdf"
+      ]
+    },
+    {
+      "slug": "xhci-interoperability-test-procedures-peripherals-hubs-and-hosts",
+      "url": "https://www.usb.org/sites/default/files/3.2%20Interoperability%20Testing%20v1.04%20w%20USB%20Type-C.pdf",
+      "path": "raw\\xhci-interoperability-test-procedures-peripherals-hubs-and-hosts\\3.2%20Interoperability%20Testing%20v1.04%20w%20USB%20Type-C.pdf",
+      "size": 2719637,
+      "sha256": "35cf30252d6f10653084a333f785fc1c1bf68b6f9996dfdd5326bc8ebf5adba3"
+    },
+    {
+      "slug": "class-definitions-communication-devices-12",
+      "url": "https://www.usb.org/sites/default/files/CDC1.2_WMC1.1_012011_0.zip",
+      "path": "raw\\class-definitions-communication-devices-12\\CDC1.2_WMC1.1_012011_0.zip",
+      "size": 4004006,
+      "sha256": "25dd732ab7cec565b18ddb171622c56ce983f73552cde94c2201988d7b0aebcd",
+      "pdfs": [
+        "CDC1.2_WMC1.1 Errata_1 ADOPTERS AGREEMENT 012011.pdf",
+        "ATM120.pdf",
+        "CDC120-20101103-track.pdf",
+        "CDC120-Errata1.pdf",
+        "ECM120.pdf",
+        "ISDN120.pdf",
+        "PSTN120.pdf",
+        "WMC110-20101103-track.pdf",
+        "WMC110-Errata1.pdf",
+        "CDC120_with_Errata_and_ECN_through_Apr_3_2025.pdf"
+      ]
+    },
+    {
+      "slug": "intel-usb4-evaluation-dock-bkc-files-installer",
+      "url": "https://www.usb.org/sites/default/files/IntelUSB4V2EvaluationDockBKCFilesInstallerWW212025.zip",
+      "path": "raw\\intel-usb4-evaluation-dock-bkc-files-installer\\IntelUSB4V2EvaluationDockBKCFilesInstallerWW212025.zip",
+      "size": 1119418,
+      "sha256": "ebae5854c731823aac3fe4cb28ee7a39949ec3880795d2ea0039d716c5d4a633",
+      "pdfs": []
+    },
+    {
+      "slug": "usb-active-cable-thermal-compliance-test-specification",
+      "url": "https://www.usb.org/sites/default/files/USB%20Active%20Cable%20Thermal%20Compliance%20Test%20Specification%20v0.92%20May%2015th.pdf",
+      "path": "raw\\usb-active-cable-thermal-compliance-test-specification\\USB%20Active%20Cable%20Thermal%20Compliance%20Test%20Specification%20v0.92%20May%2015th.pdf",
+      "size": 2153006,
+      "sha256": "d86c007eb8feae840636fe556dfe6e0fb3448d82d7f170afc78eb0f08c5609fd"
+    },
+    {
+      "slug": "usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b",
+      "url": "https://www.usb.org/sites/default/files/USB%20Type-C_Compliance%20Document_Rev_2_1b_June_2021.pdf",
+      "path": "raw\\usb-type-cr-connectors-and-cable-assemblies-compliance-document-rev-21b\\USB%20Type-C_Compliance%20Document_Rev_2_1b_June_2021.pdf",
+      "size": 2513882,
+      "sha256": "cd842acfa6a83b4289bbaee519a748ea21460c7e662c203672b0f7b765893404"
+    },
+    {
+      "slug": "usb-32-embedding-files",
+      "url": "https://www.usb.org/sites/default/files/USB32_Embedding_Files_03182025.zip",
+      "path": "raw\\usb-32-embedding-files\\USB32_Embedding_Files_03182025.zip",
+      "size": 3827184,
+      "sha256": "59b25e2e64974fb900ee2021b1d7bb69c7e541d2df0dd61e3056ba268effb406",
+      "pdfs": []
+    },
+    {
+      "slug": "techguide-xhci-pdk",
+      "url": "https://www.usb.org/sites/default/files/SetupGuide_xHCI_SSUSB_PDK_Ver2.6.pdf",
+      "path": "raw\\techguide-xhci-pdk\\SetupGuide_xHCI_SSUSB_PDK_Ver2.6.pdf",
+      "size": 332812,
+      "sha256": "f70c7589dec9b8a85ff02e6c9c1c7a8a8f11de5818a98f019bc0c9aeecdce02e"
+    },
+    {
+      "slug": "quadramax-pps-test-manual",
+      "url": "https://www.usb.org/sites/default/files/QuadraMAX%20PPS%20Test%20Manual%2020240814.pdf",
+      "path": "raw\\quadramax-pps-test-manual\\QuadraMAX%20PPS%20Test%20Manual%2020240814.pdf",
+      "size": 1597875,
+      "sha256": "f9b764aa1b51843e47c31789ce73ad5bd6c3ae9f939a51941d341335d5f126ac"
+    },
+    {
+      "slug": "embedded-usb2-version-20-supplement-usb-20-specification-eusb2v2",
+      "url": "https://usb.org/sites/default/files/Embedded%20USB2%20Version%202.0%20Supplement%20to%20the%20USB%202.0%20Specification_0.pdf",
+      "path": "raw\\embedded-usb2-version-20-supplement-usb-20-specification-eusb2v2\\Embedded%20USB2%20Version%202.0%20Supplement%20to%20the%20USB%202.0%20Specification_0.pdf",
+      "size": 1434406,
+      "sha256": "a78f2e1165a303de948b226140e92d465c15e2fd4e7abf81089b2346576e3d99"
+    },
+    {
+      "slug": "embedded-usb2-eusb2-physical-layer-supplement-usb-revision-20-specification-rev-12",
+      "url": "https://www.usb.org/sites/default/files/eUSB2_0_20240927.zip",
+      "path": "raw\\embedded-usb2-eusb2-physical-layer-supplement-usb-revision-20-specification-rev-12\\eUSB2_0_20240927.zip",
+      "size": 2225252,
+      "sha256": "17f51b976516b82df7cc854af0414d7e9c337d09250f39b49815d99fc8e02219",
+      "pdfs": [
+        "eUSB2 V1.2 ECN Native Mode Auto-Resume.pdf",
+        "eUSB2 V1.2 ECN Repeater HS SYNC.pdf",
+        "eUSB2_1p2_20211217.pdf"
+      ]
+    },
+    {
+      "slug": "mcci-mode-switch",
+      "url": "https://www.usb.org/sites/default/files/MCCI%203411%20-%20Mode%20Switch%20v1.1.pdf",
+      "path": "raw\\mcci-mode-switch\\MCCI%203411%20-%20Mode%20Switch%20v1.1.pdf",
+      "size": 837008,
+      "sha256": "59176f471e84f3baf9dc3437550efcba3fffa5da4fa0af2e20e51af7d449561c"
+    },
+    {
+      "slug": "mechanical-modify-rfi-system-level",
+      "url": "https://www.usb.org/sites/default/files/RFI%20system%20level%20test%20fixture%20-%20modify%20for%20Monitor_20230830.pdf",
+      "path": "raw\\mechanical-modify-rfi-system-level\\RFI%20system%20level%20test%20fixture%20-%20modify%20for%20Monitor_20230830.pdf",
+      "size": 1552526,
+      "sha256": "560988363bf368cac6144ac6018a0a04241b588c5276ab89e42415732e6fbe23"
+    },
+    {
+      "slug": "usb-type-cr-locking-connector-specification",
+      "url": "https://www.usb.org/sites/default/files/USB%20Type-C%20Locking%20Connector%20Specification.zip",
+      "path": "raw\\usb-type-cr-locking-connector-specification\\USB%20Type-C%20Locking%20Connector%20Specification.zip",
+      "size": 840749,
+      "sha256": "81fe22ce312a68be31799b5facf3f3090e1d05c3fb46356d0fbcfe780b615724",
+      "pdfs": [
+        "USB Type-C Locking Conn R1.0 ECN Plug Dimensions Update 20240410.pdf",
+        "usb_type-c_locking_connector_specification_rev_1_0_20160309.pdf"
+      ]
+    },
+    {
+      "slug": "usb-32-link-layer-test-specification",
+      "url": "https://www.usb.org/sites/default/files/USB%203%202%20Link%20Layer%20Test%20Specification%202024%2003%2003.pdf",
+      "path": "raw\\usb-32-link-layer-test-specification\\USB%203%202%20Link%20Layer%20Test%20Specification%202024%2003%2003.pdf",
+      "size": 1335097,
+      "sha256": "4704cb1b3be8ab8b601202a51c00241a73404c16f8932d77fa399beb2274181a"
+    },
+    {
+      "slug": "usb-type-c-functional-test-specification",
+      "url": "https://usb.org/sites/default/files/USB%20Type%20C%20Functional%20Test%20Specification%202024%2003%2003.pdf",
+      "path": "raw\\usb-type-c-functional-test-specification\\USB%20Type%20C%20Functional%20Test%20Specification%202024%2003%2003.pdf",
+      "size": 1700377,
+      "sha256": "077404cdf1d187fbd8d4ac7a6d44e544b9b8bdc1595fb1afb1d55d4b42bb2159"
+    },
+    {
+      "slug": "usb4enableidlesettings",
+      "url": "https://www.usb.org/sites/default/files/USB4EnableIdleSettings.zip",
+      "path": "raw\\usb4enableidlesettings\\USB4EnableIdleSettings.zip",
+      "size": 402,
+      "sha256": "8dd08dde9cf82f06021e358b50ae44cecf807a160b48cef2206507e0fb3ed5d1",
+      "pdfs": []
+    },
+    {
+      "slug": "sink-pps-interoperability-charging-cycle-test-procedure",
+      "url": "https://www.usb.org/sites/default/files/SINK%20PPS%20Interoperability%20Charging%20Cycle%20Test%20Procedure_Rev0.82.pdf",
+      "path": "raw\\sink-pps-interoperability-charging-cycle-test-procedure\\SINK%20PPS%20Interoperability%20Charging%20Cycle%20Test%20Procedure_Rev0.82.pdf",
+      "size": 154015,
+      "sha256": "66665b4fcd3a2e572e0007d1ef4c13d2f4e46f895ceee22fe33db64f42415f55"
+    },
+    {
+      "slug": "ip-agnostic-dual-bdf-vendor-specific-capability-pcipcie",
+      "url": "https://www.usb.org/sites/default/files/Generic_Dual_BDF_TechDoc_PCIDevice.pdf",
+      "path": "raw\\ip-agnostic-dual-bdf-vendor-specific-capability-pcipcie\\Generic_Dual_BDF_TechDoc_PCIDevice.pdf",
+      "size": 274762,
+      "sha256": "496559dd9c3476278ebfb1c6e21eeef780ce05c40aaee6e752551eb24fef8257"
+    },
+    {
+      "slug": "usb-i3cr-device-class-specification-v11",
+      "url": "https://www.usb.org/sites/default/files/USB%20I3C%20Device%20Class%20Revision%201.1.pdf",
+      "path": "raw\\usb-i3cr-device-class-specification-v11\\USB%20I3C%20Device%20Class%20Revision%201.1.pdf",
+      "size": 1594189,
+      "sha256": "0c83b994b5566823ed000fd82f0050c3f7e0190f8eb1e288dee7ac72835878c0"
+    },
+    {
+      "slug": "usb-upstream-facing-port-powered-hub-white-paper",
+      "url": "https://www.usb.org/sites/default/files/USB_Upstream_Facing_Port_Powered_Hub_White_Paper_0.9.pdf",
+      "path": "raw\\usb-upstream-facing-port-powered-hub-white-paper\\USB_Upstream_Facing_Port_Powered_Hub_White_Paper_0.9.pdf",
+      "size": 278696,
+      "sha256": "314090a3f075908da3287f64611cf7032d987e358301d33473e3a97a2ad5c0d1"
+    },
+    {
+      "slug": "usb4-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/USB4%20Adopters%20Agreement%20PDF%20Submission%20Update%2020230223_0.pdf",
+      "path": "raw\\usb4-adopters-agreement\\USB4%20Adopters%20Agreement%20PDF%20Submission%20Update%2020230223_0.pdf",
+      "size": 101612,
+      "sha256": "61cf6a12a210f4a701ebc5be90b55837c475f508f3fa6742ebce1c1bebad6d7d"
+    },
+    {
+      "slug": "usb4ett",
+      "url": "https://www.usb.org/sites/default/files/USB4ETT%20V.1.1.2.zip",
+      "path": "raw\\usb4ett\\USB4ETT%20V.1.1.2.zip",
+      "size": 65048684,
+      "sha256": "61ac8c1f6b91dbaa7a58575378dae48b125259065eb95268e8431f1b14152357",
+      "pdfs": [
+        "USB4ETT_Documentation.pdf"
+      ]
+    },
+    {
+      "slug": "usb-if-integrators-list-marketing-name-guidance",
+      "url": "https://www.usb.org/sites/default/files/USB-IF%20Integrators%20List%20Marketing%20Name%20Guidance_January%202023.pdf",
+      "path": "raw\\usb-if-integrators-list-marketing-name-guidance\\USB-IF%20Integrators%20List%20Marketing%20Name%20Guidance_January%202023.pdf",
+      "size": 150286,
+      "sha256": "aa74206825b10d62f0b9bbdca704d1c7cbf6fc3d1efb8bae4f8f219be9441d8a"
+    },
+    {
+      "slug": "usb-80g-phy-layer-analysis",
+      "url": "https://www.usb.org/sites/default/files/USB%2080G%20PHY%20background.pdf",
+      "path": "raw\\usb-80g-phy-layer-analysis\\USB%2080G%20PHY%20background.pdf",
+      "size": 1394374,
+      "sha256": "5a7e7b4ed989b2446498ce3a6b0a30fca6b3b06d79cd3520d98084789e71bd0c"
+    },
+    {
+      "slug": "electrical-compliance-test-specification-linear-re-driver-active-cable-lrd",
+      "url": "https://www.usb.org/sites/default/files/Electrical_Compliance_Test%20Specification_Linear_Re_Driver_Active_Cable_LRD_rev1p0.pdf",
+      "path": "raw\\electrical-compliance-test-specification-linear-re-driver-active-cable-lrd\\Electrical_Compliance_Test%20Specification_Linear_Re_Driver_Active_Cable_LRD_rev1p0.pdf",
+      "size": 2016880,
+      "sha256": "9e52597bf3940020e12da04bf9aa8bc8901ce73f2c40a0ba1d9710821609e921"
+    },
+    {
+      "slug": "usb-if-duty-care",
+      "url": "https://www.usb.org/sites/default/files/USB-IF%20Duty%20of%20Care_1.pdf",
+      "path": "raw\\usb-if-duty-care\\USB-IF%20Duty%20of%20Care_1.pdf",
+      "size": 94473,
+      "sha256": "2aa398651e99bcc0162536735366aa6063bbfb0a2635abc3759837f5f8087a79"
+    },
+    {
+      "slug": "usb-if-covid-and-infectious-diseases-agreement-and-waiverrelease",
+      "url": "https://www.usb.org/sites/default/files/COVID%20Waiver%20and%20Release_CW%23129.pdf",
+      "path": "raw\\usb-if-covid-and-infectious-diseases-agreement-and-waiverrelease\\COVID%20Waiver%20and%20Release_CW%23129.pdf",
+      "size": 102804,
+      "sha256": "f075d3309439d08ad37774a246542c354ff927052e901a618844ccc851a882f7"
+    },
+    {
+      "slug": "usb4tm-thunderbolt3tm-compatibility-compliance-test-specification",
+      "url": "https://www.usb.org/sites/default/files/USB4%20TBT3-Compatibility%20CTS%20Rev%201.1.zip",
+      "path": "raw\\usb4tm-thunderbolt3tm-compatibility-compliance-test-specification\\USB4%20TBT3-Compatibility%20CTS%20Rev%201.1.zip",
+      "size": 1340748,
+      "sha256": "2032a9b1e3901cf47a910b76cf36f8866515e7af5806e1e68410870bad3bcff2",
+      "pdfs": [
+        "USB4\u2122 Thunderbolt3\u2122 Compatibility CTS Rev 1.1 - CLEAN.pdf",
+        "USB4\u2122 Thunderbolt3\u2122 Compatibility CTS Rev 1.1 - REDLINE.pdf"
+      ]
+    },
+    {
+      "slug": "usb-if-covid-and-infectious-diseases-agreement-and-waiverrelease-seoul",
+      "url": "https://www.usb.org/sites/default/files/COVID%20Waiver%20and%20Release_3.pdf",
+      "path": "raw\\usb-if-covid-and-infectious-diseases-agreement-and-waiverrelease-seoul\\COVID%20Waiver%20and%20Release_3.pdf",
+      "size": 145751,
+      "sha256": "381e6baeb0a037e4f449857d9e137852ee80a705390ed1a4a6f0ef05e0566f84"
+    },
+    {
+      "slug": "usb-devdays-seoul-sponsor-application",
+      "url": "https://www.usb.org/sites/default/files/USBDevDaysSeoul%202022SponsorApplication.pdf",
+      "path": "raw\\usb-devdays-seoul-sponsor-application\\USBDevDaysSeoul%202022SponsorApplication.pdf",
+      "size": 202202,
+      "sha256": "aea3ff019d9d7f5e2ddc163d2911dbcc6e783728f524c3273226100a579094d9"
+    },
+    {
+      "slug": "usb-devdays-seoul-exhibitor-application",
+      "url": "https://www.usb.org/sites/default/files/USBDevDaysSeoul2022ExhibitorApplication.pdf",
+      "path": "raw\\usb-devdays-seoul-exhibitor-application\\USBDevDaysSeoul2022ExhibitorApplication.pdf",
+      "size": 200126,
+      "sha256": "446c5c79247bfa9cd0604835e4318ba68eafe8c1dcc27d44d283011b42a61ba8"
+    },
+    {
+      "slug": "usb-type-c-connectors-and-cable-assemblies-compliance-document",
+      "url": "https://usb.org/sites/default/files/USB%20Type-C%20Connectors%20and%20Cable%20Assemblies%20Compliance%20Document%20Rev%202.1b.zip",
+      "path": "raw\\usb-type-c-connectors-and-cable-assemblies-compliance-document\\USB%20Type-C%20Connectors%20and%20Cable%20Assemblies%20Compliance%20Document%20Rev%202.1b.zip",
+      "size": 4799804,
+      "sha256": "405e8efccde122121df93e730027bf1714335ebe6a2652b4956b40a63622ca32",
+      "pdfs": [
+        "USB Type-C_Compliance Document_Rev_2_1a_June_2021.pdf",
+        "USB Type-C_Compliance Document_Rev_2_1a_June_2021_CB.pdf"
+      ]
+    },
+    {
+      "slug": "usb-type-c-product-test-matrix-0",
+      "url": "https://www.usb.org/sites/default/files/USB-C%20Product%20Matrix%202022%2008%2003.pdf",
+      "path": "raw\\usb-type-c-product-test-matrix-0\\USB-C%20Product%20Matrix%202022%2008%2003.pdf",
+      "size": 191215,
+      "sha256": "af9002de506cafcfa64010b693cf2f9a15342bc856bec82da099f49b07dbfe80"
+    },
+    {
+      "slug": "usb-rfi-system-level-test-procedure",
+      "url": "https://www.usb.org/sites/default/files/RFI%20system%20level%20test%20procedure%20Rev1.5%2008012022.pdf",
+      "path": "raw\\usb-rfi-system-level-test-procedure\\RFI%20system%20level%20test%20procedure%20Rev1.5%2008012022.pdf",
+      "size": 1407280,
+      "sha256": "565f5d7eebe0d9f69f0088abdd0dd5c575da1bd3d4230401d2550441efc918bc"
+    },
+    {
+      "slug": "usb-type-cr-port-controller-interface-specification",
+      "url": "https://www.usb.org/sites/default/files/USB_TCPCI_R2_V1p3_30122_CLEAN.pdf",
+      "path": "raw\\usb-type-cr-port-controller-interface-specification\\USB_TCPCI_R2_V1p3_30122_CLEAN.pdf",
+      "size": 4216618,
+      "sha256": "0cc82e39b94351e12243f8f9bb978a670a3a2c7f9290fce90ce5e40b336a50ae"
+    },
+    {
+      "slug": "usb-i3c-device-class-specification",
+      "url": "https://www.usb.org/sites/default/files/USB%20I3C%20Device%20Class%20Revision%201.0.pdf",
+      "path": "raw\\usb-i3c-device-class-specification\\USB%20I3C%20Device%20Class%20Revision%201.0.pdf",
+      "size": 1372142,
+      "sha256": "32da34c0567c1e02981ed0e0d959b6ca17b86b3c7c6a606d40823c9f6e612619"
+    },
+    {
+      "slug": "fast-role-swap-switch-user-guide",
+      "url": "https://usb.org/sites/default/files/FRS%20Switch%20Documentation.pdf",
+      "path": "raw\\fast-role-swap-switch-user-guide\\FRS%20Switch%20Documentation.pdf",
+      "size": 645636,
+      "sha256": "c201d501635a531d32be301045724c34ec8e75193021b9989658d6369178e6ba"
+    },
+    {
+      "slug": "usb4tm-thunderbolt3tm-compatibility-requirements-specification",
+      "url": "https://www.usb.org/sites/default/files/USB4%E2%84%A2%20Thunderbolt3%E2%84%A2%20Compatibility%20Requirements%20Specification%20Rev%201.0%20-%2020210129_0.pdf",
+      "path": "raw\\usb4tm-thunderbolt3tm-compatibility-requirements-specification\\USB4%E2%84%A2%20Thunderbolt3%E2%84%A2%20Compatibility%20Requirements%20Specification%20Rev%201.0%20-%2020210129_0.pdf",
+      "size": 407255,
+      "sha256": "d9ffb608f6cb4108818ac412df0758f8dd3b74089fadc9ef869fcfb53d3a436d"
+    },
+    {
+      "slug": "supermutt-firmware",
+      "url": "https://www.usb.org/sites/default/files/SuperMUTT%20firmware%20version%2057%20with%20update%20procedure.zip",
+      "path": "raw\\supermutt-firmware\\SuperMUTT%20firmware%20version%2057%20with%20update%20procedure.zip",
+      "size": 1915340,
+      "sha256": "9ed59e11543168dfeeca5959209b99e30c4fd651291ac49095c2d314fec0a0c1",
+      "pdfs": [
+        "SuperMUTT Firmware Update Procedure Rev1.00.pdf"
+      ]
+    },
+    {
+      "slug": "time-synchronization-files",
+      "url": "https://www.usb.org/sites/default/files/TMU_FPGA.zip",
+      "path": "raw\\time-synchronization-files\\TMU_FPGA.zip",
+      "size": 1089366,
+      "sha256": "404daf79e394a6b285527783da71db28119ce38c00a635afff41a98a8a6cc3f6",
+      "pdfs": []
+    },
+    {
+      "slug": "cable-matlab-source-code",
+      "url": "https://www.usb.org/sites/default/files/IntePar1p6_Codes.zip",
+      "path": "raw\\cable-matlab-source-code\\IntePar1p6_Codes.zip",
+      "size": 299642,
+      "sha256": "f95a9fedcc68fdb219f5f86ddcb681e36fa4ece1cb9b6bdef0a06290e66e0c77",
+      "pdfs": []
+    },
+    {
+      "slug": "usb-32-product-test-matrix",
+      "url": "https://www.usb.org/sites/default/files/USB%203.2%20Test%20Matrix_2.pdf",
+      "path": "raw\\usb-32-product-test-matrix\\USB%203.2%20Test%20Matrix_2.pdf",
+      "size": 33421,
+      "sha256": "2ccb436bd29dd365aa7d68f94326789729783da24679ef69e20e4c08589037ad"
+    },
+    {
+      "slug": "usb-battery-charging-12-compliance-plan",
+      "url": "https://www.usb.org/sites/default/files/USB%20BC%201.2%20Compliance%20Plan%20rev%201.2.pdf",
+      "path": "raw\\usb-battery-charging-12-compliance-plan\\USB%20BC%201.2%20Compliance%20Plan%20rev%201.2.pdf",
+      "size": 1669906,
+      "sha256": "1f84253c9ec984fdbaef5c92ec555baec953b39d6dc8892e3fcb70211bdb619c"
+    },
+    {
+      "slug": "billboard-device-class-spec-revision-122-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/USB%20Billboard%20Rev%201.2.2%2020210209.zip",
+      "path": "raw\\billboard-device-class-spec-revision-122-and-adopters-agreement\\USB%20Billboard%20Rev%201.2.2%2020210209.zip",
+      "size": 866517,
+      "sha256": "90e31953c077277ee0e1a4f36bde75e19d1fba9b6fa608b5ef6f0bc8570b85f9",
+      "pdfs": [
+        "USB Billboard Revision 1.2.2 - CLEAN.pdf",
+        "USB Billboard Revision 1.2.2 - REDLINE.pdf",
+        "USB Billboard v1.2.2 ADOPTERS AGREEMENT - Device Class.pdf"
+      ]
+    },
+    {
+      "slug": "usb4-gen3-plug-connector-high-speed-design-guide",
+      "url": "https://www.usb.org/sites/default/files/USB4_Gen3_plug_HS_design_guide_white_paper_2020_10_27.pdf",
+      "path": "raw\\usb4-gen3-plug-connector-high-speed-design-guide\\USB4_Gen3_plug_HS_design_guide_white_paper_2020_10_27.pdf",
+      "size": 920124,
+      "sha256": "ae1d7a4a570b028232f2ef5ac92cb1395c74a4c42c5db08b06cd1b2bbad4bcb4"
+    },
+    {
+      "slug": "usb4-gen-3-tp3-embedding-file",
+      "url": "https://www.usb.org/sites/default/files/USB4_Gen3_0p8m.zip",
+      "path": "raw\\usb4-gen-3-tp3-embedding-file\\USB4_Gen3_0p8m.zip",
+      "size": 316735,
+      "sha256": "9da5dca145597918df424100dd7f8e7afe5bd4b17f7e2b83588104895c718bff",
+      "pdfs": []
+    },
+    {
+      "slug": "usb4-gen-2-tp3-embedding-file",
+      "url": "https://www.usb.org/sites/default/files/USB4_Gen2_2m.zip",
+      "path": "raw\\usb4-gen-2-tp3-embedding-file\\USB4_Gen2_2m.zip",
+      "size": 530720,
+      "sha256": "48c83911ae563d81dbf3c8778cce79238ebc723499cea89fc66f03e9269b5271",
+      "pdfs": []
+    },
+    {
+      "slug": "usb4-compliance-test-matrix",
+      "url": "https://usb.org/sites/default/files/USB4%20Compliance%20Matrix%2020200630.pdf",
+      "path": "raw\\usb4-compliance-test-matrix\\USB4%20Compliance%20Matrix%2020200630.pdf",
+      "size": 112367,
+      "sha256": "b257e8a62ae553032480c855f74c144070c978c90a1532f95b49ac8b229d81b1"
+    },
+    {
+      "slug": "usb-class-definition-midi-devices-v20",
+      "url": "https://www.usb.org/sites/default/files/USB%20MIDI%20v2_0.pdf",
+      "path": "raw\\usb-class-definition-midi-devices-v20\\USB%20MIDI%20v2_0.pdf",
+      "size": 1595403,
+      "sha256": "604f8683e0b16c39b79c7fc11ea51ac74477fdcee6b8cd6dc32ba664db1122fe"
+    },
+    {
+      "slug": "hid-point-sale-usage-tables-102",
+      "url": "https://usb.org/sites/default/files/pos1_02.pdf",
+      "path": "raw\\hid-point-sale-usage-tables-102\\pos1_02.pdf",
+      "size": 874903,
+      "sha256": "4af35581a394a32655da71d9a53d68c76b599fead4c12291a414e47cc1260992"
+    },
+    {
+      "slug": "oaad-arcade-usage-table",
+      "url": "https://www.usb.org/sites/default/files/oaaddataformatsv6.pdf",
+      "path": "raw\\oaad-arcade-usage-table\\oaaddataformatsv6.pdf",
+      "size": 611431,
+      "sha256": "0d21f1b8ecd1c3584d6f0b2244cb5dd9ef4becf7735f198de5acc4bd27a1fb64"
+    },
+    {
+      "slug": "monitor-control-class-10",
+      "url": "https://www.usb.org/sites/default/files/usbmon10_0.pdf",
+      "path": "raw\\monitor-control-class-10\\usbmon10_0.pdf",
+      "size": 414658,
+      "sha256": "9e8dbb699fd381642734488a0d3fa8940b3dec3f3783bb565093140040d97c74"
+    },
+    {
+      "slug": "device-class-definition-pid-10",
+      "url": "https://www.usb.org/sites/default/files/pid1_01_0.pdf",
+      "path": "raw\\device-class-definition-pid-10\\pid1_01_0.pdf",
+      "size": 676569,
+      "sha256": "77d10c3ea340cf7596e5af873de0c2596aa97962f6bb54d2b290d1cb6514acdc"
+    },
+    {
+      "slug": "device-class-definition-hid-111",
+      "url": "https://www.usb.org/sites/default/files/hid1_11.pdf",
+      "path": "raw\\device-class-definition-hid-111\\hid1_11.pdf",
+      "size": 1031484,
+      "sha256": "206272dacaf01ff34beda038b8ed59abbb02f028394896345c393bc026795d36"
+    },
+    {
+      "slug": "usb-3-hub-lvs-test-specification",
+      "url": "https://www.usb.org/sites/default/files/SSHUB%20LVS%20Specification%202019_11_21.pdf",
+      "path": "raw\\usb-3-hub-lvs-test-specification\\SSHUB%20LVS%20Specification%202019_11_21.pdf",
+      "size": 802548,
+      "sha256": "f6c647c1acdcaf861555bcef481a104cf72958b787a2db6baab3de0a284440fb"
+    },
+    {
+      "slug": "usage-tables-hid-power-devices-11",
+      "url": "https://www.usb.org/sites/default/files/pdcv11.pdf",
+      "path": "raw\\usage-tables-hid-power-devices-11\\pdcv11.pdf",
+      "size": 1010724,
+      "sha256": "111f4db6f80f5cdbf2cc5a843d332c1ca8326ade91c8da375b383de636541d91"
+    },
+    {
+      "slug": "usb-31-legacy-cable-and-connector-revision-10",
+      "url": "https://www.usb.org/sites/default/files/USB%203.1%20Legacy%20Cable%20and%20Connector%20Revision%201.0.zip",
+      "path": "raw\\usb-31-legacy-cable-and-connector-revision-10\\USB%203.1%20Legacy%20Cable%20and%20Connector%20Revision%201.0.zip",
+      "size": 8010266,
+      "sha256": "7988165f315c7f5ac67ba5e0b0867a937fb8923ed76f06b8e522a34f619e85cb",
+      "pdfs": [
+        "USB 3.1 ECN Figure 5-4 Dimensional Correction.pdf",
+        "USB 3.1 Legacy Cable and Connector Revision 1.0 Redline against 3.1 Final.pdf",
+        "USB 3.1 Legacy Cable and Connector Revision 1.0.pdf"
+      ]
+    },
+    {
+      "slug": "usb-devdays-2019-welcome-keynote",
+      "url": "https://www.usb.org/sites/default/files/D1T1-1%20-%20Welcome%20Keynote%20Taipei.pdf",
+      "path": "raw\\usb-devdays-2019-welcome-keynote\\D1T1-1%20-%20Welcome%20Keynote%20Taipei.pdf",
+      "size": 949788,
+      "sha256": "f081879a8df263de87820e3b2aafd76d4bb3f054fbcbfaa8f1b709acb287b299"
+    },
+    {
+      "slug": "usb-type-cr-system-overview",
+      "url": "https://www.usb.org/sites/default/files/D1T1-2%20-%20USB%20Type-C%20System%20Overview.pdf",
+      "path": "raw\\usb-type-cr-system-overview\\D1T1-2%20-%20USB%20Type-C%20System%20Overview.pdf",
+      "size": 858122,
+      "sha256": "98837ac762e1a92f8d8085c540c6d90e414819e76cf819b03fefb89a6548c985"
+    },
+    {
+      "slug": "usb4tm-system-overview",
+      "url": "https://www.usb.org/sites/default/files/D1T1-3%20-%20USB4%20System%20Overview.pdf",
+      "path": "raw\\usb4tm-system-overview\\D1T1-3%20-%20USB4%20System%20Overview.pdf",
+      "size": 756537,
+      "sha256": "45b11a544184597c96a8b41370cd0a2762c8ce52684cdbcf64613dcfc5605d9f"
+    },
+    {
+      "slug": "usb4tm-electricals-layer",
+      "url": "https://www.usb.org/sites/default/files/D1T1-4%20-%20USB4%20Electrical%20Layer.pdf",
+      "path": "raw\\usb4tm-electricals-layer\\D1T1-4%20-%20USB4%20Electrical%20Layer.pdf",
+      "size": 722800,
+      "sha256": "f80522e6d25ea26ab37d75309b401efcdd8c3401c69f5a1b752241f149400f93"
+    },
+    {
+      "slug": "usb4tm-logical-layer-re-timer-and-transport-layer",
+      "url": "https://usb.org/sites/default/files/D1T1-5%20-%20USB4%20Logical%20Layer%20-%20Retimer%20-%20Transport.pdf",
+      "path": "raw\\usb4tm-logical-layer-re-timer-and-transport-layer\\D1T1-5%20-%20USB4%20Logical%20Layer%20-%20Retimer%20-%20Transport.pdf",
+      "size": 1490220,
+      "sha256": "5174c7e0fd2bac6c8bb2e5ea8c7f31908fdcbe33df07f1e91021daccd208a96a"
+    },
+    {
+      "slug": "usb-branding-session",
+      "url": "https://www.usb.org/sites/default/files/D1T2-1%20-%20USB%20Branding%20Session.pdf",
+      "path": "raw\\usb-branding-session\\D1T2-1%20-%20USB%20Branding%20Session.pdf",
+      "size": 1274807,
+      "sha256": "bbd791978b756cb244e9148e2634fa4b23bab6b0b9f9ea861732f8d60128eeec"
+    },
+    {
+      "slug": "usb4tm-windows",
+      "url": "https://www.usb.org/sites/default/files/D1T2-2%20-%20USB4%20on%20Windows.pdf",
+      "path": "raw\\usb4tm-windows\\D1T2-2%20-%20USB4%20on%20Windows.pdf",
+      "size": 436197,
+      "sha256": "2b258d1a092dc5243c4be583b2e50c0f9bd0efa36d4ec7f417cd9df9768c467f"
+    },
+    {
+      "slug": "ctvpds-and-making-your-own-usb-cr-thingamajig",
+      "url": "https://www.usb.org/sites/default/files/D1T2-3a%20-%20CTVPDs%20and%20Making%20Your%20Own%20USB-C%20Thingamajig.pdf",
+      "path": "raw\\ctvpds-and-making-your-own-usb-cr-thingamajig\\D1T2-3a%20-%20CTVPDs%20and%20Making%20Your%20Own%20USB-C%20Thingamajig.pdf",
+      "size": 1150356,
+      "sha256": "d1380dc3559d47c77b074c77599ee66402b2254306f5e557a4b26e0dedc957b3"
+    },
+    {
+      "slug": "demystifying-usb-cr-using-linuxs-usb-type-cr-connector-class",
+      "url": "https://www.usb.org/sites/default/files/D1T2-3b%20-%20USB%20Type-C%20Linux%20Connector%20Class.pdf",
+      "path": "raw\\demystifying-usb-cr-using-linuxs-usb-type-cr-connector-class\\D1T2-3b%20-%20USB%20Type-C%20Linux%20Connector%20Class.pdf",
+      "size": 1359041,
+      "sha256": "06f8bd1167d759097f86c10529a6e7fd68940803ef1057878f99a0a674b67fa5"
+    },
+    {
+      "slug": "usb4tm-configuration-layer-usb3-tunneling-dp-tunneling-and-pcie-tunneling",
+      "url": "https://www.usb.org/sites/default/files/D2T1-1%20-%20USB4%20Configuration%20Layer%20-%20Protocol%20Tunneling.pdf",
+      "path": "raw\\usb4tm-configuration-layer-usb3-tunneling-dp-tunneling-and-pcie-tunneling\\D2T1-1%20-%20USB4%20Configuration%20Layer%20-%20Protocol%20Tunneling.pdf",
+      "size": 1040443,
+      "sha256": "3877c158c52f42d899676c1944a5f160dc3b122728191e9ed92779ca2953999a"
+    },
+    {
+      "slug": "usb4tm-compliance-and-certification",
+      "url": "https://www.usb.org/sites/default/files/D2T1-2%20-%20USB4%20Compliance%20and%20Certification.pdf",
+      "path": "raw\\usb4tm-compliance-and-certification\\D2T1-2%20-%20USB4%20Compliance%20and%20Certification.pdf",
+      "size": 873382,
+      "sha256": "ecb5af7e76d689a2211edaa57392ab59faaaecbb56e557d11092f490094dc602"
+    },
+    {
+      "slug": "usb4tm-time-synchronization-host-interface-connection-manager-and-thunderbolttm-3",
+      "url": "https://www.usb.org/sites/default/files/D2T1-3%20-%20USB4%20Time%20Sync%20-%20Host%20Interface%20-%20CM%20-%20TBT3.pdf",
+      "path": "raw\\usb4tm-time-synchronization-host-interface-connection-manager-and-thunderbolttm-3\\D2T1-3%20-%20USB4%20Time%20Sync%20-%20Host%20Interface%20-%20CM%20-%20TBT3.pdf",
+      "size": 875835,
+      "sha256": "0df412f8c840e3ed757bb0a0175182ebd19b96470ae11a53e777956c1214fbbe"
+    },
+    {
+      "slug": "vesa-displayporttm-alternate-mode-usb-cr",
+      "url": "https://www.usb.org/sites/default/files/D2T1-4%20-%20VESA%20DP%20Alt%20Mode%20over%20USB%20Type-C.pdf",
+      "path": "raw\\vesa-displayporttm-alternate-mode-usb-cr\\D2T1-4%20-%20VESA%20DP%20Alt%20Mode%20over%20USB%20Type-C.pdf",
+      "size": 868913,
+      "sha256": "6e90b0efb7bb96b4eb4dec9e68f4e2a0a931db4d451293391c869db8a8bd39fb"
+    },
+    {
+      "slug": "usb-power-delivery-0",
+      "url": "https://www.usb.org/sites/default/files/D2T2-1%20-%20USB%20Power%20Delivery.pdf",
+      "path": "raw\\usb-power-delivery-0\\D2T2-1%20-%20USB%20Power%20Delivery.pdf",
+      "size": 1186892,
+      "sha256": "82b1b8bddae729a7ab9140abf415d1bed90b182642dc3f1a2832fa29e9bd0972"
+    },
+    {
+      "slug": "usb4tm-cable-electricals-and-system-design",
+      "url": "https://www.usb.org/sites/default/files/D2T2-2%20-%20USB4%20Cable%20and%20System.pdf",
+      "path": "raw\\usb4tm-cable-electricals-and-system-design\\D2T2-2%20-%20USB4%20Cable%20and%20System.pdf",
+      "size": 1716706,
+      "sha256": "2f751d7e388caa6584dde3c67705283df29d18450ddf242d13e240645d42c279"
+    },
+    {
+      "slug": "usb-type-cr-active-cable",
+      "url": "https://www.usb.org/sites/default/files/D2T2-3%20-%20USB%20Type-C%20Active%20Cables.pdf",
+      "path": "raw\\usb-type-cr-active-cable\\D2T2-3%20-%20USB%20Type-C%20Active%20Cables.pdf",
+      "size": 1150830,
+      "sha256": "191dde9dcac9f887e1207d5a9f9f071854d6634f6df02f642748afdd3233ed2a"
+    },
+    {
+      "slug": "battery-charging-v12-spec-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/BCv1.2_070312_0.zip",
+      "path": "raw\\battery-charging-v12-spec-and-adopters-agreement\\BCv1.2_070312_0.zip",
+      "size": 1371538,
+      "sha256": "ea4fa630c609a2ff90c548782a10d46170d435ae6d9693be8cad23e7f66289a2",
+      "pdfs": [
+        "Battery Charging V1_2 ADOPTERS AGREEMENT - Device Class Spec.pdf",
+        "Battery_Charging_Errata_Rev_1.2.pdf",
+        "Battery_Charging_Errata_Rev_1.2_2012-03-15.pdf",
+        "BC1.2 plus errata 2012-3-15.pdf",
+        "BC1.2_without errata 2010-12-7.pdf"
+      ]
+    },
+    {
+      "slug": "usb-if-cw117-vendor-hosted-test-suite-form",
+      "url": "https://www.usb.org/sites/default/files/USB-IF%20CW117%20Vendor%20Hosted%20Test%20Room%20Form.pdf",
+      "path": "raw\\usb-if-cw117-vendor-hosted-test-suite-form\\USB-IF%20CW117%20Vendor%20Hosted%20Test%20Room%20Form.pdf",
+      "size": 141605,
+      "sha256": "45ec7acdd8d5376416e336534651f7134ce16dd14b5696aaaa37cbd677e80d02"
+    },
+    {
+      "slug": "embedded-host-target-peripheral-list-tpl-form",
+      "url": "https://www.usb.org/sites/default/files/Embedded%20Host%20Targeted%20Peripheral%20List%20%28TPL%29%20Form.pdf",
+      "path": "raw\\embedded-host-target-peripheral-list-tpl-form\\Embedded%20Host%20Targeted%20Peripheral%20List%20%28TPL%29%20Form.pdf",
+      "size": 115897,
+      "sha256": "e8bf5768565045668c60022c6a8d3e1a469c384d3e3aede8c8a2c617e615b880"
+    },
+    {
+      "slug": "android-based-targeted-host-compliance-test-specification-v100",
+      "url": "https://www.usb.org/sites/default/files/Targeted%20Host%20Compliance%20Test%20Specification%20v1.00.pdf",
+      "path": "raw\\android-based-targeted-host-compliance-test-specification-v100\\Targeted%20Host%20Compliance%20Test%20Specification%20v1.00.pdf",
+      "size": 176878,
+      "sha256": "c110eb39a0d779612c603c4dc26cb23ed908f0956ed550a5ab3ecf73e2bb06b8"
+    },
+    {
+      "slug": "usb-20-test-matrix",
+      "url": "https://usb.org/sites/default/files/USB_2.0_Test_Matrix.pdf",
+      "path": "raw\\usb-20-test-matrix\\USB_2.0_Test_Matrix.pdf",
+      "size": 60342,
+      "sha256": "27ca8249092a0dfa59b0137d451c23b66b45ea6d9a68a4fc8a55acff6c642af1"
+    },
+    {
+      "slug": "quadramax-manual",
+      "url": "https://www.usb.org/sites/default/files/QuadraMAX%20USB%20Type-C%20Tests%20Manual.pdf",
+      "path": "raw\\quadramax-manual\\QuadraMAX%20USB%20Type-C%20Tests%20Manual.pdf",
+      "size": 175949,
+      "sha256": "44a4879b992ef4ee71f4a530ffbe897f8d4652e29df07345954cabcbfe1d7d41"
+    },
+    {
+      "slug": "usb-authentication-specification-rev-10-ecn-and-errata-through-january-7-2019",
+      "url": "https://www.usb.org/sites/default/files/USB%20Authentication%20Specification%20Rev%201.0%20with%20ECN%20and%20Errata%20through%20January%207%2C%202019.zip",
+      "path": "raw\\usb-authentication-specification-rev-10-ecn-and-errata-through-january-7-2019\\USB%20Authentication%20Specification%20Rev%201.0%20with%20ECN%20and%20Errata%20through%20January%207%2C%202019.zip",
+      "size": 2825105,
+      "sha256": "89127c3e0469c1469ca88361ff44dcab5b4f959b6a06976747db9900e7345a0c",
+      "pdfs": [
+        "USB Authentication Mapping Specification 20190118.pdf",
+        "USB Security Foundation Specification 20190116.pdf"
+      ]
+    },
+    {
+      "slug": "pidvid-usb-20-high-speed-electrical-embedded-host-and-otg-moi",
+      "url": "https://www.usb.org/sites/default/files/PIDVID%20USB%202.0%20High%20Speed%20Electrical%20Embedded%20Host%20and%20OTG%20MOI%201.01.pdf",
+      "path": "raw\\pidvid-usb-20-high-speed-electrical-embedded-host-and-otg-moi\\PIDVID%20USB%202.0%20High%20Speed%20Electrical%20Embedded%20Host%20and%20OTG%20MOI%201.01.pdf",
+      "size": 995124,
+      "sha256": "2af8d5779cc0cf9d5f2527b75bbe6689fe17aa501d226517836994bf5382c660"
+    },
+    {
+      "slug": "usb-type-cr-bridge-specification-v11",
+      "url": "https://www.usb.org/sites/default/files/USB_Type-C_Bridge_Spec110117.zip",
+      "path": "raw\\usb-type-cr-bridge-specification-v11\\USB_Type-C_Bridge_Spec110117.zip",
+      "size": 3257478,
+      "sha256": "3afda4e2e24567eb3cf25d950dea045fa04b19f84214a7c94ae4825a69e99aa7",
+      "pdfs": [
+        "USB_3_0_Adopters_Agreement_Final_020411.pdf",
+        "USB-C Bridge Rev 1 1 - Clean.pdf",
+        "USB-C Bridge Rev 1 1 - Redline.pdf"
+      ]
+    },
+    {
+      "slug": "hid-descriptor-tool",
+      "url": "https://www.usb.org/sites/default/files/documents/dt2_4.zip",
+      "path": "raw\\hid-descriptor-tool\\dt2_4.zip",
+      "size": 101621,
+      "sha256": "5a0d8716d97053d6b7a78625e4cc03006e5d6b4473e700277b1f862b27645d75",
+      "pdfs": []
+    },
+    {
+      "slug": "usb2032bc12-drop-droop-test-non-usb-type-cr-products",
+      "url": "https://www.usb.org/sites/default/files/USB20_32_BC12_Drop_Droop_1_4_1.pdf",
+      "path": "raw\\usb2032bc12-drop-droop-test-non-usb-type-cr-products\\USB20_32_BC12_Drop_Droop_1_4_1.pdf",
+      "size": 607471,
+      "sha256": "cf7e58f3f45d44e35de6e44452f3bceb6f8c51e0de4345a2dc044bda2854b14e"
+    },
+    {
+      "slug": "universal-serial-bus-31-legacy-connectors-and-cable-assemblies-compliance-document",
+      "url": "https://www.usb.org/sites/default/files/CabConn_Legacy_3_1_Compliance_Rev_1_1.pdf",
+      "path": "raw\\universal-serial-bus-31-legacy-connectors-and-cable-assemblies-compliance-document\\CabConn_Legacy_3_1_Compliance_Rev_1_1.pdf",
+      "size": 2282314,
+      "sha256": "6d6cc94d51b4a86fea55fe453fc1cab213a0a0dc970e3dc4f959a17ff432cd2c"
+    },
+    {
+      "slug": "usb-31-peripheral-development-kit-usb-31-xhci-based-certification-platform",
+      "url": "https://www.usb.org/sites/default/files/TechGuide_xHCI_SSUSB_PDK_Ver2.1.pdf",
+      "path": "raw\\usb-31-peripheral-development-kit-usb-31-xhci-based-certification-platform\\TechGuide_xHCI_SSUSB_PDK_Ver2.1.pdf",
+      "size": 801054,
+      "sha256": "a1d3b7ac7ef05750af1487cc279d9577199e55de76e4f3aa894cd6c2a0ee0384"
+    },
+    {
+      "slug": "power-delivery-design-issues-hi-speed-usb-motherboards",
+      "url": "https://www.usb.org/sites/default/files/power_delivery_motherboards.pdf",
+      "path": "raw\\power-delivery-design-issues-hi-speed-usb-motherboards\\power_delivery_motherboards.pdf",
+      "size": 642590,
+      "sha256": "a727876e6a8c7b954d6e8c49cb6380333c3344f9d89799eac81840a0388ab5e2"
+    },
+    {
+      "slug": "usb-type-c-cable-assembly-signal-integrity-test-fixture-gerber-files",
+      "url": "https://www.usb.org/sites/default/files/20150704_USB_Type-C_Fixture_Gerber_File.zip",
+      "path": "raw\\usb-type-c-cable-assembly-signal-integrity-test-fixture-gerber-files\\20150704_USB_Type-C_Fixture_Gerber_File.zip",
+      "size": 5775172,
+      "sha256": "1214489e50511b99b9e5cceaa4ea1aac4f6cfc5b09075aab7c8145c2a5805f78",
+      "pdfs": []
+    },
+    {
+      "slug": "usb-multiflow-extension-mobile-broadband-interface-model-v10-and-adopters",
+      "url": "https://www.usb.org/sites/default/files/MBIMMultiflow10.zip",
+      "path": "raw\\usb-multiflow-extension-mobile-broadband-interface-model-v10-and-adopters\\MBIMMultiflow10.zip",
+      "size": 1358076,
+      "sha256": "d5bd4b549cff4196d4d01373d21cecfd130782e76b4284f2b8aacb181ea7fbd3",
+      "pdfs": [
+        "MBIM Multiflow v1.0 Adopters Agreement.pdf",
+        "MBIM MultiFlow v1.0.pdf"
+      ]
+    },
+    {
+      "slug": "usb-31usb-type-ctm-desktop-front-panel-cable-and-connector-implementation-document",
+      "url": "https://www.usb.org/sites/default/files/USB3p1_Front_Panel_CabCon_Implment_Doc_Rev1p1.pdf",
+      "path": "raw\\usb-31usb-type-ctm-desktop-front-panel-cable-and-connector-implementation-document\\USB3p1_Front_Panel_CabCon_Implment_Doc_Rev1p1.pdf",
+      "size": 3010985,
+      "sha256": "7ae8e1bdc17e80e525012ce4cbe4711bbbb5e89a2c5098fb0e48d6e3e805881e"
+    },
+    {
+      "slug": "board-usb-connections-digital-media-devices-vs-removable-media-and-readers",
+      "url": "https://www.usb.org/sites/default/files/remedia_vs_direct.pdf",
+      "path": "raw\\board-usb-connections-digital-media-devices-vs-removable-media-and-readers\\remedia_vs_direct.pdf",
+      "size": 45490,
+      "sha256": "c1a5d54b179af9e33b713e3a4c3f7fd49bdcef75fa3870ec3a169db1c48ad54b"
+    },
+    {
+      "slug": "electrical-compliance-test-specification-superspeed-usb-10-gbps-rev-10",
+      "url": "https://www.usb.org/sites/default/files/EnhancedSuperSpeedPHYComplianceTestSpec.pdf",
+      "path": "raw\\electrical-compliance-test-specification-superspeed-usb-10-gbps-rev-10\\EnhancedSuperSpeedPHYComplianceTestSpec.pdf",
+      "size": 837115,
+      "sha256": "3326c8894e89a3fce6a77cf7a37ee0501c229f9fb47d219114c7ca51b40c9132"
+    },
+    {
+      "slug": "usb-31-reference-channel-models",
+      "url": "https://www.usb.org/sites/default/files/USB31_Embedding_Files_12222016.zip",
+      "path": "raw\\usb-31-reference-channel-models\\USB31_Embedding_Files_12222016.zip",
+      "size": 1690807,
+      "sha256": "408702e80605229fa1e4b34b5c5d9383d8794d8ed9f609adf1c75b36b43693c3",
+      "pdfs": []
+    },
+    {
+      "slug": "usb-power-delivery-firmware-update-specification",
+      "url": "https://www.usb.org/sites/default/files/documents/pd_fw_update_specification_rev_1_0_20160915b.pdf",
+      "path": "raw\\usb-power-delivery-firmware-update-specification\\pd_fw_update_specification_rev_1_0_20160915b.pdf",
+      "size": 1994380,
+      "sha256": "ef5a5ad7ab8b591e4ccdd2388511fdc7b94ea42e19247b5118a06af6a5398b2c"
+    },
+    {
+      "slug": "xhci-backwards-compatibility-test-procedures-hosts-rev-17",
+      "url": "https://www.usb.org/sites/default/files/xHCI_Backwards_Compatibility_Testing_v1_7.pdf",
+      "path": "raw\\xhci-backwards-compatibility-test-procedures-hosts-rev-17\\xHCI_Backwards_Compatibility_Testing_v1_7.pdf",
+      "size": 923067,
+      "sha256": "6e6464b293f10600ae208c72c7c6796162f75430841c901265db8e18fe37fcc2"
+    },
+    {
+      "slug": "usb-type-c-end-product-cable-test-plan",
+      "url": "https://www.usb.org/sites/default/files/USB_Type-C_End_Product_Cable_Test_Plan_2016_3_14.pdf",
+      "path": "raw\\usb-type-c-end-product-cable-test-plan\\USB_Type-C_End_Product_Cable_Test_Plan_2016_3_14.pdf",
+      "size": 156416,
+      "sha256": "ced8028afe7e00e8699ea9f67a8c6da00913bdbcea92d9ced5b35ae1b62c647b"
+    },
+    {
+      "slug": "media-agnostic-usb-v10a-spec-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/Media_Agnostic_USB_v1.0a.zip",
+      "path": "raw\\media-agnostic-usb-v10a-spec-and-adopters-agreement\\Media_Agnostic_USB_v1.0a.zip",
+      "size": 2309805,
+      "sha256": "993869de07c1e22854a864437fb403ad39fd3c8a0f6764cb4fa2cccd0b16c4cd",
+      "pdfs": [
+        "MA USB v1.0a-final.pdf",
+        "Media Agnostic USB ADOPTERS AGREEMENT - Device Class Spec.pdf"
+      ]
+    },
+    {
+      "slug": "usb-31-debug-class-specification-debug-devices-rev-10",
+      "url": "https://www.usb.org/sites/default/files/documents/usb_debug_class_rev_1_0_final_0.pdf",
+      "path": "raw\\usb-31-debug-class-specification-debug-devices-rev-10\\usb_debug_class_rev_1_0_final_0.pdf",
+      "size": 1306483,
+      "sha256": "495b6db33a5d1407a4609a7907b7541afe80806415f08670504a837398f64d01"
+    },
+    {
+      "slug": "usb-30-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/USB%203_0%20Adopters%20Agreement%20PDF%20Submission%20Update%2020230219_0.pdf",
+      "path": "raw\\usb-30-adopters-agreement\\USB%203_0%20Adopters%20Agreement%20PDF%20Submission%20Update%2020230219_0.pdf",
+      "size": 193266,
+      "sha256": "dd52485b7009291cfe72915b15d5a7a3a18571ac25f09e2547a6d50448fff5f5"
+    },
+    {
+      "slug": "propagation-delay-between-host-transceivers-and-downstream-ports",
+      "url": "https://www.usb.org/sites/default/files/Propagation_Delay_between_Host_Transcievers_and_Downstream_Ports.pdf",
+      "path": "raw\\propagation-delay-between-host-transceivers-and-downstream-ports\\Propagation_Delay_between_Host_Transcievers_and_Downstream_Ports.pdf",
+      "size": 616553,
+      "sha256": "17660e0f29cf352827d4d4a55b00d2024264542aec306d3b3980dc8edfb84766"
+    },
+    {
+      "slug": "usb-31-channel-loss-budgets",
+      "url": "https://www.usb.org/sites/default/files/USB_3.1_Loss_Budget_Rev_1.0_-_2015-03-02.pdf",
+      "path": "raw\\usb-31-channel-loss-budgets\\USB_3.1_Loss_Budget_Rev_1.0_-_2015-03-02.pdf",
+      "size": 348692,
+      "sha256": "25ca21809656ee5d18b78b6227f8f15655c3b80c27124375963948da1c9e4ad3"
+    },
+    {
+      "slug": "inter-chip-supplement-usb-revision-30-specification-revision-102",
+      "url": "https://www.usb.org/sites/default/files/documents/superspeed_inter-chip_supplement_1_02_19may2014.pdf",
+      "path": "raw\\inter-chip-supplement-usb-revision-30-specification-revision-102\\superspeed_inter-chip_supplement_1_02_19may2014.pdf",
+      "size": 624248,
+      "sha256": "1086e06d3676faf758bb9edf3d267a0df50290ce0d94a43d0b6128041ac71cb0"
+    },
+    {
+      "slug": "interoperability-test-procedures-pc-pc-bridge-rev-12",
+      "url": "https://www.usb.org/sites/default/files/PC-PC_Bridge_Interop_Procedure_v1_2.pdf",
+      "path": "raw\\interoperability-test-procedures-pc-pc-bridge-rev-12\\PC-PC_Bridge_Interop_Procedure_v1_2.pdf",
+      "size": 850597,
+      "sha256": "58d12834e9644d8c2bcc8a3de873f3c1a2014a45b7ccb4562651c964c6f81ff8"
+    },
+    {
+      "slug": "usb-ps-interface-white-paper",
+      "url": "https://www.usb.org/sites/default/files/USB_PS_Interface_V1_00_20140414.pdf",
+      "path": "raw\\usb-ps-interface-white-paper\\USB_PS_Interface_V1_00_20140414.pdf",
+      "size": 771098,
+      "sha256": "3bb7a20e70e8c6fc064cdb9d71693a2848309a98318fe02de6ffffd87ff39e4b"
+    },
+    {
+      "slug": "electrical-compliance-test-specification-superspeed-usb-rev-10a",
+      "url": "https://www.usb.org/sites/default/files/SuperSpeedPHYComplianceTest_Spec1_0a.pdf",
+      "path": "raw\\electrical-compliance-test-specification-superspeed-usb-rev-10a\\SuperSpeedPHYComplianceTest_Spec1_0a.pdf",
+      "size": 583985,
+      "sha256": "e9591c5e7619d4eebbc1aecdf09edccafff34b9ec61cdf7d18c71d2766be9edf"
+    },
+    {
+      "slug": "compliance-plan-usb-go-and-embedded-host-30",
+      "url": "https://www.usb.org/sites/default/files/OTG3andEH_Compliance_Plan_1.0.pdf",
+      "path": "raw\\compliance-plan-usb-go-and-embedded-host-30\\OTG3andEH_Compliance_Plan_1.0.pdf",
+      "size": 1189102,
+      "sha256": "72351bcf1b20b6784326c46b58a39bb83de480afcb49df85adb1356479fb3f7c"
+    },
+    {
+      "slug": "methodology-used-determine-superspeed-usb-10-gbps-usb-31-gen2-channel-and-cable",
+      "url": "https://www.usb.org/sites/default/files/Establishing_USB_SuperSpeed_Gen2_Channel_and_Cable_Assembly_High_Speed_C....pdf",
+      "path": "raw\\methodology-used-determine-superspeed-usb-10-gbps-usb-31-gen2-channel-and-cable\\Establishing_USB_SuperSpeed_Gen2_Channel_and_Cable_Assembly_High_Speed_C....pdf",
+      "size": 1685529,
+      "sha256": "f6cf8dda6f54079b8c6862550ca01ac48d51e8e6b1eb0948d6b9b9d9fcc4358e"
+    },
+    {
+      "slug": "usb-mass-storage-class-specification-uasp-bootability-v10-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/UASP_Bootability_Rev_1_0.zip",
+      "path": "raw\\usb-mass-storage-class-specification-uasp-bootability-v10-and-adopters-agreement\\UASP_Bootability_Rev_1_0.zip",
+      "size": 514420,
+      "sha256": "0086eb611b8355c577c31bc2e6caee0b7ae805bf4aac4c5567ae54d2becdcc65",
+      "pdfs": [
+        "UASP Bootability Adopters Agreement - Device Class Spec.pdf",
+        "UASP Bootability Rev 1.0.pdf"
+      ]
+    },
+    {
+      "slug": "mbim-compliance-testing-v10",
+      "url": "https://www.usb.org/sites/default/files/MBIM-Compliance-1.0.pdf",
+      "path": "raw\\mbim-compliance-testing-v10\\MBIM-Compliance-1.0.pdf",
+      "size": 1292683,
+      "sha256": "ef338f0e8502b2e68856448fb450533d76806d8d823031959ea10dbc075dc3e2"
+    },
+    {
+      "slug": "managing-connector-and-cable-assembly-performance-usb-superspeed",
+      "url": "https://www.usb.org/sites/default/files/USB_SuperSpeed_CabCon_Whitepaper.pdf",
+      "path": "raw\\managing-connector-and-cable-assembly-performance-usb-superspeed\\USB_SuperSpeed_CabCon_Whitepaper.pdf",
+      "size": 1136546,
+      "sha256": "fbfd1a606f8e9eed2a5eebb0694631cfbdbc0dadbad8dcdc7623f30a5d8937bf"
+    },
+    {
+      "slug": "mobile-broadband-interface-model-v10-errata-1-and-adopters-agreement",
+      "url": "https://usb.org/sites/default/files/MBIM10Errata1_073013.zip",
+      "path": "raw\\mobile-broadband-interface-model-v10-errata-1-and-adopters-agreement\\MBIM10Errata1_073013.zip",
+      "size": 3799973,
+      "sha256": "d095f43fede1fca8471897c366d9263689714666e0194090a3b14a91f0059071",
+      "pdfs": [
+        "Compare-MBIM-v1.0-to-MBIM-v1.0-errata-1.pdf",
+        "MBIM v1 0 - errata-1.pdf",
+        "MBIMv1.0 ADOPTERS AGREEMENT - Device Class Spec.pdf"
+      ]
+    },
+    {
+      "slug": "ipp-protocol-10",
+      "url": "https://usb.org/sites/default/files/IPP_0.zip",
+      "path": "raw\\ipp-protocol-10\\IPP_0.zip",
+      "size": 1389504,
+      "sha256": "7ff1d5e038f8755889fb3bdd4884ac67b00e410096b9fe5992507bc2446daeda",
+      "pdfs": [
+        "IPP Protocol ADOPTERS AGREEMENT - Device Class Spec.pdf",
+        "IPP USB Specification.pdf"
+      ]
+    },
+    {
+      "slug": "errata-updates-cdc-v12-and-wmc-v11-dec-2012",
+      "url": "https://www.usb.org/sites/default/files/CDC1.2_WMC1.1_052013.zip",
+      "path": "raw\\errata-updates-cdc-v12-and-wmc-v11-dec-2012\\CDC1.2_WMC1.1_052013.zip",
+      "size": 2533534,
+      "sha256": "7c270eb2ccac7bb36c4f49f979c0ab309697cb6abe9bfa4e42ab69b347b6660a",
+      "pdfs": [
+        "2012-07-31-WMC110_errata.pdf",
+        "2012-07-31-WMCErrata-1.pdf",
+        "2012-08-02-CDC120_errata.pdf",
+        "2012-08-02-CDCErrata-1.pdf",
+        "CDC1.2_WMC1.1 Errata_1 ADOPTERS AGREEMENT 012011.pdf"
+      ]
+    },
+    {
+      "slug": "high-speed-inter-chip-adopters-agreement-amendment",
+      "url": "https://www.usb.org/sites/default/files/High_Speed_Inter-Chip_Amendment_20230224.pdf",
+      "path": "raw\\high-speed-inter-chip-adopters-agreement-amendment\\High_Speed_Inter-Chip_Amendment_20230224.pdf",
+      "size": 116776,
+      "sha256": "2b1cd1d780a2c0417c6d027631d7dde6148ff191072e02db71d10eb22ecdbf6d"
+    },
+    {
+      "slug": "video-class-v15-document-set",
+      "url": "https://www.usb.org/sites/default/files/USB_Video_Class_1_5.zip",
+      "path": "raw\\video-class-v15-document-set\\USB_Video_Class_1_5.zip",
+      "size": 6902548,
+      "sha256": "67ed3227f98189735b6fac2f5088dde3f5415eca066967b617d5b8f96283c1e9",
+      "pdfs": [
+        "USB_Video_Example 1.5.pdf",
+        "USB_Video_FAQ_1.5.pdf",
+        "USB_Video_Payload_DV_15.pdf",
+        "USB_Video_Payload_Frame_Based_1.5.pdf",
+        "USB_Video_Payload_H264_1.5.pdf",
+        "USB_Video_Payload_MPEG-2_TS_1.5.pdf",
+        "USB_Video_Payload_Uncompressed_1.5.pdf",
+        "USB_Video_Payload_VP8_1.5.pdf",
+        "UVC 1.5 Class specification.pdf",
+        "USB_Video_Payload_Stream_Based_1.5.pdf",
+        "USB_Video_Transport_1.5.pdf",
+        "USB_Video_Payload_MJPEG_1.5.pdf",
+        "USB_Video_Temporal_Encoder_Examples_1.5.pdf"
+      ]
+    },
+    {
+      "slug": "usb-go-and-embedded-host-automated-compliance-plan-go-embedded-host-supplement",
+      "url": "https://www.usb.org/sites/default/files/otgeh_compliance_plan_1_2.pdf",
+      "path": "raw\\usb-go-and-embedded-host-automated-compliance-plan-go-embedded-host-supplement\\otgeh_compliance_plan_1_2.pdf",
+      "size": 1331619,
+      "sha256": "cd2b9fa379d0f712a0debc234e510d380fdd1d1bbf056b5ee7ea9418fd8b41eb"
+    },
+    {
+      "slug": "usb-thin-card-v10-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/USB_Thin_Card.zip",
+      "path": "raw\\usb-thin-card-v10-and-adopters-agreement\\USB_Thin_Card.zip",
+      "size": 318342,
+      "sha256": "515d7c0128872fcb54e474f793a632f1588ce61bd3ca6af0368e30174b9d1284",
+      "pdfs": [
+        "USB THIN CARD ADOPTERS AGREEMENT - Device Class Spec.pdf",
+        "USB Thin Card Specification Rev1.0 2012-06-21.pdf"
+      ]
+    },
+    {
+      "slug": "usb-device-class-definition-audiovideo-devices-basic-device-profile-bdp",
+      "url": "https://www.usb.org/sites/default/files/AV_BDP_v1.0.pdf",
+      "path": "raw\\usb-device-class-definition-audiovideo-devices-basic-device-profile-bdp\\AV_BDP_v1.0.pdf",
+      "size": 1265126,
+      "sha256": "43176d14882075ac63bc5af2e6438a316d264aee205461ea45bca6f89566b5b8"
+    },
+    {
+      "slug": "device-class-definition-content-security-devices-20",
+      "url": "https://www.usb.org/sites/default/files/ContentSecurity_v2.0.pdf",
+      "path": "raw\\device-class-definition-content-security-devices-20\\ContentSecurity_v2.0.pdf",
+      "size": 957524,
+      "sha256": "61ab1608f2236c4abd9485ebfc0bd9b4c174d2cf36ca63c1b9ac8150f6c1f74a"
+    },
+    {
+      "slug": "content-security-method-5-high-bandwidth-digital-content-protection-21-hdcp-21",
+      "url": "https://www.usb.org/sites/default/files/CSM-5_v1.0.pdf",
+      "path": "raw\\content-security-method-5-high-bandwidth-digital-content-protection-21-hdcp-21\\CSM-5_v1.0.pdf",
+      "size": 1502139,
+      "sha256": "507bdcb0445526542ea680d017e4262a0e0a7255bbbe08e5b1d72e86efda38c0"
+    },
+    {
+      "slug": "go-and-embedded-host-supplement-usb-revision-30-specification-revision-11",
+      "url": "https://usb.org/sites/default/files/documents/usb_otg_and_eh_3-0_release_1_1_10may2012.pdf",
+      "path": "raw\\go-and-embedded-host-supplement-usb-revision-30-specification-revision-11\\usb_otg_and_eh_3-0_release_1_1_10may2012.pdf",
+      "size": 605826,
+      "sha256": "f9267964bcbc1e920b48b0fd3b67196a217d28cfefc217ec5e16ad30c1cfe703"
+    },
+    {
+      "slug": "usb-30-radio-frequency-interference-impact-24-ghz-wireless-devices",
+      "url": "https://www.usb.org/sites/default/files/327216.pdf",
+      "path": "raw\\usb-30-radio-frequency-interference-impact-24-ghz-wireless-devices\\327216.pdf",
+      "size": 1014209,
+      "sha256": "51ee3865ed139ba06dd661858a97a8dab0821a6df0a6fc58af5e7ef2d30a172e"
+    },
+    {
+      "slug": "avdd-creator-user-manual",
+      "url": "https://www.usb.org/sites/default/files/AVDD_Creator_User_Manual.pdf",
+      "path": "raw\\avdd-creator-user-manual\\AVDD_Creator_User_Manual.pdf",
+      "size": 479581,
+      "sha256": "2a66a0388b35870ba5b051aae3250442e10b9737207c1495d17be6d9a8449b87"
+    },
+    {
+      "slug": "ehci-and-xhci-high-speed-electrical-test-tool-setup-instruction",
+      "url": "https://www.usb.org/sites/default/files/HSETT_Instruction_0_4_1.pdf",
+      "path": "raw\\ehci-and-xhci-high-speed-electrical-test-tool-setup-instruction\\HSETT_Instruction_0_4_1.pdf",
+      "size": 758875,
+      "sha256": "03ea0bafdb515d2b5864313b85c4933f2bacaff3bf3223c5683abf55d558339b"
+    },
+    {
+      "slug": "hset-documentation-version-041-ehci-and-xhci",
+      "url": "https://www.usb.org/sites/default/files/HSETT_Instruction_0_4_1.pdf",
+      "path": "raw\\hset-documentation-version-041-ehci-and-xhci\\HSETT_Instruction_0_4_1.pdf",
+      "size": 758875,
+      "sha256": "03ea0bafdb515d2b5864313b85c4933f2bacaff3bf3223c5683abf55d558339b"
+    },
+    {
+      "slug": "audiovideo-device-class-v10-spec-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/USB_AV_Specification_Rev_1.0.zip",
+      "path": "raw\\audiovideo-device-class-v10-spec-and-adopters-agreement\\USB_AV_Specification_Rev_1.0.zip",
+      "size": 12092808,
+      "sha256": "5ec025eda68c773509de62702ddd1714201f5f749dab6a5f66714c5f74506f79",
+      "pdfs": [
+        "AV1_0 ADOPTERS AGREEMENT - Device Class FINAL.pdf",
+        "AVFormat 1 Video over Bulk v1.0.pdf",
+        "AVFormat 2 Isochronous Audio v1.0.pdf",
+        "AVFormat 3 Isochronous Video v1.0.pdf",
+        "AVFunction v1.0.pdf"
+      ]
+    },
+    {
+      "slug": "usb-30-superspeed-equalizer-design-guidelines",
+      "url": "https://www.usb.org/sites/default/files/USB_Superspeed_Equalizer_Design_Guidelines_2011-06-10.pdf",
+      "path": "raw\\usb-30-superspeed-equalizer-design-guidelines\\USB_Superspeed_Equalizer_Design_Guidelines_2011-06-10.pdf",
+      "size": 1642439,
+      "sha256": "ff3f756f64aebc40cbff22d7db116590b6b2070e2568b3de01cdc77897800247"
+    },
+    {
+      "slug": "media-transfer-protocol-v11-spec-and-mtp-v11-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/MTPv1_1.zip",
+      "path": "raw\\media-transfer-protocol-v11-spec-and-mtp-v11-adopters-agreement\\MTPv1_1.zip",
+      "size": 2078169,
+      "sha256": "2c388361870939be2eba65a57332803269712a425323f6d3f442ebba14496d8a",
+      "pdfs": [
+        "MTP1_1 ADOPTERS AGREEMENT - Device Class Spec.pdf",
+        "MTPforUSB-IFv1.1.pdf"
+      ]
+    },
+    {
+      "slug": "network-control-model-devices-specification-v10-and-errata-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/NCM10_012011.zip",
+      "path": "raw\\network-control-model-devices-specification-v10-and-errata-and-adopters-agreement\\NCM10_012011.zip",
+      "size": 970465,
+      "sha256": "be2b47e1a0d19f03466875f700709cdefea760cfe4d4846a07c987e24674207c",
+      "pdfs": [
+        "NCM10-20101124-track.pdf",
+        "NCM10-Errata1.pdf",
+        "NCMv1_0Errata_1 ADOPTERS AGREEMENT 012011.pdf"
+      ]
+    },
+    {
+      "slug": "mass-storage-class-specification-overview-14",
+      "url": "https://www.usb.org/sites/default/files/Mass_Storage_Specification_Overview_v1.4_2-19-2010.pdf",
+      "path": "raw\\mass-storage-class-specification-overview-14\\Mass_Storage_Specification_Overview_v1.4_2-19-2010.pdf",
+      "size": 155747,
+      "sha256": "349a15d4283e4a744ee8bce569d6efd5f447e9ea993c03e6fcd9e9d1674d8491"
+    },
+    {
+      "slug": "audio-device-class-spec-basic-audio-devices-v10-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/BasicAudioDevice-10.zip",
+      "path": "raw\\audio-device-class-spec-basic-audio-devices-v10-and-adopters-agreement\\BasicAudioDevice-10.zip",
+      "size": 1398216,
+      "sha256": "69c990986455ed51490bb13f0e5207523f092b66f93253c29b10218f28db605e",
+      "pdfs": [
+        "Audio ADOPTERS AGREEMENT - Device Class Spec.pdf",
+        "BasicAudioDevice-10.pdf"
+      ]
+    },
+    {
+      "slug": "usb-attached-scsi-protocol-uasp-v10-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/uasp_1_0.zip",
+      "path": "raw\\usb-attached-scsi-protocol-uasp-v10-and-adopters-agreement\\uasp_1_0.zip",
+      "size": 205860,
+      "sha256": "e6db5d0ad13026bd8c707beb7de3fac43382e86bf973dcbd84a887e708781935",
+      "pdfs": [
+        "UASP Rev 1.0.pdf",
+        "UASPv1_0_ADOPTERS AGREEMENT - Device Class FINAL.pdf"
+      ]
+    },
+    {
+      "slug": "usb-20-go-specification-supplement-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/USB_OTG_v2.0_Amendment_final_052609.pdf",
+      "path": "raw\\usb-20-go-specification-supplement-adopters-agreement\\USB_OTG_v2.0_Amendment_final_052609.pdf",
+      "size": 12537,
+      "sha256": "39bf293cdde1edc2b86734715a057593dfa9db7ea851b5eec765ca735d01855e"
+    },
+    {
+      "slug": "usb-30-cdr-model",
+      "url": "https://www.usb.org/sites/default/files/USB_3_0_SuperSpeed_CDR_0p5_whitepaper.pdf",
+      "path": "raw\\usb-30-cdr-model\\USB_3_0_SuperSpeed_CDR_0p5_whitepaper.pdf",
+      "size": 565594,
+      "sha256": "77406ab956ffce7e92c030b275190c4e499f9b7e13f9b4d377cec6f11a04f851"
+    },
+    {
+      "slug": "standard-host-side-certified-wireless-usb-connection-context-storage-windows",
+      "url": "https://www.usb.org/sites/default/files/WUSB_host_connection_context_v1.0.pdf",
+      "path": "raw\\standard-host-side-certified-wireless-usb-connection-context-storage-windows\\WUSB_host_connection_context_v1.0.pdf",
+      "size": 171721,
+      "sha256": "df2019d3463a182b59d327f8f0ed91e1008c669d6a42dc1aa241fe2d678e6e70"
+    },
+    {
+      "slug": "electrical-isolation-and-improved-electromagnetic-compatibility-personal",
+      "url": "https://www.usb.org/sites/default/files/Isolation_Electromagnetic_Compatibility_1_0.pdf",
+      "path": "raw\\electrical-isolation-and-improved-electromagnetic-compatibility-personal\\Isolation_Electromagnetic_Compatibility_1_0.pdf",
+      "size": 204381,
+      "sha256": "21618c5de0d6207bd4d65428b8c6001903b313e878ee38a0544c8312313ccd38"
+    },
+    {
+      "slug": "personal-healthcare-rev-10",
+      "url": "https://www.usb.org/sites/default/files/Personal_Healthcare_1.zip",
+      "path": "raw\\personal-healthcare-rev-10\\Personal_Healthcare_1.zip",
+      "size": 395829,
+      "sha256": "9311bf405438fe9928dccc884ba630cf3f77e75f8f22b4b8804d506a94c92ffd",
+      "pdfs": [
+        "healthcare_1.0.pdf",
+        "healthcare_15Feb2008_errata.pdf",
+        "Personal Healthcare ADOPTERS AGREEMENT - Device Class Spec.pdf"
+      ]
+    },
+    {
+      "slug": "cables-and-connectors-class-20",
+      "url": "https://www.usb.org/sites/default/files/CabConn20.pdf",
+      "path": "raw\\cables-and-connectors-class-20\\CabConn20.pdf",
+      "size": 688790,
+      "sha256": "39c20b63ac457195a72e8a5cf0c0a81bc34a2592b7194542ec1fce773075e57a"
+    },
+    {
+      "slug": "lockable-mass-storage-specification-10-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/Lockable_Mass_Storage_Spec_and_Adopters_Agreement.zip",
+      "path": "raw\\lockable-mass-storage-specification-10-and-adopters-agreement\\Lockable_Mass_Storage_Spec_and_Adopters_Agreement.zip",
+      "size": 507780,
+      "sha256": "db6f400949860f99e1d3afe6679d61ab5a64df582855c8b9a6ab1d1c5260f0d4",
+      "pdfs": [
+        "Lockable Mass Storage ADOPTERS AGREEMENT - Device Class Spec.pdf",
+        "Msc-lock-1.0.pdf"
+      ]
+    },
+    {
+      "slug": "usb-20-cable-and-connector-class-document",
+      "url": "https://www.usb.org/sites/default/files/CabConn20.pdf",
+      "path": "raw\\usb-20-cable-and-connector-class-document\\CabConn20.pdf",
+      "size": 688790,
+      "sha256": "39c20b63ac457195a72e8a5cf0c0a81bc34a2592b7194542ec1fce773075e57a"
+    },
+    {
+      "slug": "audio-devices-rev-20-and-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/Audio2.0_final.zip",
+      "path": "raw\\audio-devices-rev-20-and-adopters-agreement\\Audio2.0_final.zip",
+      "size": 1344290,
+      "sha256": "1ef1c6289ce2d2a6fba528ffa287536f0b830714f0c99dc386b3e682c7e8cf3e",
+      "pdfs": [
+        "Audio20 final.pdf",
+        "Frmts20 final.pdf",
+        "Termt20 final.pdf",
+        "Audio 2.0 Device Class Spec Adopters Agreement.pdf"
+      ]
+    },
+    {
+      "slug": "embedded-high-speed-host-electrical-test-procedure-version-101",
+      "url": "https://usb.org/sites/default/files/EHSET_v1.01%281%29.pdf",
+      "path": "raw\\embedded-high-speed-host-electrical-test-procedure-version-101\\EHSET_v1.01%281%29.pdf",
+      "size": 190163,
+      "sha256": "872f2688696e90198a4c5ac64487603ada8af8e004901fd5dffff034c166308b"
+    },
+    {
+      "slug": "low-voltage-inter-chip-adopters-agreement-amendment",
+      "url": "https://www.usb.org/sites/default/files/USB_Low_Voltage_InterChip_Amendment_final_20060320.pdf",
+      "path": "raw\\low-voltage-inter-chip-adopters-agreement-amendment\\USB_Low_Voltage_InterChip_Amendment_final_20060320.pdf",
+      "size": 11465,
+      "sha256": "15c39a7a924f48b65dc2dd962fb0b9d03bb96aae202f6d725ffb510a8028a807"
+    },
+    {
+      "slug": "video-class-v11-document-set",
+      "url": "https://www.usb.org/sites/default/files/USB_Video_Class_1_1_090711.zip",
+      "path": "raw\\video-class-v11-document-set\\USB_Video_Class_1_1_090711.zip",
+      "size": 7111972,
+      "sha256": "8125a05abd652f62022f69b8d5fbdbe193a216522ed250f49b4bd1958fd1c923",
+      "pdfs": [
+        "USB_Video_Class_1.1.pdf",
+        "USB_Video_Example 1.1.pdf",
+        "USB_Video_FAQ_1.1.pdf",
+        "USB_Video_Identifiers_1.1.pdf",
+        "USB_Video_Payload_DV_1.1.pdf",
+        "USB_Video_Payload_Frame_Based_1.1.pdf",
+        "USB_Video_Payload_MJPEG_1.1.pdf",
+        "USB_Video_Payload_MPEG-2_TS_1.1.pdf",
+        "USB_Video_Payload_Stream_Based_1.1.pdf",
+        "USB_Video_Payload_Uncompressed_1.1.pdf",
+        "USB_Video_Transport_1.1.pdf",
+        "USB_Video_Payload_H 264_1 0.pdf",
+        "USB_Video_Payload_H 264_Compliance_1.0.pdf",
+        "USB_Video_Payload_H 264_FAQ_1.0.pdf",
+        "Video_Payload_H264_09Aug2011_errata.pdf"
+      ]
+    },
+    {
+      "slug": "smart-card-ccid-version-11",
+      "url": "https://www.usb.org/sites/default/files/DWG_Smart-Card_CCID_Rev110.pdf",
+      "path": "raw\\smart-card-ccid-version-11\\DWG_Smart-Card_CCID_Rev110.pdf",
+      "size": 3232269,
+      "sha256": "bdea660bd0fa36c0ea407eab3436796af09387c257d15b24204d0497a9bf9013"
+    },
+    {
+      "slug": "smart-card-iccd-version-10",
+      "url": "https://www.usb.org/sites/default/files/DWG_Smart-Card_USB-ICC_ICCD_rev10.pdf",
+      "path": "raw\\smart-card-iccd-version-10\\DWG_Smart-Card_USB-ICC_ICCD_rev10.pdf",
+      "size": 593138,
+      "sha256": "3b54a0af6f7a524e83eb7b44ab9c1a8c5d5b2cef14f345b8e0a515327d75954e"
+    },
+    {
+      "slug": "series-plug-form-factor-guideline-10",
+      "url": "https://www.usb.org/sites/default/files/CCWG_A_Plug_Form_Factor_Guideline_Revision_1.0_.pdf",
+      "path": "raw\\series-plug-form-factor-guideline-10\\CCWG_A_Plug_Form_Factor_Guideline_Revision_1.0_.pdf",
+      "size": 124235,
+      "sha256": "1e645afa5cd0f1d58bc2d6a6805c6c9b01f154e5040ccf427183a14875eca284"
+    },
+    {
+      "slug": "cdc-subclass-specification-ethernet-emulation-model-devices-10",
+      "url": "https://www.usb.org/sites/default/files/CDC_EEM10.pdf",
+      "path": "raw\\cdc-subclass-specification-ethernet-emulation-model-devices-10\\CDC_EEM10.pdf",
+      "size": 885506,
+      "sha256": "e98b92dda37f18127c29b344eb00011badb759f6548c97ed83ac85caed9c031d"
+    },
+    {
+      "slug": "mass-storage-bootability-specification-10",
+      "url": "https://www.usb.org/sites/default/files/usb_msc_boot_1.0.pdf",
+      "path": "raw\\mass-storage-bootability-specification-10\\usb_msc_boot_1.0.pdf",
+      "size": 79215,
+      "sha256": "56f2eda6d22d36b6f30ce610fb40b66f0699a2ac5fc4e5e9b299eadf4cd98c67"
+    },
+    {
+      "slug": "device-firmware-upgrade-11-new-version-31-aug-2004",
+      "url": "https://www.usb.org/sites/default/files/DFU_1.1.pdf",
+      "path": "raw\\device-firmware-upgrade-11-new-version-31-aug-2004\\DFU_1.1.pdf",
+      "size": 143186,
+      "sha256": "bbe4a3341c3bfc80cc6ba31b676998c379dcc42602f4b2ca7c5ea8b8dccd5c0d"
+    },
+    {
+      "slug": "usb-if-full-and-low-speed-electrical-and-interoperability-compliance-test",
+      "url": "https://www.usb.org/sites/default/files/USB-IFTestProc1_3.pdf",
+      "path": "raw\\usb-if-full-and-low-speed-electrical-and-interoperability-compliance-test\\USB-IFTestProc1_3.pdf",
+      "size": 1389651,
+      "sha256": "174fd4586c0a29505b0e21837f1c20399c43613253f20600943455dd99883502"
+    },
+    {
+      "slug": "usb-interface-association-descriptor-device-class-code-and-use-model",
+      "url": "https://www.usb.org/sites/default/files/iadclasscode_r10.pdf",
+      "path": "raw\\usb-interface-association-descriptor-device-class-code-and-use-model\\iadclasscode_r10.pdf",
+      "size": 52453,
+      "sha256": "ce5364b4eb775e07585e0b873a46faa894e67d82591a79a1661bd648b9ef4f08"
+    },
+    {
+      "slug": "mass-storage-controlbulkinterrupt-cbi-specification-11",
+      "url": "https://usb.org/sites/default/files/usb_msc_cbi_1.1.pdf",
+      "path": "raw\\mass-storage-controlbulkinterrupt-cbi-specification-11\\usb_msc_cbi_1.1.pdf",
+      "size": 191715,
+      "sha256": "794a1cb23f9737cdcab7528d5d76c7ab2fb08bae8cb1c2e69a04b779b7bef749"
+    },
+    {
+      "slug": "test-measurement-class-specification",
+      "url": "https://usb.org/sites/default/files/USBTMC_1_006a.zip",
+      "path": "raw\\test-measurement-class-specification\\USBTMC_1_006a.zip",
+      "size": 690172,
+      "sha256": "e147d643a8c2fd54f6f77d522180a9694ce4ec2759bb08c462c6d913e862d8dd",
+      "pdfs": [
+        "USBTMC_1_00.pdf",
+        "USBTMC_usb488_subclass_1_00.pdf"
+      ]
+    },
+    {
+      "slug": "content-security-method-2-usb-digital-transmission-content-protection",
+      "url": "https://usb.org/sites/default/files/csm2_v1_0.pdf",
+      "path": "raw\\content-security-method-2-usb-digital-transmission-content-protection\\csm2_v1_0.pdf",
+      "size": 219533,
+      "sha256": "c305f4365186b4a19d2f968b3618b65dac04e0959d00b2357966529bfc46671d"
+    },
+    {
+      "slug": "understanding-wdm-power-management-v11",
+      "url": "https://www.usb.org/sites/default/files/wdm_pm11.pdf",
+      "path": "raw\\understanding-wdm-power-management-v11\\wdm_pm11.pdf",
+      "size": 170238,
+      "sha256": "b18673dec5e8a2cdc3156b5ac2f9476efee71f9e117c5deed3d2e4397d31e786"
+    },
+    {
+      "slug": "openusbdi-specification-10",
+      "url": "https://www.usb.org/sites/default/files/usbdi10.pdf",
+      "path": "raw\\openusbdi-specification-10\\usbdi10.pdf",
+      "size": 565371,
+      "sha256": "3feccdd077c23fcc3161baa174b9c8a40ffcfb45ab1eeb825f7fcb904aac8a8e"
+    },
+    {
+      "slug": "still-image-capture-device-definition-10-and-errata-16-mar-2007",
+      "url": "https://www.usb.org/sites/default/files/usb_still_img10.zip",
+      "path": "raw\\still-image-capture-device-definition-10-and-errata-16-mar-2007\\usb_still_img10.zip",
+      "size": 205456,
+      "sha256": "798ffd5c263838a4fdd4327428492126e8ed4dbfd779911be608f7bafe3f5e60",
+      "pdfs": [
+        "usb_still_img10.pdf",
+        "errata-SIC1_0-20070316.pdf"
+      ]
+    },
+    {
+      "slug": "usb-20-adopters-agreement",
+      "url": "https://www.usb.org/sites/default/files/USB%202_0%20Adopters%20Agreement%20-%20PDF%20Submission%20Update%2020230216.pdf",
+      "path": "raw\\usb-20-adopters-agreement\\USB%202_0%20Adopters%20Agreement%20-%20PDF%20Submission%20Update%2020230216.pdf",
+      "size": 162119,
+      "sha256": "ee6f829e5b3f8fd8fc7b3c0250a4573cd5f525f869b215590409de0ee5c94e47"
+    },
+    {
+      "slug": "irda-bridge-device-definition-10",
+      "url": "https://www.usb.org/sites/default/files/usbir10.pdf",
+      "path": "raw\\irda-bridge-device-definition-10\\usbir10.pdf",
+      "size": 86540,
+      "sha256": "aef8dd81af43743c4c589c9c41dc861405eb75dd6771ea7b1e9ba2e059d7ce97"
+    },
+    {
+      "slug": "hid-parser-error-checking",
+      "url": "https://usb.org/sites/default/files/hidpar.pdf",
+      "path": "raw\\hid-parser-error-checking\\hidpar.pdf",
+      "size": 91669,
+      "sha256": "ada5e803a172e8757e042e5e239a11792d971516a98f0a9b3140151e5bca386d"
+    },
+    {
+      "slug": "content-security-method-1-basic-authentication-protocol-10",
+      "url": "https://www.usb.org/sites/default/files/ContentSecurity_v2.0.pdf",
+      "path": "raw\\content-security-method-1-basic-authentication-protocol-10\\ContentSecurity_v2.0.pdf",
+      "size": 957524,
+      "sha256": "61ab1608f2236c4abd9485ebfc0bd9b4c174d2cf36ca63c1b9ac8150f6c1f74a"
+    },
+    {
+      "slug": "printer-device-class-document-11",
+      "url": "https://www.usb.org/sites/default/files/usbprint11a021811.pdf",
+      "path": "raw\\printer-device-class-document-11\\usbprint11a021811.pdf",
+      "size": 62910,
+      "sha256": "d7c52da77bebf66c6f7888b5f3b5f297d631e399cab3f032e7c300e1d2eeb13f"
+    },
+    {
+      "slug": "usb-midi-devices-10",
+      "url": "https://www.usb.org/sites/default/files/midi10.pdf",
+      "path": "raw\\usb-midi-devices-10\\midi10.pdf",
+      "size": 180066,
+      "sha256": "6ce79fec1053a9d74bd7178ae01d4373701395714080e34b7bbeb9837e62cf33"
+    },
+    {
+      "slug": "mass-storage-bulk-only-10",
+      "url": "https://www.usb.org/sites/default/files/usbmassbulk_10.pdf",
+      "path": "raw\\mass-storage-bulk-only-10\\usbmassbulk_10.pdf",
+      "size": 103609,
+      "sha256": "9137e8eefaf366ba32c7f081719a75a403c48004d47f4252ec36d711dda84a23"
+    },
+    {
+      "slug": "mass-storage-ufi-command-specification-10",
+      "url": "https://www.usb.org/sites/default/files/usbmass-ufi10.pdf",
+      "path": "raw\\mass-storage-ufi-command-specification-10\\usbmass-ufi10.pdf",
+      "size": 221255,
+      "sha256": "f7348c60fa398fd6d733dcd0422d0bbe07219c4ef615decced6ffa697656ad18"
+    },
+    {
+      "slug": "audio-device-document-10",
+      "url": "https://www.usb.org/sites/default/files/audio10.pdf",
+      "path": "raw\\audio-device-document-10\\audio10.pdf",
+      "size": 446612,
+      "sha256": "a9df24a774a8eb06de56cf4ae7ccd7ae050b7726b88618cc1c7812d8a0eadb2d"
+    },
+    {
+      "slug": "audio-data-formats-10",
+      "url": "https://usb.org/sites/default/files/frmts10.pdf",
+      "path": "raw\\audio-data-formats-10\\frmts10.pdf",
+      "size": 124836,
+      "sha256": "9141790956ba15b8dfd288a239cce667132d4c2f96efd18c91dcb64bc8941b9d"
+    },
+    {
+      "slug": "audio-terminal-types-10",
+      "url": "https://www.usb.org/sites/default/files/termt10.pdf",
+      "path": "raw\\audio-terminal-types-10\\termt10.pdf",
+      "size": 45293,
+      "sha256": "6f7b24e2a0bab175659de02316bf58285cdc50f9bd1e692fa2b4540de8fa297e"
+    },
+    {
+      "slug": "hid-parser-error-checking-0",
+      "url": "https://www.usb.org/sites/default/files/documents/hidpar.pdf",
+      "path": "raw\\hid-parser-error-checking-0\\hidpar.pdf",
+      "size": 91669,
+      "sha256": "ada5e803a172e8757e042e5e239a11792d971516a98f0a9b3140151e5bca386d"
+    },
+    {
+      "slug": "monitor-device-document-10",
+      "url": "https://www.usb.org/sites/default/files/usbmon10.pdf",
+      "path": "raw\\monitor-device-document-10\\usbmon10.pdf",
+      "size": 93464,
+      "sha256": "46813c9c82b511cb25285495a50cfef40fa8ce70f98b08655c0fdbb6cff846ed"
+    },
+    {
+      "slug": "power-device-class-document-10",
+      "url": "https://www.usb.org/sites/default/files/pdcv10_0.pdf",
+      "path": "raw\\power-device-class-document-10\\pdcv10_0.pdf",
+      "size": 1003679,
+      "sha256": "2dcba3fb30b6858916ddbc9047fcf28238edb65e9cce976a2bc059530275914b"
+    },
+    {
+      "slug": "usb-apm-interactions",
+      "url": "https://www.usb.org/sites/default/files/white-4c.pdf",
+      "path": "raw\\usb-apm-interactions\\white-4c.pdf",
+      "size": 23720,
+      "sha256": "975db524b102d975a2b4490becb5b30d432061c4f5c55d6aec83c843b7a34f4b"
+    },
+    {
+      "slug": "analysis-wireless-device-implementations-usb",
+      "url": "https://usb.org/sites/default/files/usbwire.pdf",
+      "path": "raw\\analysis-wireless-device-implementations-usb\\usbwire.pdf",
+      "size": 22902,
+      "sha256": "4b4a35703fd9526e2e2f11828265c005bd44d281869a6ce9aac2b31c54163ec9"
+    },
+    {
+      "slug": "analysis-wireless-device-implementations-universal-serial-bus",
+      "url": "https://www.usb.org/sites/default/files/documents/usbwire.pdf",
+      "path": "raw\\analysis-wireless-device-implementations-universal-serial-bus\\usbwire.pdf",
+      "size": 22902,
+      "sha256": "4b4a35703fd9526e2e2f11828265c005bd44d281869a6ce9aac2b31c54163ec9"
+    },
+    {
+      "slug": "usb-latency-requirements-and-effect-video-adapter-pci-retry-condition-maintaining",
+      "url": "https://www.usb.org/sites/default/files/usblat3.pdf",
+      "path": "raw\\usb-latency-requirements-and-effect-video-adapter-pci-retry-condition-maintaining\\usblat3.pdf",
+      "size": 53611,
+      "sha256": "efd3c7d83ac65925c9428373d639371f62ebf8c82add4ad255c9c93eb2fb09f9"
+    },
+    {
+      "slug": "usb-bandwidth-analysis",
+      "url": "https://www.usb.org/sites/default/files/bwpaper2.pdf",
+      "path": "raw\\usb-bandwidth-analysis\\bwpaper2.pdf",
+      "size": 60467,
+      "sha256": "6e87b961282c3a765a194be5786b10c7c9c380e6dfedf4a7d85b6ae3d77ed436"
+    },
+    {
+      "slug": "design-guide-low-speed-buffer-usb",
+      "url": "https://www.usb.org/sites/default/files/alsbuf.pdf",
+      "path": "raw\\design-guide-low-speed-buffer-usb\\alsbuf.pdf",
+      "size": 352163,
+      "sha256": "bef5b53375ffc0890977314df524508eadfd191a7fc9afdf1d962e9110207f23"
+    },
+    {
+      "slug": "avdd-creator-installer",
+      "url": "https://www.usb.org/sites/default/files/AVDD_Creator_Installer.zip",
+      "path": "raw\\avdd-creator-installer\\AVDD_Creator_Installer.zip",
+      "size": 132714832,
+      "sha256": "20272b63b519e115f2e683b6d126f10622fcb00601a0937fc69cdb985ff7406a",
+      "pdfs": [
+        "Apache_2.0_license.pdf",
+        "mDNS Responder FOSS notices.pdf",
+        "OpenSSL_license.pdf"
+      ]
+    },
+    {
+      "slug": "usb-connector-mezzanine-applications-guidelines-rev-10",
+      "url": "https://www.usb.org/sites/default/files/MezzanineConnectorFinal.pdf",
+      "path": "raw\\usb-connector-mezzanine-applications-guidelines-rev-10\\MezzanineConnectorFinal.pdf",
+      "size": 196938,
+      "sha256": "70bef240c1545cf026ce5cac81f94b0b35374219f0aab8151ba73df3a45630d3"
+    },
+    {
+      "slug": "common-class-base-specification-10",
+      "url": "https://www.usb.org/sites/default/files/usbccs10.pdf",
+      "path": "raw\\common-class-base-specification-10\\usbccs10.pdf",
+      "size": 56938,
+      "sha256": "afa9d465591402ce8a89e52c5e432d73be960e41a70bb5a943dd60a2fca49f1a"
+    },
+    {
+      "slug": "usb-30-electrical-compliance-methodology",
+      "url": "https://www.usb.org/sites/default/files/USB_3_0_e-Compliance_methodology_0p5_whitepaper.pdf",
+      "path": "raw\\usb-30-electrical-compliance-methodology\\USB_3_0_e-Compliance_methodology_0p5_whitepaper.pdf",
+      "size": 356551,
+      "sha256": "c486d68062f606480e83154f5e6fe459ed6520d1894c9b88a41a3272b794b800"
+    },
+    {
+      "slug": "usb-30-jitter-budgeting",
+      "url": "https://www.usb.org/sites/default/files/USB_3_0_Jitter_Budgeting_0p5_whitepaper.pdf",
+      "path": "raw\\usb-30-jitter-budgeting\\USB_3_0_Jitter_Budgeting_0p5_whitepaper.pdf",
+      "size": 355492,
+      "sha256": "17cdb0d066dfd9035d2a239e5d2e0ac248a2a067e27c417aca9366f189b848d1"
+    },
+    {
+      "slug": "cyclic-redundancy-checks-usb",
+      "url": "https://www.usb.org/sites/default/files/crcdes.pdf",
+      "path": "raw\\cyclic-redundancy-checks-usb\\crcdes.pdf",
+      "size": 15527,
+      "sha256": "e96f54d75c2731216f263b33baf8db6cbc51f0a6cc313af7fa14ee96bc99ebb4"
+    },
+    {
+      "slug": "designing-robust-usb-serial-interface-engine-sie",
+      "url": "https://www.usb.org/sites/default/files/siewp.pdf",
+      "path": "raw\\designing-robust-usb-serial-interface-engine-sie\\siewp.pdf",
+      "size": 41123,
+      "sha256": "cf7a6e20688048449c3146e4a152870d66d407cff05cd28cce81a3ac3c90ea33"
+    },
+    {
+      "slug": "handling-irpmnstartdevice-pnp-irp-v10",
+      "url": "https://www.usb.org/sites/default/files/irp_mn.pdf",
+      "path": "raw\\handling-irpmnstartdevice-pnp-irp-v10\\irp_mn.pdf",
+      "size": 91429,
+      "sha256": "8314fad41614ece1bd2c0e81db74a9e915db7c7d98530fee244761baece52ebf"
+    },
+    {
+      "slug": "system-test-implementers-forum",
+      "url": "https://www.usb.org/sites/default/files/stif.pdf",
+      "path": "raw\\system-test-implementers-forum\\stif.pdf",
+      "size": 222138,
+      "sha256": "b389004d1e027d3987efff2fdaeabebbe01542c4bec2c7443f20cc4673e8c84a"
+    },
+    {
+      "slug": "introduction-hi-speed-usb",
+      "url": "https://www.usb.org/sites/default/files/usb_20g.pdf",
+      "path": "raw\\introduction-hi-speed-usb\\usb_20g.pdf",
+      "size": 153626,
+      "sha256": "c2910cab65c901afa2a75ca5f59c3b51dd3e1addfc391587ce5db90260d54f8d"
+    }
+  ]
+}

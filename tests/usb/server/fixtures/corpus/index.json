@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "documents": [
+    {
+      "doc_id": "synth-a",
+      "number": "SYNTH SP 000-1",
+      "title": "Synthetic Alpha (test fixture)",
+      "date": "2000-01",
+      "status": "final",
+      "url": "https://example.invalid/synth-a.pdf",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000001",
+      "text_file": "synth-a.txt",
+      "sections": [
+        {"id": "1", "heading": "Introduction", "start_line": 4, "end_line": 6},
+        {"id": "2", "heading": "Widgets", "start_line": 7, "end_line": 15},
+        {"id": "2.1", "heading": "Round widgets", "start_line": 10, "end_line": 13},
+        {"id": "2.2", "heading": "Square widgets", "start_line": 14, "end_line": 15}
+      ]
+    },
+    {
+      "doc_id": "synth-b",
+      "number": "SYNTH FIPS 000",
+      "title": "Synthetic Beta (test fixture)",
+      "date": "2000-02",
+      "status": "draft",
+      "url": "https://example.invalid/synth-b.pdf",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000002",
+      "text_file": "synth-b.txt",
+      "sections": [
+        {"id": "1", "heading": "Scope", "start_line": 3, "end_line": 5},
+        {"id": "2", "heading": "Terms", "start_line": 6, "end_line": 7}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+# USB-IF specifications usblib may download. Each URL was checked to answer with a PDF whose first page
+# names the publication. sha256 is optional: when absent, the first fetch records it in corpus/index.json.
+
+[[source]]
+doc_id = "usb-ccid-1-1"
+number = "USB-IF CCID Rev 1.1"
+title = "Universal Serial Bus Device Class: Smart Card CCID Specification for Integrated Circuit(s) Cards Interface Devices"
+date = "2005-04"
+status = "final"
+url = "https://www.usb.org/sites/default/files/DWG_Smart-Card_CCID_Rev110.pdf"
