@@ -32,7 +32,7 @@ Legend: `[ok]` implemented and pinned by a named test -- `[part]` partial, with 
 | `cl.reader_html` | PLAN.md §4 | `[ ]` | exists in zimlore `markdown.py`. Interim copies listed 2026-11-13 (PORTFOLIO.md §9 item 15): lift `primarysource/ieee/_html.py` (zimlore's converter at 1903b46 plus a `Profile`) with zimlore's tests copied beside it; default output byte-for-byte zimlore's |
 | `cl.reader_text` | PLAN.md §4 | `[ ]` | exists in rfclib `index/txtseg.py` |
 | `cl.reader_zip_stream` | PLAN.md §4 | `[ ]` | exists in usblib `ingest/acquire.py` (unpacks; the core version streams members) |
-| `cl.segment_numbered` | PLAN.md §3 | `[ ]` | exists in usblib `ingest/extract.py::split_sections` |
+| `cl.segment_numbered` | PLAN.md §3, docs/validation.md | `[ ]` | exists in usblib `ingest/extract.py::split_sections` (the better of the two copies: docs/validation.md, usb). Lift it only after `val.segment_cascade` |
 | `cl.segment_bookmarks` | PLAN.md §3 | `[ ]` | exists in itulib `text.py`. Interim copies listed 2026-11-13 (PORTFOLIO.md §9 item 15): `primarysource/ecma/_pdf.py` |
 | `cl.index_fts5` | PLAN.md §3, §5.7 | `[ ]` | exists in rfclib `index/search.py` (`bm25(chunks_fts, 3.0, 1.0)`), itulib `index.py` (weights `2.0, 0.0, 15.0, 1.0`, ×0.6 demotion), cvelib `store.py` (external content with triggers, weights `8,1,4,4`); all `porter unicode61`. Column weights and the rank adjustment are per collection |
 | `cl.index_readonly_open` | PLAN.md §3 | `[ ]` | prior art: cvelib `store.py` (`?mode=ro` URI, WAL, `busy_timeout=15000`) and rfclib PR #1 (`open_db(read_only=True)` via `mode=ro`, skipping schema setup; `subjects.ensure_schema` checks before writing). itulib's `_open` sets none of these |
@@ -130,3 +130,34 @@ Licence and placement as group F recorded them (side-session notes, `roadmap-F-r
 | `col.peps` | PLAN.md §5.8 | `[part]` | Python PEPs (RST). Licence public domain or CC0 (m). Placement: not recorded; layer if confirmed Built 2026-11-13 as the `pep` collection; tests and remaining gaps in `docs/pep.md`. |
 | `col.kconfig_docs` | PLAN.md §5.8 | `[part]` | Kconfig language docs from the kernel's Documentation (RST). Licence GPL-2.0 (m). Placement: not recorded; layer if confirmed Built 2026-11-13 as the `kconfig` collection; tests and remaining gaps in `docs/kconfig.md`. |
 | `col.bbf_trs` | PLAN.md §5.8 | `[part]` | Broadband Forum TRs (PDF), collection `bbf`. Free use, no modification, whole copy with notice (read through third-party copies, not BBF's own page). Placement: volume Built 2026-11-13 as the `bbf` collection; tests and remaining gaps in `docs/bbf.md`. |
+
+## 6. Parser validation, 2026-11-13 (`docs/validation.md`)
+
+Each collection's parser was checked against a second source for the same documents (RFCXML, OSCAL, PDF bookmarks, the
+printed contents, other editions). The scripts are in the side-session notes, `primarysource-validation-2026-11-13/`;
+a fix is done when rerunning them shows the improvement and a fixture test pins it.
+
+| Obligation | Spec | Status | Where |
+|---|---|---|---|
+| `val.lone_cr_lines` | docs/validation.md, nist | `[ok]` | `pdfcorpus.corpus.text_lines` read a lone CR as a line break, shifting every later line by one (sp800-38g:449). `tests/test_pdfcorpus.py::test_a_lone_carriage_return_does_not_shift_line_numbers` |
+| `val.segment_cascade` | docs/validation.md, shared | `[ ]` | one missed heading drops every later sibling and child in the rfc, nist and usb splitters (usb: 1,485 of 1,749 misses). Let the contents, bookmarks or OSCAL admit a heading the sequence rule rejected, and reset the sequence there. Do it once, in `cl.segment_numbered` |
+| `val.ingest_crosscheck` | docs/validation.md, nist, usb | `[ ]` | where a PDF has an outline, score sections against it at ingest and refuse (or warn) below a threshold; use bookmark titles to choose between candidate lines. Bookmarks are a referee, not the segmenter: about 37% of nist PDFs have none or unnumbered ones, and 36 point chapters at the contents page |
+| `val.pdftotext_encoding` | docs/validation.md, nist, usb | `[ ]` | the PATH `pdftotext` is xpdf 4.00. Pass `-eol unix`, decode surrogate pairs (`surrogatepass`, then rejoin), NFKC-normalise ligatures. Today: 86,455 U+FFFD in 26 nist files, ligatures dropped in fips197 ("Defnitions" at line 326). Record the backend in the index's source hash |
+| `val.rerun_harness` | docs/validation.md | `[ ]` | turn the four validation scripts into one `primarysource validate <collection>` that reports agreement, so a parser change is measured, not argued |
+| `rfc.txtseg_child_heading` | docs/validation.md, rfc | `[ ]` | `_followed_by_body` rejects a heading directly followed by its child (rfc9288:338 loses 174 sections). Count a next heading whose label extends the candidate's as body |
+| `rfc.txtseg_titles` | docs/validation.md, rfc | `[ ]` | the title check rejects lowercase, `<`, trailing `.digit` and long comma titles (rfc8991:556, rfc9031:1549); `segment` takes titles from the contents (rfc9787:2025); `_NUM` allows only 6 levels (rfc8878:941) |
+| `rfc.txtseg_pageless_toc` | docs/validation.md, rfc | `[ ]` | `parse_toc` assumes page numbers; every RFC from 8650 has none: wrapped lines dropped (rfc8953:66), trailing digits read as pages (rfc9930:70), unnumbered entries never parsed (rfc8700:70) |
+| `rfc.rfcxml_unnumbered` | docs/validation.md, rfc | `[ ]` | rfcxml reads rfc9694's unnumbered References (`pn` section-7) as numbered |
+| `rfc.pre8650_unvalidated` | docs/validation.md, rfc | `[ ]` | RFCs before 8650 have no XML, so the page-numbered layout is unmeasured; RFC 2119's keyword list becomes sections. Needs another referee (the RFC Editor's HTML) |
+| `ns.splitter_header_parent_appendix` | docs/validation.md, nist | `[ ]` | in `extract.split_sections`: strip the running header before matching, compare `_parent_key` ids as integers (sp800-171r3 "03.01"), accept `Appendix X:`. Measured on a copy: median agreement 0.60 to 0.87 |
+| `ns.controls_from_oscal` | docs/validation.md, nist | `[ ]` | 171r3, 172r3 and 218 index 0 controls; 53r5 has 69 cut titles. Take control ids and titles from OSCAL and map them to PDF lines; allow `()` and wrapped titles in `controls._CONTROL` |
+| `ns.oscal_choice_insert` | docs/validation.md, nist | `[ ]` | `oscal._select_text` drops `<insert>` inside `<choice>` (cm-7.2; 71 choices in 53r5) |
+| `ns.layout_fallback_always` | docs/validation.md, nist | `[ ]` | `fetch.build_document` tries `detect_layout` only below 3 sections; try it always and keep the better (sp800-128) |
+| `ia.annex_letters` | docs/validation.md, itu | `[ ]` | annex letters fixed at `[A-I]` in `text.py` (and `parse_ref`): X.680 J, K, L lost into §I.4.4. Take the letters from the bookmarks |
+| `ia.annex_headings` | docs/validation.md, itu | `[ ]` | an annex without its own bookmark merges into the previous clause (X.690-2015 Annex B, X.691 A–F); a bare "Annex X" bookmark takes its title from the next sibling |
+| `ia.short_headings` | docs/validation.md, itu | `[ ]` | unbookmarked headings under the 20-character floor are dropped (X.680 §52.8, X.690-2008 §8.1.2); keep them as heading clauses |
+| `ia.silent_merge_warning` | docs/validation.md, itu | `[ ]` | flag a clause that contains a standalone annex heading or is far longer than its siblings, as the existing `warning` |
+| `ia.asn1_from_clause_text` | docs/validation.md, itu | `[ ]` | `asn1mod` needs line breaks that clause bodies have lost (X.680 D.2: 1 of 14 assignments); accept `XER/PER INSTRUCTIONS` and `LINK-DEFINITIONS` headers |
+| `ia.sentence_rules` | docs/validation.md, itu | `[ ]` | drop "etc." from the abbreviations (10 merged pairs), split before an opening quote (about 20), and decide whether a colon ends a ¶ (21% of boundaries; ¶1 of every definition is the term) |
+| `us.splitter_titles_chapter` | docs/validation.md, usb | `[ ]` | accept lowercase, digit and quote-initial titles when the id is expected or in the contents (95 misses); cut table-column text at 3+ spaces (47 title mismatches); accept `Chapter N.` only when N is in the contents (Source Power:931) |
+| `us.split_measure_superseded` | docs/validation.md, usb | `[ ]` | `usb-split-measure.json` labels 19 documents good that agree with the bookmarks below 0.8; its counts cannot see a cascade. Replace it with `val.rerun_harness` |

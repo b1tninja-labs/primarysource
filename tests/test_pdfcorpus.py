@@ -380,3 +380,23 @@ def test_form_feed_at_a_page_break_does_not_shift_line_numbers(mutable_corpus: P
     assert len(lines) == len(original_lines)
     assert lines[1] == "\x0c" + original_lines[1]
     assert lines[2:] == original_lines[2:]
+
+
+def test_a_lone_carriage_return_does_not_shift_line_numbers(mutable_corpus: Path) -> None:
+    """pdftotext can leave a lone CR inside a line; ingest counts lines by LF only, so the reader must too.
+
+    Found by comparing nist's index with its stored text (sp800-38g, sp800-166): every line after the CR was off
+    by one. A CRLF file (how the text is stored on Windows) still reads as one line per CRLF.
+    """
+    path = mutable_corpus / "synth-a.txt"
+    original = path.read_text(encoding="utf-8").split("\n")
+    if original and original[-1] == "":
+        original.pop()
+    lines_in = list(original)
+    lines_in[1] = original[1] + "\rtail"
+    path.write_bytes(("\r\n".join(lines_in) + "\r\n").encode("utf-8"))
+    c = load_corpus(mutable_corpus)
+    lines = c.text_lines(c.documents[0])
+    assert len(lines) == len(original)
+    assert lines[1] == original[1] + "\rtail"
+    assert lines[2:] == original[2:]

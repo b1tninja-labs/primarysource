@@ -41,8 +41,11 @@ class Corpus:
             raise CorpusError(f"{doc.doc_id}: text_file {doc.text_file!r} escapes the corpus directory.")
         try:
             # Split on newline only, as the ingest side does. splitlines() also breaks on form feeds,
-            # which pdftotext puts at every page break, and that shifts every line number.
-            lines = path.read_text(encoding="utf-8").split("\n")
+            # which pdftotext puts at every page break, and that shifts every line number. Read with
+            # newline="" for the same reason: universal newlines would also break on a lone "\r" that
+            # pdftotext left inside a line (sp800-38g line 449). Only the "\r" of a CRLF is dropped.
+            with path.open(encoding="utf-8", newline="") as handle:
+                lines = [line.removesuffix("\r") for line in handle.read().split("\n")]
             if lines and lines[-1] == "":
                 lines.pop()
             return lines
