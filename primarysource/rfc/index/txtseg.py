@@ -257,12 +257,20 @@ def _successor(prev: str, cand: str) -> bool:
     return False
 
 
-def _followed_by_body(lines: list[str], i: int) -> bool:
+def _followed_by_body(lines: list[str], i: int, label: str = "") -> bool:
+    """True when the heading at ``i`` is followed by body text, or directly by its own first child.
+
+    A heading followed straight by its child ("3.5.1" then "3.5.1.1") used to read as a run of numbers, so it
+    was rejected and, with it, every descendant, since none of them was a successor any more
+    (docs/validation.md, rfc: 41 such headings and 194 descendants, e.g. rfc9288 line 338)."""
     for j in range(i + 1, min(len(lines), i + 12)):
         s = lines[j].strip()
         if not s or _furniture(lines[j]):
             continue
-        return not _HEAD.match(lines[j]) or lines[j].startswith(" ")
+        m = _HEAD.match(lines[j])
+        if m and label and canon(m.group("lab")).startswith(label + "."):
+            return True
+        return not m or lines[j].startswith(" ")
     return False
 
 
@@ -328,7 +336,7 @@ def find_headings(lines: list[str]) -> tuple[list[tuple[int, str, str]],
             prev = sec
             for cl, cs, ct in _scan_candidates(lines, ln, bounds[idx + 1] - 1):
                 if cs.startswith(sec + ".") and _successor(prev, cs) and \
-                        _followed_by_body(lines, cl - 1):
+                        _followed_by_body(lines, cl - 1, cs):
                     extra.append((cl, cs, ct))
                     prev = cs
         q.extra = len(extra)
@@ -336,7 +344,7 @@ def find_headings(lines: list[str]) -> tuple[list[tuple[int, str, str]],
     else:
         prev = ""
         for cl, cs, ct in _scan_candidates(lines, body0, len(lines)):
-            if _successor(prev, cs) and _followed_by_body(lines, cl - 1):
+            if _successor(prev, cs) and _followed_by_body(lines, cl - 1, cs):
                 heads.append((cl, cs, ct))
                 prev = cs
         q.notes.append("no usable ToC; left-margin successor scan")
