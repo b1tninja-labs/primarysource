@@ -11,8 +11,9 @@ from typing import Any
 
 import pytest
 
-from primarysource import pdfcorpus
-from primarysource.pdfcorpus import tools
+from primarysource import cli, pdfcorpus
+from primarysource.errors import LibError
+from primarysource.pdfcorpus import fts, tools
 from primarysource.pdfcorpus.corpus import Corpus, CorpusError
 from primarysource.pdfcorpus.corpus import load_corpus as _load
 from primarysource.pdfcorpus.models import Document, Section
@@ -25,6 +26,7 @@ SPEC = CorpusSpec(
     server_name="synthlib",
     env_var="SYNTHLIB_CORPUS",
     fetch_command="synthlib fetch",
+    index_command="synthlib index",
     default_dir=lambda: Path("/nonexistent/synth"),
     instructions="Synthetic fixture corpus.",
     cite_example="SYNTH SP 000-1 §2.1",
@@ -47,6 +49,21 @@ def mutable_corpus(tmp_path: Path) -> Path:
     return dst
 
 
+@pytest.fixture
+def indexed(mutable_corpus: Path) -> Corpus:
+    """The fixture corpus with its FTS5 search index built, as a fetch leaves it."""
+    loaded = load_corpus(mutable_corpus)
+    fts.build(loaded)
+    return loaded
+
+
+def _footer(text: str) -> dict[str, str]:
+    """The `key: value` lines after the last blank line of a rendered result."""
+    body, _, tail = text.rstrip("\n").rpartition("\n\n")
+    lines = tail.splitlines() if body else []
+    return dict(line.split(": ", 1) for line in lines if ": " in line and line.split(": ", 1)[0].isalpha())
+
+
 def _write_index(root: Path, mutate: Callable[[dict[str, Any]], object]) -> None:
     data = json.loads((root / "index.json").read_text(encoding="utf-8"))
     mutate(data)
@@ -63,8 +80,10 @@ def test_load_valid(corpus: Corpus) -> None:
 
 
 def test_missing_corpus_points_at_fetch(tmp_path: Path) -> None:
-    with pytest.raises(CorpusError, match="synthlib fetch"):
+    with pytest.raises(CorpusError, match="not fetched yet") as ei:
         load_corpus(tmp_path)
+    assert ei.value.action == "synthlib fetch"
+    assert "synthlib fetch" not in ei.value.message
 
 
 def test_env_var_selects_corpus(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
@@ -122,8 +141,9 @@ def test_duplicate_doc_id(mutable_corpus: Path) -> None:
 def test_missing_text_file(mutable_corpus: Path) -> None:
     (mutable_corpus / "synth-a.txt").unlink()
     c = load_corpus(mutable_corpus)
-    with pytest.raises(CorpusError, match="synthlib fetch"):
+    with pytest.raises(CorpusError, match="is missing") as ei:
         c.text_lines(c.documents[0])
+    assert ei.value.action == "synthlib fetch"
 
 
 def test_text_file_cannot_escape_corpus(mutable_corpus: Path) -> None:
@@ -142,8 +162,9 @@ def test_doc_by_id_or_number(corpus: Corpus, ref: str) -> None:
 
 
 def test_unknown_doc_is_error_listing_known(corpus: Corpus) -> None:
-    with pytest.raises(tools.ToolError, match="Unknown document.*synth-a, synth-b"):
+    with pytest.raises(tools.ToolError, match="unknown document.*synth-a, synth-b") as ei:
         tools.info(corpus, "nope")
+    assert ei.value.hint == "synth_search('<words>')"
 
 
 # ---- read ---------------------------------------------------------------------
@@ -156,6 +177,7 @@ def test_read_section_range_and_numbers(corpus: Corpus) -> None:
     assert "11: Round widgets use quokka quokka quokka counters." in out
     assert "13: " in out
     assert "14:" not in out and " 9:" not in out
+    assert _footer(out) == {"cite": "SYNTH SP 000-1 §2.1"}
 
 
 def test_read_section_accepts_section_sign(corpus: Corpus) -> None:
@@ -164,21 +186,45 @@ def test_read_section_accepts_section_sign(corpus: Corpus) -> None:
 
 def test_read_lines(corpus: Corpus) -> None:
     out = tools.read(corpus, "synth-a", lines="4-5")
-    assert out.splitlines()[1:] == [
+    assert out.splitlines()[1:3] == [
         "4: 1 Introduction",
         "5: This synthetic introduction mentions the zebra token once.",
     ]
 
 
+@pytest.mark.parametrize(
+    ("ref", "first_line"),
+    [
+        ("synth-a§2.1", "10: 2.1 Round widgets"),
+        ("synth-a::2.1", "10: 2.1 Round widgets"),
+        ("SYNTH-A§2.1", "10: 2.1 Round widgets"),
+        ("synth-a:4-5", "4: 1 Introduction"),
+    ],
+)
+def test_read_takes_a_ref_as_doc(corpus: Corpus, ref: str, first_line: str) -> None:
+    assert tools.read(corpus, ref).splitlines()[1] == first_line
+
+
+def test_a_ref_and_a_section_argument_are_not_both_taken(corpus: Corpus) -> None:
+    with pytest.raises(tools.ToolError, match="already names"):
+        tools.read(corpus, "synth-a§2.1", section="2.2")
+    with pytest.raises(LibError, match="not a ref"):
+        tools.read(corpus, "synth-a§2.1¶x")
+    with pytest.raises(tools.ToolError, match="no ¶ or #"):
+        tools.read(corpus, "synth-a§2.1¶2")
+
+
 def test_read_unknown_section(corpus: Corpus) -> None:
-    with pytest.raises(tools.ToolError, match="no section '9.9'.*outline"):
+    with pytest.raises(tools.ToolError, match="no section '9.9'") as ei:
         tools.read(corpus, "synth-a", section="9.9")
+    assert ei.value.hint == "synth_outline('synth-a')"
 
 
-def test_read_requires_exactly_one_selector(corpus: Corpus) -> None:
-    with pytest.raises(tools.ToolError, match="exactly one"):
+def test_read_requires_a_section_or_lines(corpus: Corpus) -> None:
+    with pytest.raises(tools.ToolError, match="a section or a line range") as ei:
         tools.read(corpus, "synth-a")
-    with pytest.raises(tools.ToolError, match="exactly one"):
+    assert "synth_outline('synth-a')" in ei.value.hint
+    with pytest.raises(tools.ToolError, match="not both"):
         tools.read(corpus, "synth-a", section="1", lines="1-2")
 
 
@@ -188,10 +234,28 @@ def test_read_bad_lines(corpus: Corpus, spec: str) -> None:
         tools.read(corpus, "synth-a", lines=spec)
 
 
-def test_read_truncates_long_ranges(corpus: Corpus, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(tools, "MAX_READ_LINES", 3)
-    out = tools.read(corpus, "synth-a", lines="1-8")
-    assert "(lines 1-3)" in out and "truncated at 3 lines" in out and "4:" not in out
+def test_a_read_stops_at_its_budget_and_next_is_a_ref_read_accepts(corpus: Corpus) -> None:
+    out = tools.read(corpus, "synth-a", lines="1-15", max_tokens=20)
+    footer = _footer(out)
+    assert footer["next"].startswith("synth-a:") and footer["next"].endswith("-15")
+    assert tools.GRAMMAR.parse(footer["next"]).lines is not None
+    seen: list[str] = []
+    ref = "synth-a:1-15"
+    for _ in range(20):
+        out = tools.read(corpus, ref, max_tokens=20)
+        seen += out.split("\n\n")[0].splitlines()[1:]
+        ref = _footer(out).get("next", "")
+        if not ref:
+            break
+    assert [int(line.split(":")[0]) for line in seen] == list(range(1, 16))
+
+
+def test_a_read_always_makes_progress_and_has_no_next_at_the_end(corpus: Corpus) -> None:
+    out = tools.read(corpus, "synth-a", section="2.1", max_tokens=1)
+    assert "(lines 10-10 of 10-13)" in out and _footer(out)["next"] == "synth-a:11-13"
+    assert "next" not in _footer(tools.read(corpus, "synth-a:11-13"))
+    with pytest.raises(tools.ToolError, match="max_tokens"):
+        tools.read(corpus, "synth-a", section="1", max_tokens=0)
 
 
 # ---- outline ------------------------------------------------------------------
@@ -201,6 +265,15 @@ def test_outline_tree(corpus: Corpus) -> None:
     lines = tools.outline(corpus, "synth-a").splitlines()
     assert lines[1] == "1  Introduction  (lines 4-6)"
     assert lines[3] == "  2.1  Round widgets  (lines 10-13)"
+    assert "next" not in _footer(tools.outline(corpus, "synth-a"))
+
+
+def test_outline_pages_with_a_start_cursor(corpus: Corpus) -> None:
+    first = tools.outline(corpus, "synth-a", limit=3)
+    assert _footer(first)["next"] == "start=3"
+    rest = tools.outline(corpus, "synth-a", start=3, limit=3)
+    assert "2.2  Square widgets" in rest and "Round" not in rest
+    assert "next" not in _footer(rest)
 
 
 # ---- info ---------------------------------------------------------------------
@@ -216,11 +289,11 @@ def test_info_fields_and_no_warning_for_final(corpus: Corpus) -> None:
         "url: https://example.invalid/synth-a.pdf",
     ):
         assert needle in out
-    assert "WARNING" not in out
+    assert "warning" not in _footer(out)
 
 
 def test_info_warns_when_not_final(corpus: Corpus) -> None:
-    assert "WARNING: status is 'draft'" in tools.info(corpus, "synth-b")
+    assert _footer(tools.info(corpus, "synth-b"))["warning"].startswith("status is 'draft'")
 
 
 # ---- cite ---------------------------------------------------------------------
@@ -248,6 +321,7 @@ def test_cite_matches_contract_form() -> None:
     )
     out = tools.cite(Corpus(FIXTURES, (d,)), "x", section="3.2.4")
     assert out.splitlines()[0] == "NIST SP 800-73pt2-5 §3.2.4"
+    assert tools.cite(Corpus(FIXTURES, (d,)), "x§3.2.4").splitlines()[0] == "NIST SP 800-73pt2-5 §3.2.4"
 
 
 def test_cite_document_only_and_unknown_section(corpus: Corpus) -> None:
@@ -262,47 +336,107 @@ def test_cite_document_only_and_unknown_section(corpus: Corpus) -> None:
 # ---- search -------------------------------------------------------------------
 
 
-def test_search_ranks_and_reports_lines(corpus: Corpus) -> None:
-    out = tools.search(corpus, "quokka")
-    assert out.splitlines()[1] == ""
-    assert out.splitlines()[2].startswith("synth-a §2.1 Round widgets (lines 10-12")
-    assert out.index("synth-a §2.1") < out.index("synth-a §2 ") < out.index("synth-b §1")
-    assert "11: Round widgets use quokka quokka quokka counters." in out
+def _hits(out: str) -> list[str]:
+    return [line.split("  ")[0] for line in out.splitlines() if "§" in line and "(lines " in line]
 
 
-def test_search_does_not_credit_parent_with_child_text(corpus: Corpus) -> None:
-    out = tools.search(corpus, "counters")
-    assert "§2.1" in out and "§2 " not in out
+def test_search_ranks_and_reports_lines(indexed: Corpus) -> None:
+    out = tools.search(indexed, "quokka")
+    assert _hits(out)[0] == "synth-a§2.1"
+    assert set(_hits(out)) == {"synth-a§2.1", "synth-a§2", "synth-b§1"}
+    assert "synth-a§2.1  Round widgets  (lines 10-13, score " in out
+    assert "quokka quokka quokka counters" in out
 
 
-def test_search_restricted_to_doc_by_number(corpus: Corpus) -> None:
-    out = tools.search(corpus, "quokka", doc="SYNTH FIPS 000")
-    assert "synth-b" in out and "synth-a" not in out
+def test_search_does_not_credit_parent_with_child_text(indexed: Corpus) -> None:
+    assert _hits(tools.search(indexed, "counters")) == ["synth-a§2.1"]
 
 
-def test_search_heading_match_outranks_body_only(corpus: Corpus) -> None:
-    out = tools.search(corpus, "scope terms fictional", doc="synth-b")
-    assert out.splitlines()[2].startswith("synth-b §2 Terms")
+def test_search_restricted_to_doc_by_number(indexed: Corpus) -> None:
+    assert _hits(tools.search(indexed, "quokka", doc="SYNTH FIPS 000")) == ["synth-b§1"]
 
 
-def test_search_limit(corpus: Corpus) -> None:
-    out = tools.search(corpus, "quokka", limit=1)
-    assert out.startswith("1 of 3 passages")
-    assert out.count("(lines ") == 1
+def test_a_restricted_search_relaxes_within_its_document(indexed: Corpus) -> None:
+    # "round quokka" has every word in synth-a; synth-b has only "quokka", so restricted to it the search relaxes.
+    out = tools.search(indexed, "round quokka", doc="synth-b")
+    assert _hits(out) == ["synth-b§1"] and "relaxed" in _footer(out)
+    assert "relaxed" not in _footer(tools.search(indexed, "round quokka"))
 
 
-def test_search_no_match_is_stated_not_empty(corpus: Corpus) -> None:
-    assert tools.search(corpus, "xyzzy") == "No passages match 'xyzzy'."
+def test_search_heading_match_outranks_body_only(indexed: Corpus) -> None:
+    # "terms" is the heading of synth-b §2 and a body word of nothing else there; "fictional" is in both.
+    assert _hits(tools.search(indexed, "terms fictional", doc="synth-b"))[0] == "synth-b§2"
+    assert fts.RANKING.title > fts.RANKING.body
 
 
-def test_search_rejects_empty_query_and_bad_limit(corpus: Corpus) -> None:
-    with pytest.raises(tools.ToolError, match="Empty query"):
-        tools.search(corpus, "  !! ")
+def test_search_pages_with_a_start_cursor_to_the_end(indexed: Corpus) -> None:
+    first = tools.search(indexed, "quokka", limit=1)
+    assert len(_hits(first)) == 1 and _footer(first)["next"] == "start=1"
+    seen = _hits(first)
+    cursor = _footer(first)["next"]
+    while cursor:
+        page = tools.search(indexed, "quokka", limit=1, start=int(cursor.removeprefix("start=")))
+        seen += _hits(page)
+        cursor = _footer(page).get("next", "")
+    assert seen == _hits(tools.search(indexed, "quokka"))
+
+
+def test_search_no_match_is_stated_not_empty(indexed: Corpus) -> None:
+    assert tools.search(indexed, "xyzzy") == "No passages match 'xyzzy'.\n"
+
+
+def test_search_rejects_empty_query_and_bad_limit(indexed: Corpus) -> None:
+    with pytest.raises(tools.ToolError, match="no words") as ei:
+        tools.search(indexed, "  !! ")
+    assert ei.value.hint == "synth_search('<words>')"
     with pytest.raises(tools.ToolError, match="limit"):
-        tools.search(corpus, "quokka", limit=0)
+        tools.search(indexed, "quokka", limit=0)
+    with pytest.raises(tools.ToolError, match="0-based"):
+        tools.search(indexed, "quokka", start=-1)
+
+
+def test_search_reads_the_index_not_the_text(indexed: Corpus) -> None:
+    for document in indexed.documents:
+        (indexed.root / document.text_file).unlink()
+    assert _hits(tools.search(indexed, "counters")) == ["synth-a§2.1"]
+
+
+def test_a_missing_index_names_the_index_command(corpus: Corpus) -> None:
+    with pytest.raises(CorpusError, match="no search index") as ei:
+        tools.search(corpus, "quokka")
+    assert (ei.value.hint, ei.value.action) == ("", "synthlib index")
+
+
+def test_a_stale_index_names_the_index_command(indexed: Corpus) -> None:
+    _write_index(indexed.root, lambda d: d["documents"].pop())
+    reloaded = load_corpus(indexed.root)
+    with pytest.raises(CorpusError, match="stale") as ei:
+        tools.search(reloaded, "quokka")
+    assert ei.value.action == "synthlib index"
+    fts.build(reloaded)
+    assert _hits(tools.search(reloaded, "quokka")) == ["synth-a§2.1", "synth-a§2"]
+
+
+def test_the_index_command_builds_the_index(mutable_corpus: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    assert fts.main(SPEC, ["--corpus", str(mutable_corpus)]) == 0
+    assert "indexed 6 section(s) of 2 document(s)" in capsys.readouterr().out
+    assert _hits(tools.search(load_corpus(mutable_corpus), "zebra")) == ["synth-a§1"]
+    assert fts.main(SPEC, ["--corpus", str(mutable_corpus / "nowhere")]) == 2
+    assert "action: synthlib fetch" in capsys.readouterr().err
 
 
 # ---- MCP wiring ---------------------------------------------------------------
+
+
+def _call(server: Any, name: str, arguments: dict[str, Any]) -> Any:
+    import anyio
+    from mcp import Client
+
+    async def drive() -> Any:
+        async with Client(server) as client:
+            return await client.call_tool(name, arguments)
+
+    return anyio.run(drive)
 
 
 def test_tool_surface() -> None:
@@ -312,23 +446,47 @@ def test_tool_surface() -> None:
     assert names == {"search", "read", "outline", "info", "cite"}
 
 
-def test_mcp_tool_maps_errors_and_serves(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
-    from mcp.server.mcpserver.exceptions import ToolError as McpToolError
+def test_primarysource_mcp_serves_nist_and_usb_tools_prefixed() -> None:
+    for name in ("nist", "usb"):
+        served = {t.name for t in cli.build_server([name])._tool_manager.list_tools()}
+        assert served == {f"{name}_{tool}" for tool in ("search", "read", "outline", "info", "cite")}
+        bare = {t.name for t in cli.build_server([name], bare=True)._tool_manager.list_tools()}
+        assert bare == {"search", "read", "outline", "info", "cite"}
 
+
+def test_mcp_tool_maps_errors_and_serves(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     from primarysource.pdfcorpus.server import CorpusServer
 
     server = CorpusServer(SPEC)
     monkeypatch.setenv("SYNTHLIB_CORPUS", str(tmp_path))
-    with pytest.raises(McpToolError, match="synthlib fetch"):
+    with pytest.raises(CorpusError, match="not fetched yet"):
         server.info("synth-a")
+    result = _call(server.mcp, "info", {"doc": "synth-a"})
+    assert result.is_error is True
+    lines = result.content[0].text.splitlines()[1:]
+    assert lines[0].startswith("error: no corpus index at ")
+    assert lines[1:] == ["action: synthlib fetch"]
     monkeypatch.setenv("SYNTHLIB_CORPUS", str(FIXTURES))
     assert "number: SYNTH SP 000-1" in server.info("synth-a")
-    with pytest.raises(McpToolError, match="Unknown document"):
-        server.cite("nope")
-    server.reset()
-    monkeypatch.setenv("SYNTHLIB_CORPUS", str(tmp_path))
-    with pytest.raises(McpToolError, match="not fetched yet"):
-        server.outline("synth-a")
+    result = _call(server.mcp, "cite", {"doc": "nope"})
+    assert result.is_error is True
+    assert result.content[0].text.splitlines()[1:] == [
+        "error: unknown document 'nope' (known doc_ids: synth-a, synth-b)",
+        "hint: synth_search('<words>')",
+    ]
+    result = _call(server.mcp, "search", {"query": "quokka"})
+    assert result.is_error is True and "action: synthlib index" in result.content[0].text
+
+
+def test_a_running_server_reloads_a_rewritten_corpus(monkeypatch: pytest.MonkeyPatch, mutable_corpus: Path) -> None:
+    from primarysource.pdfcorpus.server import CorpusServer
+
+    server = CorpusServer(SPEC)
+    monkeypatch.setenv("SYNTHLIB_CORPUS", str(mutable_corpus))
+    assert "synth-b" in server.info("synth-b")
+    _write_index(mutable_corpus, lambda d: d["documents"].pop())
+    with pytest.raises(tools.ToolError, match="unknown document"):
+        server.info("synth-b")
 
 
 # ---- no network ----------------------------------------------------------------
@@ -351,7 +509,7 @@ _NETWORK = {
 
 def test_server_source_imports_no_networking() -> None:
     files = sorted(SERVER_DIR.glob("*.py"))
-    assert len(files) >= 4
+    assert len(files) >= 6
     for f in files:
         for node in ast.walk(ast.parse(f.read_text(encoding="utf-8"))):
             mods: list[str] = []

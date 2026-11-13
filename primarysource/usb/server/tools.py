@@ -3,29 +3,33 @@
 from __future__ import annotations
 
 from primarysource.pdfcorpus.tools import (
-    MAX_READ_LINES,
+    GRAMMAR,
+    OUTLINE_ROWS,
+    READ_TOKENS,
     ToolError,
     cite,
     info,
     outline,
     parse_lines,
     read,
+    resolve,
     resolve_doc,
     resolve_section,
     search,
-    tokens,
 )
 
 __all__ = [
-    "MAX_READ_LINES",
+    "GRAMMAR",
+    "OUTLINE_ROWS",
+    "READ_TOKENS",
     "ToolError",
     "cite",
     "info",
     "outline",
     "parse_lines",
     "read",
+    "resolve",
     "resolve_doc",
     "resolve_section",
     "search",
-    "tokens",
 ]

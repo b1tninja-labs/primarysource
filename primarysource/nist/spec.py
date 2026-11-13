@@ -27,9 +27,10 @@ SPEC = CorpusSpec(
     server_name="nistlib",
     env_var="NISTLIB_CORPUS",
     fetch_command="primarysource nist fetch",
+    index_command="primarysource nist index",
     default_dir=corpus_dir,
     instructions=(
-        "NIST publications (SP 800-73 PIV, SP 800-78, SP 800-76, FIPS 201) from a locally fetched corpus. search('<question>') -> read(doc, section=<id>) -> cite(doc, section=<id>). Documents are addressed by doc_id or by number. Check info(doc) for status before quoting. If the corpus is missing, tools say so and name `primarysource nist fetch`."
+        "NIST publications (SP 800-73 PIV, SP 800-78, SP 800-76, FIPS 201) from a locally fetched corpus. search('<words>') -> read('<doc_id>§<section>') -> cite('<doc_id>§<section>'). Search hits start with that ref; a read's 'next:' line is a ref to pass back to read. Documents are addressed by doc_id or by number. Check info(doc) for status before quoting. A missing corpus or search index is an error whose 'action:' line is the command to run (`primarysource nist fetch`, `primarysource nist index`)."
     ),
     cite_example='NIST SP 800-73pt2-5 §3.2.4',
     read_defaults=_read_defaults,

@@ -15,6 +15,10 @@ class CorpusSpec:
     `env_var` overrides the corpus directory (the old `NISTLIB_CORPUS`), else `default_dir()` gives it.
     `read_defaults(root)` returns `{publication name: doc_id}` for bare names with no revision, and `alias(key)`
     turns a normalised reference into such a name (NIST: "nist sp 800-53" -> "800-53"). Both are optional.
+
+    `fetch_command` and `index_command` are what a human runs when the corpus or its search index is missing or
+    stale; they become an error's `action:` line. With no `index_command` the fetch command is named, since a fetch
+    also builds the index.
     """
 
     name: str
@@ -26,11 +30,8 @@ class CorpusSpec:
     cite_example: str
     read_defaults: Callable[[Path], Mapping[str, str]] | None = None
     alias: Callable[[str], str] | None = None
+    index_command: str = ""
 
     def corpus_dir(self) -> Path:
         env = os.environ.get(self.env_var)
         return Path(env) if env else self.default_dir()
-
-    @property
-    def fetch_hint(self) -> str:
-        return f"Run `{self.fetch_command}` to download the corpus."

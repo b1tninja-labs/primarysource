@@ -24,6 +24,8 @@ from primarysource.usb.ingest.extract import (
 from primarysource.usb.ingest.index import read_index, sha256_bytes, sha256_file, write_index
 from primarysource.usb.ingest.sources import Source, SourcesError, load_sources
 from primarysource.usb.models import Document
+from primarysource.usb.spec import SPEC
+from primarysource.pdfcorpus.fts import build_after_fetch
 
 USER_AGENT = "usblib-fetch/0.1 (corpus fetcher; one request per listed URL)"
 TIMEOUT_SECONDS = 120
@@ -158,6 +160,8 @@ def run(data_dir: Path, from_files: dict[str, Path], only: Sequence[str]) -> int
         documents.append(document)
     write_index(index_path, documents)
     print(f"wrote {index_path} with {len(documents)} document(s)")
+    if not build_after_fetch(SPEC, corpus):
+        failures += 1
     return 1 if failures else 0
 
 

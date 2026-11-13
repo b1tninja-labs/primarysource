@@ -26,6 +26,8 @@ from primarysource.nist.ingest.prose_layouts import detect_layout, split_for_lay
 from primarysource.nist.ingest.index import read_index, sha256_bytes, sha256_file, write_index
 from primarysource.nist.ingest.sources import Source, SourcesError, load_sources
 from primarysource.nist.models import Document
+from primarysource.nist.spec import SPEC
+from primarysource.pdfcorpus.fts import build_after_fetch
 
 USER_AGENT = "nistlib-fetch/0.1 (corpus fetcher; one request per listed URL)"
 TIMEOUT_SECONDS = 120
@@ -172,6 +174,8 @@ def run(data_dir: Path, from_files: dict[str, Path], only: Sequence[str]) -> int
             documents.append(old)
     write_index(index_path, documents)
     print(f"wrote {index_path} with {len(documents)} document(s)")
+    if not build_after_fetch(SPEC, corpus):
+        failures += 1
     return 1 if failures else 0
 
 

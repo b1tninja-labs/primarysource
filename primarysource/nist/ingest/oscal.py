@@ -29,6 +29,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from primarysource.nist.ingest.index import read_index, sha256_bytes, write_index
+from primarysource.nist.spec import SPEC
+from primarysource.pdfcorpus.fts import build_after_fetch
 from primarysource.nist.models import Document, Section
 
 NAMESPACE = "http://csrc.nist.gov/ns/oscal/1.0"
@@ -434,6 +436,8 @@ def run(
         print(
             f"updated {corpus / 'index.json'} with {len(documents)} OSCAL document(s)"
         )
+        if not build_after_fetch(SPEC, corpus):
+            failures += 1
     return 1 if failures else 0
 
 
