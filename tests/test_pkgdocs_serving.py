@@ -73,7 +73,7 @@ def test_the_command_imports_reads_outlines_searches_and_cites(
     assert run(library.spec, ["import", "--tree", "main", "--archive", str(archive)], library) == 0
     out = capsys.readouterr().out
     assert f"main v1 {COMMIT[:12]}: 2 documents" in out and "matches the pin" in out
-    assert run(library.spec, ["read", "alpha§1.1¶1"], library) == 0
+    assert run(library.spec, ["read", "alpha§1.1¶1", "--max-tokens", "1"], library) == 0
     assert capsys.readouterr().out.startswith("Text about gaskets and sprockets.\n\ncite: ")
     assert run(library.spec, ["outline", "alpha"], library) == 0
     assert "1.2.1  Notes" in capsys.readouterr().out
@@ -93,7 +93,7 @@ def test_a_failing_command_exits_1_with_the_error_and_its_hint_on_stderr(
     library = Library(make_spec(None), tmp_path / "empty")
     assert run(library.spec, ["read", "alpha§1"], library) == 1
     err = capsys.readouterr().err
-    assert "error: Demo documents is not imported" in err and "hint: primarysource demo import" in err
+    assert "error: Demo documents is not imported" in err and "action: primarysource demo import" in err
     pinned = Library(make_spec(manifest_for(FILES, INCLUDE)), tmp_path / "empty")
     assert run(pinned.spec, ["import", "--archive", str(tmp_path / "gone.tar.gz"), "--tree", "main"], pinned) == 1
     assert "no file at" in capsys.readouterr().err
@@ -104,7 +104,7 @@ def test_the_command_prints_utf8_whatever_the_console_code_page_is(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     library = installed_library(tmp_path)
-    assert run(library.spec, ["read", "alpha§1.1¶1"], library) == 0
+    assert run(library.spec, ["read", "alpha§1.1¶1", "--max-tokens", "1"], library) == 0
     assert "§1.1¶1" in capsys.readouterr().out
 
 
@@ -135,4 +135,4 @@ def test_the_proposed_builtin_lines_register_all_six_in_the_core_command(
     assert cli.main(["pep", "status"]) == 0
     assert "Python Enhancement Proposals" in capsys.readouterr().out
     assert cli.main(["debpolicy", "read", "5.6.1"]) == 1
-    assert "hint: primarysource debpolicy import" in capsys.readouterr().err
+    assert "action: primarysource debpolicy import" in capsys.readouterr().err

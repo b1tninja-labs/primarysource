@@ -58,7 +58,7 @@ class Edition:
             }
             self.aliases: dict[str, str] = {str(k): str(v) for k, v in listing["aliases"].items()}
         except (OSError, ValueError, KeyError, TypeError) as exc:
-            raise LibError(f"the edition at {path} is damaged ({exc})", "import it again") from exc
+            raise LibError(f"the edition at {path} is damaged ({exc})", "", "import it again") from exc
 
     @property
     def commit(self) -> str:
@@ -75,7 +75,7 @@ class Edition:
         try:
             return Doc.from_json(json.loads((self.path / "docs" / entry.file).read_text(encoding="utf-8")))
         except (OSError, ValueError) as exc:
-            raise LibError(f"document {doc_id!r} is unreadable ({exc})", "import the edition again") from exc
+            raise LibError(f"document {doc_id!r} is unreadable ({exc})", "", "import the edition again") from exc
 
     @property
     def index_path(self) -> Path:

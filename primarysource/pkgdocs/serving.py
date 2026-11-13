@@ -30,40 +30,48 @@ def build_server(spec: Spec, library: Library | None = None) -> Any:
     lib = library or Library(spec)
     examples = "; ".join(spec.example_refs)
 
-    def read(ref: str, start: int = 1, max_tokens: int = DEFAULT_MAX_TOKENS) -> str:
-        return lib.read(ref, start=start, max_tokens=max_tokens)
+    def read(ref: str, max_tokens: int = DEFAULT_MAX_TOKENS) -> str:
+        return lib.read(ref, max_tokens=max_tokens)
 
-    def outline(doc: str, start: int = 1, max_tokens: int = 4000) -> str:
+    def outline(doc: str, start: int = 0, max_tokens: int = 4000) -> str:
         return lib.outline(doc, start=start, max_tokens=max_tokens)
 
-    def search(query: str, doc_prefix: str = "", limit: int = 10, start: int = 1) -> str:
+    def search(query: str, doc_prefix: str = "", limit: int = 10, start: int = 0) -> str:
         return lib.search(query, limit=limit, start=start, doc_prefix=doc_prefix)
 
     def cite(ref: str) -> str:
         return lib.cite(ref)
 
-    def docs(prefix: str = "", limit: int = 200, start: int = 1) -> str:
+    def docs(prefix: str = "", limit: int = 200, start: int = 0) -> str:
         return lib.docs(prefix, limit=limit, start=start)
 
     def status() -> str:
         return lib.status()
 
     read.__doc__ = (
-        f"Read {spec.title} text by ref, cut at block boundaries within max_tokens. A 'next: start=N' footer line "
-        "means call again with start=N. The cite: line is the citation.\n\n"
+        f"Read {spec.title} text by ref, cut at block boundaries within max_tokens. A 'next: <ref>' footer line is "
+        "the ref that reads the next page: pass it back as ref. '¶n' reads from the nth block. The cite: line is the "
+        "citation.\n\n"
         f"ref: '<doc>[@<commit>]§<section>[#<anchor>][¶<n>]'; the section is an id, an anchor, a heading or a unique "
         f"part of one. Examples: {examples}"
     )
-    outline.__doc__ = "List a document's sections, each with the ref that reads it. doc: a document id (see docs)."
+    outline.__doc__ = (
+        "List a document's sections, each with the ref that reads it. doc: a document id (see docs). A "
+        "'next: start=N' footer line means call again with start=N (a 0-based offset)."
+    )
     search.__doc__ = (
         f"Find sections of {spec.title} by words (all of them, else some, which the relaxed: line says). "
         "One line per "
-        "hit: '<ref>: <document> / <section> -- <snippet>'. doc_prefix narrows to document ids starting with it."
+        "hit: '<ref>: <document> / <section> -- <snippet>'. doc_prefix narrows to document ids starting with it. "
+        "A 'next: start=N' footer line means call again with start=N (a 0-based offset)."
     )
     cite.__doc__ = (
         "The citation for a ref (document, section, edition, commit, source file, licence) and its span hash."
     )
-    docs.__doc__ = "List document ids and titles, optionally those whose id starts with prefix."
+    docs.__doc__ = (
+        "List document ids and titles, optionally those whose id starts with prefix. A 'next: start=N' footer line "
+        "means call again with start=N (a 0-based offset)."
+    )
     status.__doc__ = "What this collection pins, what is imported, and its licence."
 
     server = MCPServer(f"primarysource-{spec.name}", version=__version__, instructions=spec.instructions)
@@ -86,20 +94,19 @@ def _parser(spec: Spec) -> argparse.ArgumentParser:
     docs = commands.add_parser("docs", help="list documents")
     docs.add_argument("prefix", nargs="?", default="")
     docs.add_argument("--limit", type=int, default=200)
-    docs.add_argument("--start", type=int, default=1)
+    docs.add_argument("--start", type=int, default=0)
     outline = commands.add_parser("outline", help="a document's sections with their refs")
     outline.add_argument("doc")
-    outline.add_argument("--start", type=int, default=1)
+    outline.add_argument("--start", type=int, default=0)
     outline.add_argument("--max-tokens", type=int, default=4000)
     read = commands.add_parser("read", help="read by ref")
     read.add_argument("ref")
-    read.add_argument("--start", type=int, default=1)
     read.add_argument("--max-tokens", type=int, default=DEFAULT_MAX_TOKENS)
     search = commands.add_parser("search", help="find sections by words")
     search.add_argument("query")
     search.add_argument("--doc-prefix", default="")
     search.add_argument("--limit", type=int, default=10)
-    search.add_argument("--start", type=int, default=1)
+    search.add_argument("--start", type=int, default=0)
     commands.add_parser("cite", help="the citation for a ref").add_argument("ref")
     return parser
 
@@ -139,7 +146,7 @@ def run(spec: Spec, argv: Sequence[str], library: Library | None = None) -> int:
         elif args.command == "outline":
             text = lib.outline(args.doc, start=args.start, max_tokens=args.max_tokens)
         elif args.command == "read":
-            text = lib.read(args.ref, start=args.start, max_tokens=args.max_tokens)
+            text = lib.read(args.ref, max_tokens=args.max_tokens)
         elif args.command == "search":
             text = lib.search(args.query, limit=args.limit, start=args.start, doc_prefix=args.doc_prefix)
         else:

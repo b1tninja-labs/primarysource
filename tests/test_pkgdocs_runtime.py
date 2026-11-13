@@ -9,6 +9,7 @@ from dataclasses import replace
 from pathlib import Path
 
 import pytest
+from cursor_check import follow_list, follow_read
 from pkgdocs_fixture import (
     COMMIT,
     FILES,
@@ -167,17 +168,13 @@ def test_a_section_includes_its_subsections_and_paging_follows_next_without_loss
     whole = library.read("alpha§1", max_tokens=5000)
     for text in ("# 1 Alpha", "## 1.1 First part", "### 1.2.1 Notes", "A repeated heading."):
         assert text in whole
-    pieces: list[str] = []
-    start = 1
-    while True:
-        page = library.read("alpha§1", start=start, max_tokens=8)
-        pieces.append(page.split("\n\ncite:")[0])
-        following = footer(page, "next")
-        if not following:
-            break
-        start = int(following.removeprefix("start="))
+    pieces, refs = follow_read(lambda ref: library.read(ref, max_tokens=8), "alpha§1")
     assert "\n\n".join(pieces) == whole.split("\n\ncite:")[0]
-    assert len(pieces) > 3
+    assert len(pieces) > 3 and all(r.startswith(f"demo:alpha@{COMMIT[:12]}§1¶") for r in refs[1:])
+    # a ¶ read starts at that block of the section and runs on through its subsections
+    own = library.read("alpha§1.1¶2", max_tokens=5000)
+    assert own.startswith("Another paragraph on gaskets.")
+    assert footer(library.read("alpha§1.1¶2", max_tokens=1), "cite").startswith(f"demo:alpha@{COMMIT[:12]}§1.1¶2 ")
 
 
 def test_cite_gives_the_licence_the_source_file_and_the_span_hash_of_the_cited_text(tmp_path: Path) -> None:
@@ -198,6 +195,8 @@ def test_outline_lists_sections_with_refs_and_pages(tmp_path: Path) -> None:
     assert f"    1.2.1  Notes  [1]  demo:alpha@{COMMIT[:12]}§1.2.1" in text
     paged = library.outline("alpha", max_tokens=20)
     assert footer(paged, "next").startswith("start=")
+    rows = follow_list(lambda start: library.outline("alpha", start=start, max_tokens=20))
+    assert [r for r in rows if r != "Alpha"] == text.split("\n\ncite:")[0].splitlines()[1:]
     with pytest.raises(LibError, match="not a ref"):
         library.outline("")
 
@@ -207,7 +206,10 @@ def test_docs_lists_ids_and_titles_and_filters_by_prefix(tmp_path: Path) -> None
     assert library.docs().splitlines()[:2] == ["alpha  Alpha", "beta  Beta"]
     assert library.docs("be").splitlines()[0] == "beta  Beta"
     assert library.docs("zz").startswith("no documents with an id starting 'zz'")
-    assert "next: start=2" in library.docs(limit=1)
+    assert "next: start=1" in library.docs(limit=1)
+    assert (
+        follow_list(lambda start: library.docs(limit=1, start=start)) == library.docs().split("\n\n")[0].splitlines()
+    )
 
 
 def test_search_ranks_sections_sanitises_operators_and_relaxes_with_a_note(tmp_path: Path) -> None:
@@ -228,8 +230,8 @@ def test_search_ranks_sections_sanitises_operators_and_relaxes_with_a_note(tmp_p
 def test_search_pages_filters_by_document_prefix_and_treats_like_wildcards_literally(tmp_path: Path) -> None:
     library = installed_library(tmp_path)
     everything = library.search("part notes sprockets intro", limit=2)
-    assert footer(everything, "next") == "start=3"
-    second = library.search("part notes sprockets intro", limit=2, start=3)
+    assert footer(everything, "next") == "start=2"
+    second = library.search("part notes sprockets intro", limit=2, start=2)
     assert second.splitlines()[0] not in everything
     assert "alpha" not in library.search("intro", doc_prefix="beta")
     assert library.search("intro", doc_prefix="%").startswith("no sections matched")
@@ -246,7 +248,10 @@ def test_nothing_imported_is_an_error_with_the_remedy_never_an_empty_result(tmp_
     for call in calls:
         with pytest.raises(LibError, match="Demo documents is not imported") as caught:
             call()
-        assert caught.value.hint == "primarysource demo import"
+        assert (
+            caught.value.action == "primarysource demo import"
+            and caught.value.hint == "demo_status says what is pinned"
+        )
     assert "not imported" in library.status()
 
 
@@ -279,7 +284,7 @@ def test_an_unreadable_stored_document_is_a_liberror_with_the_remedy(tmp_path: P
     (root / "docs" / "00001.json").write_text('{"id": "alpha"}', encoding="utf-8")
     with pytest.raises(LibError, match="damaged") as caught:
         library.read("alpha§1")
-    assert caught.value.hint == "import the edition again"
+    assert caught.value.action == "import the edition again"
     (root / "docs" / "00001.json").unlink()
     with pytest.raises(LibError, match="unreadable"):
         library.read("alpha§1")
