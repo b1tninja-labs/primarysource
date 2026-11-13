@@ -60,6 +60,8 @@ usb = []
 itu = ["pypdf>=5"]
 # ISO standards from the owner's own purchased PDFs (primarysource/iso/): pypdf reads them at import only.
 iso = ["pypdf>=5"]
+# CVE records (primarysource/cve/, moved in from cvelib): standard library only; `[cve,mcp]` serves it.
+cve = []
 
 [project.scripts]
 primarysource = "primarysource.cli:main"
@@ -85,6 +87,9 @@ select = ["E", "F", "I", "UP", "S", "B", "SIM"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101"]
+# cve builds git and network requests from fixed URLs it names itself (moved in from cvelib with these ignores).
+"primarysource/cve/*" = ["S603", "S607", "S310"]
+"tests/cve/*" = ["S105", "S106"]
 
 [tool.mypy]
 strict = true

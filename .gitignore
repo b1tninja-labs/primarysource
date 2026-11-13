@@ -25,6 +25,11 @@ htmlcov/
 *.db
 *.db-wal
 *.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.csv.gz
+.cvelib/
 
 # Captures and secrets
 *.har

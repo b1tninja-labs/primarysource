@@ -16,3 +16,14 @@ outside the IETF Standards Process.
 
 Every other collection's documents are fetched by the user, under their
 publishers' own terms, and are stored outside this package.
+
+cve (moved in from cvelib, MIT before the move) ships no vulnerability data either: records are fetched by the user
+with `primarysource cve sync` into the cve home, and its test fixtures are invented text. The sources keep their own
+terms, summarised in docs/cve-sources.md:
+
+- CVE List (cvelistV5) and the Linux kernel CNA repository: CVE Program Terms of Use, which ask that copies keep
+  MITRE's copyright designation and that licence.
+- CISA Known Exploited Vulnerabilities and Vulnrichment: CC0 1.0.
+- FIRST EPSS: published free of charge; cite it as FIRST EPSS, https://www.first.org/epss.
+- NVD (not ingested yet): if added, display "This product uses data from the NVD API but is not endorsed or
+  certified by the NVD."
