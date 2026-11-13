@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "note": "Catalogue metadata and digests only. No document text belongs in this file or anywhere in the repository.",
+  "collections": {
+    "posix": {
+      "licence": "LicenseRef-OpenGroup-IEEE-personal-use",
+      "placement": "volume",
+      "terms_url": "https://pubs.opengroup.org/onlinepubs/terms.htm",
+      "terms_read": "2026-11-12",
+      "terms_summary": "Jointly owned by The Open Group and the IEEE. Reading and downloading for personal use only, after giving a name and email address per publication; no copying, amending, reprinting, sale or re-use without permission of both holders. The hard copy is authoritative.",
+      "editions": [
+        {
+          "id": "posix-2024",
+          "designations": [
+            "IEEE Std 1003.1-2024",
+            "The Open Group Base Specifications Issue 8",
+            "ISO/IEC/IEEE 9945"
+          ],
+          "designation_note": "One text under three covers. The ISO/IEC/IEEE 9945 edition was not examined; its year and its identity with this HTML are not verified.",
+          "title": "The Open Group Base Specifications Issue 8, IEEE Std 1003.1-2024",
+          "publisher": "IEEE and The Open Group",
+          "edition_date": "2024",
+          "archive_updated": "2025-04-01",
+          "page_url": "https://pubs.opengroup.org/onlinepubs/9799919799/",
+          "source_url": "https://pubs.opengroup.org/onlinepubs/9799919799/download/susv5.tgz",
+          "archive": "susv5.tgz",
+          "sha256": "11c7ee3e98febe3d58d03a02885d0fab9a3564d06a9b02742d9d138ae341a957",
+          "size": 4962222,
+          "root": "susv5-html/",
+          "members": 1715,
+          "html_files": 1616,
+          "html_bytes": 24248288
+        }
+      ]
+    },
+    "ieee802": {
+      "licence": "LicenseRef-IEEE-GET-Program",
+      "placement": "volume",
+      "terms_url": "https://ieeexplore.ieee.org/Xplorehelp/overview-of-ieee-xplore/get-program-terms-of-use",
+      "terms_read": "not read: the terms page answered HTTP 418 to an automated fetch on 2026-11-12",
+      "terms_summary": "IEEE GET Program (standards.ieee.org, read 2026-11-12): the Terms and Conditions of Use must be accepted before the PDF is available; the documents are not in the public domain and IEEE remains the sole copyright holder. Copy and automation limits are unverified.",
+      "editions": [
+        {
+          "id": "802.1Q-2022",
+          "designations": ["IEEE Std 802.1Q-2022"],
+          "title": "IEEE Standard for Local and Metropolitan Area Networks--Bridges and Bridged Networks",
+          "publisher": "IEEE",
+          "edition_date": "2022-12-22",
+          "page_url": "https://standards.ieee.org/ieee/802.1Q/10323/",
+          "source_url": null,
+          "archive": null,
+          "sha256": null,
+          "size": null,
+          "get_program": "the standard's page says the PDF is available at no cost through the GET program (read 2026-11-12)"
+        },
+        {
+          "id": "802.3-2022",
+          "designations": ["IEEE Std 802.3-2022"],
+          "title": "IEEE Standard for Ethernet",
+          "publisher": "IEEE",
+          "edition_date": "2022-07-29",
+          "page_url": "https://standards.ieee.org/ieee/802.3/10422/",
+          "source_url": null,
+          "archive": null,
+          "sha256": null,
+          "size": null,
+          "get_program": "the standard's page links the GET program; whether this edition is free there was not stated (read 2026-11-12)"
+        }
+      ]
+    }
+  }
+}
