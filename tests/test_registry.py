@@ -55,6 +55,24 @@ def test_builtins_win_over_plugins_and_nothing_is_imported(monkeypatch: pytest.M
     assert "_ps_never_imported" not in sys.modules
 
 
+def test_two_builtins_can_share_one_extra(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        registry, "BUILTIN", {"posixdemo": "_ps_absent.mod:POSIX [shared]", "netdemo": "_ps_absent.mod:NET"}
+    )
+    found = registry._targets()
+    assert found["posixdemo"] == _Target("_ps_absent.mod:POSIX", 'pip install "primarysource[shared]"')
+    assert found["netdemo"].install == 'pip install "primarysource[netdemo]"'
+    with pytest.raises(LibError) as caught:
+        load("posixdemo", found)
+    assert caught.value.hint == 'pip install "primarysource[shared]"'
+
+
+def test_a_malformed_target_is_reported(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(registry, "BUILTIN", {"bad": "no-colon"})
+    with pytest.raises(LibError, match="malformed"):
+        available()
+
+
 @pytest.mark.parametrize(("name", "prefix"), [("Demo", "Demo_"), ("demo", "dm_"), ("2x", "")])
 def test_names_and_prefixes_are_checked(name: str, prefix: str) -> None:
     with pytest.raises(ValueError):

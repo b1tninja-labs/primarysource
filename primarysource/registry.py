@@ -26,10 +26,21 @@ from primarysource.refs import RefGrammar
 
 ENTRY_POINT_GROUP = "primarysource.collections"
 
-# name -> "module:attribute". A collection is added here when it moves in (PLAN.md §6); the extra is its name.
+# name -> "module:attribute" or "module:attribute [extra]", the entry-point spelling. A collection is added here
+# when it moves in (PLAN.md §6). Without "[extra]" the extra is the collection's name; two collections that share
+# one extra (posix and ieee802 in `[ieee]`) both name it.
 BUILTIN: dict[str, str] = {}
 
 _NAME = re.compile(r"[a-z][a-z0-9]*")
+_SPEC = re.compile(r"\s*(?P<target>[\w.]+:[\w.]+)\s*(?:\[\s*(?P<extra>[\w-]+)\s*\])?\s*")
+
+
+def _split(spec: str) -> tuple[str, str | None]:
+    """`module:attribute [extra]` -> (`module:attribute`, `extra` or None)."""
+    match = _SPEC.fullmatch(spec)
+    if match is None:
+        raise LibError(f"malformed collection target {spec!r}", "expected 'module:attribute [extra]'")
+    return match["target"], match["extra"]
 
 
 @dataclass(frozen=True, slots=True)
@@ -62,9 +73,11 @@ def _targets() -> dict[str, _Target]:
     found: dict[str, _Target] = {}
     for ep in entry_points(group=ENTRY_POINT_GROUP):
         dist = ep.dist.name if ep.dist is not None else ep.name
-        found[ep.name] = _Target(ep.value, f'pip install "{dist}"')
+        target, extra = _split(ep.value)
+        found[ep.name] = _Target(target, f'pip install "{dist}[{extra}]"' if extra else f'pip install "{dist}"')
     for name, spec in BUILTIN.items():
-        found[name] = _Target(spec, f'pip install "primarysource[{name}]"')
+        target, extra = _split(spec)
+        found[name] = _Target(target, f'pip install "primarysource[{extra or name}]"')
     return found
 
 
