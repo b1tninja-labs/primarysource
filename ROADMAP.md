@@ -108,3 +108,11 @@ Legend: `[ok]` implemented and pinned by a named test -- `[part]` partial, with 
 | `ieee.no_corpus_tripwire` | AGENTS.md | `[ok]` | `tests/test_ieee_collections.py::test_the_ieee_package_holds_code_and_a_small_catalogue_only`, `tests/test_ieee_collections.py::test_no_file_in_the_tree_carries_the_standard_s_notice` |
 | `ieee.manifest_lift` | docs/ieee.md §8 | `[ ]` | the pins and terms move from `catalogue.json` into the core's collection manifest when it lands |
 | `ieee.html_lift` | docs/ieee.md §8 | `[ ]` | `_html.py` and its copied tests move into the core reader (`cl.reader_html`), `Profile` with them |
+
+## 5. Proposed collections, not started
+
+Licence and placement as group F recorded them (side-session notes, `roadmap-F-reference/SUMMARY.md`, 2026-11-13). (m) means the licence was given from memory and is **unverified**: read it before the collection is built.
+
+| Obligation | Spec | Status | Where |
+|---|---|---|---|
+| `col.purl_spec` | PLAN.md §5.8 | `[ ]` | purl spec, ECMA-427 (Dec 2025). Ecma; the repository's code is MIT, the standard text has its own licence id (not read). Placement: volume until that licence is read |

@@ -1,0 +1,22 @@
+{
+ "terms": {
+  "licence": "Ecma International text copyright policy (default notice)",
+  "placement": "volume",
+  "terms_url": "https://ecma-international.org/policies/by-ipr/ecma-text-copyright-policy/",
+  "terms_read": "2026-11-12",
+  "summary": "The notice printed in ECMA-427 allows copying and distribution of the whole or parts with the copyright notice and licence on every copy, and derivative works only as commentary, accessibility, translation or format change, or implementation; the content may not otherwise be modified. Ecma prefers that the standard is downloaded from its own site. This collection therefore stays on a user-fetched volume: the importer downloads the PDF from ecma-international.org and writes only to the user's own home. Software in the standard is BSD-licensed (the Software License section of the PDF)."
+ },
+ "editions": [
+  {
+   "number": "427",
+   "edition": 1,
+   "designation": "ECMA-427",
+   "title": "Package-URL (PURL) specification",
+   "edition_name": "1st edition, December 2025",
+   "page_url": "https://ecma-international.org/publications-and-standards/standards/ecma-427/",
+   "source_url": "https://ecma-international.org/wp-content/uploads/ECMA-427_1st_edition_december_2025.pdf",
+   "size": 2320437,
+   "sha256": "037180df99e7d7c26d910dc3adb3fa07c4fb787cc4bd29e43634de3802313825"
+  }
+ ]
+}
