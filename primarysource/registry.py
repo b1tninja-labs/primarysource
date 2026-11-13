@@ -41,6 +41,7 @@ BUILTIN: dict[str, str] = {
     "usbids": "primarysource.usbids:COLLECTION",
     "draft": "primarysource.draft.collection:COLLECTION [draft]",
     "c2sp": "primarysource.c2sp:C2SP",
+    "bbf": "primarysource.bbf:BBF [bbf]",
     "ecma": "primarysource.ecma:ECMA [ecma]",
 }
 

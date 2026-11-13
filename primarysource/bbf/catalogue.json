@@ -1,0 +1,777 @@
+{
+ "repo": "BroadbandForum/cwmp-data-models",
+ "commit": "049759159f40499f5155be0d21f2573c6381969f",
+ "raw_base": "https://raw.githubusercontent.com/BroadbandForum/cwmp-data-models/",
+ "terms": {
+  "models": {
+   "licence": "BSD-3-Clause",
+   "placement": "layer",
+   "terms_url": "https://raw.githubusercontent.com/BroadbandForum/cwmp-data-models/049759159f40499f5155be0d21f2573c6381969f/tr-181-2-22-0-root.xml",
+   "terms_read": "2026-11-12",
+   "summary": "Each data-model XML file opens with a Broadband Forum copyright notice and a BSD-3-Clause-style licence: redistribution and use in source and binary forms, with or without modification, with the notice retained. It is a licence under copyright only; patent terms are in the Forum IPR policy. Placement may be an image layer."
+  },
+  "reports": {
+   "licence": "Broadband Forum Technical Report terms of use",
+   "placement": "volume",
+   "terms_url": "https://www.broadband-forum.org/pdfs/tr-069-1-6-1.pdf",
+   "terms_read": "2026-11-12",
+   "summary": "Page 2 of the PDF: a perpetual, worldwide licence to use the report to develop, make, use and sell compliant products and to distribute those products; no right to sublicense, modify or create derivative works except for code in the report; all copies of the report or any portion must carry the notices on that page. Not for an image layer: the user fetches it from the Forum into a volume."
+  }
+ },
+ "models": [
+  {
+   "id": "tr-069-biblio",
+   "path": "tr-069-biblio.xml",
+   "title": "TR-069 Data Model Bibliographic References",
+   "size": 184840,
+   "sha256": "cef5e578b4f9bb25c6b74d1bc286071a35a5a606f23cb07507e6972f4c1b1e38"
+  },
+  {
+   "id": "tr-181-2-22-0-atm",
+   "path": "tr-181-2-22-0-atm.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [ATM]",
+   "size": 17302,
+   "sha256": "3f6d55989fa882edbe2f53ffa0bd147da5a43eb17db4a1a4e9c2a2852b97e080"
+  },
+  {
+   "id": "tr-181-2-22-0-basapm",
+   "path": "tr-181-2-22-0-basapm.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [BASAPM]",
+   "size": 11276,
+   "sha256": "1d974e576724e301095c9780f4f33bcc890a7f82d9a5e083ae77d343a8449471"
+  },
+  {
+   "id": "tr-181-2-22-0-bridging",
+   "path": "tr-181-2-22-0-bridging.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Bridging]",
+   "size": 93471,
+   "sha256": "8e74fd25f420b824f04ef9e534a9655918be56605bb62a03556981049c5f3a09"
+  },
+  {
+   "id": "tr-181-2-22-0-bulkdata",
+   "path": "tr-181-2-22-0-bulkdata.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [BulkData]",
+   "size": 40074,
+   "sha256": "f9676ff9969c7fbf46670d777a897ff5da80182e209912c0f78201aef9ca24c8"
+  },
+  {
+   "id": "tr-181-2-22-0-captiveportal",
+   "path": "tr-181-2-22-0-captiveportal.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [CaptivePortal]",
+   "size": 7399,
+   "sha256": "5fa3fa043a9cc5af809653e91b90f254fec8cd72b8f856922633e683e67329c2"
+  },
+  {
+   "id": "tr-181-2-22-0-cellular",
+   "path": "tr-181-2-22-0-cellular.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Cellular]",
+   "size": 58859,
+   "sha256": "b5aec39fc8056c9b0ca96f244a550c23658d0bcb42b2a2e3bbc71033735cc728"
+  },
+  {
+   "id": "tr-181-2-22-0-collectiondevice",
+   "path": "tr-181-2-22-0-collectiondevice.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [CollectionDevice]",
+   "size": 13322,
+   "sha256": "38f3dfba213f5fdccadb09c1362e1b6306c280e1df8aa8f926fce80994eae6f9"
+  },
+  {
+   "id": "tr-181-2-22-0-common",
+   "path": "tr-181-2-22-0-common.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [COMMON]",
+   "size": 27828,
+   "sha256": "85c3da01bd2458f60078798af300e8666930a79645ac1ec60d028ff62eb05fb4"
+  },
+  {
+   "id": "tr-181-2-22-0-connectionmonitoring",
+   "path": "tr-181-2-22-0-connectionmonitoring.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [ConnectionMonitoring]",
+   "size": 21019,
+   "sha256": "92ccd3849b72b420d4413dd88816bf1df5a9b6c8bb9edcbeec82c8af2adb5aec"
+  },
+  {
+   "id": "tr-181-2-22-0-cwmp",
+   "path": "tr-181-2-22-0-cwmp.xml",
+   "title": "Device:2 Root Data Model definition [CWMP]",
+   "size": 244658,
+   "sha256": "25fa0a8d0afbaee9708b94842e8d8cc1cfd5f1c252e7052708b7ed75b7b2059c"
+  },
+  {
+   "id": "tr-181-2-22-0-cwmp-full",
+   "path": "tr-181-2-22-0-cwmp-full.xml",
+   "title": "Device:2 Root Data Model definition [CWMP]",
+   "size": 5425272,
+   "sha256": "d331ed729226d86b6ee426531eda823289f363fa1a6e4b445531fad79dc581d7"
+  },
+  {
+   "id": "tr-181-2-22-0-deviceinfo",
+   "path": "tr-181-2-22-0-deviceinfo.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [DeviceInfo]",
+   "size": 124506,
+   "sha256": "3b942c76cd3891ee7ee7b64865e17b1a873a08fc2643ad0868a61439952f003a"
+  },
+  {
+   "id": "tr-181-2-22-0-dhcpv4",
+   "path": "tr-181-2-22-0-dhcpv4.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [DHCPv4]",
+   "size": 77616,
+   "sha256": "ea80486c63bb58234f6dbf4d433092e9ac98982c2c5d716171fc34c27eb7174a"
+  },
+  {
+   "id": "tr-181-2-22-0-dhcpv6",
+   "path": "tr-181-2-22-0-dhcpv6.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [DHCPv6]",
+   "size": 87273,
+   "sha256": "48fab31c83cb69b1b7cad124ae42c4bd9841546be611b5abac51640b01d1169e"
+  },
+  {
+   "id": "tr-181-2-22-0-dlna",
+   "path": "tr-181-2-22-0-dlna.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [DLNA]",
+   "size": 6594,
+   "sha256": "1c365c897da1341eaf3d633c01676974ce5d3d18b14ce7f656a5b301397b3ae8"
+  },
+  {
+   "id": "tr-181-2-22-0-dns",
+   "path": "tr-181-2-22-0-dns.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [DNS]",
+   "size": 68741,
+   "sha256": "7cae2b08c86f6fda840ba2cbf3480d536ec33bfab85039573997ffd63ad01d5a"
+  },
+  {
+   "id": "tr-181-2-22-0-docsis",
+   "path": "tr-181-2-22-0-docsis.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [DOCSIS]",
+   "size": 77096,
+   "sha256": "bbf819106cbe6ff3dccf3d431936b7fce02cdbeed74e31bf3e4db0cfcae25b76"
+  },
+  {
+   "id": "tr-181-2-22-0-dsl",
+   "path": "tr-181-2-22-0-dsl.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [DSL]",
+   "size": 225471,
+   "sha256": "58476ab4b0bb1f1269938b64345e131df314717fc3103be718eff99d0dd53ea2"
+  },
+  {
+   "id": "tr-181-2-22-0-dslite",
+   "path": "tr-181-2-22-0-dslite.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [DSLite]",
+   "size": 13999,
+   "sha256": "3ba656f787ffb62cb45bb426016d4d8f84e0073fba605e158673c2ff1cb2c0f7"
+  },
+  {
+   "id": "tr-181-2-22-0-dynamicdns",
+   "path": "tr-181-2-22-0-dynamicdns.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [DynamicDNS]",
+   "size": 16744,
+   "sha256": "34e8cb292cb5cb4884f67e6937d9c8a20765882ee567ed96a0c68c0a9561fe97"
+  },
+  {
+   "id": "tr-181-2-22-0-ethernet",
+   "path": "tr-181-2-22-0-ethernet.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Ethernet]",
+   "size": 48621,
+   "sha256": "5a8c16e1bd0fc59f8cc6d59285135d867dbdb416fcb83c4be14610264060f817"
+  },
+  {
+   "id": "tr-181-2-22-0-etsim2m",
+   "path": "tr-181-2-22-0-etsim2m.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [ETSIM2M]",
+   "size": 47934,
+   "sha256": "03c567efe961ddce568dae6320289a7f3179352904d8ff14b3d64926ad8dcf1d"
+  },
+  {
+   "id": "tr-181-2-22-0-fap",
+   "path": "tr-181-2-22-0-fap.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [FAP]",
+   "size": 66210,
+   "sha256": "c96bfee593e92727c3533500b60376eb7b3fd88c73d91c81b26e7d78413871cf"
+  },
+  {
+   "id": "tr-181-2-22-0-fast",
+   "path": "tr-181-2-22-0-fast.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [FAST]",
+   "size": 62784,
+   "sha256": "1251f2f9f0b5c4bc1f3209f7c36f9a061fa44019e688f82477e799544a71e3d0"
+  },
+  {
+   "id": "tr-181-2-22-0-faultmgmt",
+   "path": "tr-181-2-22-0-faultmgmt.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [FaultMgmt]",
+   "size": 34348,
+   "sha256": "0b09ff508e9f76309fb43c5858c6058b89a50804e4829bf8f7232b4f1f29f0f9"
+  },
+  {
+   "id": "tr-181-2-22-0-firewall",
+   "path": "tr-181-2-22-0-firewall.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Firewall]",
+   "size": 113024,
+   "sha256": "a36fee93475805be1c787bad2363f95c91b0cf5555dc5056862789480b9f04fc"
+  },
+  {
+   "id": "tr-181-2-22-0-firewall-cwmp",
+   "path": "tr-181-2-22-0-firewall-cwmp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Firewall CWMP]",
+   "size": 4216,
+   "sha256": "aba3f73aecdb856a8055e7ee22eb1f5b6d78befe249ddd26a9eda9e98de7b255"
+  },
+  {
+   "id": "tr-181-2-22-0-flashdevice",
+   "path": "tr-181-2-22-0-flashdevice.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [FlashDevice]",
+   "size": 15668,
+   "sha256": "fce12a4023c95ef461a08f5746d14a0fcd53eb645e1858c8e78d885ba0b97cda"
+  },
+  {
+   "id": "tr-181-2-22-0-fwe",
+   "path": "tr-181-2-22-0-fwe.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [FWE]",
+   "size": 3889,
+   "sha256": "e25b3c3f49933ae4ac9ffd6ca884fb406e8b63fefe91e73fd5e9dc634b4f3404"
+  },
+  {
+   "id": "tr-181-2-22-0-ghn",
+   "path": "tr-181-2-22-0-ghn.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Ghn]",
+   "size": 66885,
+   "sha256": "00d39c073d297223d04380930dc4a8a7ba42f1966efacb50d7bedbfef66f1512"
+  },
+  {
+   "id": "tr-181-2-22-0-gre",
+   "path": "tr-181-2-22-0-gre.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [GRE]",
+   "size": 26812,
+   "sha256": "a011bf9c877f9940fa8c4e1fbb52ef29263f41ef5a2155c0977d5cfd1e59ba35"
+  },
+  {
+   "id": "tr-181-2-22-0-hardware",
+   "path": "tr-181-2-22-0-hardware.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [HardwareCPUs]",
+   "size": 36098,
+   "sha256": "4816e89dc236f224abcee8d05cfdb5fa01eb9bbb4340bc3895bed8a3aae260ef"
+  },
+  {
+   "id": "tr-181-2-22-0-homeplug",
+   "path": "tr-181-2-22-0-homeplug.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [HomePlug]",
+   "size": 16791,
+   "sha256": "13c939e510e87732f96ff03a9aaba8d8516dadad8368ecb28ed9b79ac113b8d3"
+  },
+  {
+   "id": "tr-181-2-22-0-hosts",
+   "path": "tr-181-2-22-0-hosts.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Hosts]",
+   "size": 34685,
+   "sha256": "afce4b25fa5e1d58833cd01d4f157519fe7c5673c3dcd42cfa68adae8e5e94aa"
+  },
+  {
+   "id": "tr-181-2-22-0-hpna",
+   "path": "tr-181-2-22-0-hpna.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [HPNA]",
+   "size": 47484,
+   "sha256": "153a7156abeb587130a821b951f9aa048eb0d52beb7dc8c17316e96a522435dd"
+  },
+  {
+   "id": "tr-181-2-22-0-ieee1905",
+   "path": "tr-181-2-22-0-ieee1905.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [IEEE1905]",
+   "size": 126096,
+   "sha256": "e9f6e152d6b4bbbe35c359ef39310e9d23d439dfd0ad2ed2498acb429fb80db6"
+  },
+  {
+   "id": "tr-181-2-22-0-ieee8021x",
+   "path": "tr-181-2-22-0-ieee8021x.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [IEEE8021x]",
+   "size": 22250,
+   "sha256": "97f8a1a05757beffcb5035cc24670c686305b8e3b2dd9db76db4ff75d0e05e5d"
+  },
+  {
+   "id": "tr-181-2-22-0-interface",
+   "path": "tr-181-2-22-0-interface.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Interface]",
+   "size": 32325,
+   "sha256": "2e752751e56ad551b7eb5f1c0b7deb1499df1a01ed6bcc73bd7e68181873b0d0"
+  },
+  {
+   "id": "tr-181-2-22-0-interfacestack",
+   "path": "tr-181-2-22-0-interfacestack.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [InterfaceStack]",
+   "size": 6511,
+   "sha256": "13a0f17ad6598c2c7cd6076d7c30f93b112c3181e92269bdff2da420ae7a1a35"
+  },
+  {
+   "id": "tr-181-2-22-0-ip",
+   "path": "tr-181-2-22-0-ip.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [IP]",
+   "size": 219087,
+   "sha256": "73fe15305e2ebbe0f3ae7aee10612d3a2d0eb5a298acd2604c1184bc4325bc69"
+  },
+  {
+   "id": "tr-181-2-22-0-ipsec",
+   "path": "tr-181-2-22-0-ipsec.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [IPsec]",
+   "size": 88359,
+   "sha256": "2f382583c57ad0d4846b9849cf6bc0d7125b139321fa3f90b93e0dbbc58ec365"
+  },
+  {
+   "id": "tr-181-2-22-0-ipv6rd",
+   "path": "tr-181-2-22-0-ipv6rd.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [IPv6rd]",
+   "size": 13014,
+   "sha256": "63ce3f66a6cacc810ba4bb475ed55732abc23b81bbe923b38de6177521686d88"
+  },
+  {
+   "id": "tr-181-2-22-0-l2tpv3",
+   "path": "tr-181-2-22-0-l2tpv3.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [L2TPv3]",
+   "size": 28768,
+   "sha256": "f6464101e2e46eb9b7b54faa7a5978ffbfde5342e303121552c18cfcfb697a50"
+  },
+  {
+   "id": "tr-181-2-22-0-lanconfigsecurity",
+   "path": "tr-181-2-22-0-lanconfigsecurity.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [LANConfigSecurity]",
+   "size": 4280,
+   "sha256": "2221827f9438ee88e92687759a4105b9d5993dd6b2583f4ad0369109b350cf22"
+  },
+  {
+   "id": "tr-181-2-22-0-leds",
+   "path": "tr-181-2-22-0-leds.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [LEDs]",
+   "size": 20646,
+   "sha256": "1a18b35c75fadc25abd0fbe6d0d32d6ded5d9663d247a57e4b97019dc00986e7"
+  },
+  {
+   "id": "tr-181-2-22-0-lldp",
+   "path": "tr-181-2-22-0-lldp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [LLDP]",
+   "size": 21932,
+   "sha256": "36bdca0a2f61a5bd44f9f316c3766cccb98195467f7b42211e4a318b887a6473"
+  },
+  {
+   "id": "tr-181-2-22-0-lmap",
+   "path": "tr-181-2-22-0-lmap.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [LMAP]",
+   "size": 87757,
+   "sha256": "072aee2b02ad3ab4bc8e5775d324efd6acd39c5acd34880fc355935b254a0cd8"
+  },
+  {
+   "id": "tr-181-2-22-0-localagent",
+   "path": "tr-181-2-22-0-localagent.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [LocalAgent]",
+   "size": 79055,
+   "sha256": "97dcdcdc4a6f2ea62c0100ae034ed0d91ede25b0c8ce3fc181b6fdee9e1cdc85"
+  },
+  {
+   "id": "tr-181-2-22-0-logical",
+   "path": "tr-181-2-22-0-logical.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Logical]",
+   "size": 13883,
+   "sha256": "1a42b8e1a3824ef16b369d716ba4dde79d77bc60dc6d9ecd7bc20659f562f4e9"
+  },
+  {
+   "id": "tr-181-2-22-0-map",
+   "path": "tr-181-2-22-0-map.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [MAP]",
+   "size": 26726,
+   "sha256": "6742cd26962a86c16cf9f5a0d51b937344b912db90d0b7807afb2dd25f6d3bf5"
+  },
+  {
+   "id": "tr-181-2-22-0-moca",
+   "path": "tr-181-2-22-0-moca.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [MoCA]",
+   "size": 161367,
+   "sha256": "32aeb3f2e08b59303478344626d81be8192eb461e4a6092eb6596d59668fcc46"
+  },
+  {
+   "id": "tr-181-2-22-0-moca-cwmp",
+   "path": "tr-181-2-22-0-moca-cwmp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [MoCA CWMP]",
+   "size": 27187,
+   "sha256": "c4d620b5d4f7742a1621a859d5c3c2a7144498d9cf9650c58be4c51012189ade"
+  },
+  {
+   "id": "tr-181-2-22-0-mqtt",
+   "path": "tr-181-2-22-0-mqtt.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [MQTT]",
+   "size": 102541,
+   "sha256": "50803cfcca2d3eb6063b20298c059c28238af30a7f7a8e5c82b741a465323884"
+  },
+  {
+   "id": "tr-181-2-22-0-nat",
+   "path": "tr-181-2-22-0-nat.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [NAT Base]",
+   "size": 46932,
+   "sha256": "4f672d16328e47736e64245e23861c93bbe06d655fbdd76e6fa9feff4f710b7a"
+  },
+  {
+   "id": "tr-181-2-22-0-nat-cwmp",
+   "path": "tr-181-2-22-0-nat-cwmp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [NAT CWMP]",
+   "size": 4013,
+   "sha256": "ac4c174f10045f52041905837e16e51e9f26a0dab3ee5727e717a5467aa9d4f7"
+  },
+  {
+   "id": "tr-181-2-22-0-neighbordiscovery",
+   "path": "tr-181-2-22-0-neighbordiscovery.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [NeighborDiscovery]",
+   "size": 25162,
+   "sha256": "42504f9e68e3c899c68f3a1ffe575b33f0afd4ad9b9ecf4fc15dcce2aa01f217"
+  },
+  {
+   "id": "tr-181-2-22-0-optical",
+   "path": "tr-181-2-22-0-optical.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Optical]",
+   "size": 11318,
+   "sha256": "91957e0390b313ef685b30ec35d9a4bf227d271da702afabc28db6eb91e0a8ae"
+  },
+  {
+   "id": "tr-181-2-22-0-packetcapture",
+   "path": "tr-181-2-22-0-packetcapture.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [PacketCapture]",
+   "size": 9005,
+   "sha256": "2981508992b78861b3087a78d4d51ababa411addcae8f5f6e961b7d070108fd1"
+  },
+  {
+   "id": "tr-181-2-22-0-pcp",
+   "path": "tr-181-2-22-0-pcp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [PCP]",
+   "size": 43157,
+   "sha256": "4b353faf50cecfb4c9202d98dc7abcf01e542d7f70d9c1d125b2cf9e4c27d9d5"
+  },
+  {
+   "id": "tr-181-2-22-0-pdu",
+   "path": "tr-181-2-22-0-pdu.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [PDU]",
+   "size": 31502,
+   "sha256": "6596ebf339f52ceb26db2dac4d7c813a14f3fe1e086eed583aa483783b0c09fe"
+  },
+  {
+   "id": "tr-181-2-22-0-periodicfiletransfer",
+   "path": "tr-181-2-22-0-periodicfiletransfer.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [PeriodicFileTransfer]",
+   "size": 32042,
+   "sha256": "de1bbc56bcc9621999b166835b0059de6c4b22d9f6d5f855fb265eab68b8e949"
+  },
+  {
+   "id": "tr-181-2-22-0-periodicstatistics",
+   "path": "tr-181-2-22-0-periodicstatistics.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [PeriodicStatistics]",
+   "size": 24392,
+   "sha256": "9d08048cd2aaecff34c06a1dcbea0f1c81d8ef6d4e01b03999fae73c90ad0135"
+  },
+  {
+   "id": "tr-181-2-22-0-powermanagement",
+   "path": "tr-181-2-22-0-powermanagement.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [PowerManagement]",
+   "size": 10580,
+   "sha256": "baf18f3e05dc41a0ea57d2f75d4e59a547fb5edb7309be210b339b6b1b5065a1"
+  },
+  {
+   "id": "tr-181-2-22-0-ppp",
+   "path": "tr-181-2-22-0-ppp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [PPP]",
+   "size": 21739,
+   "sha256": "125e1003c3717ae8bbf9409e9e432ac3dc87a8b73a67cdc2e863109748a17334"
+  },
+  {
+   "id": "tr-181-2-22-0-ptm",
+   "path": "tr-181-2-22-0-ptm.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [PTM]",
+   "size": 6600,
+   "sha256": "dc3f2beb0ed01ee39087bfd3fce97745846f9aad355f2786d34fc7f0b26298fa"
+  },
+  {
+   "id": "tr-181-2-22-0-qos",
+   "path": "tr-181-2-22-0-qos.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [QoS]",
+   "size": 140242,
+   "sha256": "f0586c16e276dfd165d7f6495ad577be14bbe1caa0be101461d8374c293cf3a8"
+  },
+  {
+   "id": "tr-181-2-22-0-radsecproxy",
+   "path": "tr-181-2-22-0-radsecproxy.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [RadSecProxy]",
+   "size": 25208,
+   "sha256": "04cadb0f299002bfa5a9b72afa7957c88c7d4d8318543042380a0c9c032192a0"
+  },
+  {
+   "id": "tr-181-2-22-0-root",
+   "path": "tr-181-2-22-0-root.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Root]",
+   "size": 4078,
+   "sha256": "53f77ea9edeb98124ed3d9af16353c9d5ed21e4f2f455920090afd1f93f2a9e1"
+  },
+  {
+   "id": "tr-181-2-22-0-routeradvertisement",
+   "path": "tr-181-2-22-0-routeradvertisement.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [RouterAdvertisement]",
+   "size": 25391,
+   "sha256": "8aae87d6494af8b21fcc811793ca0e5b12c472c19622e0bc31748e237c1c3de5"
+  },
+  {
+   "id": "tr-181-2-22-0-routing",
+   "path": "tr-181-2-22-0-routing.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Routing]",
+   "size": 96478,
+   "sha256": "23ccb43488713ef4957eca61b127b1cb06c7707cb50eac13444fae311143d903"
+  },
+  {
+   "id": "tr-181-2-22-0-schedules",
+   "path": "tr-181-2-22-0-schedules.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Schedules]",
+   "size": 10250,
+   "sha256": "d804ce5e03deacf3c02b745bd1b79f6cbc16c8991b67f8f285c35bfa4d5bc24c"
+  },
+  {
+   "id": "tr-181-2-22-0-security",
+   "path": "tr-181-2-22-0-security.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Security]",
+   "size": 78348,
+   "sha256": "a3217ce28ca584e499a47c39f06ef3af8a71989c48e1825bb97ce54ca80406fb"
+  },
+  {
+   "id": "tr-181-2-22-0-selftest",
+   "path": "tr-181-2-22-0-selftest.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [SelfTest]",
+   "size": 3111,
+   "sha256": "4b2f1390cee0acb0ae85a4c136f3ada710ae2b83ec3f25fc47dfbe2a200c0d98"
+  },
+  {
+   "id": "tr-181-2-22-0-sessionmanagement",
+   "path": "tr-181-2-22-0-sessionmanagement.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [SessionManagement]",
+   "size": 36083,
+   "sha256": "16541e951f21dc04d3fcacb01d736d5b909d5ee7c3e2be306a1353a327620f72"
+  },
+  {
+   "id": "tr-181-2-22-0-sfp",
+   "path": "tr-181-2-22-0-sfp.xml",
+   "title": "Device:2 Root Data Model: Small Form-Factor Pluggable [SFP]",
+   "size": 70299,
+   "sha256": "f167eae41cdaa75f5f05ba67b7c76780d43b8826809c353cc4b7c2d8bafae37e"
+  },
+  {
+   "id": "tr-181-2-22-0-smartcardreaders",
+   "path": "tr-181-2-22-0-smartcardreaders.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [SmartCardReaders]",
+   "size": 10366,
+   "sha256": "7d3156d6b00e61965ee5d2cde9ab1618ca40d9dd13fe5e68b4d9cf77bb08f336"
+  },
+  {
+   "id": "tr-181-2-22-0-softwaremodules",
+   "path": "tr-181-2-22-0-softwaremodules.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [SoftwareModules]",
+   "size": 77779,
+   "sha256": "b54dff397743c3fe150e9de1bf6f13b26bac3e4e3590715282daa6a91b9fd424"
+  },
+  {
+   "id": "tr-181-2-22-0-ssh",
+   "path": "tr-181-2-22-0-ssh.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [SSH]",
+   "size": 21364,
+   "sha256": "6e472afc613eebdd7f25537befc6c6fbb6491746950ff8de7a43a6cb9b0c5e5a"
+  },
+  {
+   "id": "tr-181-2-22-0-stats",
+   "path": "tr-181-2-22-0-stats.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Stats]",
+   "size": 3618,
+   "sha256": "a96eea26c5bdd45672683f52cab0b8ebf9172a1c21bc6da85e7064be976a2764"
+  },
+  {
+   "id": "tr-181-2-22-0-stomp",
+   "path": "tr-181-2-22-0-stomp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [STOMP]",
+   "size": 13922,
+   "sha256": "40e6b231da08f3a48e0f14ae42520c236b26df29d6643ee669837ccbf58f644f"
+  },
+  {
+   "id": "tr-181-2-22-0-syslog",
+   "path": "tr-181-2-22-0-syslog.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Syslog]",
+   "size": 39484,
+   "sha256": "2733a64ab8c16e2bd0ea35469af19e561d398f7fc289c902be9b2379166e8dff"
+  },
+  {
+   "id": "tr-181-2-22-0-thread",
+   "path": "tr-181-2-22-0-thread.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Thread]",
+   "size": 59679,
+   "sha256": "81ec7414e58d8b3d1d13c32223b2d6acc002209606c4b2d710d01cd16a78df3e"
+  },
+  {
+   "id": "tr-181-2-22-0-time",
+   "path": "tr-181-2-22-0-time.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Time]",
+   "size": 32363,
+   "sha256": "fce7164542e5c29379429c47bd1066e72b3b0a86c90a5fe6f98575e3376236db"
+  },
+  {
+   "id": "tr-181-2-22-0-trustedelements",
+   "path": "tr-181-2-22-0-trustedelements.xml",
+   "title": "Device:2 Root Data Model: Trusted Elements definitions",
+   "size": 16580,
+   "sha256": "555c3347f5f6e661d445b73908e0dffa1e90ee46ad10194089cf9c2fa2ddcd2b"
+  },
+  {
+   "id": "tr-181-2-22-0-unixdomainsocket",
+   "path": "tr-181-2-22-0-unixdomainsocket.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [UnixDomainSocket]",
+   "size": 7731,
+   "sha256": "54daa6602353de3dc549f325b86133ec60a6c48f6fb6e47f187402d3d0af1479"
+  },
+  {
+   "id": "tr-181-2-22-0-upa",
+   "path": "tr-181-2-22-0-upa.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [UPA]",
+   "size": 22728,
+   "sha256": "0840e77231132292a85c6c6f92abc7199b156c850793fabd3dfc95d1f95fbf0b"
+  },
+  {
+   "id": "tr-181-2-22-0-upnp",
+   "path": "tr-181-2-22-0-upnp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [UPnP]",
+   "size": 50179,
+   "sha256": "b2e6396213f93b897254cb49c597ae23fef217fdc32abe5eb5e72d2ea29ff5e0"
+  },
+  {
+   "id": "tr-181-2-22-0-usb",
+   "path": "tr-181-2-22-0-usb.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [USB]",
+   "size": 37254,
+   "sha256": "183b2db44bd127149c2e25b916012b62fcd076227a6b3d5636addd2249a40dd3"
+  },
+  {
+   "id": "tr-181-2-22-0-userinterface",
+   "path": "tr-181-2-22-0-userinterface.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [UserInterface]",
+   "size": 39979,
+   "sha256": "397ef64425e9af63e87d3a8c8688fe8237e04ece82d985ed41e4d419916056b7"
+  },
+  {
+   "id": "tr-181-2-22-0-users",
+   "path": "tr-181-2-22-0-users.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Users]",
+   "size": 21832,
+   "sha256": "448c2593f4743946591f39219afb555337ed16320eca029b61dfc8d900d07af1"
+  },
+  {
+   "id": "tr-181-2-22-0-usp-base",
+   "path": "tr-181-2-22-0-usp-base.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [Interface]",
+   "size": 4366,
+   "sha256": "c0f4e71852a1d2c506ad0b7f06388d9d53afbb7714f254ac9f38bb4a5e70466f"
+  },
+  {
+   "id": "tr-181-2-22-0-uspservices",
+   "path": "tr-181-2-22-0-uspservices.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [USPService]",
+   "size": 8494,
+   "sha256": "0fa5ce27be27bdaddad75ea75ff186dda50303e8d4110ca518fcc35c80ef59e5"
+  },
+  {
+   "id": "tr-181-2-22-0-vxlan",
+   "path": "tr-181-2-22-0-vxlan.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [VXLAN]",
+   "size": 26245,
+   "sha256": "3b70592a2e4058cbc179c022a87e99c4a4f6ff6bbef9e5d78823b0e8c3e19f1f"
+  },
+  {
+   "id": "tr-181-2-22-0-wifi",
+   "path": "tr-181-2-22-0-wifi.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [WiFi]",
+   "size": 61039,
+   "sha256": "2c149e863846302ece1146d5d8090922e24e95357f9674cfbe195a3fb5405bd9"
+  },
+  {
+   "id": "tr-181-2-22-0-wifi-base",
+   "path": "tr-181-2-22-0-wifi-base.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [WiFi Base]",
+   "size": 263935,
+   "sha256": "3aab6b7adf3877e8aa4c4e17b8191fbce0c2f2e52c926b46da2683b750b0bac5"
+  },
+  {
+   "id": "tr-181-2-22-0-wifi-cwmp",
+   "path": "tr-181-2-22-0-wifi-cwmp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [WiFi CWMP]",
+   "size": 8866,
+   "sha256": "e606f74c677c0765934d69a46a2058efc2b4ad21b45c614e8a1c4eb86ecfaceb"
+  },
+  {
+   "id": "tr-181-2-22-0-wifi-de",
+   "path": "tr-181-2-22-0-wifi-de.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [WiFi Data Elements]",
+   "size": 272736,
+   "sha256": "19e076b1cb99669de14838181311a31cdb967dde851fec5d96dc206c57366384"
+  },
+  {
+   "id": "tr-181-2-22-0-wifi-de-base",
+   "path": "tr-181-2-22-0-wifi-de-base.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [WiFi Data Elements Base]",
+   "size": 54049,
+   "sha256": "cc89c13b28d51ee382ba64c26695ed766a895e32d4b8e11a2137d4ba11f72518"
+  },
+  {
+   "id": "tr-181-2-22-0-wifi-sensing",
+   "path": "tr-181-2-22-0-wifi-sensing.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [WiFi Sensing]",
+   "size": 18485,
+   "sha256": "3c64ba1e440e8972c16ee2f635c4e93ce407ec61f28f860a5b09dcd760aa2689"
+  },
+  {
+   "id": "tr-181-2-22-0-wifi-templates",
+   "path": "tr-181-2-22-0-wifi-templates.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [WiFi Data Elements]",
+   "size": 46404,
+   "sha256": "ea673e42ac3c70bcb2aa71067a1cb53c7e3a8dbb543286b6f813944b66d02d96"
+  },
+  {
+   "id": "tr-181-2-22-0-wireguard",
+   "path": "tr-181-2-22-0-wireguard.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [WireGuard]",
+   "size": 14707,
+   "sha256": "3693e926402426db1f56b3a9ef699669e8394eb45cad4c84b8622e5bba416605"
+  },
+  {
+   "id": "tr-181-2-22-0-wwc",
+   "path": "tr-181-2-22-0-wwc.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [WWC]",
+   "size": 23611,
+   "sha256": "dfc97160c1de4a3686835d843afc95c01e9c3f1f5ffe9a5a8b2ca47355001e50"
+  },
+  {
+   "id": "tr-181-2-22-0-xmpp",
+   "path": "tr-181-2-22-0-xmpp.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [XMPP]",
+   "size": 26152,
+   "sha256": "b22eda715af6e67ebe5a5895a0afaf826c59a1db384398bca375007080dfe3ca"
+  },
+  {
+   "id": "tr-181-2-22-0-xpon",
+   "path": "tr-181-2-22-0-xpon.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [XPON]",
+   "size": 70357,
+   "sha256": "d0ec7324ef32798f1598eb666927c131af089d7b3d7af8d7e2523404715c639b"
+  },
+  {
+   "id": "tr-181-2-22-0-zigbee",
+   "path": "tr-181-2-22-0-zigbee.xml",
+   "title": "Device:2 Root Data Model: Common Object definitions [ZigBee]",
+   "size": 59484,
+   "sha256": "659a98ba9aea16a31bb9705320bcfc81a0143b15b7fa9c6bb7b73b90a44bf41f"
+  }
+ ],
+ "reports": [
+  {
+   "id": "tr-069-1-6-1",
+   "designation": "TR-069",
+   "title": "CPE WAN Management Protocol",
+   "issue": "Amendment 6 Corrigendum 1, June 2020 (CWMP 1.4)",
+   "page_url": "https://www.broadband-forum.org/technical-library?number=TR-069",
+   "source_url": "https://www.broadband-forum.org/pdfs/tr-069-1-6-1.pdf",
+   "size": 3066832,
+   "sha256": "21622e4ab362f0b31d5ce15f40bd259dc28cedba095046cf48b5cac2512ba115"
+  }
+ ]
+}

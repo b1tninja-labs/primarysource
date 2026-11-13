@@ -116,3 +116,4 @@ Licence and placement as group F recorded them (side-session notes, `roadmap-F-r
 | Obligation | Spec | Status | Where |
 |---|---|---|---|
 | `col.purl_spec` | PLAN.md §5.8 | `[ ]` | purl spec, ECMA-427 (Dec 2025). Ecma; the repository's code is MIT, the standard text has its own licence id (not read). Placement: volume until that licence is read |
+| `col.bbf_trs` | PLAN.md §5.8 | `[ ]` | Broadband Forum TRs (PDF), collection `bbf`. Free use, no modification, whole copy with notice (read through third-party copies, not BBF's own page). Placement: volume |

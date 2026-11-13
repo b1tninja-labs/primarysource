@@ -38,6 +38,7 @@ cavp = []
 usbids = []
 draft = []
 c2sp = []
+bbf = ["pypdf>=5"]
 ecma = ["pypdf>=5"]
 
 # The RFC series (primarysource/rfc/, moved in from rfclib). mcp serves any collection.
