@@ -5,7 +5,7 @@ The HTML is invented, in the shape the generators emit; none of it is upstream t
 
 from __future__ import annotations
 
-from primarysource.ieee._html import convert, fence_language
+from primarysource.readers.html import convert, fence_language
 
 
 def blocks(html: str) -> list[str]:

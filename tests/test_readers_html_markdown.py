@@ -9,8 +9,8 @@ import time
 import pytest
 from ieee_htmlfixture import BIG_MANUAL, CONFIG, INSTALL, MAN_PAGE, PIXEL
 
-from primarysource.ieee import _html
-from primarysource.ieee._html import convert, resolve_href, to_plain
+from primarysource.readers import html as _html
+from primarysource.readers.html import convert, resolve_href, to_plain
 
 
 def test_application_shell_and_inline_images_are_not_content() -> None:
