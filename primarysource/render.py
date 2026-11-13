@@ -14,7 +14,7 @@ from __future__ import annotations
 import re
 from collections.abc import Mapping
 
-FOOTER_ORDER = ("cite", "unit", "span", "next", "relaxed", "warning")
+FOOTER_ORDER = ("cite", "unit", "span", "next", "relaxed", "confidence", "warning")
 
 _NEXT_START = re.compile(r"start=(0|[1-9][0-9]*)")
 

@@ -34,7 +34,7 @@ def test_an_empty_library_is_an_error_naming_the_fix(home: Path) -> None:
     assert scanned.books == []
     error = library.empty_library_error(scanned)
     assert "no ZIM files found" in error.message
-    assert "zimlore get" in error.hint, "the error must name the command that fixes it"
+    assert "primarysource zim get" in error.action, "the error must name the command that fixes it"
 
 
 def test_scan_reads_metadata_and_reports_unreadable_files(home: Path) -> None:
@@ -91,7 +91,7 @@ def test_resolution_prefers_exact_and_reports_what_is_installed_when_nothing_mat
     with pytest.raises(ZimloreError) as missing:
         library.find("cobol")
     assert missing.value.extra["installed"] == ["devdocs_en_react", "devdocs_en_react-native"]
-    assert "zimlore list" in missing.value.hint
+    assert "primarysource zim list" in missing.value.action
 
 
 def test_two_libraries_that_match_equally_are_listed_not_guessed(home: Path) -> None:

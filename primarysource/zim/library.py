@@ -308,7 +308,7 @@ _BOOKS: dict[tuple[str, int, int], Book] = {}
 
 def close_all() -> None:
     """Drop every cached archive handle. Windows keeps a ZIM file locked while a handle is open, so anything
-    that deletes or replaces a ZIM (the test suite, `zimlore get --replace`) calls this first."""
+    that deletes or replaces a ZIM (the test suite, `primarysource zim get --replace`) calls this first."""
     _ARCHIVES.clear()
     _BOOKS.clear()
 
@@ -334,7 +334,7 @@ def open_archive(path: Path) -> Any:
             _ARCHIVES[key] = reader.Archive(str(path))
         except (RuntimeError, OSError) as error:
             raise ZimloreError(
-                f"{path} is not a readable ZIM file ({error})", "re-download it: zimlore get"
+                f"{path} is not a readable ZIM file ({error})", "re-download it: primarysource zim get"
             ) from error
     return _ARCHIVES[key]
 
@@ -422,9 +422,16 @@ def empty_library_error(scanned: Scan) -> ZimloreError:
         unreadable = (
             f"; {len(scanned.problems)} file(s) there could not be read, first: {scanned.problems[0]['error']}"
         )
+    # Files that cannot be opened because the binding is missing are not an empty library: install it first.
+    fix = (
+        "download one: primarysource zim catalog flask ; primarysource zim get devdocs_en_flask "
+        "(or copy a .zim into that directory)"
+        if _libzim.available()
+        else _libzim.REMEDY
+    )
     return ZimloreError(
         f"no ZIM files found in {where}{unreadable}",
-        "download one: zimlore catalog flask ; zimlore get devdocs_en_flask (or copy a .zim into that directory)",
+        fix,
         searched=[str(d) for d in scanned.directories],
         problems=scanned.problems,
     )
@@ -552,9 +559,11 @@ def _version_error(family: str, requested: str, members: list[Book]) -> ZimloreE
     )
     return LibraryNotFound(
         f"{family} has no installed version matching '{requested}' ({stated})",
-        "ask for one of the installed versions, or omit the version to get the newest; zimlore list shows them"
+        "ask for one of the installed versions, or omit the version to get the newest; "
+        "primarysource zim list shows them"
         if installed
         else "this library records its edition date, not a release: omit the version",
+        tool_hint="omit the version to get the newest, or ask for an installed one: zim_libraries lists them",
         requested_version=requested,
         installed_versions=installed,
         installed=sorted({b.name for b in members}),
@@ -649,7 +658,7 @@ def select(query: str, scanned: Scan | None = None) -> Selection:
         raise unstated
     raise LibraryNotFound(
         f"no installed library matches '{query}'",
-        "zimlore list shows what is installed; zimlore catalog <name> finds one to download",
+        "primarysource zim list shows what is installed; primarysource zim catalog <name> finds one to download",
         installed=[b.name for b in books],
     )
 

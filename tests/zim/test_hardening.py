@@ -114,16 +114,16 @@ def test_a_hash_in_a_path_is_written_percent_23_and_round_trips() -> None:
 
 def test_paging_past_the_end_is_an_error_not_an_inverted_range(acme: Path) -> None:
     total = service.read("acme§guide/config", max_tokens=100_000)["blocks"]["of"]
-    last = service.read("acme§guide/config", start=total)
+    last = service.read(f"acme§guide/config¶{total}")
     assert last["blocks"] == {"from": total, "to": total, "of": total} and last["next"] is None
-    with pytest.raises(ZimloreError, match="past the end"):
-        service.read("acme§guide/config", start=total + 1)
-    with pytest.raises(ZimloreError, match="past the end"):
-        service.read("acme§guide/config#long", start=999)
-    with pytest.raises(ZimloreError, match="start must be an integer of at least 1"):
-        service.read("acme§guide/config", start=0)
-    with pytest.raises(ZimloreError, match="start must be an integer of at least 1"):
-        service.read("acme§guide/config", start=-5)
+    with pytest.raises(ZimloreError, match="no ¶"):
+        service.read(f"acme§guide/config¶{total + 1}")
+    with pytest.raises(ZimloreError, match="no ¶999"):
+        service.read("acme§guide/config#long¶999")
+    with pytest.raises(ZimloreError, match="start must be an integer of at least 0"):
+        service.search("widgets", "acme", start=-1)
+    with pytest.raises(ZimloreError, match="start must be an integer of at least 0"):
+        service.libraries(start=-5)
 
 
 def test_non_positive_limits_and_budgets_are_rejected_and_huge_ones_are_clamped(acme: Path) -> None:

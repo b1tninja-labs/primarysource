@@ -10,7 +10,7 @@ A manifest is TOML and names catalogue entries only:
 It may be committed to a project: it can name nothing that executes, because every entry is validated as a bare
 catalogue name (no scheme, no slash, no colon) and unknown keys are errors. All network goes through `catalog.py`.
 Nothing here deletes: an installed library the manifest does not name is reported as an extra and left alone, and
-an update is a new dated file beside the old edition, exactly as `zimlore get` stages it.
+an update is a new dated file beside the old edition, exactly as `primarysource zim get` stages it.
 """
 
 from __future__ import annotations
@@ -48,7 +48,7 @@ def check_name(name: object, where: str) -> str:
     if not isinstance(name, str) or not NAME_RE.fullmatch(name) or name.endswith(".zim"):
         raise ZimloreError(
             f"{where}: {name!r} is not a catalogue name",
-            "a manifest names catalogue entries (zimlore catalog <words> finds them), never URLs or paths",
+            "a manifest names catalogue entries (primarysource zim catalog <words> finds them), never URLs or paths",
         )
     return name
 
@@ -244,7 +244,7 @@ def execute(plan: Plan, *, progress: Callable[[str, int, int], None] | None = No
             f"the sync would grow the library to about {(plan.installed_bytes + plan.download_bytes) / 1e6:.1f} MB "
             f"({plan.installed_bytes / 1e6:.1f} MB installed + about {plan.download_bytes / 1e6:.1f} MB new), "
             f"over the {(plan.budget or 0) / 1e6:.1f} MB budget; nothing was downloaded",
-            "raise `budget` in the manifest, drop a library or group, or free space: zimlore prune --yes",
+            "raise `budget` in the manifest, drop a library or group, or free space: primarysource zim prune --yes",
         )
     directory = library.zim_dirs()[0]
     library.close_all()
@@ -262,7 +262,7 @@ def execute(plan: Plan, *, progress: Callable[[str, int, int], None] | None = No
             path = catalog.download(item.entry, directory, progress=report, added_by="sync")
         except ZimloreError as error:
             results.append(
-                {"name": name, "action": item.action, "ok": False, "error": error.message, "hint": error.hint}
+                {"name": name, "action": item.action, "ok": False, "error": error.message, "hint": error.cli_hint}
             )
             continue
         results.append({"name": name, "action": item.action, "ok": True, "file": str(path)})

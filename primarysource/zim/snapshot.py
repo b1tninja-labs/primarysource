@@ -2,7 +2,8 @@
 
 `refresh()` is the only function here that touches the network (through `catalog`'s own `_get`, so the https-only
 rule and the size limit apply). It pages through the English OPDS feed and writes `$ZIMLORE_HOME/catalog.json`
-atomically. Everything else reads that file. A missing snapshot is an error naming `zimlore catalog --refresh`; a
+atomically. Everything else reads that file. A missing snapshot is an error naming
+`primarysource zim catalog --refresh`; a
 corrupt or wrong-schema one is also an error, never an empty snapshot, because "the catalogue has nothing called
 flask" and "the snapshot could not be read" send an agent to opposite conclusions.
 
@@ -28,7 +29,7 @@ SCHEMA = 1
 FILE_NAME = "catalog.json"
 PAGE_SIZE = 500
 MAX_PAGES = 100
-HINT = "zimlore catalog --refresh"
+HINT = "primarysource zim catalog --refresh"
 _SAFE_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*")
 _FIELDS = ("name", "title", "date", "language", "summary", "creator", "articles", "approx_bytes", "url", "tags")
 
@@ -130,7 +131,8 @@ def _entry_from(raw: object) -> catalog.CatalogEntry:
 
 
 def load(today: datetime | None = None) -> tuple[list[catalog.CatalogEntry], str, int]:
-    """(entries, fetched_at, age_days). Offline. Raises `ZimloreError` (hint: `zimlore catalog --refresh`) when
+    """(entries, fetched_at, age_days). Offline. Raises `ZimloreError` (hint: `primarysource zim catalog
+    --refresh`) when
     there is no snapshot or it cannot be used."""
     target = path()
     if not target.is_file():
@@ -163,7 +165,7 @@ def available(
     beats prefix beats substring beats fuzzy), newest edition of each name. Offline."""
     wanted = library.norm(query)
     if not wanted:
-        raise ZimloreError("empty query", "give a few words, e.g. zimlore available flask")
+        raise ZimloreError("empty query", "give a few words, e.g. primarysource zim available flask")
     entries, fetched_at, age = load(today)
     have = installed or {}
     scored: list[tuple[float, str, catalog.CatalogEntry, str]] = []
@@ -179,7 +181,7 @@ def available(
             "date": entry.date,
             "approx_mb": round(entry.approx_bytes / 1e6, 1),
             "articles": entry.articles,
-            "install": f"zimlore get {entry.name}",
+            "install": f"primarysource zim get {entry.name}",
             "installed": entry.name in have,
             "installed_edition": have.get(entry.name),
             "match": why,

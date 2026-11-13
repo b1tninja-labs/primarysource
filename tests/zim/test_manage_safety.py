@@ -194,7 +194,7 @@ def test_one_locked_file_is_reported_and_exit_1_while_the_others_are_deleted(
     assert code == 1 and result["ok"] is False
     assert [Path(d["file"]).name for d in result["deleted"]] == [oldest.name]
     assert [Path(d["file"]).name for d in result["failed"]] == [middle.name]
-    assert "zimlore mcp" in result["failed"][0]["hint"]
+    assert "primarysource zim mcp" in result["failed"][0]["hint"]
     assert not oldest.exists() and middle.exists() and newest.exists()
     assert manage.sidecar_path(middle).read_text(encoding="utf-8") == before, "the record of a kept file survives"
 

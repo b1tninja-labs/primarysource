@@ -12,11 +12,13 @@ from pathlib import Path
 from typing import Any
 from xml.sax.saxutils import escape
 
-import anyio
 import pytest
+from zimfixture import contract_server, tool_error, tool_text
 
 from primarysource.zim import catalog, cli, mcp, service, snapshot
 from primarysource.zim.errors import LibraryNotFound, ZimloreError
+
+anyio = pytest.importorskip("anyio")
 
 # Invented catalogue: names and titles follow the live feed's conventions, the numbers are made up.
 CATALOGUE: list[dict[str, Any]] = [
@@ -133,7 +135,10 @@ def test_load_returns_entries_fetched_at_and_age(snap: Path) -> None:
 def test_a_missing_snapshot_is_an_error_naming_the_refresh_command(home: Path) -> None:
     with pytest.raises(ZimloreError) as caught:
         snapshot.load()
-    assert caught.value.hint == "zimlore catalog --refresh" and "no catalogue snapshot" in caught.value.message
+    assert (
+        caught.value.action == "primarysource zim catalog --refresh"
+        and "no catalogue snapshot" in caught.value.message
+    )
 
 
 @pytest.mark.parametrize(
@@ -153,7 +158,7 @@ def test_a_corrupt_or_wrong_schema_snapshot_is_an_error_never_an_empty_one(snap:
     snap.write_text(damage(json.loads(snap.read_text(encoding="utf-8"))), encoding="utf-8")
     with pytest.raises(ZimloreError) as caught:
         snapshot.load()
-    assert "cannot be used" in caught.value.message and caught.value.hint == "zimlore catalog --refresh"
+    assert "cannot be used" in caught.value.message and caught.value.action == "primarysource zim catalog --refresh"
     with pytest.raises(ZimloreError):
         snapshot.available("acme")
 
@@ -165,7 +170,11 @@ def test_available_ranks_like_the_library_does_and_keeps_the_latest_edition(snap
     assert set(names) == {"devdocs_en_acme", "devdocs_en_acme_extras", "acme_en_widgets"}
     assert names.count("devdocs_en_acme") == 1 and rows[0]["date"] == "2026-10-01", "latest edition only"
     top = rows[0]
-    assert top["install"] == "zimlore get devdocs_en_acme" and top["approx_mb"] == 0.6 and top["articles"] == 59
+    assert (
+        top["install"] == "primarysource zim get devdocs_en_acme"
+        and top["approx_mb"] == 0.6
+        and top["articles"] == 59
+    )
     assert top["title"] == "Acme Docs" and top["installed"] is False and top["installed_edition"] is None
     assert top["snapshot_age_days"] == 0
     # exact > prefix: "acme" is the whole slug of one entry and only a prefix of another
@@ -227,11 +236,13 @@ def test_a_resolve_miss_carries_the_obtainable_libraries_from_the_snapshot(acme:
     with pytest.raises(LibraryNotFound) as caught:
         service.resolve("widgetry")
     error = caught.value.as_dict()
-    assert error["error"] == "no installed library matches 'widgetry'" and "zimlore catalog" in str(error["hint"])
+    assert error["error"] == "no installed library matches 'widgetry'" and "primarysource zim catalog" in str(
+        error["hint"]
+    )
     assert error["installed"] == ["acme_en_widgets"]
     obtainable = error["obtainable"]
     assert isinstance(obtainable, list) and obtainable[0]["name"] == "devdocs_en_widgetry"
-    assert obtainable[0]["install"] == "zimlore get devdocs_en_widgetry" and error["snapshot_age_days"] == 0
+    assert obtainable[0]["install"] == "primarysource zim get devdocs_en_widgetry" and error["snapshot_age_days"] == 0
     # the other resolving paths enrich in the same way
     with pytest.raises(LibraryNotFound) as search_miss:
         service.search("anything", "widgetry")
@@ -261,14 +272,14 @@ def test_a_resolve_miss_without_a_snapshot_still_fails_the_same_way_with_a_hint(
         service.resolve("widgetry")
     extra = caught.value.as_dict()
     assert extra["error"] == "no installed library matches 'widgetry'" and "obtainable" not in extra
-    assert "zimlore catalog --refresh" in str(extra["snapshot_hint"])
+    assert "primarysource zim catalog --refresh" in str(extra["snapshot_hint"])
 
 
 def test_a_resolve_miss_with_a_corrupt_snapshot_still_reports_the_miss(acme: Path, snap: Path) -> None:
     snap.write_text("{broken", encoding="utf-8")
     with pytest.raises(LibraryNotFound) as caught:
         service.resolve("widgetry")
-    assert "zimlore catalog --refresh" in str(caught.value.extra["snapshot_hint"])
+    assert "primarysource zim catalog --refresh" in str(caught.value.extra["snapshot_hint"])
     assert "obtainable" not in caught.value.extra
 
 
@@ -276,7 +287,7 @@ def test_an_empty_library_error_is_unchanged_by_the_snapshot(home: Path, snap: P
     with pytest.raises(ZimloreError) as caught:
         service.resolve("anything")
     assert not isinstance(caught.value, LibraryNotFound) and "obtainable" not in caught.value.extra
-    assert "zimlore get devdocs_en_flask" in caught.value.hint
+    assert "primarysource zim get devdocs_en_flask" in caught.value.action
 
 
 def test_nothing_but_refresh_touches_the_network(
@@ -296,25 +307,26 @@ def test_nothing_but_refresh_touches_the_network(
     assert cli.main(["catalog", "--offline", "acme"]) == 0
     assert cli.main(["catalog", "--offline"]) == 0
     capsys.readouterr()
-    app = mcp.build()
-    out = json.loads(anyio.run(app.call_tool, "zim_available", {"query": "acme"}).content[0].text)  # type: ignore[attr-defined]
-    assert out["available"][0]["name"] == "devdocs_en_acme" and out["snapshot"]["age_days"] == 0
-    miss = json.loads(anyio.run(app.call_tool, "zim_resolve", {"name": "widgetry"}).content[0].text)  # type: ignore[attr-defined]
-    assert miss["obtainable"][0]["name"] == "devdocs_en_widgetry"
+    server = contract_server()
+    out = tool_text(server, "zim_available", query="acme")
+    assert out.startswith("devdocs_en_acme") and "snapshot of" in out and "0 days old" in out
+    miss = tool_error(server, "zim_resolve", name="widgetry")
+    assert "devdocs_en_widgetry" in miss["hint"], "the offline snapshot says what could be installed"
     with pytest.raises(AssertionError, match="network"):
         snapshot.refresh()
 
 
 def test_zim_available_is_listed_with_a_description_that_promises_offline(acme: Path) -> None:
-    tools = anyio.run(mcp.build().list_tools)  # type: ignore[attr-defined]
+    tools = anyio.run(mcp.build().list_tools)
     tool = next(t for t in tools if t.name == "zim_available")
-    assert "never touches the network" in tool.description and "snapshot_age_days" in tool.description
-    assert "zim_available" in mcp.INSTRUCTIONS and "obtainable" in mcp.INSTRUCTIONS
+    assert "never touches the network" in tool.description and "snapshot's age" in tool.description
+    assert "zim_available" in mcp.INSTRUCTIONS
 
 
 def test_zim_available_without_a_snapshot_is_an_error_object(acme: Path) -> None:
-    payload = json.loads(anyio.run(mcp.build().call_tool, "zim_available", {"query": "x"}).content[0].text)  # type: ignore[attr-defined]
-    assert payload["user_command"] == "zimlore catalog --refresh" and "available" not in payload
+    error = tool_error(contract_server(), "zim_available", query="x")
+    assert error["action"] == "primarysource zim catalog --refresh" and "acme_en_widgets" in error["error"]
+    assert "ask the user" in error["hint"] and "no snapshot" in error["hint"]
 
 
 def test_cli_catalog_refresh_then_offline_and_available(
@@ -327,7 +339,7 @@ def test_cli_catalog_refresh_then_offline_and_available(
     assert written["entries"] == 7 and written["seconds"] >= 0 and Path(written["path"]) == snapshot.path()
     assert cli.main(["available", "widgetry"]) == 0
     out = capsys.readouterr().out
-    assert "zimlore get devdocs_en_widgetry" in out and "0 days old, offline" in out
+    assert "primarysource zim get devdocs_en_widgetry" in out and "0 days old, offline" in out
     assert cli.main(["catalog", "--offline", "widgetry", "--json"]) == 0
     assert json.loads(capsys.readouterr().out)["available"][0]["name"] == "devdocs_en_widgetry"
     assert cli.main(["catalog", "--refresh", "--offline"]) == 2
@@ -345,4 +357,4 @@ def test_cli_available_without_a_snapshot_exits_2_and_names_the_fix(
     home: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     assert cli.main(["available", "flask"]) == 2
-    assert "fix: zimlore catalog --refresh" in capsys.readouterr().err
+    assert "hint: primarysource zim catalog --refresh" in capsys.readouterr().err

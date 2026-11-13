@@ -8,13 +8,14 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-import anyio
 import pytest
 import zimfixture
-from zimfixture import build_zim, shell
+from zimfixture import build_zim, contract_server, shell, tool_error
 
 from primarysource.zim import cli, library, mcp, service, snapshot
 from primarysource.zim.errors import ZimloreError
+
+anyio = pytest.importorskip("anyio")
 
 BOOK = "acme_en_widgets"
 
@@ -59,11 +60,9 @@ def _write_snapshot(names: list[tuple[str, str]]) -> None:
     snapshot.path().write_text(json.dumps(document), encoding="utf-8")
 
 
-def _call(tool: str, **arguments: Any) -> dict[str, Any]:
-    result = anyio.run(mcp.build().call_tool, tool, arguments)  # type: ignore[attr-defined]
-    loaded = json.loads(result.content[0].text)
-    assert isinstance(loaded, dict)
-    return loaded
+def _error(tool: str, **arguments: Any) -> dict[str, str]:
+    """A failing tool as a client sees it: the `error:`, `hint:` and `action:` lines."""
+    return tool_error(contract_server(), tool, **arguments)
 
 
 # --- F2: a search that found only partial matches says so -------------------------------------------------------
@@ -116,48 +115,50 @@ def test_a_search_that_matches_nothing_is_low_confidence_too(acme: Path) -> None
 
 
 def test_the_search_description_defines_every_match_value() -> None:
-    text = next(t for t in anyio.run(mcp.build().list_tools) if t.name == "zim_search").description  # type: ignore[attr-defined]
-    assert "`full-text`" in text and "`some terms`" in text and "`title`" in text and "confidence" in text
+    text = " ".join(next(t for t in anyio.run(mcp.build().list_tools) if t.name == "zim_search").description.split())
+    assert "[full-text]" in text and "[some terms]" in text and "[title]" in text and "confidence" in text
 
 
 # --- F3/F4: errors speak to the audience that reads them --------------------------------------------------------
 
 
 def test_mcp_errors_name_tools_and_the_cli_keeps_its_commands(acme: Path, capsys: pytest.CaptureFixture[str]) -> None:
-    missing = _call("zim_search", query="x", library="cobol")
+    missing = _error("zim_search", query="x", library="cobol")
     assert "zim_libraries" in missing["hint"] and "zim_available" in missing["hint"]
-    assert "zimlore " not in missing["hint"] and "tool_hint" not in missing
+    assert "primarysource zim list" not in missing["hint"] and "tool_hint" not in missing
 
-    entry = _call("zim_read", ref="acme§nope/nope")
-    assert "zim_search" in entry["hint"] and "zim_outline" in entry["hint"] and "zimlore " not in entry["hint"]
+    entry = _error("zim_read", ref="acme§nope/nope")
+    assert (
+        "zim_search" in entry["hint"] and "zim_outline" in entry["hint"] and "primarysource zim" not in entry["hint"]
+    )
+    assert "action" not in entry, "a model can fix this itself: no command for the human"
 
-    anchor = _call("zim_read", ref="acme§guide/config#nope")
+    anchor = _error("zim_read", ref="acme§guide/config#nope")
     assert "zim_outline" in anchor["hint"] and "acme_en_widgets§guide/config" in anchor["hint"]
-    assert "zimlore " not in anchor["hint"]
+    assert "primarysource zim" not in anchor["hint"]
 
     # The CLI's reader is the human: command wording, and none of the model-facing keys.
     with pytest.raises(ZimloreError) as caught:
         service.search("x", "cobol")
     cli_view = caught.value.as_dict()
-    assert "zimlore list" in str(cli_view["hint"]) and "tool_hint" not in cli_view
+    assert "primarysource zim list" in str(cli_view["hint"]) and "tool_hint" not in cli_view
     assert "snapshot_hint" in cli_view and "user_action" not in cli_view
     assert cli.main(["read", "acme§nope/nope"]) == 2
-    assert "zimlore search" in capsys.readouterr().err
+    assert "primarysource zim search" in capsys.readouterr().err
 
 
 def test_without_a_snapshot_available_lists_the_installed_libraries_and_says_who_must_act(acme: Path) -> None:
-    payload = _call("zim_available", query="django")
-    assert payload["installed"] == [BOOK], "'not installed' is answerable from the error alone"
-    assert "ask the user" in payload["user_action"] and "zimlore catalog --refresh" in payload["user_action"]
-    assert payload["user_command"] == "zimlore catalog --refresh"
-    assert "zimlore" not in payload["hint"], "the hint names no command; user_command does"
-    assert "available" not in payload
+    error = _error("zim_available", query="django")
+    assert BOOK in error["error"], "'not installed' is answerable from the error alone"
+    assert "ask the user" in error["hint"] and "primarysource zim catalog --refresh" in error["hint"]
+    assert error["action"] == "primarysource zim catalog --refresh"
+    assert "zimlore" not in error["hint"]
 
 
 def test_a_missing_library_without_a_snapshot_asks_the_user(acme: Path) -> None:
-    payload = _call("zim_resolve", name="cobol")
-    assert "ask the user" in payload["user_action"] and payload["user_command"] == "zimlore catalog --refresh"
-    assert "snapshot_hint" not in payload, "CLI wording does not go to a model"
+    error = _error("zim_resolve", name="cobol")
+    assert "ask the user" in error["hint"] and error["action"] == "primarysource zim catalog --refresh"
+    assert "snapshot_hint" not in "".join(error.values()), "CLI wording does not go to a model"
 
 
 # --- F5: ¶n inside a section is section-relative ----------------------------------------------------------------
@@ -166,13 +167,14 @@ def test_a_missing_library_without_a_snapshot_asks_the_user(acme: Path) -> None:
 def test_a_block_ref_with_an_anchor_counts_inside_the_section(acme: Path) -> None:
     page = service.read("acme§guide/config#timeouts")
     first = service.read("acme§guide/config#timeouts¶1")
-    assert first["scope"] == "block" and first["content"].startswith("## Timeouts"), "¶1 is the section's heading"
-    second = service.read("acme§guide/config#timeouts¶2")
+    assert first["scope"] == "section" and first["content"].startswith("## Timeouts"), "¶1 is the section's heading"
+    assert first["content"] == page["content"], "¶1 is the whole section"
+    second = service.read("acme§guide/config#timeouts¶2", max_tokens=1)
     assert "timeout setting bounds" in second["content"]
     assert second["content"] in page["content"] and "Settings control widgets" not in second["content"]
-    assert second["blocks"] == {"from": 1, "to": 1, "of": 1}
+    assert second["blocks"] == {"from": 2, "to": 2, "of": 3}
     assert second["cite"].endswith("entry guide/config#timeouts ¶2"), "the cite echoes what was read"
-    assert second["ref"] == f"{BOOK}§guide/config#timeouts¶2"
+    assert second["ref"] == f"{BOOK}§guide/config#timeouts" and second["next"] == f"{BOOK}§guide/config#timeouts¶3"
     article = service.read("acme§guide/config¶2")
     assert "Settings control widgets" in article["content"], "without an anchor ¶n still counts the page"
 
@@ -195,8 +197,8 @@ def test_an_empty_available_query_is_not_reported_as_a_missing_snapshot(acme: Pa
 
 
 def test_the_read_description_says_what_a_pilcrow_counts() -> None:
-    text = next(t for t in anyio.run(mcp.build().list_tools) if t.name == "zim_read").description  # type: ignore[attr-defined]
-    assert "nth block of the section" in text
+    text = " ".join(next(t for t in anyio.run(mcp.build().list_tools) if t.name == "zim_read").description.split())
+    assert "starts at the nth block" in text and "#anchor" in text
 
 
 # --- F7: hits on medium pages -----------------------------------------------------------------------------------
@@ -220,7 +222,7 @@ def test_a_medium_page_hit_gets_a_section_and_every_hit_gets_its_block_count(hom
 def test_a_cut_read_says_how_much_is_left_in_blocks_and_tokens(acme: Path) -> None:
     cut = service.read("acme§guide/config", max_tokens=60)
     assert cut["next"] and cut["remaining_blocks"] == cut["blocks"]["of"] - cut["blocks"]["to"]
-    rest = service.read("acme§guide/config", start=cut["next"]["start"], max_tokens=8000)
+    rest = service.read(cut["next"], max_tokens=8000)
     assert rest["next"] is None and "remaining_blocks" not in rest
     assert abs(cut["remaining_tokens"] - service.tokens(rest["content"])) <= cut["remaining_blocks"], (
         "the estimate is the tokens of the blocks still to come, give or take the joins between them"
@@ -263,8 +265,8 @@ def test_max_tokens_is_clamped_at_8000_on_every_tool_that_takes_it(acme: Path) -
 
 
 def test_the_cite_description_says_reads_already_carry_one() -> None:
-    text = next(t for t in anyio.run(mcp.build().list_tools) if t.name == "zim_cite").description  # type: ignore[attr-defined]
-    assert "zim_read results already carry" in text
+    text = " ".join(next(t for t in anyio.run(mcp.build().list_tools) if t.name == "zim_cite").description.split())
+    assert "zim_read footers already carry" in text
 
 
 # --- F13: the instructions open with a decision tree --------------------------------------------------------------
@@ -272,9 +274,10 @@ def test_the_cite_description_says_reads_already_carry_one() -> None:
 
 def test_the_instructions_open_with_the_decision_tree_and_stay_short() -> None:
     text = mcp.INSTRUCTIONS
-    assert len(text) < 1500
+    assert len(text) < 2200
     order = [
-        text.index(word) for word in ("zim_available", "zim_libraries", "section.ref", "confidence: low", "Refs:")
+        text.index(word)
+        for word in ("zim_available", "zim_libraries", "best section ref", "confidence: low", "Refs:")
     ]
-    assert order == sorted(order), "decisions first, then refs, paging, freshness and the security note"
-    assert text.index("freshness") > text.index("Refs:") and "untrusted data" in text
+    assert order == sorted(order), "decisions first, then refs, paging, warnings and the security note"
+    assert text.index("warning") > text.index("Refs:") and "untrusted data" in text

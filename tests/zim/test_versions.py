@@ -7,13 +7,11 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
 
-import anyio
 import pytest
-from zimfixture import build_zim, managed
+from zimfixture import build_zim, contract_server, managed, tool_error, tool_text
 
-from primarysource.zim import cli, library, manage, mcp, purl, service
+from primarysource.zim import cli, library, manage, purl, service
 from primarysource.zim.errors import LibraryNotFound, ZimloreError
 from primarysource.zim.refs import Ref, parse_ref
 
@@ -166,7 +164,7 @@ def test_a_version_that_is_not_installed_is_an_error_listing_the_installed_ones(
     error = missing.value
     assert "no installed version matching '4.0'" in error.message and "3.1.0, 3.0.3" in error.message
     assert error.extra["installed_versions"] == ["3.1.0", "3.0.3"] and error.extra["requested_version"] == "4.0"
-    assert "build" not in (error.message + error.hint).lower(), "`zimlore docs build` does not exist"
+    assert "build" not in (error.message + error.hint).lower(), "`primarysource zim docs build` does not exist"
     with pytest.raises(LibraryNotFound):
         library.select("flask 3.1.9")  # a prefix needs a version that starts with it, not one that is near it
 
@@ -334,7 +332,7 @@ def test_cli_list_shows_the_family_with_its_versions_collapsed(
     versions(home, "golang_cobra", ["v1.8.1", "v1.10.2"])
     assert cli.main(["list"]) == 0
     out = capsys.readouterr().out
-    assert out.count("\n") == 1 and out.startswith("golang_cobra [v1.10.2, v1.8.1]  ")
+    assert out.count("golang_cobra") == 1 and "golang_cobra [v1.10.2, v1.8.1]  " in out
     assert cli.main(["list", "--all-versions"]) == 0
     out = capsys.readouterr().out
     assert "golang_cobra_v1.10.2  " in out and "golang_cobra_v1.8.1  " in out
@@ -365,16 +363,11 @@ def test_search_over_every_library_reads_each_package_once(home: Path) -> None:
 
 def test_the_mcp_tools_take_a_version_a_purl_and_all_versions(home: Path) -> None:
     versions(home, COBRA, ["v1.8.1", "v1.10.2"])
-    app = mcp.build()
-
-    def call(tool: str, args: dict[str, object]) -> dict[str, Any]:
-        result = anyio.run(app.call_tool, tool, args)  # type: ignore[attr-defined]
-        payload: dict[str, Any] = json.loads(result.content[0].text)
-        return payload
-
-    resolved = call("zim_resolve", {"name": "cobra v1.8.1"})
-    assert resolved["name"] == f"{COBRA}_v1.8.1" and resolved["other_versions"] == ["v1.10.2"]
-    listed = call("zim_libraries", {})
-    assert [r["versions"] for r in listed["libraries"]] == [["v1.10.2", "v1.8.1"]]
-    assert call("zim_libraries", {"all_versions": True})["total"] == 2
-    assert "installed_versions" in call("zim_resolve", {"name": "cobra 7"})
+    server = contract_server()
+    resolved = tool_text(server, "zim_resolve", name="cobra v1.8.1")
+    assert resolved.startswith(f"{COBRA}_v1.8.1") and "also installed: v1.10.2" in resolved
+    listed = tool_text(server, "zim_libraries")
+    assert f"{COBRA} [v1.10.2, v1.8.1]  " in listed and listed.count(COBRA) == 1
+    assert tool_text(server, "zim_libraries", all_versions=True).startswith("2 installed")
+    missing = tool_error(server, "zim_resolve", name="cobra 7")
+    assert "v1.8.1" in missing["error"] and "zim_libraries" in missing["hint"] and "action" not in missing

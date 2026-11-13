@@ -14,8 +14,11 @@ import os
 import re
 from bisect import bisect_left
 from collections import OrderedDict
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
+
+from primarysource import budget
+from primarysource.model import span_hash
 
 from . import _libzim, library, manage, snapshot
 from .errors import LibraryNotFound, ZimloreError
@@ -32,13 +35,15 @@ MAX_ENTRY_ENV = "PRIMARYSOURCE_ZIM_MAX_ENTRY_BYTES"
 LEGACY_MAX_ENTRY_ENV = "ZIMLORE_MAX_ENTRY_BYTES"
 """The largest entry `document` will read and convert, by the size libzim reports before any byte is read. A page
 this size is not documentation: a 16 MB page of 2,000,000 paragraphs took 47 s to convert, and an entry of
-gigabytes was read into memory whole. Set `PRIMARYSOURCE_ZIM_MAX_ENTRY_BYTES` (legacy: `ZIMLORE_MAX_ENTRY_BYTES`) to a larger number to read
-one anyway."""
+gigabytes was read into memory whole. Set `PRIMARYSOURCE_ZIM_MAX_ENTRY_BYTES`
+(legacy: `ZIMLORE_MAX_ENTRY_BYTES`) to a larger number to read one anyway."""
 MAX_TOKENS_CAP = 8_000
 """The most one `read`, `search`, `links` or `outline` call may spend. A model that passed `max_tokens=100000` once
 received a 52,000-token page; 8,000 is four default reads, and a longer page is reached by paging, which is
 cheaper to decide on than to undo. A larger request is cut to this and the result says so in `clamped`."""
 MAX_LIMIT = 500
+SEARCH_DEPTH = 25
+"""How many candidates each library is asked for at least, whatever page of hits is wanted (see `search`)."""
 _DOCS: OrderedDict[tuple[str, str], tuple[Any, str, Document]] = OrderedDict()
 _DOC_CACHE = 64
 
@@ -70,8 +75,9 @@ def _scan() -> library.Scan:
         error.extra.update(
             tool_hint="no ZIM files are installed, so nothing can be read; zim_available lists what could be fetched",
             user_action="ask the user to download a library and put it in the directory named in `searched`",
-            user_command=error.hint,
+            user_command=error.cli_hint,
         )
+        error.settle()
         raise error
     return scanned
 
@@ -89,6 +95,7 @@ def _select(name: str, scanned: library.Scan) -> library.Selection:
             "call zim_libraries to see what is installed; to install one, call zim_available, then ask the user "
             "to run the `install` command it returns"
         )
+        error.settle()
         raise
 
 
@@ -115,7 +122,7 @@ def _installed(scanned: library.Scan) -> dict[str, str]:
 def _no_snapshot(error: ZimloreError) -> dict[str, Any]:
     """What a model needs when there is no usable catalogue snapshot: it cannot make one (that needs the network
     and the user's say-so), so the next move is to ask. `user_command` is the CLI text for the human."""
-    command = error.hint or snapshot.HINT
+    command = error.cli_hint or snapshot.HINT
     return {
         "user_action": f"ask the user to run `{command}` once; you cannot, the server never touches the network",
         "user_command": command,
@@ -127,7 +134,8 @@ def _obtainable(name: str, scanned: library.Scan) -> dict[str, Any]:
         found = snapshot.available(name, 5, _installed(scanned))
     except ZimloreError as error:
         return {
-            "snapshot_hint": f"{error.message}; run `{error.hint or snapshot.HINT}` to learn what could be installed",
+            "snapshot_hint": f"{error.message}; run `{error.cli_hint or snapshot.HINT}` "
+            "to learn what could be installed",
             **_no_snapshot(error),
         }
     return {"obtainable": found["available"], "snapshot_age_days": found["snapshot"]["age_days"]}
@@ -154,23 +162,30 @@ def _obtainable_for_query(query: str, scanned: library.Scan) -> dict[str, Any]:
     return {"obtainable": rows[:5], "snapshot_age_days": age}
 
 
-def available(query: str, limit: int = 8) -> dict[str, Any]:
+def available(query: str, limit: int = 8, start: int = 0) -> dict[str, Any]:
     """What the offline catalogue snapshot says could be installed for `query` (no network), with which of it
     is already installed. Without a usable snapshot it raises, naming the installed libraries (so "not installed"
     is still answerable) and what only the user can do."""
     scanned = library.scan()
+    start = _bounded("start", start, 0, 2**62)
     try:
-        return snapshot.available(query, limit, _installed(scanned))
+        found = snapshot.available(query, start + limit, _installed(scanned))
     except ZimloreError as error:
-        if error.hint != snapshot.HINT:  # an empty query is not a missing snapshot
+        if error.cli_hint != snapshot.HINT:  # an empty query is not a missing snapshot
             raise
-        error.extra.update(
-            installed=sorted(_installed(scanned)),
-            tool_hint="no snapshot, so what could be installed is unknown; `installed` lists what is: if the "
-            "library you want is not in it, it is not installed",
+        names = sorted(_installed(scanned))
+        raise ZimloreError(
+            f"{error.message}; the libraries installed are: {', '.join(names) or 'none'}",
+            snapshot.HINT,
+            installed=names,
+            tool_hint="no snapshot, so what could be installed is unknown; if the library you want is not among "
+            "the installed ones, it is not installed",
             **_no_snapshot(error),
-        )
-        raise
+        ) from error
+    found["available"] = found["available"][start:]
+    if found["matches"] > start + len(found["available"]):
+        found["next"] = start + len(found["available"])
+    return found
 
 
 def _book(name: str, scanned: library.Scan | None = None) -> Book:
@@ -221,7 +236,7 @@ def _entry(book: Book, path: str) -> tuple[Any, str, str | None]:
         if not archive.has_main_entry:
             raise ZimloreError(
                 f"{book.name} has no main page",
-                f"zimlore outline {book.name}",
+                f"primarysource zim outline {book.name}",
                 tool_hint=f"call zim_outline with ref={book.name!r} to list its entries",
             )
         entry = archive.main_entry
@@ -242,7 +257,8 @@ def _missing(book: Book, path: str) -> ZimloreError:
     near = _suggest(book, path.rsplit("/", 1)[-1].replace("-", " ").replace("_", " "), 5)
     return ZimloreError(
         f"{book.name} has no entry {path!r}",
-        f"zimlore search {book.name} <words> finds entries; zimlore outline {book.name} lists them",
+        f"primarysource zim search {book.name} <words> finds entries; "
+        f"primarysource zim outline {book.name} lists them",
         tool_hint=f"call zim_search with library={book.name!r} to find the entry, or zim_outline to list entries",
         **({"did_you_mean": [format_ref(book.name, p) for p, _ in near]} if near else {}),
     )
@@ -277,7 +293,7 @@ def document(book: Book, path: str) -> tuple[Document, str, str | None]:
     else:
         raise ZimloreError(
             f"{book.name}§{final} is {mimetype}, not text",
-            "only HTML and plain-text entries can be read; zimlore outline lists the readable ones",
+            "only HTML and plain-text entries can be read; primarysource zim outline lists the readable ones",
             tool_hint="only HTML and plain-text entries can be read; zim_outline lists the readable ones",
             mimetype=mimetype,
             size=int(item.size),
@@ -317,7 +333,7 @@ def _is_article(entry: Any) -> bool:
 # --- citation ------------------------------------------------------------------------------------------------
 
 
-def citation(book: Book, path: str, anchor: str = "", para: int | None = None) -> str:
+def citation(book: Book, path: str, anchor: str = "", para: int | str | None = None) -> str:
     """Built from the ZIM's own metadata, never typed by hand: library, edition date, entry path."""
     where = path + (f"#{anchor}" if anchor else "") + (f" ¶{para}" if para else "")
     text = f"{book.title} [{book.name}], ZIM edition {book.date or 'undated'}, entry {where or '(main page)'}"
@@ -379,7 +395,9 @@ def _fresh(book: Book) -> dict[str, Any]:
     return fresh
 
 
-def libraries(query: str = "", limit: int = 50, verbose: bool = False, all_versions: bool = False) -> dict[str, Any]:
+def libraries(
+    query: str = "", limit: int = 50, verbose: bool = False, all_versions: bool = False, start: int = 0
+) -> dict[str, Any]:
     """Installed libraries (or those matching `query`, best first), newest edition of each, at most `limit`. The
     versions of one package are ONE row (its newest version, `versions` listing them all) unless `all_versions`
     asks for a row per ZIM `Name`.
@@ -387,12 +405,13 @@ def libraries(query: str = "", limit: int = 50, verbose: bool = False, all_versi
     A library with 243 DevDocs ZIMs installed would otherwise cost about 35,000 tokens in one call."""
     clamped: dict[str, int] = {}
     limit = _bounded("limit", limit, 1, 1000, clamped)
+    start = _bounded("start", start, 0, 2**62)
     scanned = _scan()
     home = str(library.zim_dirs()[0]) if library.zim_dirs() else ""
     if query:
         ranked = library.rank(query, scanned.books, library.user_aliases())
         rows = []
-        for candidate in ranked[:limit]:
+        for candidate in ranked[start : start + limit]:
             row = _book_row(candidate.book, scanned, verbose, family=True)
             row["match"] = candidate.why
             row["score"] = round(candidate.score, 1)
@@ -406,9 +425,11 @@ def libraries(query: str = "", limit: int = 50, verbose: bool = False, all_versi
             ordered = sorted(newest.values(), key=lambda b: b.name)
         else:
             ordered = sorted(_newest_per_family(scanned.books), key=lambda b: b.family)
-        rows = [_book_row(b, scanned, verbose, family=not all_versions) for b in ordered[:limit]]
+        rows = [_book_row(b, scanned, verbose, family=not all_versions) for b in ordered[start : start + limit]]
         result = {"total": len(ordered), "libraries": rows}
-    result["truncated"] = result["total"] > len(rows)
+    result["truncated"] = result["total"] > start + len(rows)
+    if result["truncated"]:
+        result["next"] = start + len(rows)
     result["directory"] = home
     if scanned.problems:
         result["problems"] = scanned.problems
@@ -769,7 +790,7 @@ def _best_section(doc: Document, query: str) -> tuple[Heading, int, int] | None:
 
 
 def search(
-    query: str, library_name: str = "", limit: int = 8, max_tokens: int = 1500, language: str = ""
+    query: str, library_name: str = "", limit: int = 8, max_tokens: int = 1500, language: str = "", start: int = 0
 ) -> dict[str, Any]:
     """Search one library, or all of them when `library_name` is empty. Hits are refs ready for `read`.
 
@@ -782,15 +803,20 @@ def search(
     if not query.strip():
         raise ZimloreError(
             "empty query",
-            "give a few words, e.g. zimlore search flask 'application factory'",
+            "give a few words, e.g. primarysource zim search flask 'application factory'",
             tool_hint="give a few words, e.g. query='application factory'",
         )
     clamped: dict[str, int] = {}
     limit = _bounded("limit", limit, 1, MAX_LIMIT, clamped)
+    start = _bounded("start", start, 0, 2**62)
     max_tokens = _bounded("max_tokens", max_tokens, 1, MAX_TOKENS_CAP, clamped)
     scanned = _scan()
     books = [_find(library_name, scanned)] if library_name else _newest_per_family(scanned.books)
-    per_book = limit if len(books) == 1 else max(2, min(limit, 5))
+    # The engine has no offset: a later page asks it for everything up to its own end, and the earlier hits are
+    # skipped. How many title and full-text candidates the engine is asked for decides the order past the first few
+    # (`_book_hits` fills from its tiers), so every page asks for at least SEARCH_DEPTH: pages are then cuts of one
+    # list, which is what lets `next: start=<n>` lose nothing. Reading a page's hits, the costly step, is unchanged.
+    per_book = max(SEARCH_DEPTH, start + (limit if len(books) == 1 else max(2, min(limit, 5))))
     lists: list[list[Hit]] = []
     modes: dict[str, str] = {}
     for book in books:
@@ -804,7 +830,7 @@ def search(
                 ordered.append(hits[rank])
     kept: list[dict[str, Any]] = []
     used, truncated, sure = 0, False, False
-    for hit in ordered[:limit]:
+    for hit in ordered[start : start + limit]:
         too_large = ""
         try:
             doc, _, _ = document(hit.book, hit.path)
@@ -844,8 +870,10 @@ def search(
         "libraries_searched": [b.name for b in books],
         "editions": {b.name: b.date or None for b in books},  # once, not per hit; `zim_cite` builds the citation
         "hits": kept,
-        "truncated": truncated or len(ordered) > limit,
+        "truncated": truncated or len(ordered) > start + limit,
     }
+    if result["truncated"]:
+        result["next"] = start + len(kept)
     title_only = [name for name, mode in modes.items() if mode == "titles only"]
     if title_only:
         result["title_only"] = f"no full-text index in: {', '.join(title_only)}; only titles were searched there"
@@ -883,16 +911,19 @@ def _no_section(book: Book, final: str, doc: Document, anchor: str) -> ZimloreEr
     close = [lowered[m] for m in difflib.get_close_matches(anchor.lower(), list(lowered), n=3, cutoff=0.6)]
     return ZimloreError(
         f"{book.name}§{final} has no section #{anchor}",
-        f"zimlore outline {book.name}§{final} lists the anchors",
+        f"primarysource zim outline {book.name}§{final} lists the anchors",
         tool_hint=f"call zim_outline with ref={book.name}§{final} to list its anchors",
         **({"did_you_mean": [format_ref(book.name, final, a) for a in close]} if close else {}),
     )
 
 
-def _scope(book: Book, final: str, doc: Document, parsed: Ref) -> tuple[int, int, str]:
+def _scope(book: Book, final: str, doc: Document, parsed: Ref, onward: bool = False) -> tuple[int, int, str]:
     """The blocks a ref names, as (lo, hi, scope) over `doc.blocks`. `¶n` counts inside the scope it is written
     after: the nth block of the section when there is an `#anchor`, of the article otherwise. Counting the page's
-    nth block under a section's name would cite a section for text it does not contain."""
+    nth block under a section's name would cite a section for text it does not contain.
+
+    `¶n` names that one block (what `cite` checks) unless `onward`: a read of `ref¶n` starts at block n and
+    continues to the end of the scope, which is how a cut read's `next:` ref pages (PLAN.md §5.11)."""
     lo, hi, scope = 0, len(doc.blocks), "article"
     if parsed.anchor:
         span = doc.section(parsed.anchor)
@@ -907,59 +938,57 @@ def _scope(book: Book, final: str, doc: Document, parsed: Ref) -> tuple[int, int
                 "¶n counts the blocks of the section when the ref has an #anchor, of the article otherwise",
                 blocks=hi - lo,
             )
-        lo, hi, scope = lo + parsed.para - 1, lo + parsed.para, "block"
+        lo = lo + parsed.para - 1
+        if not onward:
+            hi, scope = lo + 1, "block"
     return lo, hi, scope
+
+
+def _label(first: int, last: int, para: int | None) -> int | str | None:
+    """What a read's citation names: nothing for a whole scope read from its first block, `¶n` for one block, `¶a-b`
+    for a page that starts inside the scope or holds several blocks of a `¶` read (blocks 1-based in the scope)."""
+    if para is None and first <= 1:
+        return None
+    return first if first == last else f"{first}-{last}"
 
 
 def read(
     ref: str,
     library_name: str = "",
-    start: int = 1,
     max_tokens: int = 2000,
     format: str = "markdown",  # noqa: A002 - the tool parameter is called format
 ) -> dict[str, Any]:
-    """One article, one section (`#anchor`) or one block (`¶n`), cut to a token budget. `next` is set when the
-    budget, not the article, ended the page; pass it back as `start`."""
+    """One article, one section (`#anchor`), cut to a token budget, from block `¶n` on when the ref has one. `next`
+    is a ref (the same scope with `¶` at the first block not shown) when the budget, not the scope, ended the page."""
     if format not in {"markdown", "text"}:
         raise ZimloreError(f"unknown format {format!r}", "format is 'markdown' or 'text'")
     clamped: dict[str, int] = {}
-    start = _bounded("start", start, 1, 2**62)
     max_tokens = _bounded("max_tokens", max_tokens, 1, MAX_TOKENS_CAP, clamped)
     book, parsed = _context(ref, library_name)
     doc, final, via = document(book, parsed.path)
-    lo, hi, scope = _scope(book, final, doc, parsed)
-    if start > 1 and start - 1 >= hi - lo:
-        raise ZimloreError(
-            f"{book.name}§{final}{'#' + parsed.anchor if parsed.anchor else ''} has {hi - lo} blocks; "
-            f"start={start} is past the end",
-            "start counts blocks from 1; pass the `next.start` of the previous page",
-            blocks=hi - lo,
-        )
-    first = lo + start - 1
-    used, index = 0, first
-    chunk: list[str] = []
-    marks: list[bool] = []
-    while index < hi:
-        block = doc.blocks[index]
-        cost = tokens(block)
-        if chunk and used + cost > max_tokens:
-            break
-        chunk.append(block)
-        marks.append(doc.tight[index] if index < len(doc.tight) else False)
-        used += cost
-        index += 1
+    whole = replace(parsed, para=None)
+    scope_lo, hi, scope = _scope(book, final, doc, whole)
+    lo, _, _ = _scope(book, final, doc, parsed, onward=True)
+    first = lo
+    # The core pager: whole blocks until the next would pass the budget, the first always taken (so a cursor
+    # following `next` terminates), and `oversize` when that one alone is over.
+    page = budget.page(doc.blocks[lo:hi], 1, max_tokens)
+    chunk = list(page.units)
+    index = lo + len(chunk)
+    marks = [doc.tight[i] if i < len(doc.tight) else False for i in range(lo, index)]
     body = join_blocks(chunk, marks)
     if format == "text":
         body = to_plain(body)
-    ref_out = format_ref(book.name, final, parsed.anchor, parsed.para)
+    ref_out = format_ref(book.name, final, parsed.anchor)
+    label = _label(first - scope_lo + 1, index - scope_lo, parsed.para)
     result: dict[str, Any] = {
         "ref": ref_out,
-        "cite": citation(book, final, parsed.anchor, parsed.para),
+        "cite": citation(book, final, parsed.anchor, label),
         "title": _title(book, final),
         "scope": scope,
         "freshness": _fresh(book),
         "format": format,
-        "blocks": {"from": first - lo + 1, "to": index - lo, "of": hi - lo},
+        "blocks": {"from": first - scope_lo + 1, "to": index - scope_lo, "of": hi - scope_lo},
         "content": body,
         "next": None,
     }
@@ -968,11 +997,11 @@ def read(
     if via:
         result["redirected_from"] = via
     if index < hi:
-        result["next"] = {"ref": ref_out, "start": index - lo + 1}
+        result["next"] = format_ref(book.name, final, parsed.anchor, index - scope_lo + 1)
         # What is left, in the unit a model budgets in: block counts alone made "17 of 76" mean nothing.
         result["remaining_blocks"] = hi - index
         result["remaining_tokens"] = sum(tokens(b) for b in doc.blocks[index:hi])
-    if chunk and used > max_tokens:
+    if page.oversize:
         result["oversize"] = "one block alone exceeds the budget and is returned whole so paging makes progress"
     if doc.truncated:
         result["converted_truncated"] = (
@@ -1031,7 +1060,7 @@ def outline(
             "outline": page,
         }
         if start + len(page) < len(rows):
-            out["next"] = {"start": start + len(page)}
+            out["next"] = start + len(page)
         out["truncated"] = cut or "next" in out  # `next` present means rows are missing, whoever ended the page
         if clamped:
             out["clamped"] = clamped
@@ -1064,17 +1093,20 @@ def outline(
     if clamped:
         result["clamped"] = clamped
     if cut or index < total:
-        result["next"] = {"start": resume, "prefix": prefix}
+        result["next"] = resume
     result["truncated"] = cut or "next" in result
     return result
 
 
-def links(ref: str, library_name: str = "", limit: int = 100, max_tokens: int = 1500) -> dict[str, Any]:
+def links(
+    ref: str, library_name: str = "", limit: int = 100, max_tokens: int = 1500, start: int = 0
+) -> dict[str, Any]:
     """Links out of an article, internal ones resolved to refs, each marked with whether the target exists in
     this ZIM. An internal link whose target is absent is reported, not dropped: it tells the reader the
     article points outside what was archived."""
     clamped: dict[str, int] = {}
     limit = _bounded("limit", limit, 1, 1000, clamped)
+    start = _bounded("start", start, 0, 2**62)
     max_tokens = _bounded("max_tokens", max_tokens, 1, MAX_TOKENS_CAP, clamped)
     book, parsed = _context(ref, library_name)
     doc, final, _ = document(book, parsed.path)
@@ -1082,11 +1114,16 @@ def links(ref: str, library_name: str = "", limit: int = 100, max_tokens: int = 
     rows: list[dict[str, Any]] = []
     seen: set[tuple[str, str, str]] = set()
     used, truncated = 0, False
+    distinct = []
     for link in doc.links:
         key = (link.path or link.href, link.anchor, link.text)
         if key in seen:
             continue
         seen.add(key)
+        distinct.append(link)
+    if start > len(distinct):
+        raise ZimloreError(f"{book.name}§{final} has {len(distinct)} links; start={start} is past the end")
+    for link in distinct[start:]:
         if link.path is None:
             row: dict[str, Any] = {"text": link.text, "url": link.href, "external": True}
         else:
@@ -1102,19 +1139,32 @@ def links(ref: str, library_name: str = "", limit: int = 100, max_tokens: int = 
             break
         used += cost
         rows.append(row)
-    result: dict[str, Any] = {"ref": format_ref(book.name, final), "links": rows, "truncated": truncated}
+    result: dict[str, Any] = {
+        "ref": format_ref(book.name, final),
+        "links": rows,
+        "total": len(distinct),
+        "truncated": truncated,
+    }
+    if truncated:
+        result["next"] = start + len(rows)
     if clamped:
         result["clamped"] = clamped
     return result
 
 
+JOINER = "\n"
+
+
 def cite(ref: str, library_name: str = "") -> dict[str, Any]:
     book, parsed = _context(ref, library_name)
     entry, final, _ = _entry(book, parsed.path)
+    span = ""
     if parsed.anchor or parsed.para is not None:
         doc, _, _ = document(book, final)
-        _scope(book, final, doc, parsed)  # the same check `read` makes: a cite must name something that exists
+        lo, hi, _ = _scope(book, final, doc, parsed)  # the same check `read` makes: a cite must name something real
+        span = span_hash(JOINER.join(doc.blocks[lo:hi]))
     return {
+        **({"span": span} if span else {}),
         "ref": format_ref(book.name, final, parsed.anchor, parsed.para),
         "cite": citation(book, final, parsed.anchor, parsed.para),
         "title": str(entry.title),

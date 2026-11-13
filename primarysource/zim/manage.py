@@ -253,7 +253,7 @@ def _health(book: Book) -> str:
 
 def _failure(error: OSError) -> str:
     if isinstance(error, PermissionError):
-        return "stop any running 'zimlore mcp' server or kiwix reader that has it open, then retry"
+        return "stop any running 'primarysource zim mcp' server or kiwix reader that has it open, then retry"
     return ""
 
 
@@ -401,7 +401,9 @@ def remove(
     if edition:
         matching = [e for e in found if _edition_matches(e, edition)]
         if not matching:
-            raise ZimloreError(f"{chosen.name} has no edition {edition}", "zimlore list shows the installed dates")
+            raise ZimloreError(
+                f"{chosen.name} has no edition {edition}", "primarysource zim list shows the installed dates"
+            )
         if len(matching) > 1:
             raise ZimloreError(
                 f"{len(matching)} different ZIMs of {chosen.name} carry the date {edition}; not guessing",
@@ -432,7 +434,7 @@ def prune(
     (libzim's checksum, the sidecar hash), because the older edition may be the only good copy. Files zimlore did not
     put there (no sidecar, or `added_by: adopt`) are listed under `skipped` and kept unless `include_unmanaged`."""
     if keep < 1:
-        raise ZimloreError("keep must be at least 1", "pruning every edition is `zimlore remove --all`")
+        raise ZimloreError("keep must be at least 1", "pruning every edition is `primarysource zim remove --all`")
     scanned = library.scan()
     doomed: list[Book] = []
     refused: list[dict[str, Any]] = []
@@ -553,7 +555,7 @@ def add_local(source: Path, *, link: bool = False, force: bool = False) -> dict[
     if not source.is_file():
         raise ZimloreError(f"{source} is not a file", "give the path of a .zim file")
     if source.suffix != ".zim":
-        raise ZimloreError(f"{source} does not end in .zim", "zimlore add takes a .zim file")
+        raise ZimloreError(f"{source} does not end in .zim", "primarysource zim add takes a .zim file")
     library.close_all()
     try:
         book = library.read_book(source)
@@ -574,7 +576,7 @@ def add_local(source: Path, *, link: bool = False, force: bool = False) -> dict[
     if source.resolve().parent in {d.resolve() for d in library.zim_dirs() if d.is_dir()}:
         raise ZimloreError(
             f"{source} is already in the library directory {source.parent}",
-            "nothing to add; zimlore verify --adopt records a provenance sidecar for it",
+            "nothing to add; primarysource zim verify --adopt records a provenance sidecar for it",
         )
     target = directory / source.name
     base = {"name": book.name, "edition": book.date or None, "file": str(target)}
@@ -584,14 +586,16 @@ def add_local(source: Path, *, link: bool = False, force: bool = False) -> dict[
             return {**base, "status": "already-installed", "mode": "none", "bytes": book.size, "sha256": digest}
         raise ZimloreError(
             f"{target} already exists and is a different file; not overwriting it",
-            "rename the source, or remove the installed file first: zimlore list shows it, zimlore remove deletes it",
+            "rename the source, or remove the installed file first: primarysource zim list shows it, "
+            "primarysource zim remove deletes it",
         )
     clash = [b for b in library.scan().books if b.name == book.name and (b.date == book.date or b.uuid == book.uuid)]
     library.close_all()
     if clash:
         raise ZimloreError(
             f"{book.name} edition {book.date or 'undated'} is already installed as {clash[0].path.name}",
-            f"replace it deliberately: zimlore remove {book.name} --edition {book.date} --yes, then add again",
+            f"replace it deliberately: primarysource zim remove {book.name} --edition {book.date} --yes, "
+            "then add again",
         )
     directory.mkdir(parents=True, exist_ok=True)
     if link:

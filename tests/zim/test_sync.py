@@ -288,7 +288,7 @@ def test_the_budget_caps_the_library_after_the_sync_and_the_boundary_is_allowed(
     assert over.over_budget
     with pytest.raises(ZimloreError, match="over the .* budget; nothing was downloaded") as refused:
         sync.execute(over)
-    assert "budget" in refused.value.hint and kiwix.fetched() == []
+    assert "budget" in refused.value.action and kiwix.fetched() == []
     assert not list((home / "zim").glob("alpha*"))
     assert sync.make_plan(sync.Manifest(None, ("alpha",))).over_budget is False, "no budget means no cap"
 

@@ -1,4 +1,4 @@
-"""Named sets of catalogue names for `zimlore sync --group NAME`. Names only: no content, no URLs, no paths.
+"""Named sets of catalogue names for `primarysource zim sync --group NAME`. Names only: no content, no URLs, no paths.
 
 **The membership below is an EDITORIAL DEFAULT, not a decision.** Which documentation a "core" set should hold is
 the maintainer's call (`docs/library-management.md` section 6, "should groups ship in the package"); until that is

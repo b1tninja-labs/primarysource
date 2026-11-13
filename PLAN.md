@@ -86,8 +86,8 @@ Backends give different text, so the backend name and version are part of an ind
 
 ## 5. Decisions already made
 
-1. **Tool results are text**, with `cite:`, `unit:`, `span:`, `next:`, `relaxed:`, `warning:` footer lines in that
-   order (`primarysource/render.py`). The passage dominates the tokens and JSON escapes every newline in it; `rfclib`,
+1. **Tool results are text**, with `cite:`, `unit:`, `span:`, `next:`, `relaxed:`, `confidence:`, `warning:` footer lines
+   in that order (`primarysource/render.py`). The passage dominates the tokens and JSON escapes every newline in it; `rfclib`,
    the only published library, already returns text. Structured content can be added later without breaking text
    readers. Measured on 2026-11-13; the figures are in item 9.
 2. **`¶n` keeps its per-library unit, and the unit is declared** (`primarysource/model.py::Unit`). RFCs have real

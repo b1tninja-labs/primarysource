@@ -116,15 +116,15 @@ def test_paging_follows_next_and_loses_nothing(acme: Path) -> None:
     whole = service.read("acme§guide/config", max_tokens=100_000)
     assert whole["next"] is None
     pieces: list[str] = []
-    start, pages = 1, 0
+    ref, pages = "acme§guide/config", 0
     while True:
-        page = service.read("acme§guide/config", start=start, max_tokens=60)
+        page = service.read(ref, max_tokens=60)
         pieces.append(page["content"])
         pages += 1
         if page["next"] is None:
             break
-        assert page["next"]["start"] == page["blocks"]["to"] + 1
-        start = page["next"]["start"]
+        assert page["next"] == f"{BOOK}§guide/config¶{page['blocks']['to'] + 1}", "next is a ref read takes back"
+        ref = page["next"]
     assert pages > 3, "a 60-token budget must really page this article"
     assert "\n\n".join(pieces).replace("\n- ", "\n\n- ") == whole["content"].replace("\n- ", "\n\n- ")
     assert sum(p.count("Paragraph ") for p in pieces) == 40
@@ -132,12 +132,12 @@ def test_paging_follows_next_and_loses_nothing(acme: Path) -> None:
 
 def test_a_page_always_makes_progress_when_one_block_exceeds_the_budget(acme: Path) -> None:
     first = service.read("acme§dump", max_tokens=10)
-    assert first["content"] == "# Dump" and first["next"]["start"] == 2, "the heading fits; the log block does not"
-    huge = service.read("acme§dump", start=first["next"]["start"], max_tokens=10)
+    assert first["content"] == "# Dump" and first["next"].endswith("¶2"), "the heading fits; the log block does not"
+    huge = service.read(first["next"], max_tokens=10)
     assert huge["blocks"] == {"from": 2, "to": 2, "of": 3}
     assert huge["content"].count("line of a very long log") == 400, "the oversized block is whole, never cut"
-    assert "exceeds the budget" in huge["oversize"] and huge["next"]["start"] == 3
-    assert "After the dump." in service.read("acme§dump", start=3, max_tokens=10)["content"]
+    assert "exceeds the budget" in huge["oversize"] and huge["next"].endswith("¶3")
+    assert "After the dump." in service.read(huge["next"], max_tokens=10)["content"]
 
 
 def test_section_read_stops_at_the_next_heading(acme: Path) -> None:
@@ -155,8 +155,13 @@ def test_definition_read_is_one_api_entry(acme: Path) -> None:
 
 def test_block_read_and_plain_text(acme: Path) -> None:
     block = service.read("acme§guide/install¶2")
-    assert block["scope"] == "block" and block["blocks"] == {"from": 1, "to": 1, "of": 1}
-    assert block["cite"].endswith("¶2")
+    assert block["scope"] == "article" and block["blocks"]["from"] == 2, "¶n reads onward from block n"
+    assert block["blocks"]["to"] == block["blocks"]["of"] and block["next"] is None
+    assert f"¶2-{block['blocks']['of']}" in block["cite"], "the cite names the blocks shown"
+    short = service.read("acme§guide/install¶2", max_tokens=1)
+    assert short["blocks"]["to"] == 2 and short["cite"].endswith("¶2") and short["next"].endswith("¶3")
+    one = service.cite("acme§guide/install¶2")
+    assert one["cite"].endswith("¶2") and one["span"].startswith("sha256:"), "cite names the one block"
     plain = service.read("acme§guide/install#quickstart", format="text")
     assert "```" not in plain["content"] and "widget.run()" in plain["content"] and "##" not in plain["content"]
     with pytest.raises(ZimloreError, match="no ¶999"):
@@ -168,7 +173,8 @@ def test_block_read_and_plain_text(acme: Path) -> None:
 def test_unknown_entry_and_anchor_errors_name_the_alternatives(acme: Path) -> None:
     with pytest.raises(ZimloreError) as entry:
         service.read("acme§guide/instal")
-    assert "has no entry" in entry.value.message and "zimlore search" in entry.value.hint
+    assert "has no entry" in entry.value.message and "zim_search" in entry.value.hint
+    assert "did you mean" in entry.value.hint and entry.value.action == ""
     assert f"{BOOK}§guide/install" in entry.value.extra["did_you_mean"]  # type: ignore[operator]
     with pytest.raises(ZimloreError) as anchor:
         service.read("acme§guide/config#timeout")
@@ -196,7 +202,7 @@ def test_article_outline_lists_headings_and_definitions_with_anchors(acme: Path)
     assert all("ref" not in r for r in rows), "repeating library and path on every row cost ~60 characters each"
     assert service.read(f"{out['ref']}#{by_text['Timeouts']['anchor']}")["scope"] == "section", "ref + #anchor reads"
     paged = service.outline("acme§guide/config", limit=2)
-    assert len(paged["outline"]) == 2 and paged["next"] == {"start": 2}
+    assert len(paged["outline"]) == 2 and paged["next"] == 2
 
 
 def test_library_outline_pages_by_path_and_filters_by_prefix(acme: Path) -> None:
@@ -205,7 +211,7 @@ def test_library_outline_pages_by_path_and_filters_by_prefix(acme: Path) -> None
     assert paths == sorted(paths) and "application.css" not in paths and "blob.bin" not in paths
     assert "guide/install" in paths and "old/install" not in paths, "redirects are listed by their target only"
     first = service.outline("acme", limit=2)
-    second = service.outline("acme", start=first["next"]["start"], limit=100)
+    second = service.outline("acme", start=first["next"], limit=100)
     joined = [e["ref"] for e in first["entries"] + second["entries"]]
     assert joined == [e["ref"] for e in everything["entries"]], "paging neither skips nor repeats entries"
     scoped = service.outline("acme", prefix="guide/")
@@ -492,7 +498,7 @@ def test_the_outline_is_cut_to_a_token_budget_and_resumes_without_loss(acme: Pat
         if "next" not in page:
             break
         assert page["truncated"] is True
-        start = page["next"]["start"]
+        start = page["next"]
     assert seen == whole["outline"], "paging by budget neither skips nor repeats rows"
     library_whole = service.outline("acme", max_tokens=50_000)["entries"]
     paged: list[dict[str, object]] = []
@@ -502,7 +508,7 @@ def test_the_outline_is_cut_to_a_token_budget_and_resumes_without_loss(acme: Pat
         paged += page["entries"]
         if "next" not in page:
             break
-        start = page["next"]["start"]
+        start = page["next"]
     assert paged == library_whole
 
 

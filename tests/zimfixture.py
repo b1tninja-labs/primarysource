@@ -285,3 +285,55 @@ def acme(home: Path) -> Path:
     service.forget()
     build_zim(home / "zim")
     return home
+
+
+# --- the MCP contract, as a client sees it ---------------------------------------------------------------------
+
+
+def _call(server: Any, tool: str, **arguments: Any) -> Any:
+    import anyio
+    from mcp import Client
+
+    async def drive() -> Any:
+        async with Client(server) as client:
+            return await client.call_tool(tool, arguments)
+
+    return anyio.run(drive)
+
+
+def tool_text(server: Any, tool: str, **arguments: Any) -> str:
+    """A tool's text result; fails if it is an error or carries structured content."""
+    result = _call(server, tool, **arguments)
+    assert result.is_error is False, result.content[0].text
+    assert result.structured_content is None, "text only"
+    return str(result.content[0].text)
+
+
+def tool_error(server: Any, tool: str, **arguments: Any) -> dict[str, str]:
+    """A failing tool's `isError` text as {error, hint, action}: the fixed lines, in the fixed order."""
+    result = _call(server, tool, **arguments)
+    assert result.is_error is True, result.content[0].text
+    lines = result.content[0].text.splitlines()[1:]
+    found = dict(line.split(": ", 1) for line in lines)
+    assert list(found) == [key for key in ("error", "hint", "action") if key in found], lines
+    return found
+
+
+def footer_of(text: str) -> dict[str, str]:
+    """The footer lines after the last blank line, checked to be known keys in the core's fixed order."""
+    from primarysource.render import FOOTER_ORDER
+
+    body, _, tail = text.rstrip("\n").rpartition("\n\n")
+    lines = tail.splitlines() if body else []
+    footer = dict(line.split(": ", 1) for line in lines if line.split(": ", 1)[0] in FOOTER_ORDER)
+    if len(footer) != len(lines):
+        return {}
+    assert list(footer) == [key for key in FOOTER_ORDER if key in footer], "footer keys in FOOTER_ORDER"
+    return footer
+
+
+def contract_server() -> Any:
+    """The server `primarysource mcp --collection zim` builds."""
+    from primarysource import cli as core_cli
+
+    return core_cli.build_server(["zim"])

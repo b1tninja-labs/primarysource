@@ -464,7 +464,8 @@ def _ensure_replaceable(final: Path) -> None:
     except OSError as error:
         raise ZimloreError(
             f"{final} is in use by another process and cannot be replaced ({error}); nothing was downloaded",
-            "stop any running 'zimlore mcp' server or kiwix reader that has it open, then run the same command again",
+            "stop any running 'primarysource zim mcp' server or kiwix reader that has it open, "
+            "then run the same command again",
         ) from error
     try:
         os.rename(probe, final)
@@ -488,7 +489,7 @@ def _check_space(directory: Path, part: Path, meta: Metalink, name: str) -> None
     if need > free:
         raise ZimloreError(
             f"{name} needs {need} more bytes and {directory} has {free} free; nothing was downloaded",
-            "free space: zimlore du shows the use, zimlore prune --yes drops old editions",
+            "free space: primarysource zim du shows the use, primarysource zim prune --yes drops old editions",
         )
 
 
@@ -541,7 +542,7 @@ def download_result(
     if not (is_catalogue_host(host) or host in LOCAL_HOSTS):
         raise ZimloreError(
             f"{entry.url} is not on {CATALOGUE_DOMAIN}; its .meta4 would come from the host that serves the file",
-            "zimlore downloads only catalogue entries; to install a file from elsewhere use zimlore add",
+            "zimlore downloads only catalogue entries; to install a file from elsewhere use primarysource zim add",
         )
     directory.mkdir(parents=True, exist_ok=True)
     part = final.with_name(final.name + ".part")
@@ -558,7 +559,8 @@ def download_result(
             if not replace:
                 raise ZimloreError(
                     f"{final} already exists and is not the file the catalogue describes; not replacing it",
-                    "zimlore get NAME --replace replaces it (the old file is lost); otherwise move it aside",
+                    "primarysource zim get NAME --replace replaces it (the old file is lost); "
+                    "otherwise move it aside",
                 )
         _check_space(directory, part, meta, entry.name)
         done, hexdigest = _transfer(entry, part, lock, meta, opener, progress, deadline_seconds)
@@ -587,6 +589,6 @@ def download_result(
         manage.sidecar_path(final).unlink(missing_ok=True)  # never leave the previous file's record on this one
         raise ZimloreError(
             f"{final} was installed and verified but its provenance record could not be written ({error})",
-            "free disk space, then zimlore verify --adopt records what the file is",
+            "free disk space, then primarysource zim verify --adopt records what the file is",
         ) from error
     return Downloaded(final, "replaced" if existing else "installed")

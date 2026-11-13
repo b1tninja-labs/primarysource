@@ -299,7 +299,7 @@ def test_add_refuses_a_second_file_for_an_installed_edition_and_names_remove(hom
     twin = _source(tmp_path, "second_2026-10.zim")  # same Name and Date, another file
     with pytest.raises(ZimloreError, match="already installed as first_2026-10.zim") as caught:
         manage.add_local(twin)
-    assert "zimlore remove acme_en_widgets --edition 2026-10-01 --yes" in caught.value.hint
+    assert "primarysource zim remove acme_en_widgets --edition 2026-10-01 --yes" in caught.value.action
     assert [p.name for p in (home / "zim").glob("*.zim")] == ["first_2026-10.zim"]
     newer = _source(tmp_path, "third_2026-11.zim", date="2026-11-01")
     assert manage.add_local(newer)["status"] == "added", "another date is another edition and coexists"
@@ -309,7 +309,7 @@ def test_add_refuses_a_file_that_is_already_in_the_library_directory(home: Path)
     inside = build_zim(home / "zim")
     with pytest.raises(ZimloreError, match="already in the library directory") as caught:
         manage.add_local(inside)
-    assert "verify --adopt" in caught.value.hint
+    assert "verify --adopt" in caught.value.action
 
 
 def test_add_link_makes_a_link_and_removing_the_edition_leaves_the_original(home: Path, tmp_path: Path) -> None:

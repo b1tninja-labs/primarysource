@@ -140,7 +140,7 @@ def test_a_file_bigger_than_the_free_space_is_refused_before_the_download(
     seen: Seen = []
     with _serve(served, log=seen) as base, pytest.raises(ZimloreError, match="free") as caught:
         catalog.download(_at(entry, base), tmp_path / "zim")
-    assert "prune" in caught.value.hint and _zim_requests(seen) == []
+    assert "prune" in caught.value.action and _zim_requests(seen) == []
     assert list((tmp_path / "zim").iterdir()) == []
 
 
@@ -297,7 +297,7 @@ def test_download_never_replaces_an_existing_file_unless_told(tmp_path: Path) ->
     with _serve(served, log=seen) as base:
         with pytest.raises(ZimloreError, match="not replacing") as caught:
             catalog.download(_at(entry, base), target)
-        assert "--replace" in caught.value.hint
+        assert "--replace" in caught.value.action
         size = (served / NAME).stat().st_size
         mine.write_bytes(b"P" * size)  # the right length, a record of some other hash
         manage.write_sidecar(mine, manage.Provenance("u", "n", "d", "00" * 32, size, "t", "get"))
@@ -350,7 +350,7 @@ def test_replacing_a_file_that_is_open_fails_before_anything_is_downloaded(tmp_p
         pytest.raises(ZimloreError, match="in use by another process") as caught,
     ):
         catalog.download(_at(entry, base), target, replace=True)
-    assert "stop" in caught.value.hint and seen == [], "not even the .meta4 was requested"
+    assert "stop" in caught.value.action and seen == [], "not even the .meta4 was requested"
     assert held.read_bytes() == b"in use" and sorted(p.name for p in target.iterdir()) == [NAME]
 
 
