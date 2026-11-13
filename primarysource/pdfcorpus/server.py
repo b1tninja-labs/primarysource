@@ -10,12 +10,13 @@ from collections.abc import Callable
 from typing import Any
 
 from mcp.server.mcpserver import MCPServer
-from mcp.server.mcpserver.exceptions import ToolError as McpToolError
 from mcp.types import ToolAnnotations
 
+from primarysource.errors import LibError
 from primarysource.pdfcorpus import tools
 from primarysource.pdfcorpus.corpus import Corpus, CorpusError, load_corpus
 from primarysource.pdfcorpus.spec import CorpusSpec
+from primarysource.scaffold import tool_error
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False)
 
@@ -47,7 +48,8 @@ class CorpusServer:
         try:
             return fn(self._load(), *args)
         except (CorpusError, tools.ToolError) as e:
-            raise McpToolError(str(e)) from None
+            # the remedy is written into the message, so there is no hint: line to split out yet
+            raise tool_error(LibError(str(e))) from None
 
     def search(self, query: str, doc: str | None = None, limit: int = 8) -> str:
         return self._run(tools.search, query, doc, limit)

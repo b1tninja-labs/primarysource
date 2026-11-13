@@ -7,16 +7,11 @@ answer in text with the fixed footer, read the local database only (none writes 
 
 from __future__ import annotations
 
-import functools
-from collections.abc import Callable
-from typing import Any
-
 from mcp.server.mcpserver import MCPServer
-from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import ToolAnnotations
 
 from primarysource import __version__
-from primarysource.errors import LibError
+from primarysource.scaffold import add_tools
 from primarysource.usbids import tools
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False)
@@ -29,17 +24,6 @@ INSTRUCTIONS = (
     "usage). usbids_classify('09', '00', '02') decodes a class code triple. The cite: footer line names the "
     "snapshot. If the database is not imported, the error says how."
 )
-
-
-def _guard(fn: Callable[..., str]) -> Callable[..., str]:
-    @functools.wraps(fn)  # the SDK reads the tool's schema from the wrapped signature
-    def wrapped(*args: Any, **kwargs: Any) -> str:
-        try:
-            return fn(*args, **kwargs)
-        except LibError as exc:
-            raise ToolError(exc.as_text()) from None
-
-    return wrapped
 
 
 def usbids_lookup(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
@@ -67,5 +51,4 @@ def usbids_sections() -> str:
 
 
 server = MCPServer("primarysource-usbids", version=__version__, instructions=INSTRUCTIONS)
-for _tool in (usbids_lookup, usbids_search, usbids_classify, usbids_sections):
-    server.add_tool(_guard(_tool), name=_tool.__name__, annotations=READ_ONLY, structured_output=False)
+add_tools(server, (usbids_lookup, usbids_search, usbids_classify, usbids_sections), annotations=READ_ONLY)

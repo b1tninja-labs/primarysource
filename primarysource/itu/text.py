@@ -15,8 +15,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-from pypdf import PdfReader
-from pypdf.errors import PdfReadError
+# pypdf (the [itu] extra) is imported where a PDF is opened, not here: the collection and its server import
+# without it (PLAN.md §5.13), and an index already built needs no PDF reader.
 
 # Numeric (8.1.2.4) or annex (A.1, C.3.2) numbering. Annex letters stop at I: past that they collide with
 # recommendation names ("G.711", "H.323") far more often than they head a clause.
@@ -48,6 +48,8 @@ def tidy(text: str) -> str:
 
 
 def pages(path: object) -> list[str]:
+    from pypdf import PdfReader
+
     reader = PdfReader(str(path))
     return strip_running_lines([page.extract_text() or "" for page in reader.pages])
 
@@ -179,6 +181,9 @@ def headings(path: object, page_text: list[str] | None = None) -> list[tuple[str
                 found.append((match.group(1), tidy(match.group(2))))
             elif annex:
                 found.append((annex.group(1), tidy(annex.group(2)) or f"Annex {annex.group(1)}"))
+
+    from pypdf import PdfReader
+    from pypdf.errors import PdfReadError
 
     try:
         walk(list(PdfReader(str(path)).outline))

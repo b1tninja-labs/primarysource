@@ -8,18 +8,16 @@ the remedy. Every tool reads local files only: none writes, none fetches. Drafts
 
 from __future__ import annotations
 
-import functools
 from collections.abc import Callable
 from typing import Any
 
 from mcp.server.mcpserver import MCPServer
-from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import ToolAnnotations
 
 from primarysource import __version__
 from primarysource.draft import views
 from primarysource.draft.store import Store
-from primarysource.errors import LibError
+from primarysource.scaffold import add_tools
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False)
 
@@ -38,19 +36,6 @@ INSTRUCTIONS = (
 
 def _library() -> Store:
     return Store()
-
-
-def _guard(fn: Callable[..., str]) -> Callable[..., str]:
-    """Run a tool, turning a LibError into a tool error with its hint."""
-
-    @functools.wraps(fn)  # the SDK reads the tool's schema from the wrapped signature
-    def wrapped(*args: Any, **kwargs: Any) -> str:
-        try:
-            return fn(*args, **kwargs)
-        except LibError as exc:
-            raise ToolError(exc.as_text()) from None
-
-    return wrapped
 
 
 def draft_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
@@ -99,8 +84,7 @@ def draft_list() -> str:
 def _build() -> Any:
     tools: list[Callable[..., str]] = [draft_read, draft_outline, draft_search, draft_cite, draft_info, draft_list]
     built = MCPServer("primarysource-draft", version=__version__, instructions=INSTRUCTIONS)
-    for tool in tools:
-        built.add_tool(_guard(tool), name=tool.__name__, annotations=READ_ONLY, structured_output=False)
+    add_tools(built, tools, annotations=READ_ONLY)
     return built
 
 

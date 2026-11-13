@@ -7,17 +7,14 @@ reads local files only; none writes or fetches.
 
 from __future__ import annotations
 
-import functools
-from collections.abc import Callable
 from typing import Any
 
 from mcp.server.mcpserver import MCPServer
-from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import ToolAnnotations
 
 from primarysource import __version__
 from primarysource.c2sp import library
-from primarysource.errors import LibError
+from primarysource.scaffold import add_tools
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False)
 
@@ -28,17 +25,6 @@ INSTRUCTIONS = (
     "'static-ct-api@09f3e51§...' to pin a commit. c2sp_outline('<doc>') lists headings as refs; c2sp_cite('<ref>') "
     "gives the citation and the hash of the cited text. If nothing is imported, the error says how."
 )
-
-
-def _guard(fn: Callable[..., str]) -> Callable[..., str]:
-    @functools.wraps(fn)  # the SDK reads the tool's schema from the wrapped signature
-    def wrapped(*args: Any, **kwargs: Any) -> str:
-        try:
-            return fn(*args, **kwargs)
-        except LibError as exc:
-            raise ToolError(exc.as_text()) from None
-
-    return wrapped
 
 
 def c2sp_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
@@ -73,8 +59,7 @@ def c2sp_docs() -> str:
 
 def _build() -> Any:
     built = MCPServer("primarysource-c2sp", version=__version__, instructions=INSTRUCTIONS)
-    for tool in (c2sp_read, c2sp_search, c2sp_outline, c2sp_cite, c2sp_docs):
-        built.add_tool(_guard(tool), name=tool.__name__, annotations=READ_ONLY, structured_output=False)
+    add_tools(built, (c2sp_read, c2sp_search, c2sp_outline, c2sp_cite, c2sp_docs), annotations=READ_ONLY)
     return built
 
 

@@ -36,8 +36,12 @@ def test_mcp_serves_the_collection_server(monkeypatch: pytest.MonkeyPatch) -> No
     monkeypatch.setenv("PRIMARYSOURCE_READONLY", "")
     code = cli.main(["mcp", "--collection", "rfc", "--transport", "http", "--port", "9999", "--read-only"])
     assert code == 0
+    # the collection's own server, composed: the same functions under prefixed names
     collection = registry.load("rfc")
-    assert seen["server"] is registry.attribute(collection, collection.server, "server")
+    own = registry.attribute(collection, collection.server, "server")
+    served = {tool.name: tool for tool in seen["server"]._tool_manager.list_tools()}
+    assert {f"rfc_{tool.name}" for tool in own._tool_manager.list_tools()} == set(served)
+    assert served["rfc_search"].fn.__wrapped__ is own._tool_manager.get_tool("search").fn
     assert (seen["transport"], seen["port"], seen["host"]) == ("http", 9999, "127.0.0.1")
     import os
 
@@ -58,14 +62,17 @@ def test_read_only_mode_does_not_leak_into_later_tests() -> None:
 
 
 def test_a_server_target_may_be_a_factory(monkeypatch: pytest.MonkeyPatch) -> None:
-    built: list[object] = []
+    pytest.importorskip("mcp")
+    from mcp.server.mcpserver import MCPServer
 
-    class Server:
-        def run(self, **_: Any) -> None:  # pragma: no cover - serve.run is replaced
-            pass
+    built: list[Any] = []
 
-    def factory() -> Server:
-        server = Server()
+    def ping() -> str:
+        return "pong"
+
+    def factory() -> Any:
+        server = MCPServer("factory-built")
+        server.add_tool(ping)
         built.append(server)
         return server
 
@@ -73,4 +80,5 @@ def test_a_server_target_may_be_a_factory(monkeypatch: pytest.MonkeyPatch) -> No
     monkeypatch.setattr(serve, "run", lambda server, transport, **kw: seen.update(server=server))
     monkeypatch.setattr(registry, "attribute", lambda collection, spec, what: factory)
     assert cli.main(["mcp", "--collection", "rfc"]) == 0
-    assert seen["server"] is built[0]
+    assert len(built) == 1
+    assert seen["server"]._tool_manager.get_tool("rfc_ping").fn.__wrapped__ is ping
