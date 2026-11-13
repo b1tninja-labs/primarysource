@@ -30,7 +30,7 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["mypy>=1.20", "pytest>=8", "ruff>=0.15"]
+dev = ["mypy>=1.20", "packaging>=24", "pytest>=8", "ruff>=0.15"]
 # posix and ieee802 (primarysource/ieee/). pypdf is for importing 802 PDFs only; posix needs nothing.
 ieee = ["pypdf>=5"]
 iana = []
@@ -60,6 +60,11 @@ usb = []
 itu = ["pypdf>=5"]
 # ISO standards from the owner's own purchased PDFs (primarysource/iso/): pypdf reads them at import only.
 iso = ["pypdf>=5"]
+# Kiwix libraries (primarysource/zim/, moved in from zimlore). libzim is a compiled extension (libzim + Xapian,
+# GPL-3.0-or-later); the wheel of this package ships only its own code, and the collection imports and lists
+# without it. PyPI carries libzim wheels for Windows x64, macOS and Linux; Windows on ARM has neither wheel nor a
+# practical sdist build, so the marker leaves it out and `zim` there reports the missing binding with the remedy.
+zim = ["libzim>=4.1; sys_platform != 'win32' or platform_machine != 'ARM64'"]
 
 [project.scripts]
 primarysource = "primarysource.cli:main"
@@ -85,6 +90,10 @@ select = ["E", "F", "I", "UP", "S", "B", "SIM"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101"]
+# zimlore's own ignores: it shells out to nothing but git in tests, and downloads catalogue entries over urllib.
+"primarysource/zim/*" = ["S603", "S607", "S310"]
+"tests/zim/*" = ["S104", "S603", "S607", "S310"]
+"scripts/zim_*.py" = ["S603", "S607", "S310"]
 
 [tool.mypy]
 strict = true
@@ -96,6 +105,11 @@ module = [
     "primarysource.rfc", "primarysource.rfc.*", "primarysource.nist.*", "primarysource.usb.*", "mcp", "mcp.*",
 ]
 follow_imports = "skip"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# python-libzim ships no type information; primarysource/zim/_libzim.py is the one place that imports it.
+module = ["libzim", "libzim.*"]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]

@@ -16,3 +16,25 @@ outside the IETF Standards Process.
 
 Every other collection's documents are fetched by the user, under their
 publishers' own terms, and are stored outside this package.
+
+ZIM files (the `zim` collection)
+--------------------------------
+This repository contains no ZIM file and no text from any ZIM file. A ZIM is an archive of someone else's
+content, and each one carries that content's own licence: DevDocs ZIMs archive upstream project documentation
+under whatever licence each project chose, Stack Exchange ZIMs are user-contributed content under Creative
+Commons terms with attribution requirements, Wikipedia is another case again. Those licences differ from each
+other and from this software's. The collection therefore never ships, vendors or embeds ZIM content: files live
+in the collection's home (`$PRIMARYSOURCE_HOME/zim`, or `ZIMLORE_HOME` as before; subdirectory `zim/`) on each
+user's machine, fetched by the user with `primarysource zim get` or copied there, and `.gitignore` names every
+way a ZIM can be spelled so that one cannot be staged by accident. `tests/zim/test_license.py` is a tripwire
+against the obvious copy, not a proof against a determined one; its test ZIMs are built from invented text at
+test time, in a temporary directory.
+
+What the collection says about a document is a citation (library, ZIM edition date, entry path) plus the
+licence metadata the ZIM itself carries in its `License` field. Many ZIMs carry none, and the collection reports
+that as "not stated in the ZIM" rather than guessing: the licence of the text you reuse is the upstream
+project's, and you should read it there.
+
+The optional `zim` extra installs libzim (python-libzim), a compiled binding that is licensed GPL-3.0-or-later
+by its own authors. This package's wheel contains none of it and carries only this package's own code under the
+Apache License 2.0; libzim is a separately installed dependency under its own licence.

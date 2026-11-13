@@ -20,6 +20,15 @@ htmlcov/
 *.rtf
 *.zip
 *.zim
+# ZIM files in every spelling (the `zim` collection): a ZIM is one binary file that git history cannot take back.
+# `/zim/` is anchored: the collection's own code is primarysource/zim/ and tests/zim/.
+*.zim.*
+*.zimaa
+*.meta4
+*.idx.tmp/
+/zim/
+zimlore-home/
+.zimlore/
 *.sqlite3
 *.sqlite3-journal
 *.db

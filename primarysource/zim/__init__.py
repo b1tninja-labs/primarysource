@@ -1,0 +1,5 @@
+"""zim: a Kiwix library (ZIM files) as token-budgeted, citable documentation for AI agents."""
+
+from __future__ import annotations
+
+__version__ = "0.1.0"
