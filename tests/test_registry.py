@@ -9,7 +9,7 @@ import pytest
 from primarysource import registry
 from primarysource.errors import LibError
 from primarysource.model import Unit
-from primarysource.refs import RefGrammar
+from primarysource.refs import Ref, RefGrammar
 from primarysource.registry import Collection, _Target, available, load
 
 DEMO = Collection("demo", "Demo standards", "demo_", Unit.SENTENCE, RefGrammar(r"D\d+"))
@@ -90,3 +90,25 @@ def test_a_missing_server_names_the_shared_extra_and_mcp(monkeypatch: pytest.Mon
     with pytest.raises(LibError) as caught:
         registry.attribute(collection, "_ps_absent_cli:main", "command line")
     assert caught.value.hint == 'pip install "primarysource[shared]"'
+
+
+class _IdKeyed:
+    """A ref parser for id-keyed refs (`demo:1d6b:0002`) that RefGrammar cannot express."""
+
+    def parse(self, text: str) -> Ref:
+        doc, sep, key = text.partition(":")
+        if not sep or doc != "demo" or not key:
+            raise LibError(f"not a demo ref: {text!r}", "write demo:<id>")
+        return Ref(doc=doc, section=key)
+
+    def format(self, ref: Ref) -> str:
+        return f"{ref.doc}:{ref.section}"
+
+
+def test_a_collection_may_bring_its_own_ref_parser() -> None:
+    collection = Collection("demo", "Demo registry", "demo_", Unit.BLOCK, _IdKeyed())
+    ref = collection.grammar.parse("demo:1d6b:0002")
+    assert ref == Ref(doc="demo", section="1d6b:0002")
+    assert collection.grammar.format(ref) == "demo:1d6b:0002"
+    with pytest.raises(LibError):
+        collection.grammar.parse("other:1")

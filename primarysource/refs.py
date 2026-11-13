@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from typing import Protocol
 
 from primarysource.errors import LibError
 
@@ -28,6 +29,16 @@ class Ref:
     para: int | None = None
     anchor: str | None = None
     lines: tuple[int, int] | None = None
+
+
+class RefParser(Protocol):
+    """What a collection's refs need: text to `Ref` and back. `RefGrammar` is one; a collection whose refs are not
+    `<doc>§<section>` (an id-keyed registry such as `usbids:1d6b:0002`) supplies its own object with these two
+    methods, raising `LibError` for text that is not a ref."""
+
+    def parse(self, text: str) -> Ref: ...
+
+    def format(self, ref: Ref) -> str: ...
 
 
 class RefGrammar:

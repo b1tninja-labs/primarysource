@@ -23,7 +23,7 @@ from typing import Any
 
 from primarysource.errors import LibError
 from primarysource.model import Unit
-from primarysource.refs import RefGrammar
+from primarysource.refs import RefParser
 
 ENTRY_POINT_GROUP = "primarysource.collections"
 
@@ -61,7 +61,7 @@ class Collection:
     title: str
     prefix: str
     unit: Unit
-    grammar: RefGrammar
+    grammar: RefParser
     server: str = ""
     cli: str = ""
 
