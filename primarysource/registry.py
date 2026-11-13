@@ -50,6 +50,7 @@ BUILTIN: dict[str, str] = {
     "pms": "primarysource.pms:COLLECTION",
     "pep": "primarysource.pep:COLLECTION",
     "kconfig": "primarysource.kconfig:COLLECTION",
+    "iso": "primarysource.iso:ISO [iso]",
 }
 
 _NAME = re.compile(r"[a-z][a-z0-9]*")
