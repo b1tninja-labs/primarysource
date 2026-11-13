@@ -43,6 +43,12 @@ BUILTIN: dict[str, str] = {
     "c2sp": "primarysource.c2sp:C2SP",
     "bbf": "primarysource.bbf:BBF [bbf]",
     "ecma": "primarysource.ecma:ECMA [ecma]",
+    "gitdocs": "primarysource.gitdocs:COLLECTION",
+    "debpolicy": "primarysource.debpolicy:COLLECTION",
+    "rpmdocs": "primarysource.rpmdocs:COLLECTION",
+    "pms": "primarysource.pms:COLLECTION",
+    "pep": "primarysource.pep:COLLECTION",
+    "kconfig": "primarysource.kconfig:COLLECTION",
 }
 
 _NAME = re.compile(r"[a-z][a-z0-9]*")

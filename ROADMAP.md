@@ -115,5 +115,13 @@ Licence and placement as group F recorded them (side-session notes, `roadmap-F-r
 
 | Obligation | Spec | Status | Where |
 |---|---|---|---|
-| `col.purl_spec` | PLAN.md §5.8 | `[ ]` | purl spec, ECMA-427 (Dec 2025). Ecma; the repository's code is MIT, the standard text has its own licence id (not read). Placement: volume until that licence is read |
-| `col.bbf_trs` | PLAN.md §5.8 | `[ ]` | Broadband Forum TRs (PDF), collection `bbf`. Free use, no modification, whole copy with notice (read through third-party copies, not BBF's own page). Placement: volume |
+| `col.git_docs` | PLAN.md §5.8 | `[part]` | git Documentation (AsciiDoc). Licence GPL-2.0 (m). Placement: layer Built 2026-11-13 as the `gitdocs` collection; tests and remaining gaps in `docs/gitdocs.md`. |
+| `col.debian_policy_dpkg` | PLAN.md §5.8 | `[part]` | Debian Policy (RST) and dpkg man pages (roff, POD). Licence GPL-2+ (m). Placement: layer Built 2026-11-13 as the `debpolicy` collection; tests and remaining gaps in `docs/debpolicy.md`. |
+| `col.rpm_docs` | PLAN.md §5.8 | `[part]` | rpm docs (Markdown). Licence GPL-2.0+ (m). Placement: layer Built 2026-11-13 as the `rpmdocs` collection; tests and remaining gaps in `docs/rpmdocs.md`. |
+| `col.gentoo_pms_gleps` | PLAN.md §5.8 | `[part]` | Gentoo PMS (HTML) and GLEPs (RST). PMS: CC-BY-SA 3.0, read on the EAPI 3 page; the GLEPs' licence is not recorded. Placement: layer, with attribution Built 2026-11-13 as the `pms` collection; tests and remaining gaps in `docs/pms.md`. |
+| `col.arch_apk_void` | PLAN.md §5.8 | `[ ]` | Arch/pacman, apk-tools and the Void manual (AsciiDoc, scdoc, Markdown). Licence GPL/MIT (m). Placement: layer |
+| `col.purl_spec` | PLAN.md §5.8 | `[part]` | purl spec, ECMA-427 (Dec 2025). Ecma; the repository's code is MIT, the standard text has its own licence id (not read). Placement: volume until that licence is read Built 2026-11-13 as the `ecma` collection; tests and remaining gaps in `docs/ecma.md`. |
+| `col.xz_format` | PLAN.md §5.8 | `[ ]` | xz file format, one document. Licence public domain (m). Placement: not recorded; layer if public domain is confirmed |
+| `col.peps` | PLAN.md §5.8 | `[part]` | Python PEPs (RST). Licence public domain or CC0 (m). Placement: not recorded; layer if confirmed Built 2026-11-13 as the `pep` collection; tests and remaining gaps in `docs/pep.md`. |
+| `col.kconfig_docs` | PLAN.md §5.8 | `[part]` | Kconfig language docs from the kernel's Documentation (RST). Licence GPL-2.0 (m). Placement: not recorded; layer if confirmed Built 2026-11-13 as the `kconfig` collection; tests and remaining gaps in `docs/kconfig.md`. |
+| `col.bbf_trs` | PLAN.md §5.8 | `[part]` | Broadband Forum TRs (PDF), collection `bbf`. Free use, no modification, whole copy with notice (read through third-party copies, not BBF's own page). Placement: volume Built 2026-11-13 as the `bbf` collection; tests and remaining gaps in `docs/bbf.md`. |
