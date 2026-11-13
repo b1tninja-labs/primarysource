@@ -55,3 +55,22 @@ def test_read_only_mode_does_not_leak_into_later_tests() -> None:
     import os
 
     assert os.environ.get("PRIMARYSOURCE_READONLY", "") == ""
+
+
+def test_a_server_target_may_be_a_factory(monkeypatch: pytest.MonkeyPatch) -> None:
+    built: list[object] = []
+
+    class Server:
+        def run(self, **_: Any) -> None:  # pragma: no cover - serve.run is replaced
+            pass
+
+    def factory() -> Server:
+        server = Server()
+        built.append(server)
+        return server
+
+    seen: dict[str, Any] = {}
+    monkeypatch.setattr(serve, "run", lambda server, transport, **kw: seen.update(server=server))
+    monkeypatch.setattr(registry, "attribute", lambda collection, spec, what: factory)
+    assert cli.main(["mcp", "--collection", "rfc"]) == 0
+    assert seen["server"] is built[0]

@@ -51,6 +51,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.read_only:
             os.environ["PRIMARYSOURCE_READONLY"] = "1"
         server = registry.attribute(collection, collection.server, "server")
+        if not hasattr(server, "run") and callable(server):
+            server = server()  # a factory such as itu's build()
         if transport == "http":
             print(f"primarysource mcp: {collection.name} at http://{args.host}:{args.port}/mcp", file=sys.stderr)
         serve.run(server, transport, host=args.host, port=args.port, allowed_hosts=args.allowed_host)

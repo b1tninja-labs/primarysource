@@ -50,3 +50,6 @@ tmp/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# A collection fetch target, should one ever be pointed inside the tree (itu licence test checks this)
+/corpus/
