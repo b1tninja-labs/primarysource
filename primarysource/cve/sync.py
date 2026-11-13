@@ -24,6 +24,8 @@ from email.message import Message
 from pathlib import Path
 from typing import Any
 
+from primarysource.fsutil import replace
+
 from . import config, store
 from .errors import CvelibError
 from .kernel import parse_dyad
@@ -75,7 +77,7 @@ def http_download(url: str, target: Path) -> None:
     except (urllib.error.URLError, TimeoutError) as error:
         partial.unlink(missing_ok=True)
         raise CvelibError(f"download failed for {url}: {error}", "Check connectivity and retry.") from error
-    partial.replace(target)
+    replace(partial, target)
 
 
 def check_disk(path: Path, need: int, force: bool) -> None:
@@ -85,8 +87,7 @@ def check_disk(path: Path, need: int, force: bool) -> None:
         raise CvelibError(
             f"{path} has {free / 1024**3:.1f} GB free; this sync needs about {need / 1024**3:.1f} GB and would leave "
             f"less than the {config.min_free_bytes() / 1024**3:.1f} GB reserve",
-            "Set CVELIB_HOME to a larger disk, or pass --force, or lower CVELIB_MIN_FREE_GB.",
-            status="disk",
+            "set CVELIB_HOME to a larger disk, or lower CVELIB_MIN_FREE_GB, or pass --force",
         )
 
 
@@ -178,7 +179,8 @@ def ingest_kernel_tree(conn: Any, tree: Path, version: str, upstream_date: str) 
     if not root.is_dir():
         raise CvelibError(
             f"{tree} is not a checkout of the kernel CNA vulns repository",
-            "Run: primarysource cve sync --source kernel",
+            "pass the root of a vulns.git checkout, or leave --kernel-tree out to fetch one",
+            "primarysource cve sync --source kernel",
         )
     store.clear_kernel(conn)
     published = rejected = 0

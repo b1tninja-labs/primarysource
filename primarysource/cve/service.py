@@ -113,7 +113,7 @@ def _not_found(cve: str, sources: Mapping[str, dict[str, Any]]) -> CvelibError:
         if not gaps
         else "This corpus is incomplete: " + "; ".join(gaps)
     )
-    return CvelibError(f"{cve} is in none of the synced sources", hint, status="not_found", partial=gaps)
+    return CvelibError(f"{cve} is in none of the synced sources", hint)
 
 
 def _preferred_metric(metrics: list[dict[str, Any]]) -> dict[str, Any] | None:
@@ -252,6 +252,7 @@ def read(ref: str, max_tokens: int = 2000) -> dict[str, Any]:
         if "cvelist" in records:
             attribution["registry"] = _label("cvelist", sources.get("cvelist"))
         cvelist = records.get("cvelist")
+        cite = _cite(cve, attribution)
         # Registry status wins for lifecycle: a CVE rejected upstream is rejected even if a mirror lags.
         state = (cvelist or primary)["state"]
         if "kernel" in records and records["kernel"]["state"] != state:
@@ -267,31 +268,42 @@ def read(ref: str, max_tokens: int = 2000) -> dict[str, Any]:
         kernel_block = _kernel_block(conn, cve, sources)
 
         if section == "references":
-            return _with_gaps(_page(refs, start, budget, cve, section, {"ref": f"{cve}§references"}), sources)
+            return _with_gaps(
+                _page(refs, start, budget, cve, section, {"ref": f"{cve}§references", "cite": cite}), sources
+            )
         if section == "affected":
             return _with_gaps(
                 _page(
-                    affected, start, budget, cve, section, {"ref": f"{cve}§affected", "source": attribution["record"]}
+                    affected,
+                    start,
+                    budget,
+                    cve,
+                    section,
+                    {"ref": f"{cve}§affected", "cite": cite, "source": attribution["record"]},
                 ),
                 sources,
             )
         if section == "cvss":
             return _with_gaps(
-                {"ref": f"{cve}§cvss", "items": metrics, "preferred": _preferred_metric(metrics)}, sources
+                {"ref": f"{cve}§cvss", "cite": cite, "items": metrics, "preferred": _preferred_metric(metrics)},
+                sources,
             )
         if section == "kernel":
             if kernel_block is None:
                 return _with_gaps(
-                    {"ref": f"{cve}§kernel", "kernel": None, "note": "no kernel CNA data for this CVE"}, sources
+                    {"ref": f"{cve}§kernel", "cite": cite, "kernel": None, "note": "no kernel CNA data for this CVE"},
+                    sources,
                 )
             ranges = kernel_block.pop("ranges")
             return _with_gaps(
-                _page(ranges, start, budget, cve, section, {"ref": f"{cve}§kernel", **kernel_block}), sources
+                _page(ranges, start, budget, cve, section, {"ref": f"{cve}§kernel", "cite": cite, **kernel_block}),
+                sources,
             )
         if section == "sources":
             return _with_gaps(
                 {
                     "ref": f"{cve}§sources",
+                    "cite": cite,
                     "sources": {
                         name: {
                             "version": row["version"],
@@ -373,9 +385,7 @@ def search(
         if not (sources.get("cvelist") or sources.get("kernel")):
             raise CvelibError(
                 "no CVE records have been synced",
-                "Run: primarysource cve sync --source cvelist,kernel",
-                status="not_synced",
-                partial=_coverage(sources),
+                action="primarysource cve sync --source cvelist,kernel",
             )
         if re.fullmatch(r"(?i)CVE-\d{4}-\d{4,}", text):
             cve = text.upper()
@@ -480,8 +490,7 @@ def kev(ref: str = "", vendor: str = "", since: str = "", limit: int = 20, start
         if row is None or row["state"] == "failed":
             raise CvelibError(
                 "the CISA KEV catalog is not synced, so KEV status cannot be determined",
-                "Run: primarysource cve sync --source kev",
-                status="not_synced",
+                action="primarysource cve sync --source kev",
             )
         label = _label("kev", row)
         if ref:
@@ -618,9 +627,7 @@ def kernel_list(
         if not (sources.get("kernel") and sources["kernel"]["state"] == "ok"):
             raise CvelibError(
                 "kernel CNA data is not synced, so a version cannot be assessed",
-                "Run: primarysource cve sync --source kernel",
-                status="not_synced",
-                partial=_coverage(sources),
+                action="primarysource cve sync --source kernel",
             )
         grouped: dict[str, list[Pair]] = {}
         for row in conn.execute("SELECT cve, start, start_git, fix, fix_git FROM kernel_pair"):
@@ -694,7 +701,8 @@ def info(ref: str = "") -> dict[str, Any]:
             "home": str(home),
             "status": "not_synced",
             "error": "no index yet",
-            "hint": "Run: primarysource cve sync (set CVELIB_HOME to a large disk first)",
+            "action": "primarysource cve sync",
+            "hint": "set CVELIB_HOME (or PRIMARYSOURCE_CVE_HOME) to a large disk first",
         }
     conn = store.open_read()
     try:
@@ -718,7 +726,7 @@ def info(ref: str = "") -> dict[str, Any]:
                     "epss": _epss_block(conn, cve, sources),
                     "kernel_cna": cve
                     in {row[0] for row in conn.execute("SELECT DISTINCT cve FROM kernel_pair WHERE cve=?", (cve,))},
-                    "next": f"cve_read('{cve}')",
+                    "next": cve,
                 },
                 sources,
             )

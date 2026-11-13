@@ -1,56 +1,24 @@
-"""Command line: the same answers as the MCP server, printed for a person (or as JSON with --json)."""
+"""`primarysource cve ...`: the same answers as the MCP tools, as the same text; `--json` prints `service`'s dict.
+
+A failure prints the `error:`, `hint:` and `action:` lines of a `LibError` on stderr and exits 2 (PLAN.md §5.10)."""
 
 from __future__ import annotations
 
 import argparse
 import json
 import sys
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 from pathlib import Path
 from typing import Any
 
-from . import __version__, config, service
-from .errors import CvelibError
+from primarysource.errors import LibError
+
+from . import __version__, config, service, views
 from .sync import sync as run_sync
 
 
 def _print_json(payload: object) -> None:
     print(json.dumps(payload, ensure_ascii=False, indent=2))
-
-
-def _render_search(payload: dict[str, Any]) -> None:
-    for hit in payload["hits"]:
-        flags = "".join(
-            [
-                f" cvss={hit['cvss']}" if "cvss" in hit else "",
-                " KEV" if hit.get("kev") else "",
-                f" epss={hit['epss']:.3f}" if "epss" in hit else "",
-            ]
-        )
-        print(f"{hit['ref']}  [{hit['source']}]{flags}  {hit['title']}")
-    if not payload["hits"]:
-        print("(no matches)")
-    _render_tail(payload)
-
-
-def _render_kernel_list(payload: dict[str, Any]) -> None:
-    print(f"{payload['version']}: {payload['affected_total']} of {payload['assessed']} kernel CNA CVEs affect it")
-    print(f"source: {payload['source']}")
-    for item in payload["items"]:
-        marks = " KEV" if item.get("kev") else ""
-        print(f"{item['ref']}{marks}  {item['title']}  ({item['why']})")
-    _render_tail(payload)
-
-
-def _render_tail(payload: dict[str, Any]) -> None:
-    for line in payload.get("caveats", []):
-        print(f"caveat: {line}")
-    for line in payload.get("partial", []):
-        print(f"partial: {line}")
-    if "relaxed" in payload:
-        print(f"note: {payload['relaxed']}")
-    if "next" in payload:
-        print(f"next: {payload['next']}")
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -83,6 +51,7 @@ def _parser() -> argparse.ArgumentParser:
     kev.add_argument("--vendor", default="")
     kev.add_argument("--since", default="")
     kev.add_argument("--limit", type=int, default=20)
+    kev.add_argument("--start", type=int, default=0)
 
     kernel = commands.add_parser("kernel", help="does this CVE affect this kernel version")
     kernel.add_argument("ref")
@@ -108,24 +77,34 @@ def _parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _show(args: argparse.Namespace, payload: dict[str, Any], view: Callable[[dict[str, Any]], str]) -> None:
+    if args.json:
+        _print_json(payload)
+    else:
+        print(view(payload), end="")
+
+
 def _dispatch(args: argparse.Namespace) -> int:
     command = args.command
     if command == "path":
-        _print_json({"home": str(config.home()), "index": str(config.index_path()), "env": "CVELIB_HOME"})
+        if args.json:
+            _print_json({"home": str(config.home()), "index": str(config.index_path()), "env": "CVELIB_HOME"})
+        else:
+            print(views.path(str(config.home()), str(config.index_path())), end="")
     elif command == "info":
-        _print_json(service.info(args.ref))
+        _show(args, service.info(args.ref), views.info)
     elif command == "search":
         payload = service.search(" ".join(args.query), args.limit, args.start, args.kev, args.kernel, args.year)
-        _print_json(payload) if args.json else _render_search(payload)
+        _show(args, payload, views.search)
     elif command == "read":
-        _print_json(service.read(args.ref, args.max_tokens))
+        _show(args, service.read(args.ref, args.max_tokens), views.read)
     elif command == "kev":
-        _print_json(service.kev(args.ref, args.vendor, args.since, args.limit))
+        _show(args, service.kev(args.ref, args.vendor, args.since, args.limit, args.start), views.kev)
     elif command == "kernel":
-        _print_json(service.kernel_check(args.ref, args.version))
+        _show(args, service.kernel_check(args.ref, args.version), views.kernel_check)
     elif command == "kernel-list":
         payload = service.kernel_list(args.version, args.kev, args.path, args.limit, args.start)
-        _print_json(payload) if args.json else _render_kernel_list(payload)
+        _show(args, payload, views.kernel_list)
     elif command == "sync":
         results = run_sync(
             [item.strip() for item in args.source.split(",") if item.strip()],
@@ -141,6 +120,9 @@ def _dispatch(args: argparse.Namespace) -> int:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    # Record text holds characters a Windows console's code page has no room for; a command whose job is to print
+    # it must not die on one.
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
     args = _parser().parse_args(argv)
     if args.command == "mcp":
         from .mcp import main as serve
@@ -153,10 +135,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
     try:
         return _dispatch(args)
-    except CvelibError as error:
-        print(f"error: {error.message}", file=sys.stderr)
-        if error.hint:
-            print(f"hint: {error.hint}", file=sys.stderr)
+    except LibError as error:
+        print(error.as_text(), file=sys.stderr)
         return 2
 
 

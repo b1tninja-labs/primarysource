@@ -28,6 +28,33 @@ It merges, per CVE, with each field attributed:
 NVD, OSV and GitHub Advisories are not ingested yet. [cve-sources.md](cve-sources.md) records how each source is
 obtained, what its terms are, and why Grype's database is a cross-check rather than a source.
 
+## 0. What a result looks like
+
+On the core contract (PLAN.md §5.9-§5.11). Every tool and every command returns text: the answer as lines, then
+the fixed footer. `service.py` still builds plain dicts, which `--json` prints; `views.py` turns the same dict into
+the text.
+
+```
+CVE-2025-2001  PUBLISHED
+title: Widget login bypass
+cvss: 7.8 HIGH (CVSS 3.1, CNA:acme); 2 score(s) in CVE-2025-2001§cvss
+kev: listed, added 2026-01-04, due 2026-01-25, ransomware use Known; action: ...
+...
+cite: CVE-2025-2001 [CVE List ...; CISA KEV 2026.01.05; FIRST EPSS 2026-01-05]
+next: CVE-2025-2001§references¶1
+```
+
+- `next:` on a read is a ref (`CVE-2025-2001§references¶9`: the items from the ninth on) that `cve_read` takes back
+  as `ref`; on a list (`cve_search`, `cve_kev`, `cve_kernel_list`) it is `start=<n>`, 0-based. The items of a list
+  section are printed as `CVE-Y-N§section¶n  <item>`, so each can be cited. `unit: block` says so.
+- `partial:` is a footer key added for this collection (PLAN.md §5.1): every source that is missing, failed or
+  stale, on one line, gaps joined by ` | `. A CVE "not in KEV" is a different fact when the KEV catalog was never
+  synced; the line says so on every answer that could be wrong for it.
+- A missing corpus, a source a question needs that was never synced, an unknown CVE and an unknown section are
+  `LibError`s: `error:`, `hint:`, and `action:` (`primarysource cve sync --source kev`) lines, exit status 2 on the
+  command line, an `isError` result in a tool. An empty search says "no CVE record matches ..." and is not an error.
+- `--json` is global (`primarysource cve --json read CVE-2025-2001`) and prints the dict for every command.
+
 ## 1. Where the data goes
 
 ```
@@ -90,4 +117,6 @@ comes back with a caveat.
   scores.
 - Not a scanner (no SBOMs, no package matching), not a publisher, not a reachability engine.
 
-The rows that say what is pinned by a test and what is not are in ROADMAP.md, section 4a.
+The rows that say what is pinned by a test and what is not are in ROADMAP.md, section 4a: its own FTS5 store
+(`cve.on_core_index`), its own fetch and disk reserve (`cve.atomic_download`) and the missing network setting
+(`cve.settings_network`) are what is left of the move.

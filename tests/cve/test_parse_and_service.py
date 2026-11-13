@@ -50,7 +50,7 @@ def test_kev_shape_rejected_when_wrong() -> None:
 def test_missing_corpus_is_an_error_naming_the_fix(home: Path) -> None:
     with pytest.raises(CvelibError) as caught:
         service.search("anything")
-    assert "primarysource cve sync" in caught.value.hint
+    assert caught.value.action == "primarysource cve sync"
     assert service.info()["status"] == "not_synced"
 
 
@@ -196,3 +196,15 @@ def test_cvelist_delta_targets_stop_at_since() -> None:
         {"fetchTime": "2026-01-01T00:00:00Z", "new": [{"githubLink": "u3"}], "updated": []},
     ]
     assert sync._delta_targets(log, datetime(2026, 1, 2, tzinfo=UTC)) == ["u1", "u2"]
+
+
+def test_a_download_is_put_in_place_whole_or_not_at_all(tmp_path: Path) -> None:
+    source = tmp_path / "in.bin"
+    source.write_bytes(b"x" * 5000)
+    target = tmp_path / "out" / "baseline.zip"
+    sync.http_download(source.as_uri(), target)
+    assert target.read_bytes() == b"x" * 5000 and not list(target.parent.glob("*.part"))
+    other = tmp_path / "out" / "other.zip"
+    with pytest.raises(CvelibError):
+        sync.http_download((tmp_path / "missing.bin").as_uri(), other)
+    assert not other.exists() and not list(other.parent.glob("*.part"))

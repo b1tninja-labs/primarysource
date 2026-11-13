@@ -91,15 +91,17 @@ def open_read(path: Path | None = None) -> sqlite3.Connection:
     if not target.is_file():
         raise CvelibError(
             f"no cve index at {target}",
-            "Run: primarysource cve sync   (set CVELIB_HOME to a large disk first; see primarysource cve path)",
-            status="not_synced",
+            "set CVELIB_HOME (or PRIMARYSOURCE_CVE_HOME) to a large disk first; `primarysource cve path` shows where",
+            "primarysource cve sync",
         )
     try:
         conn = _configure(sqlite3.connect(f"{target.resolve().as_uri()}?mode=ro", uri=True))
         conn.execute("SELECT 1 FROM source LIMIT 1")
     except sqlite3.Error as error:
         raise CvelibError(
-            f"the index at {target} is unusable: {error}", "Run: primarysource cve sync --rebuild"
+            f"the index at {target} is unusable: {error}",
+            "delete it and its -wal and -shm files; the sync then starts from the CVE List baseline",
+            "primarysource cve sync --full",
         ) from error
     return conn
 
