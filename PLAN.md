@@ -108,7 +108,7 @@ Backends give different text, so the backend name and version are part of an ind
 ## 6. Adoption order
 
 0. **Before any adoption**:
-   - commit this repository;
+   - commit this repository (done 2026-11-12);
    - merge rfclib PR #1, so that the HTTP transport, read-only open and write transaction are lifted from code
      that already serves rather than written twice.
 1. `nistlib` and `usblib` together, because they are unpublished, have the least to lose and the most to gain:
@@ -157,7 +157,8 @@ rfclib has no matrix, so its items are in `PORTFOLIO.md` §9 item 13:
   `zim_` and `cve_`. Renaming rfclib's tools breaks a published interface, so it needs the owner's yes.
 - **Licence of nistlib and usblib.** Both declare Apache-2.0 in `pyproject.toml` and ship no LICENSE file.
   This package and the rest of the family are MIT.
-- Nothing is committed yet.
+- First commit made on 2026-11-12. There is no GitHub remote yet. The repository must be public, or
+  public-compatible, because itulib is public and will depend on it.
 
 ## 8. Review, 2026-11-12
 
