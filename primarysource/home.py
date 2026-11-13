@@ -9,9 +9,10 @@ from __future__ import annotations
 
 import os
 import sys
-import tempfile
 from collections.abc import Mapping
 from pathlib import Path
+
+from primarysource.fsutil import atomic_write as atomic_write  # moved to fsutil; kept here for importers
 
 
 def resolve_home(app: str, environ: Mapping[str, str] | None = None, platform: str | None = None) -> Path:
@@ -57,22 +58,3 @@ def collection_home(
         if old.is_dir():
             return old
     return resolve_home("primarysource", env, platform) / name
-
-
-def atomic_write(path: Path, data: bytes) -> None:
-    """Write `data` to `path` through a temp file in the same directory and `os.replace`.
-
-    A reader sees the old file or the new one, never a partial one. itulib's index rebuild unlinks first and a
-    concurrent reader then sees "no index"; this is the replacement for that.
-    """
-    path.parent.mkdir(parents=True, exist_ok=True)
-    handle, temp_name = tempfile.mkstemp(dir=path.parent, prefix=path.name + ".", suffix=".part")
-    try:
-        with os.fdopen(handle, "wb") as stream:
-            stream.write(data)
-            stream.flush()
-            os.fsync(stream.fileno())
-        os.replace(temp_name, path)
-    except BaseException:
-        Path(temp_name).unlink(missing_ok=True)
-        raise
