@@ -1,8 +1,9 @@
 primarysource
 Copyright 2026 Justin Capella. Licensed under the Apache License, Version 2.0 (LICENSE).
 
-The collections moved in from rfclib, itulib, zimlore, nistlib and usblib are the
-same author's original work and are relicensed here under the Apache License 2.0.
+The collections moved in from the author's other libraries (rfclib, itulib, zimlore,
+nistlib, usblib, cvelib and any later *lib) are the same author's original work and
+are relicensed here under the Apache License 2.0, whatever licence they carried before.
 
 Document text is not part of this software's licence
 ----------------------------------------------------
