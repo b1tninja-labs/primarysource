@@ -1,21 +1,57 @@
-"""A full-text index over one edition, tagged with the digest it was built from.
+"""A full-text index over one edition, on the core's index (`primarysource/index.py`), tagged with its source.
 
-The index records the sha256 of the PDF it came from and refuses to serve results when the corpus no longer
-matches. That is the difference between "this clause says X in the edition you hold" and a stale table that
-reports the same confident answer after ITU republished something - a gate that silently skips, in the shape
-of a search result.
+One SQLite file per edition, built by `primarysource.index.rebuild` (a temporary file `os.replace`d over the old
+one, so a server sees the old index or the new one, never half of one) and opened for serving with
+`primarysource.index.open_read` (`?mode=ro`: nothing is created or migrated, and a read-only volume works).
+
+How a clause sits in the core's schema, chosen so itulib's measured BM25 weights carry over unchanged:
+
+- every clause is a core document of one section, in reading order. `doc_id` is its zero-padded ordinal, so two
+  fragments that carry the same number both survive and `fragments` can say so;
+- the document title is the clause number. It fills the core's `doc_title` column, weighted 2.0 as itulib's
+  `number` column was;
+- the section title is the document's own heading, or empty when the clause has none (the label `outline` shows
+  is then the first sentence, derived from the body). It is weighted 15.0 as itulib's `head` column was;
+- the section's one unit is the clause body, weighted 1.0. ¶n is still the nth sentence of that body.
+
+One more document, `~edition`, has no sections and holds what the index was built from as JSON in its title: the
+collection's own schema, the edition key and the PDF's sha256, size and modification time. The index refuses to
+serve when the PDF no longer matches. That is the difference between "this clause says X in the edition you
+hold" and a stale table that reports the same confident answer after ITU republished something - a gate that
+silently skips, in the shape of a search result. The check is by `stat` first: the PDF is hashed only when its
+size or modification time differs from the recorded ones, and a hash that matches is remembered for the life of
+the process, so serving does not read the whole PDF on every call. The cost, stated: a file rewritten with the
+same size and its old modification time restored is not noticed.
 """
 
 from __future__ import annotations
 
 import hashlib
+import json
 import pathlib
 import re
 import sqlite3
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass
+
+from primarysource import index as core
+from primarysource.errors import LibError
+from primarysource.model import Document, Section, Unit
 
 from . import corpus, text
 from .sources import Amendment, Edition
+
+SCHEMA = "4"  # this collection's layout on the core schema; the core's own version is its PRAGMA user_version
+META_ID = "~edition"
+CANDIDATES = 150
+DEMOTION = 0.6  # score multiplier for clauses that are rarely the answer; flat optimum between 0.4 and 0.8
+_INFORMATIVE = re.compile(r"does not form an integral part", re.IGNORECASE)
+
+# BM25 column weights as itulib measured them: the clause number 2.0, the document's own heading 15.0 (a heading
+# match is a much stronger signal than the same word somewhere in a body), the body 1.0.
+NUMBER_WEIGHT, HEADING_WEIGHT, BODY_WEIGHT = 2.0, 15.0, 1.0
+CHARS_PER_TOKEN = 4
 
 
 @dataclass(frozen=True)
@@ -23,167 +59,214 @@ class Hit:
     number: str
     title: str
     excerpt: str
-    score: float
-    all_terms: bool = True  # False: matched only some of the query's terms
+    score: float  # higher is better: BM25 negated, times the demotion
+
+
+@dataclass(frozen=True)
+class Results:
+    """One page of search hits. `relaxed`: no clause held every term, so these hold some. `next_start`: the 0-based
+    `start` of the next page, or None at the end. No hits means nothing matched."""
+
+    hits: tuple[Hit, ...]
+    relaxed: bool
+    next_start: int | None
 
 
 def _db_path(edition: Edition) -> pathlib.Path:
     return corpus.home() / "index" / f"{edition.key.replace('#', '-')}.sqlite3"
 
 
+def index_command(edition: Edition) -> str:
+    return f"primarysource itu index {edition.key}"
+
+
+def sync_command(edition: Edition) -> str:
+    return f"primarysource itu sync {edition.key}"
+
+
+def _sha256(path: pathlib.Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def _documents(rows: tuple[text.Clause, ...], meta: dict[str, object]) -> Iterator[Document]:
+    yield Document(META_ID, json.dumps(meta, sort_keys=True), Unit.SENTENCE)
+    for ordinal, row in enumerate(rows):
+        section = Section(
+            id=row.number,
+            title=row.title if row.heading else "",
+            units=(row.body,) if row.body else (),
+            depth=row.number.count(".") + 1,
+        )
+        yield Document(f"{ordinal:05d}", row.number, Unit.SENTENCE, (section,))
+
+
 def build(edition: Edition) -> int:
-    """(Re)build the index for one edition. Returns the clause count."""
+    """(Re)build the index for one edition and swap it in atomically. Returns the clause count."""
     pdf = corpus.require(edition)
-    digest = hashlib.sha256(pdf.read_bytes()).hexdigest()
+    stat = pdf.stat()
+    digest = _sha256(pdf)
     extracted = text.pages(pdf)
     rows = text.clauses(extracted, text.headings(pdf, extracted))
     if not rows:
-        raise RuntimeError(
-            f"{edition.key}: extracted 0 clauses. The corpus exists but nothing parsed, which is a failure "
-            f"of the extractor, not an empty document. Refusing to write an empty index."
+        raise LibError(
+            f"{edition.key}: extracted 0 clauses. The corpus exists but nothing parsed, which is a failure of the "
+            "extractor, not an empty document. Refusing to write an empty index.",
+            "",
+            f"check that {pdf} opens as a PDF, then run: primarysource itu fetch {edition.key} --refresh",
         )
-    db = _db_path(edition)
-    db.parent.mkdir(parents=True, exist_ok=True)
-    db.unlink(missing_ok=True)
-    connection = sqlite3.connect(db)
-    try:
-        connection.executescript(
-            """
-            CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
-            CREATE VIRTUAL TABLE clause USING fts5(number, title UNINDEXED, head, body, tokenize='porter unicode61');
-            """
-        )
-        connection.executemany(
-            "INSERT INTO clause (number, title, head, body) VALUES (?, ?, ?, ?)",
-            [(row.number, row.title, row.title if row.heading else "", row.body) for row in rows],
-        )
-        connection.executemany(
-            "INSERT INTO meta (key, value) VALUES (?, ?)",
-            [("edition", edition.key), ("pdf_sha256", digest), ("clauses", str(len(rows))), ("schema", SCHEMA)],
-        )
-        connection.commit()
-    finally:
-        connection.close()
+    meta: dict[str, object] = {
+        "schema": SCHEMA,
+        "edition": edition.key,
+        "pdf_sha256": digest,
+        "pdf_octets": stat.st_size,
+        "pdf_mtime_ns": stat.st_mtime_ns,
+        "clauses": len(rows),
+    }
+    core.rebuild(_db_path(edition), _documents(rows, meta), rebuild_command=index_command(edition))
+    _VERIFIED.pop(pdf, None)
     return len(rows)
 
 
-def _open(edition: Edition) -> sqlite3.Connection:
-    db = _db_path(edition)
-    if not db.is_file():
-        raise corpus.CorpusMissing(
-            f"{edition.key}: no index. Run: itulib fetch {edition.key} && itulib index {edition.key} "
-            f"(or: itulib sync)"
-        )
-    connection = sqlite3.connect(db)
-    meta = dict(connection.execute("SELECT key, value FROM meta"))
-    if meta.get("schema") != SCHEMA:
-        connection.close()
-        raise RuntimeError(
-            f"{edition.key}: the index was built by an older itulib. "
-            f"Run: itulib index {edition.key} (or: itulib sync)"
-        )
-    pdf = corpus.require(edition)
-    if meta.get("pdf_sha256") != hashlib.sha256(pdf.read_bytes()).hexdigest():
-        connection.close()
-        raise RuntimeError(
-            f"{edition.key}: the corpus changed since the index was built. Run: itulib index {edition.key}"
-        )
-    return connection
+# PDF path -> (size, mtime_ns, sha256) that this process hashed and found to match its index.
+_VERIFIED: dict[pathlib.Path, tuple[int, int, str]] = {}
 
 
-def search(edition: Edition, query: str, limit: int = 8) -> tuple[Hit, ...]:
-    return search_mode(edition, query, limit)[0]
-
-
-CANDIDATES = 150
-DEMOTION = 0.6  # score multiplier for clauses that are rarely the answer; flat optimum between 0.4 and 0.8
-_INFORMATIVE = re.compile(r"does not form an integral part", re.IGNORECASE)
-
-
-def search_mode(edition: Edition, query: str, limit: int = 8) -> tuple[tuple[Hit, ...], bool]:
-    """(hits, relaxed): the best clauses for a question, best first.
-
-    Candidates are every clause that contains ANY query term, ranked by BM25 with the heading weighted above the
-    body, then adjusted by where the clause sits: definitions (clause 3.x) and informative annexes are demoted
-    unless the query asks what a term means, because a definition that merely mentions the words is rarely the rule
-    that was asked about. Each hit says whether it contained every term, and `relaxed` is true when some did not,
-    because "some of your words matched" is a weaker answer than "all of them did".
-
-    Tried and dropped on the blind set because they did not help: pushing a subtree's best score up to its
-    heading-only parent, a bonus for words found in the heading, and a bonus for all-terms matches.
-    """
-    strict_query = text.fts_query(query)
-    loose_query = text.fts_query(query, any_term=True)
-    wants_definitions = text.asks_for_definition(query)
-    connection = _open(edition)
+def _check_source(edition: Edition, meta: dict[str, object]) -> None:
+    """Refuse when the PDF on disk is not the one the index was built from. Hashes only when `stat` differs."""
+    pdf = corpus.pdf_path(edition)
     try:
-        # BM25_WEIGHTS is a module constant, never user input.
-        rows = connection.execute(
-            f"SELECT number, title, snippet(clause, 3, '', '', ' … ', 24), bm25(clause, {BM25_WEIGHTS}) FROM clause "  # noqa: S608
-            f"WHERE clause MATCH ? ORDER BY bm25(clause, {BM25_WEIGHTS}) LIMIT ?",
-            (loose_query, CANDIDATES),
-        ).fetchall()
-        every_term = (
-            {row[0] for row in connection.execute("SELECT number FROM clause WHERE clause MATCH ?", (strict_query,))}
-            if strict_query != loose_query
-            else {row[0] for row in rows}
+        stat = pdf.stat()
+    except FileNotFoundError:
+        raise LibError(
+            f"{edition.key}: the PDF this index was built from is not in {corpus.home()}",
+            "itu_info shows which editions are fetched",
+            sync_command(edition),
+        ) from None
+    expected = str(meta.get("pdf_sha256", ""))
+    if (stat.st_size, stat.st_mtime_ns) == (meta.get("pdf_octets"), meta.get("pdf_mtime_ns")):
+        return
+    if _VERIFIED.get(pdf) == (stat.st_size, stat.st_mtime_ns, expected):
+        return
+    if _sha256(pdf) != expected:
+        raise LibError(
+            f"{edition.key}: the corpus changed since the index was built",
+            "itu_info shows the registered digest of each edition",
+            index_command(edition),
         )
-        informative = _informative_annexes(connection)
+    _VERIFIED[pdf] = (stat.st_size, stat.st_mtime_ns, expected)
+
+
+@contextmanager
+def _open(edition: Edition) -> Iterator[sqlite3.Connection]:
+    """A read-only connection to an edition's index that matches the PDF on disk, closed on exit."""
+    path = _db_path(edition)
+    if not path.is_file():
+        raise LibError(f"{edition.key}: no index", "itu_info shows which editions are fetched", sync_command(edition))
+    try:
+        connection = core.open_read(path, rebuild_command=index_command(edition))
+    except LibError as error:  # the core names the command in `hint`; here it is a human's to run, so `action`
+        raise LibError(error.message, "", index_command(edition)) from None
+    try:
+        row = connection.execute("SELECT title FROM documents WHERE doc_id = ?", (META_ID,)).fetchone()
+        meta = json.loads(row[0]) if row else {}
+        if not isinstance(meta, dict) or meta.get("schema") != SCHEMA:
+            raise LibError(
+                f"{edition.key}: the index was built by an older itulib or primarysource", "", index_command(edition)
+            )
+        _check_source(edition, meta)
+        yield connection
     finally:
         connection.close()
-    adjusted = []
-    for number, title, excerpt, score in rows:
-        factor = 1.0
-        if number.startswith("3.") and not wants_definitions:
-            factor *= DEMOTION
-        if number.split(".")[0] in informative:
-            factor *= DEMOTION
-        adjusted.append(Hit(number, title, excerpt or title, score * factor, number in every_term))
-    adjusted.sort(key=lambda hit: hit.score)  # bm25 is negative: more negative is better
-    top = tuple(adjusted[:limit])
-    return top, any(not hit.all_terms for hit in top)
+
+
+def _display(title: str, body: str) -> str:
+    """The label of a clause: its own heading, or the first sentence of its body when it has none."""
+    return title or text.first_sentence(body)
+
+
+def search(edition: Edition, query: str, limit: int = 8, start: int = 0) -> Results:
+    """The best clauses for a question, best first, `limit` from the 0-based `start`.
+
+    The core's search (`primarysource.index.search`): every term is required first, and only when no clause holds
+    them all will any term do, which the result says with `relaxed`. The terms are the query's words without
+    question words and filler (`text.query_words`, measured on itulib's blind retrieval set). BM25 weights the
+    heading above the number above the body, and each hit is then adjusted by where the clause sits: definitions
+    (clause 3.x) and informative annexes are demoted unless the query asks what a term means, because a
+    definition that merely mentions the words is rarely the rule that was asked about.
+
+    Tried and dropped on the blind set because they did not help: pushing a subtree's best score up to its
+    heading-only parent, and a bonus for words found in the heading.
+    """
+    if start < 0:
+        raise LibError(f"start={start} is negative", "start is a 0-based offset; pass the value of next:")
+    words = " ".join(text.query_words(query))
+    wants_definitions = text.asks_for_definition(query)
+    with _open(edition) as connection:
+        informative = _informative_annexes(connection)
+
+        def adjust(hit: core.Hit, _query: str) -> float:
+            number, factor = hit.section_id, 1.0
+            if number.startswith("3.") and not wants_definitions:
+                factor *= DEMOTION
+            if number.split(".")[0] in informative:
+                factor *= DEMOTION
+            return factor
+
+        ranking = core.Ranking(NUMBER_WEIGHT, HEADING_WEIGHT, BODY_WEIGHT, adjust=adjust, candidates=CANDIDATES)
+        found = core.search(connection, words, ranking=ranking, limit=limit, start=start)
+        marks = ",".join("?" * len(found.hits))
+        bodies: dict[str, str] = dict(
+            connection.execute(
+                f"SELECT doc_id, body FROM sections WHERE doc_id IN ({marks})",  # noqa: S608 - only '?' marks
+                [hit.doc_id for hit in found.hits],
+            ).fetchall()
+        )
+    hits = []
+    for hit in found.hits:
+        title = _display(hit.title, bodies.get(hit.doc_id, ""))
+        hits.append(Hit(hit.section_id, title, hit.snippet or title, hit.score))
+    return Results(tuple(hits), found.relaxed, found.next_start)
 
 
 def _informative_annexes(connection: sqlite3.Connection) -> set[str]:
     """Letters of the annexes that say they do not form an integral part of the recommendation."""
     return {
         number
-        for number, body in connection.execute("SELECT number, body FROM clause WHERE length(number) = 1")
+        for number, body in connection.execute("SELECT section_id, body FROM sections WHERE length(section_id) = 1")
         if _INFORMATIVE.search(body)
     }
 
 
+def _rows(edition: Edition) -> list[tuple[str, str, str]]:
+    """(number, heading or "", body) of every clause, in reading order."""
+    with _open(edition) as connection:
+        return connection.execute("SELECT section_id, title, body FROM sections ORDER BY id").fetchall()
+
+
 def read(edition: Edition, number: str) -> text.Clause | None:
-    connection = _open(edition)
-    try:
-        row = connection.execute("SELECT number, title, body FROM clause WHERE number = ?", (number,)).fetchone()
-    finally:
-        connection.close()
-    return text.Clause(number=row[0], title=row[1], body=row[2]) if row else None
+    with _open(edition) as connection:
+        row = connection.execute(
+            "SELECT section_id, title, body FROM sections WHERE section_id = ? ORDER BY id LIMIT 1", (number,)
+        ).fetchone()
+    if row is None:
+        return None
+    return text.Clause(number=row[0], title=_display(row[1], row[2]), body=row[2], heading=bool(row[1]))
 
 
 def outline(edition: Edition) -> tuple[tuple[str, str], ...]:
-    connection = _open(edition)
-    try:
-        return tuple(
-            (row[0], row[1]) for row in connection.execute("SELECT number, title FROM clause ORDER BY rowid")
-        )
-    finally:
-        connection.close()
+    return tuple((number, _display(title, body)) for number, title, body in _rows(edition))
 
 
 # --- paging, citation, references ----------------------------------------------------------------------------
 
-CHARS_PER_TOKEN = 4
-# bm25 column weights for (number, title, body). Titles are the document's own headings, so a title match is a much
-# stronger signal than the same word somewhere in a body.
-BM25_WEIGHTS = "2.0, 0.0, 15.0, 1.0"  # number, title (display only), head, body
-SCHEMA = "3"
-
 
 @dataclass(frozen=True)
 class Page:
-    """A budgeted slice of one clause. `next` is the ¶ to pass as `start` for the rest, or None at the end."""
+    """A budgeted slice of one clause. `next` is the ¶ the rest starts at, or None at the end."""
 
     number: str
     title: str
@@ -214,7 +297,10 @@ def page(edition: Edition, number: str, *, start: int = 1, max_tokens: int = 200
         return Page(clause.number, clause.title, 1, 0, 0, "", None)
     units = text.sentences(clause.body)
     if not 1 <= start <= max(len(units), 1):
-        raise ValueError(f"§{number} has {len(units)} sentences; start={start} is outside 1..{len(units)}")
+        raise LibError(
+            f"§{number} has {len(units)} sentences; ¶{start} is outside 1..{len(units)}",
+            f"itu_read('{number}') reads the clause from its first sentence",
+        )
     budget = max(max_tokens, 1) * CHARS_PER_TOKEN
     used, last = 0, start - 1
     for n in range(start, len(units) + 1):
@@ -230,11 +316,8 @@ def page(edition: Edition, number: str, *, start: int = 1, max_tokens: int = 200
 def fragments(edition: Edition, number: str) -> int:
     """How many extracted fragments carry this clause number. More than one means the splitter could not tell a
     heading from a numbered sub-item or a table cell, and `read` returns the first. Callers should say so."""
-    connection = _open(edition)
-    try:
-        row = connection.execute("SELECT count(*) FROM clause WHERE number = ?", (number,)).fetchone()
-    finally:
-        connection.close()
+    with _open(edition) as connection:
+        row = connection.execute("SELECT count(*) FROM sections WHERE section_id = ?", (number,)).fetchone()
     return int(row[0])
 
 
@@ -261,11 +344,7 @@ class Links:
 
 def links(edition: Edition, number: str) -> Links | None:
     """Outgoing references of a clause, and the clauses of the same edition that point back at it."""
-    connection = _open(edition)
-    try:
-        rows = connection.execute("SELECT number, body FROM clause ORDER BY rowid").fetchall()
-    finally:
-        connection.close()
+    rows = [(n, body) for n, _title, body in _rows(edition)]
     known = {row[0] for row in rows}
     body = next((row[1] for row in rows if row[0] == number), None)
     if body is None:
@@ -282,35 +361,42 @@ def links(edition: Edition, number: str) -> Links | None:
     )
 
 
+@dataclass(frozen=True)
+class GrepHit:
+    number: str
+    excerpt: str
+
+
 def grep(
-    edition: Edition, pattern: str, *, max_tokens: int = 2000, context: int = 120
-) -> tuple[list[dict[str, str]], bool]:
+    edition: Edition, pattern: str, *, start: int = 0, max_tokens: int = 2000, context: int = 120
+) -> tuple[tuple[GrepHit, ...], int | None]:
     """Regex over clause bodies in ONE query, with an excerpt around the first match, cut to a token budget.
 
-    Returns (hits, truncated). `truncated` is True when the budget stopped the listing, so a short list is
-    distinguishable from a complete one.
+    Returns (hits, next start): matching clauses from the 0-based `start`, and the `start` of the rest when the
+    budget stopped the listing, or None when it is complete. At least one hit is returned when any remain.
     """
-    import re
-
-    compiled = re.compile(pattern, re.IGNORECASE)
-    connection = _open(edition)
     try:
-        rows = connection.execute("SELECT number, body FROM clause ORDER BY rowid").fetchall()
-    finally:
-        connection.close()
-    budget, used = max(max_tokens, 1) * CHARS_PER_TOKEN, 0
-    hits: list[dict[str, str]] = []
-    for number, body in rows:
+        compiled = re.compile(pattern, re.IGNORECASE)
+    except re.error as error:
+        raise LibError(f"{pattern!r} is not a regular expression: {error}", "itu_search takes plain words") from None
+    if start < 0:
+        raise LibError(f"start={start} is negative", "start is a 0-based offset; pass the value of next:")
+    budget, used, seen = max(max_tokens, 1) * CHARS_PER_TOKEN, 0, 0
+    hits: list[GrepHit] = []
+    for number, _title, body in _rows(edition):
         match = compiled.search(body)
         if not match:
+            continue
+        seen += 1
+        if seen <= start:
             continue
         excerpt = body[max(match.start() - context, 0) : match.end() + context]
         cost = len(excerpt) + len(number) + 20
         if hits and used + cost > budget:
-            return hits, True
+            return tuple(hits), start + len(hits)
         used += cost
-        hits.append({"number": number, "excerpt": excerpt})
-    return hits, False
+        hits.append(GrepHit(number, excerpt))
+    return tuple(hits), None
 
 
 def _points_at(body: str, number: str) -> bool:
@@ -323,7 +409,9 @@ def slice_rows(
 ) -> tuple[tuple[tuple[str, str], ...], int | None]:
     """(rows[start:...], next start or None), cut to a token budget. Always returns at least one row."""
     if not 0 <= start <= len(rows):
-        raise ValueError(f"start={start} is outside 0..{len(rows)}")
+        raise LibError(
+            f"start={start} is outside 0..{len(rows)}", "start is a 0-based offset; pass the value of next:"
+        )
     budget, used, end = max(max_tokens, 1) * CHARS_PER_TOKEN, 0, start
     while end < len(rows):
         cost = len(rows[end][0]) + len(rows[end][1]) + 12

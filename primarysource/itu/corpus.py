@@ -20,6 +20,8 @@ import pathlib
 import time
 import urllib.request
 
+from primarysource.errors import LibError
+
 from .sources import Amendment, Edition
 
 Document = Edition | Amendment
@@ -72,16 +74,16 @@ def require(edition: Document) -> pathlib.Path:
     path = pdf_path(edition)
     if not has(edition):
         raise CorpusMissing(
-            f"{edition.key} is not in {home()}.\n"
-            f"    Run: itulib fetch {edition.key}   (or: itulib sync)\n"
-            f"    The file is copyright ITU and is fetched to your machine rather than shipped with this "
-            f"package, so there is no way to obtain it from the repository."
+            f"{edition.key} is not in {home()}. The file is copyright ITU and is fetched to your machine rather "
+            "than shipped with this package, so there is no way to obtain it from the repository.",
+            "itu_info shows which editions are fetched",
+            f"primarysource itu fetch {edition.key}",
         )
     return path
 
 
-class CorpusMissing(RuntimeError):
-    """The corpus has not been fetched. The remedy is a command, never a committed file."""
+class CorpusMissing(LibError, RuntimeError):
+    """The corpus has not been fetched. The remedy is a command (`action`), never a committed file."""
 
 
 def fetch(edition: Document, *, refresh: bool = False) -> pathlib.Path:

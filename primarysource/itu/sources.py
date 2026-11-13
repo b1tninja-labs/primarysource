@@ -377,7 +377,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.500-202410-I!Amd1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.500 page, PDF 218291 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.500#2019-10!amd1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.500#2019-10!amd1`.",
         sha256="df26e76b8cd2e9e17de507f2187f15dc10d11b8894894758eb3eeed7e7b8ec8d",
         octets=218_291,
     ),
@@ -388,7 +388,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.501-202110-I!Amd1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.501 page, PDF 351086 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.501#2019-10!amd1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.501#2019-10!amd1`.",
         sha256="24ad1e87d3c9eff366cc178616fa88c4b6e9c47ea29504001259337bea6a1bdb",
         octets=351_086,
     ),
@@ -399,7 +399,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.501-202410-I!Amd2!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.501 page, PDF 550429 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.501#2019-10!amd2`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.501#2019-10!amd2`.",
         sha256="084fbedc61083c3e5b2a0f6b6c5e44b62f6d1cf0ed1d93bb5ed59ac08fea5872",
         octets=550_429,
     ),
@@ -410,7 +410,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.509-202110-I!Cor1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.509 page, PDF 367050 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.509#2019-10!cor1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.509#2019-10!cor1`.",
         sha256="ddcc42186f120c51d40ba278b0ca31f528fde851ea663a69474fbcd09bd06f7c",
         octets=367_050,
     ),
@@ -421,7 +421,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.509-202310-I!Cor2!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.509 page, PDF 352052 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.509#2019-10!cor2`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.509#2019-10!cor2`.",
         sha256="583416a04fcd76a201e43486d92eb183c5ddae3f03947bf43d50b8185ab5f5a9",
         octets=352_052,
     ),
@@ -432,7 +432,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.509-202410-I!Amd1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.509 page, PDF 300835 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.509#2019-10!amd1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.509#2019-10!amd1`.",
         sha256="7b0f16ec963fead56accab523fef543295f7946272330b2843799ade96d6cf76",
         octets=300_835,
     ),
@@ -443,7 +443,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.511-202410-I!Amd1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.511 page, PDF 246331 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.511#2019-10!amd1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.511#2019-10!amd1`.",
         sha256="322169a1f4861f4ca00c49b5c4c7e41686ea3c762d3faa416c9c21888064a806",
         octets=246_331,
     ),
@@ -454,7 +454,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.518-202410-I!Amd1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.518 page, PDF 239174 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.518#2019-10!amd1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.518#2019-10!amd1`.",
         sha256="312d69f9f4094548ce8f15cee1d43dd42ce5070f2491250a9fb92121e0032ff3",
         octets=239_174,
     ),
@@ -465,7 +465,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.519-202410-I!Amd1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.519 page, PDF 278528 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.519#2019-10!amd1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.519#2019-10!amd1`.",
         sha256="40d6c66587c395836491589d9dbe0660e349b30e39f79b4ed9b2118859829952",
         octets=278_528,
     ),
@@ -476,7 +476,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.520-202410-I!Amd1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.520 page, PDF 560983 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.520#2019-10!amd1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.520#2019-10!amd1`.",
         sha256="20ff1efd7cee34887939b73d82bd9f4e32e8ea39d8df2ebc2c9eb1302de7671d",
         octets=560_983,
     ),
@@ -487,7 +487,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.521-202410-I!Amd1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.521 page, PDF 231439 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.521#2019-10!amd1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.521#2019-10!amd1`.",
         sha256="f78c10f0266c004c6cc5fb822a2cfb758439734aba6977578ab68969d24cd435",
         octets=231_439,
     ),
@@ -498,7 +498,7 @@ AMENDMENTS: tuple[Amendment, ...] = (
         status="in force",
         artifact="T-REC-X.525-202410-I!Amd1!PDF-E",
         note="X.500 catalog sync 2026-11-07: listed In force on the X.525 page, PDF 207369 bytes as listed. "
-        "Not applied to the base text and not indexed; read it with `itulib read X.525#2019-10!amd1`.",
+        "Not applied to the base text and not indexed; read it with `primarysource itu read X.525#2019-10!amd1`.",
         sha256="787be5f950b4b3f950326a1bd80ffd36979043918bf41ae35bed65f664c743c8",
         octets=207_369,
     ),

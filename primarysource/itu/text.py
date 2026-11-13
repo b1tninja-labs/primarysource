@@ -87,7 +87,7 @@ def strip_running_lines(page_texts: list[str]) -> list[str]:
 _TITLE_END = re.compile(r"(?<!Rec)(?<!e\.g)(?<!i\.e)(?<!Fig)(?<!No)(?<!cf)(?<!Cor)(?<!Amd)\. ")
 
 
-def _heading(chunk: str) -> str:
+def first_sentence(chunk: str) -> str:
     """First sentence of the chunk, capped. A heading and its first rule are not separable in extracted
     text — `11.6 Set-of components The encodings of…` runs straight on — so the title is offered as a label
     and `body` stays authoritative."""
@@ -286,7 +286,7 @@ def clauses(source: list[str] | str, listed: list[tuple[str, str]] | None = None
         body = flat[end:stop].strip()
         if len(body) < 20 or HISTORY_ROW.match(body):
             continue
-        found.append(Clause(number=number, title=_heading(body), body=body))
+        found.append(Clause(number=number, title=first_sentence(body), body=body))
     return tuple(found)
 
 
@@ -370,7 +370,7 @@ def _clauses_from_headings(flat: str, listed: list[tuple[str, str]]) -> tuple[Cl
             stop = marks[position + 1][1] if position + 1 < len(marks) else region_end
             body = flat[end:stop].strip()
             if len(body) >= 20 and not HISTORY_ROW.match(body):
-                found.append(Clause(number=candidate, title=_heading(body), body=body))
+                found.append(Clause(number=candidate, title=first_sentence(body), body=body))
     return tuple(found)
 
 
@@ -460,21 +460,28 @@ def asks_for_definition(raw: str) -> bool:
     return any(token.lower() in _DEFINITION_WORDS for token in query_tokens(raw))
 
 
+def query_words(raw: str) -> list[str]:
+    """The words of a query that are search terms: filler and question words dropped, a query made only of them
+    kept as typed. Modal verbs stay: in a normative document they are part of what is being asked."""
+    tokens = [token for token in raw.split() if token]
+    # Filler words must not be required terms ("encoding for a value of a CHOICE type" matches no clause that
+    # contains every one of those words), but a query made only of them is still a query.
+    content = [token for token in tokens if token.strip("?.,;:!()\"'").lower() not in _STOPWORDS | _QUESTION_WORDS]
+    return content or tokens
+
+
 def fts_query(raw: str, *, any_term: bool = False) -> str:
-    """Turn a user query into something FTS5 will accept.
+    """Turn a user query into something FTS5 will accept: `query_words`, each quoted as a phrase.
 
     A raw query is not a valid MATCH expression: `set-of value order` parses as `set` NEAR `-of` (an
     unsupported-unary-not) and raised OperationalError out of a search tool, which is exactly the wrong shape
     of failure - the caller sees a crash where it should see either an answer or a stated error. Each token is
     quoted, and internal double quotes are doubled, which is FTS5's own escape. The cost is that advanced
     syntax (`AND`, `NEAR`, prefix `*`) stops working from the query box; that is the honest trade, and it is
-    said here rather than left for a user to discover.
+    said here rather than left for a user to discover. The index searches through the core's own quoting
+    (`primarysource.index.fts_query`), given these words.
     """
-    tokens = [token for token in raw.split() if token]
-    # Filler words must not be required terms ("encoding for a value of a CHOICE type" matches no clause that
-    # contains every one of those words), but a query made only of them is still a query.
-    content = [token for token in tokens if token.strip("?.,;:!()\"'").lower() not in _STOPWORDS | _QUESTION_WORDS]
-    tokens = content or tokens
+    tokens = query_words(raw)
     if not tokens:
         raise ValueError("empty query: there is nothing to search for")
     joiner = " OR " if any_term else " "
@@ -567,11 +574,36 @@ def refs(body: str) -> Refs:
     return Refs(tuple(seen), tuple(bare), tuple(recs), tuple(standards), tuple(foreign))
 
 
-def parse_ref(raw: str) -> tuple[str | None, str, int | None]:
-    """`X.690§11.6¶2`, `X.690 11.6`, `§11.6`, `11.6¶2` -> (rec or None, clause number, ¶ or None)."""
-    match = re.fullmatch(
-        r"\s*(?:([A-Z]\.\d+(?:#[\d-]+)?)\s*)?§?\s*((?:\d{1,2}|[A-I])(?:\.\d+)*)(?:\s*¶\s*(\d+))?\s*", raw
-    )
+_REF = re.compile(r"\s*(?:([A-Z]\.\d+(?:#[\d-]+)?)\s*)?§?\s*((?:\d{1,2}|[A-I])(?:\.\d+)*)(?:\s*¶\s*(\d+)(-)?)?\s*")
+
+
+@dataclass(frozen=True)
+class Target:
+    """A parsed ref. `onward`: the ref ends `¶n-`, the clause from sentence n on, which is the `next:` of a read."""
+
+    rec: str | None
+    number: str
+    para: int | None
+    onward: bool = False
+
+
+def parse_target(raw: str) -> Target:
+    """`X.690§11.6¶2`, `X.690#2021-02§11.6¶5-`, `X.690 11.6`, `§11.6`, `11.6¶2` -> `Target`."""
+    match = _REF.fullmatch(raw)
     if not match:
         raise ValueError(f"{raw!r} is not a clause reference; expected e.g. X.690§11.6 or 11.6¶2")
-    return match.group(1), match.group(2), int(match.group(3)) if match.group(3) else None
+    para = int(match.group(3)) if match.group(3) else None
+    if para == 0:
+        raise ValueError(f"{raw!r}: ¶ counts sentences from 1")
+    return Target(match.group(1), match.group(2), para, bool(match.group(4)))
+
+
+def parse_ref(raw: str) -> tuple[str | None, str, int | None]:
+    """`X.690§11.6¶2`, `X.690 11.6`, `§11.6`, `11.6¶2` -> (rec or None, clause number, ¶ or None).
+
+    The `¶n-` form is a read cursor and means more than one sentence, so it is refused here, where one ¶ is meant.
+    """
+    target = parse_target(raw)
+    if target.onward:
+        raise ValueError(f"{raw!r} is a read cursor (¶n-, the clause from ¶n on); name one ¶ or the clause")
+    return target.rec, target.number, target.para

@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from primarysource.errors import LibError
 from primarysource.itu import corpus, index, text
 from primarysource.itu.sources import Edition
 
@@ -95,7 +96,7 @@ def test_a_page_always_makes_progress_even_if_one_sentence_exceeds_the_budget(ho
 
 
 def test_start_outside_the_clause_is_an_error(home: Path) -> None:
-    with pytest.raises(ValueError, match="outside"):
+    with pytest.raises(LibError, match="outside"):
         index.page(SYNTHETIC, "1.1", start=99)
 
 
@@ -117,10 +118,12 @@ def test_links_reports_unresolved_clause_numbers(home: Path, monkeypatch: pytest
 
 
 def test_grep_is_budgeted_and_says_when_it_stopped(home: Path) -> None:
-    hits, truncated = index.grep(SYNTHETIC, "gadget", max_tokens=10)
-    assert len(hits) == 1 and truncated
-    hits, truncated = index.grep(SYNTHETIC, "gadget", max_tokens=5000)
-    assert len(hits) == 3 and not truncated
+    hits, more = index.grep(SYNTHETIC, "gadget", max_tokens=10)
+    assert len(hits) == 1 and more == 1, "the budget stopped it, and next is where the rest starts"
+    rest, more = index.grep(SYNTHETIC, "gadget", start=1, max_tokens=10)
+    assert [h.number for h in rest] == ["1.2"] and more == 2
+    hits, more = index.grep(SYNTHETIC, "gadget", max_tokens=5000)
+    assert len(hits) == 3 and more is None
 
 
 def test_citation_comes_from_the_registry() -> None:
@@ -178,14 +181,25 @@ def test_bare_pointers_count_only_when_the_clause_exists(home: Path, monkeypatch
     assert back is not None and back.cited_by == ("1.2",)
 
 
-def test_search_tops_up_with_partial_matches_and_marks_them(home: Path) -> None:
-    hits, relaxed = index.search_mode(SYNTHETIC, "widgets counted")
-    assert relaxed and hits[0].number == "1.1" and hits[0].all_terms
-    assert [h.number for h in hits if not h.all_terms] == ["1.2"], "1.2 has only one of the two terms"
-    loose, relaxed = index.search_mode(SYNTHETIC, "widgets zeppelin")
-    assert relaxed and loose and not any(h.all_terms for h in loose)
-    none, relaxed = index.search_mode(SYNTHETIC, "zeppelin dirigible")
-    assert none == () and not relaxed
+def test_search_requires_every_term_first_and_says_relaxed_only_when_it_falls_back(home: Path) -> None:
+    strict = index.search(SYNTHETIC, "widgets counted")
+    assert [h.number for h in strict.hits] == ["1.1"] and not strict.relaxed, "1.2 has only one of the two terms"
+    loose = index.search(SYNTHETIC, "widgets zeppelin")
+    assert loose.relaxed and {h.number for h in loose.hits} == {"1.1", "1.2"}, "no clause has both: any will do"
+    none = index.search(SYNTHETIC, "zeppelin dirigible")
+    assert none.hits == () and not none.relaxed, "nothing matched is an empty result, not an error"
+
+
+def test_search_pages_with_a_zero_based_start_and_loses_nothing(home: Path) -> None:
+    everything = [h.number for h in index.search(SYNTHETIC, "gadget", limit=10).hits]
+    assert len(everything) == 3
+    seen: list[str] = []
+    start: int | None = 0
+    while start is not None:
+        page = index.search(SYNTHETIC, "gadget", limit=1, start=start)
+        seen += [h.number for h in page.hits]
+        start = page.next_start
+    assert seen == everything
 
 
 def test_filler_words_are_not_required_terms() -> None:
@@ -214,7 +228,7 @@ def test_slice_rows_pages_without_loss_and_always_progresses() -> None:
         assert shown
         got.extend(n for n, _ in shown)
     assert got == [n for n, _ in rows]
-    with pytest.raises(ValueError, match="outside"):
+    with pytest.raises(LibError, match="outside"):
         index.slice_rows(rows, 999, 40)
 
 
@@ -399,18 +413,22 @@ def test_a_real_heading_outranks_a_body_that_merely_repeats_the_word(
     )
     monkeypatch.setattr(text, "headings", lambda _p, _t=None: [("2", "Gadgets"), ("3", "Other things")])
     index.build(SYNTHETIC)
-    hits, _ = index.search_mode(SYNTHETIC, "gadgets")
+    hits = index.search(SYNTHETIC, "gadgets").hits
     assert hits[0].number == "2", "the clause whose HEADING is the word must come first"
 
 
 def test_an_index_from_an_older_schema_is_refused_with_the_remedy(home: Path) -> None:
+    import json
     import sqlite3
 
     db = index._db_path(SYNTHETIC)
     with sqlite3.connect(db) as connection:
-        connection.execute("UPDATE meta SET value = '1' WHERE key = 'schema'")
-    with pytest.raises(RuntimeError, match="older itulib"):
+        (meta,) = connection.execute("SELECT title FROM documents WHERE doc_id = ?", (index.META_ID,)).fetchone()
+        older = json.dumps({**json.loads(meta), "schema": "3"})
+        connection.execute("UPDATE documents SET title = ? WHERE doc_id = ?", (older, index.META_ID))
+    with pytest.raises(LibError, match="older itulib") as refused:
         index.search(SYNTHETIC, "widgets")
+    assert refused.value.action == "primarysource itu index T.0#0000-00"
 
 
 OTHER = Edition(
@@ -500,13 +518,13 @@ def test_definitions_are_demoted_unless_the_question_asks_for_one(
     )
     index.build(SYNTHETIC)
     monkeypatch.setattr(index, "DEMOTION", 1.0)
-    assert index.search_mode(SYNTHETIC, "widget")[0][0].number == "3.1", (
+    assert index.search(SYNTHETIC, "widget").hits[0].number == "3.1", (
         "fixture: without the demotion the definition leads"
     )
     monkeypatch.setattr(index, "DEMOTION", 0.6)
-    plain, _ = index.search_mode(SYNTHETIC, "widget")
+    plain = index.search(SYNTHETIC, "widget").hits
     assert plain[0].number == "4.1", "with it, the rule outranks a definition that merely repeats the word"
-    asked, _ = index.search_mode(SYNTHETIC, "definition of widget")
+    asked = index.search(SYNTHETIC, "definition of widget").hits
     assert asked[0].number == "3.1", "and a question about what the term means still finds the definition"
 
 
@@ -522,15 +540,8 @@ def test_informative_annexes_are_demoted(home: Path, monkeypatch: pytest.MonkeyP
     monkeypatch.setattr(text, "headings", lambda _p, _t=None: listed)
     index.build(SYNTHETIC)
     monkeypatch.setattr(index, "DEMOTION", 1.0)
-    assert index.search_mode(SYNTHETIC, "widgets")[0][0].number == "A", "fixture: without it the annex leads"
+    assert index.search(SYNTHETIC, "widgets").hits[0].number == "A", "fixture: without it the annex leads"
     monkeypatch.setattr(index, "DEMOTION", 0.6)
-    hits, _ = index.search_mode(SYNTHETIC, "widgets")
+    hits = index.search(SYNTHETIC, "widgets").hits
     assert hits[0].number == "1", "a normative clause beats an informative annex that repeats the word more often"
     assert {h.number for h in hits} >= {"A", "A.1"}, "the annex is demoted, not hidden"
-
-
-def test_search_hits_say_whether_they_contained_every_term(home: Path) -> None:
-    hits, relaxed = index.search_mode(SYNTHETIC, "widgets counted")
-    assert relaxed and any(h.all_terms for h in hits) and any(not h.all_terms for h in hits)
-    exact, relaxed = index.search_mode(SYNTHETIC, "widgets")
-    assert not relaxed and all(h.all_terms for h in exact), "one term: every hit has it"
