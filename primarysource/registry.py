@@ -52,6 +52,7 @@ BUILTIN: dict[str, str] = {
     "kconfig": "primarysource.kconfig:COLLECTION",
     "iso": "primarysource.iso:ISO [iso]",
     "zim": "primarysource.zim.collection:COLLECTION [zim]",
+    "cve": "primarysource.cve.collection:COLLECTION",
 }
 
 _NAME = re.compile(r"[a-z][a-z0-9]*")

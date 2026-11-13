@@ -65,6 +65,8 @@ iso = ["pypdf>=5"]
 # without it. PyPI carries libzim wheels for Windows x64, macOS and Linux; Windows on ARM has neither wheel nor a
 # practical sdist build, so the marker leaves it out and `zim` there reports the missing binding with the remedy.
 zim = ["libzim>=4.1; sys_platform != 'win32' or platform_machine != 'ARM64'"]
+# CVE records (primarysource/cve/, moved in from cvelib): standard library only; `[cve,mcp]` serves it.
+cve = []
 
 [project.scripts]
 primarysource = "primarysource.cli:main"
@@ -94,6 +96,9 @@ select = ["E", "F", "I", "UP", "S", "B", "SIM"]
 "primarysource/zim/*" = ["S603", "S607", "S310"]
 "tests/zim/*" = ["S104", "S603", "S607", "S310"]
 "scripts/zim_*.py" = ["S603", "S607", "S310"]
+# cve builds git and network requests from fixed URLs it names itself (moved in from cvelib with these ignores).
+"primarysource/cve/*" = ["S603", "S607", "S310"]
+"tests/cve/*" = ["S105", "S106"]
 
 [tool.mypy]
 strict = true

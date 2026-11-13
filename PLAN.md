@@ -86,8 +86,10 @@ Backends give different text, so the backend name and version are part of an ind
 
 ## 5. Decisions already made
 
-1. **Tool results are text**, with `cite:`, `unit:`, `span:`, `next:`, `relaxed:`, `confidence:`, `warning:` footer lines
-   in that order (`primarysource/render.py`). The passage dominates the tokens and JSON escapes every newline in it; `rfclib`,
+1. **Tool results are text**, with `cite:`, `unit:`, `span:`, `next:`, `relaxed:`, `confidence:`, `partial:`, `warning:` footer lines
+   in that order (`primarysource/render.py`). `partial:` names the sources a multi-source answer could not consult or
+   found stale (one line, gaps joined by ` | `), so an absence is read with its limit; the cve collection uses it
+   and a collection with one source never does. The passage dominates the tokens and JSON escapes every newline in it; `rfclib`,
    the only published library, already returns text. Structured content can be added later without breaking text
    readers. Measured on 2026-11-13; the figures are in item 9.
 2. **`¶n` keeps its per-library unit, and the unit is declared** (`primarysource/model.py::Unit`). RFCs have real
@@ -246,7 +248,8 @@ from outside. The order below stands.
    - an FTS5 index in place of the per-query scan;
    - a ref string, token paging and one home.
 2. `cvelib`, before its first commit if its author agrees. It already has the hardened open and the FTS5 shape,
-   and it is the source for `cl.index_readonly_open`.
+   and it is the source for `cl.index_readonly_open`. **Done 2026-11-13:** moved in as `primarysource.cve` from its
+   uncommitted tree, then put on the core contract (ROADMAP `cl.adopt_cvelib`, section 4a).
 3. `itulib`:
    - pager, ref grammar and error type;
    - read-only open and atomic rebuild;
