@@ -60,7 +60,9 @@ def test_two_builtins_can_share_one_extra(monkeypatch: pytest.MonkeyPatch) -> No
         registry, "BUILTIN", {"posixdemo": "_ps_absent.mod:POSIX [shared]", "netdemo": "_ps_absent.mod:NET"}
     )
     found = registry._targets()
-    assert found["posixdemo"] == _Target("_ps_absent.mod:POSIX", 'pip install "primarysource[shared]"')
+    assert found["posixdemo"] == _Target(
+        "_ps_absent.mod:POSIX", 'pip install "primarysource[shared]"', 'pip install "primarysource[shared,mcp]"'
+    )
     assert found["netdemo"].install == 'pip install "primarysource[netdemo]"'
     with pytest.raises(LibError) as caught:
         load("posixdemo", found)
@@ -77,3 +79,14 @@ def test_a_malformed_target_is_reported(monkeypatch: pytest.MonkeyPatch) -> None
 def test_names_and_prefixes_are_checked(name: str, prefix: str) -> None:
     with pytest.raises(ValueError):
         Collection(name, "t", prefix, Unit.BLOCK, RefGrammar(r"D\d+"))
+
+
+def test_a_missing_server_names_the_shared_extra_and_mcp(monkeypatch: pytest.MonkeyPatch, demo_module: str) -> None:
+    monkeypatch.setattr(registry, "BUILTIN", {"demo": f"{demo_module}:COLLECTION [shared]"})
+    collection = load("demo")
+    with pytest.raises(LibError) as caught:
+        registry.attribute(collection, "_ps_absent_server:mcp", "server")
+    assert caught.value.hint == 'pip install "primarysource[shared,mcp]"'
+    with pytest.raises(LibError) as caught:
+        registry.attribute(collection, "_ps_absent_cli:main", "command line")
+    assert caught.value.hint == 'pip install "primarysource[shared]"'

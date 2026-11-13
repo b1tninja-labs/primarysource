@@ -76,6 +76,8 @@ class Collection:
 class _Target:
     spec: str
     install: str
+    # the hint when the collection's MCP server is what is missing: its own extra plus primarysource[mcp]
+    server_install: str = ""
 
 
 def _targets() -> dict[str, _Target]:
@@ -85,10 +87,15 @@ def _targets() -> dict[str, _Target]:
     for ep in entry_points(group=ENTRY_POINT_GROUP):
         dist = ep.dist.name if ep.dist is not None else ep.name
         target, extra = _split(ep.value)
-        found[ep.name] = _Target(target, f'pip install "{dist}[{extra}]"' if extra else f'pip install "{dist}"')
+        package = f"{dist}[{extra}]" if extra else dist
+        found[ep.name] = _Target(target, f'pip install "{package}"', f'pip install "{package}" "primarysource[mcp]"')
     for name, spec in BUILTIN.items():
         target, extra = _split(spec)
-        found[name] = _Target(target, f'pip install "primarysource[{extra or name}]"')
+        found[name] = _Target(
+            target,
+            f'pip install "primarysource[{extra or name}]"',
+            f'pip install "primarysource[{extra or name},mcp]"',
+        )
     return found
 
 
@@ -120,12 +127,13 @@ def attribute(collection: Collection, spec: str, what: str) -> Any:
     if not spec:
         raise LibError(f"collection {collection.name!r} has no {what}", "")
     module_name, _, name = spec.partition(":")
-    extras = f"{collection.name},mcp" if what == "server" else collection.name
     try:
         module = importlib.import_module(module_name)
     except ModuleNotFoundError as exc:
-        raise LibError(
-            f"the {collection.name!r} {what} needs {exc.name!r}, which is not installed",
-            f'pip install "primarysource[{extras}]"',
-        ) from exc
+        target = _targets().get(collection.name)
+        if target is None:
+            hint = f'pip install "primarysource[{collection.name}]"'
+        else:
+            hint = target.server_install if what == "server" and target.server_install else target.install
+        raise LibError(f"the {collection.name!r} {what} needs {exc.name!r}, which is not installed", hint) from exc
     return getattr(module, name)
