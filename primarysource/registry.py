@@ -81,6 +81,9 @@ class Collection:
     grammar: RefParser
     server: str = ""
     cli: str = ""
+    identify: str = ""
+    """A "module:function" taking an `identify.Probe` and returning `identify.Candidate`s: how this collection
+    recognises its own documents in a supplied file. Empty when it has none."""
 
     def __post_init__(self) -> None:
         if not _NAME.fullmatch(self.name):

@@ -117,6 +117,12 @@ def test_collection_home_keeps_old_settings_and_libraries(tmp_path: Path) -> Non
         "/x"
     )
     assert collection_home("rfc", "rfclib", {**base, "PRIMARYSOURCE_HOME": "/y"}, plat) == Path("/y") / "rfc"
+    own = {**base, "PRIMARYSOURCE_ISO_HOME": "/m/iso", "PRIMARYSOURCE_HOME": "/y"}
+    assert collection_home("iso", None, own, plat) == Path("/m/iso")
+    assert collection_home("nist", None, own, plat) == Path("/y") / "nist"
+    both = {**base, "RFCLIB_HOME": "/x", "PRIMARYSOURCE_RFC_HOME": "/z"}
+    assert collection_home("rfc", "rfclib", both, plat) == Path("/x")
+    assert collection_home("rfc", "rfclib", {**base, "PRIMARYSOURCE_RFC_HOME": "/z"}, plat) == Path("/z")
     assert collection_home("rfc", "rfclib", base, plat) == tmp_path / "primarysource" / "rfc"
     (tmp_path / "rfclib").mkdir()
     assert collection_home("rfc", "rfclib", base, plat) == tmp_path / "rfclib"

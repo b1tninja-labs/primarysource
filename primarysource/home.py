@@ -40,10 +40,12 @@ def collection_home(
     """Where one collection keeps its library (PLAN.md §5.8). The first that applies:
 
     1. `$<LEGACY_APP>_HOME`, e.g. `RFCLIB_HOME`: an explicit setting from before the move keeps working;
-    2. `$PRIMARYSOURCE_HOME/<name>`;
-    3. the legacy app's per-user directory (`%LOCALAPPDATA%\\rfclib`), if it already exists, so an existing
+    2. `$PRIMARYSOURCE_<NAME>_HOME`, e.g. `PRIMARYSOURCE_ISO_HOME`: one collection somewhere of its own (another
+       drive, a mounted volume) while the others stay where they are;
+    3. `$PRIMARYSOURCE_HOME/<name>`;
+    4. the legacy app's per-user directory (`%LOCALAPPDATA%\\rfclib`), if it already exists, so an existing
        library is found instead of an empty one being started beside it;
-    4. the per-user `primarysource/<name>`.
+    5. the per-user `primarysource/<name>`.
 
     Nothing is created.
     """
@@ -51,6 +53,9 @@ def collection_home(
     legacy_var = f"{legacy_app.upper()}_HOME" if legacy_app else ""
     if legacy_app and env.get(legacy_var):
         return Path(env[legacy_var])
+    own = env.get(f"PRIMARYSOURCE_{name.upper()}_HOME")
+    if own:
+        return Path(own)
     if env.get("PRIMARYSOURCE_HOME"):
         return Path(env["PRIMARYSOURCE_HOME"]) / name
     if legacy_app:

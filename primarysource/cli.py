@@ -1,6 +1,7 @@
 """The `primarysource` command.
 
     primarysource collections                       list what is registered
+    primarysource identify <pdf or folder> ...      which collection knows each PDF, and how to import it
     primarysource mcp --collection rfc [--collection nist ...] [--bare-names]
                       [--transport http] [--host H] [--port P] [--allowed-host H] [--read-only]
     primarysource rfc <command> ...                 the collection's own commands (sync, index, status, ...)
@@ -17,6 +18,7 @@ import argparse
 import os
 import sys
 from collections.abc import Sequence
+from pathlib import Path
 from typing import Any
 
 from primarysource import registry, scaffold, serve
@@ -27,6 +29,8 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="primarysource", description="Search, read and cite primary sources.")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("collections", help="list the registered collections")
+    ident = commands.add_parser("identify", help="say which collection knows each PDF, and how to import it")
+    ident.add_argument("paths", nargs="+", type=Path, help="PDFs, or folders of PDFs")
     mcp = commands.add_parser("mcp", help="run the MCP server for one or more collections")
     mcp.add_argument(
         "--collection", action="append", required=True, help="a collection to serve, e.g. rfc (repeatable)"
@@ -74,6 +78,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.command == "collections":
             for name in registry.available():
                 print(name)
+            return 0
+        if args.command == "identify":
+            from primarysource import identify
+
+            hooks = identify.registered_hooks()
+            for path in identify.pdfs(args.paths):
+                try:
+                    print(identify.describe(path, identify.identify(identify.probe_pdf(path), hooks)))
+                except LibError as exc:
+                    print(f"{path.name}: {exc.message}")
             return 0
         transport = serve.normalise_transport(args.transport)
         if args.read_only:

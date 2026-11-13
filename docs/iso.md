@@ -9,7 +9,7 @@ official copies should go. It records:
 
 ```
 pip install "primarysource[iso,mcp]"            # pypdf, needed only to import; mcp to serve
-primarysource iso import                         # every new or changed PDF in purchased/
+primarysource iso import                         # every new or changed PDF in the iso home
 primarysource iso import my.pdf --designation "ISO/IEC 9899:2024"
 primarysource iso search "integer promotion"
 primarysource iso read "iso:9899@2024§6.3.1.1"
@@ -19,12 +19,17 @@ primarysource mcp --collection iso               # iso_read, iso_search, iso_out
 ## 1. Where the files go
 
 ```
-$PRIMARYSOURCE_HOME/iso/purchased/     # default: %LOCALAPPDATA%\primarysource\iso\purchased
+$PRIMARYSOURCE_ISO_HOME              # the owner's setting: M:\reference\iso
+$PRIMARYSOURCE_HOME/iso              # otherwise
+%LOCALAPPDATA%\primarysource\iso    # the default
 ```
 
-- The folder exists on the owner's machine, with a README.
-- It is the `iso` collection's home (`home.collection_home("iso")`), so the importer and index find it with
-  no extra setting.
+- The PDFs go directly in the `iso` collection's home (`home.collection_home("iso")`); there is no subfolder.
+  The import writes `extracted/`, `index.sqlite` and `install.json` beside them.
+- `PRIMARYSOURCE_<NAME>_HOME` moves one collection anywhere (another drive, a mounted volume) while the others
+  stay where they are, in the same order of precedence as the per-collection settings (`settings.py`).
+- On the owner's machine the PDFs live in `M:\reference\iso`, set once as a user environment variable:
+  `setx PRIMARYSOURCE_ISO_HOME M:\reference\iso`.
 - A file named as the ISO store names it (`ISO_IEC_9899_2024(en).pdf`) is imported by `primarysource iso import`
   with no arguments. Any other name needs `--designation` with the designation printed on the cover.
 - Put one PDF per publication there, exactly as delivered (watermarked in the buyer's name).
@@ -39,8 +44,15 @@ $PRIMARYSOURCE_HOME/iso/purchased/     # default: %LOCALAPPDATA%\primarysource\i
 - **What ISO says:** its store and help pages describe purchased PDFs as **single-user**. One user may access
   them, and posting them to a shared server or intranet needs a multi-user arrangement through the national
   member body (ISO help articles 664356 and 376041, read 2026-11-13).
-- **How it is served:** over stdio on the buyer's own machine, or with the iso home mounted read-only into the
-  buyer's own container. It is never baked into an image or published.
+- **How it is served:** over stdio on the buyer's own machine, or in the buyer's own container with the iso
+  home mounted read-only, for example `-v M:\reference\iso:/data/iso:ro -e PRIMARYSOURCE_ISO_HOME=/data/iso`.
+- **The owner's container (asked 2026-11-13).** The owner wants the image to include the iso data. No
+  Dockerfile exists here yet. When one is written:
+  - the iso data enters through the read-only mount above, so it is indexed and served without being in any
+    image layer;
+  - the image that is pushed (GHCR, the MCP Registry) never contains it;
+  - if the owner wants it baked in anyway, that is a separate, local-only build target whose tag is never
+    pushed, because a pushed layer is a copy given to everyone who can pull it.
 
 ## 3. Licence: the owner's decision
 
@@ -58,10 +70,28 @@ $PRIMARYSOURCE_HOME/iso/purchased/     # default: %LOCALAPPDATA%\primarysource\i
 
 ## 3a. How the collection works
 
-- **Import** (`primarysource/iso/importer.py`). Each PDF is read once with `readers/pdf.py` and
-  `readers/bookmarks.py` (ISO PDFs carry bookmarks) into `extracted/<key>.json`. Serving reads that file, so
-  serving needs no `pypdf`.
-  - `install.json` records the designation, the source path, sha256, size and mtime, and the extractor.
+- **What the file is** (`primarysource/iso/identify.py`, core `primarysource/identify.py`). People keep
+  downloads under any name, so the import reads the PDF itself. On an ISO cover the designation follows
+  `Reference number`, and every later page repeats it as a running header. Those outweigh the file name.
+  - A renamed file imports under its real designation.
+  - A file named for the wrong standard is imported as what its cover says, with a note.
+  - A PDF that another collection recognises is refused with that collection's command. An ITU-T
+    Recommendation or a NIST publication dropped in the iso folder is the usual case.
+  - `primarysource identify <pdf or folder>` asks every collection. iso, itu, nist, ecma and ieee802
+    recognise their own designations. It reports each PDF's designation, the evidence, and the command that
+    imports it.
+- **Import** (`primarysource/iso/importer.py`). Each PDF is read once with `readers/pdf.py` into
+  `extracted/<key>.json`. Serving reads that file, so serving needs no `pypdf`.
+  - **Cutting into clauses.** A PDF is cut at its bookmarks when it has them. Older ISO editions have none
+    (both 7816 PDFs the owner bought, 2005 and 2006), so those are cut at their numbered headings. That uses
+    `pdftotext -layout` text and the shared splitter (`pdfcorpus/split.py`), which reads the contents page.
+    Measured 2026-11-13: ISO/IEC 7816-3:2006 gives 113 clauses and ISO/IEC 7816-4:2005 gives 125, from
+    clause 1 on.
+  - A distributor's tracking string printed before a heading (`` --`,``,`---1 Scope ``) is stripped.
+  - When the PDF's title metadata is useless (`Microsoft Word - C038770e.doc`), the English title on the
+    cover is used.
+  - `install.json` records the designation, the source path, sha256, size and mtime, the extractor and the
+    segmenter.
   - **The PDF is not copied**, and the buyer's watermark is not recorded.
   - A folder import skips a file whose size and mtime are unchanged, and names each file it cannot import.
   - Imports hold the collection's bulk lock.
@@ -77,8 +107,8 @@ $PRIMARYSOURCE_HOME/iso/purchased/     # default: %LOCALAPPDATA%\primarysource\i
   footer.
   - Errors carry `hint` (the tool to call) and `action` (the import or index command).
   - `iso_docs` says when a source PDF has changed since import, or is missing.
-- **Tests** (`tests/test_iso.py`). They use an invented bookmarked PDF under ISO-store file names, never ISO
-  text.
+- **Tests** (`tests/test_iso.py`, `tests/test_identify.py`). They use invented PDFs, with and without
+  bookmarks and with an ISO-style cover and running header. They never use ISO text.
 
 ## 4. Freely available ISO text, and bulk collections
 

@@ -1,6 +1,6 @@
 """`primarysource iso ...`: the collection's own commands.
 
-primarysource iso import [FILE] [--designation "ISO/IEC 9899:2024"]   # no FILE: every PDF in purchased/
+primarysource iso import [FILE] [--designation "ISO/IEC 9899:2024"]   # no FILE: every PDF in the iso home
 primarysource iso index
 primarysource iso docs
 primarysource iso outline <doc> [--start N] [--limit N]
@@ -24,8 +24,10 @@ from primarysource.iso import importer, library
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="primarysource iso", description="ISO standards from your own PDFs")
     commands = parser.add_subparsers(dest="command", required=True)
-    imp = commands.add_parser("import", help="extract and index your PDFs (default: every PDF in purchased/)")
-    imp.add_argument("file", nargs="?", type=Path, help="one PDF; without it, every new or changed PDF in purchased/")
+    imp = commands.add_parser("import", help="extract and index your PDFs (default: every PDF in the iso home)")
+    imp.add_argument(
+        "file", nargs="?", type=Path, help="one PDF; without it, every new or changed PDF in the iso home"
+    )
     imp.add_argument("--designation", help="as printed on the cover, e.g. 'ISO/IEC 9899:2024'")
     commands.add_parser("index", help="rebuild the search index from what is imported")
     commands.add_parser("docs", help="what is imported")
@@ -50,22 +52,26 @@ def _out(text: str) -> int:
     return 0
 
 
+def _line(result: importer.ImportResult) -> str:
+    line = (
+        f"imported iso:{result.doc} ({result.designation}): {result.sections} sections, "
+        f"{result.headings_found} headings found ({result.segmenter})"
+    )
+    return line + (f"\n  note: {result.note}" if result.note else "")
+
+
 def _import(args: argparse.Namespace, home: Path) -> int:
     with bulk_lock(home, "import"):
         if args.file is not None:
             result = importer.import_file(home, args.file, args.designation)
-            return _out(
-                f"imported iso:{result.doc} ({result.designation}): {result.sections} sections, "
-                f"{result.headings_found} headings found in the text"
-            )
+            return _out(_line(result))
         if args.designation:
             raise LibError("--designation needs a FILE", "", "primarysource iso import FILE --designation '...'")
-        (home / importer.PURCHASED).mkdir(parents=True, exist_ok=True)
         done, skipped = importer.import_folder(home)
-    lines = [f"imported iso:{r.doc} ({r.designation}): {r.sections} sections" for r in done]
+    lines = [_line(r) for r in done]
     lines += [f"skipped {name}: {why}" for name, why in skipped]
     if not lines:
-        lines = [f"no PDFs in {home / importer.PURCHASED}"]
+        lines = [f"no new or changed PDFs in {home}"]
     return _out("\n".join(lines))
 
 

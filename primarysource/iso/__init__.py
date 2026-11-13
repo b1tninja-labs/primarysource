@@ -1,10 +1,11 @@
 """ISO standards from the owner's own purchased PDFs.
 
-Placement is a personal volume: the files are the buyer's single-user copies, dropped into
-`$PRIMARYSOURCE_HOME/iso/purchased/` and imported with `primarysource iso import`. Nothing here fetches, nothing is
-copied into an image, and the PDF itself is not copied: the import stores the extracted text and a record of the
-source (sha256, size, mtime), and builds the core FTS5 index. Reading a PDF needs `pypdf` (the `[iso]` extra) at
-import time only; serving reads the stored extraction. `docs/iso.md` is the user-facing description.
+Placement is a personal volume: the files are the buyer's single-user copies, dropped into the collection's
+home (`$PRIMARYSOURCE_ISO_HOME`, else `$PRIMARYSOURCE_HOME/iso`) and imported with `primarysource iso import`.
+Nothing here fetches and nothing is copied into an image. The PDF itself is not copied either: the import stores
+the extracted text and a record of the source (sha256, size, mtime), and builds the core FTS5 index. Reading a
+PDF needs `pypdf` (the `[iso]` extra) at import time only; serving reads the stored extraction. `docs/iso.md` is
+the user-facing description.
 """
 
 from __future__ import annotations
@@ -41,6 +42,7 @@ ISO = Collection(
     grammar=_Refs(),
     server="primarysource.iso.server:server",
     cli="primarysource.iso.cli:main",
+    identify="primarysource.iso.identify:identify",
 )
 """Refs: `iso:9899@2024§6.5.2¶3`. The document is `<number>@<year>` (the newest imported year when omitted); a
 printed designation such as `ISO/IEC 9899:2024§6.5.2` is accepted too. `¶n` is the nth sentence of the clause's

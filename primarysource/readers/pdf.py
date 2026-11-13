@@ -25,7 +25,7 @@ from types import ModuleType
 from typing import Any, NamedTuple
 
 from primarysource.errors import LibError
-from primarysource.readers.bookmarks import Outline, cut
+from primarysource.readers.bookmarks import Outline, cut, cut_numbered
 
 MAX_BYTES = 64 * 1024 * 1024
 MAX_PAGES = 2000
@@ -102,16 +102,16 @@ def outline(reader: Any) -> Outline:
     return flat
 
 
-def pdftotext_pages(path: Path, count: int) -> list[str] | None:
+def pdftotext_pages(path: Path, count: int, *, layout: bool = False) -> list[str] | None:
     """The page texts from `pdftotext` if it is on PATH and returns `count` pages, else None. Its text keeps word
-    spacing that `pypdf` loses on some fonts, and puts headings where they are read."""
+    spacing that `pypdf` loses on some fonts, and puts headings where they are read. `layout` keeps the page's
+    columns (`-layout`), which the numbered-heading splitter reads contents rows and table cells by."""
     exe = shutil.which("pdftotext")
     if exe is None:
         return None
+    argv = [exe, *(["-layout"] if layout else []), "-enc", "UTF-8", "-q", str(path), "-"]
     try:
-        done = subprocess.run(  # noqa: S603 - fixed argument list, no shell
-            [exe, "-enc", "UTF-8", "-q", str(path), "-"], capture_output=True, timeout=300, check=False
-        )
+        done = subprocess.run(argv, capture_output=True, timeout=300, check=False)  # noqa: S603 - no shell
     except (OSError, subprocess.SubprocessError):
         return None
     if done.returncode != 0:
@@ -122,7 +122,7 @@ def pdftotext_pages(path: Path, count: int) -> list[str] | None:
     return pages if len(pages) == count else None
 
 
-def extract(data: bytes, path: Path | None = None) -> dict[str, Any]:
+def extract(data: bytes, path: Path | None = None, *, numbered: bool = False) -> dict[str, Any]:
     """Read a PDF into `{"title", "pages", "extractor", "pypdf", "headings_found", "sections": [{"id", "title",
     "depth", "page", "text"}]}`.
 
@@ -130,8 +130,10 @@ def extract(data: bytes, path: Path | None = None) -> dict[str, Any]:
     `name version` (`Backend.label`); `pypdf` is the version that gave the bookmarks. If `path` names the PDF on
     disk and `pdftotext` is on PATH, its page text is used; otherwise `pypdf`'s, in content-stream order first,
     and if fewer than 70% of the bookmarked headings are found in it as lines (some typesetters emit headings out
-    of order) the pages are re-read in `layout` mode and the better result is kept. Raises `LibError` for a PDF
-    that is too large, cannot be read, has no bookmarks, or when `pypdf` is not installed."""
+    of order) the pages are re-read in `layout` mode and the better result is kept. With `numbered`, a PDF without
+    bookmarks is cut at numbered headings instead (`bookmarks.cut_numbered`), and `segmenter` says which was used.
+    Raises `LibError` for a PDF that is too large, cannot be read, has no bookmarks (and, with `numbered`, fewer
+    than 3 numbered headings), or when `pypdf` is not installed."""
     if len(data) > MAX_BYTES:
         raise LibError(f"PDF is {len(data)} bytes, over the {MAX_BYTES} byte bound", "")
     pypdf = _pypdf()
@@ -141,18 +143,30 @@ def extract(data: bytes, path: Path | None = None) -> dict[str, Any]:
         if count > MAX_PAGES:
             raise LibError(f"PDF has {count} pages, over the {MAX_PAGES} bound", "")
         bookmarks = outline(reader)
-        if not bookmarks:
+        if not bookmarks and not numbered:
             raise LibError("the PDF has no bookmarks to split it into sections", "this reader needs a bookmarked PDF")
         meta = reader.metadata
         title = str(meta.title) if meta is not None and meta.title else ""
-        external = pdftotext_pages(path, count) if path is not None else None
+        external = pdftotext_pages(path, count, layout=not bookmarks) if path is not None else None
         backend = Backend("pypdf", str(pypdf.__version__))
-        if external is not None:
+        if not bookmarks:
+            if external is not None:
+                backend = pdftotext_backend() or Backend("pdftotext", "unknown")
+            texts = external
+            if texts is None:
+                texts = [str(p.extract_text(extraction_mode="layout") or "") for p in reader.pages]
+            sections, located = cut_numbered(texts)
+            if located < 3:
+                raise LibError(
+                    "the PDF has no bookmarks, and fewer than 3 numbered headings were found in its text",
+                    "this reader needs a bookmarked PDF or numbered clause headings",
+                )
+        elif external is not None:
             backend = pdftotext_backend() or Backend("pdftotext", "unknown")
             sections, located = cut(external, bookmarks)
         else:
             sections, located = cut([str(reader.pages[i].extract_text() or "") for i in range(count)], bookmarks)
-        if external is None and located * 10 < len(bookmarks) * 7:
+        if bookmarks and external is None and located * 10 < len(bookmarks) * 7:
             layout = [str(reader.pages[i].extract_text(extraction_mode="layout") or "") for i in range(count)]
             better, better_located = cut(layout, bookmarks)
             if better_located > located:
@@ -168,5 +182,6 @@ def extract(data: bytes, path: Path | None = None) -> dict[str, Any]:
         "extractor": backend.label(),
         "pypdf": pypdf.__version__,
         "headings_found": located,
+        "segmenter": "bookmarks" if bookmarks else "numbered headings",
         "sections": sections,
     }

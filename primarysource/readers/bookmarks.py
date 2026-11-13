@@ -73,17 +73,79 @@ def heading_id(title: str) -> tuple[str, str]:
     return slug(title), title
 
 
+_TRACKING_MARK = re.compile(r"^\s*[-`,]{8,}")
+"""A distributor's tracking string printed before the first line of a page (``--`,``,``,,,`---1 Scope``)."""
+
+
+def clean_pages(pages: list[str], *, keep_spacing: bool = False) -> list[list[str]]:
+    """Each page's non-empty lines with page furniture dropped: a line whose `furniture_key` occurs on at least a
+    quarter of the pages (at least 3) is a running header or footer. Whitespace is collapsed unless `keep_spacing`
+    (layout text, whose column gaps the numbered-heading splitter reads); a distributor's tracking string at the
+    start of a line is removed either way."""
+
+    def tidy(raw: str) -> str:
+        line = _TRACKING_MARK.sub("", raw)
+        return line.rstrip() if keep_spacing else " ".join(line.split())
+
+    per_page = [[ln for ln in (tidy(raw) for raw in text.splitlines()) if ln.strip()] for text in pages]
+    seen: Counter[str] = Counter()
+    for lines in per_page:
+        seen.update({furniture_key(" ".join(ln.split())) for ln in lines})
+    limit = max(3, len(pages) // 4)
+    return [[ln for ln in lines if seen[furniture_key(" ".join(ln.split()))] < limit] for lines in per_page]
+
+
+def cut_numbered(pages: list[str]) -> tuple[list[dict[str, Any]], int]:
+    """Cut page texts into sections at numbered headings, for a PDF without bookmarks (older ISO editions, for
+    one). Furniture is dropped as in `cut`, then the shared numbered-heading splitter
+    (`primarysource.pdfcorpus.split.split_sections`, `cl.segment_numbered`) finds the headings. Text before the
+    first heading becomes a `front-matter` section. Returns the sections in `cut`'s shape and how many headings
+    were found."""
+    from primarysource.pdfcorpus.split import split_sections
+
+    lines: list[str] = []
+    page_of: list[int] = []
+    for number, page_lines in enumerate(clean_pages(pages, keep_spacing=True)):
+        lines.extend(page_lines)
+        page_of.extend([number] * len(page_lines))
+    found = split_sections("\n".join(lines))
+    sections: list[dict[str, Any]] = []
+    first = found[0].start_line - 1 if found else len(lines)
+    if first > 0:
+        sections.append(
+            {
+                "id": "front-matter",
+                "title": "Front matter",
+                "depth": 0,
+                "page": 1,
+                "text": "\n".join(split_sentences(" ".join(lines[:first]))),
+            }
+        )
+    used: Counter[str] = Counter()
+    for section in found:
+        ident = section.id
+        used[ident] += 1
+        if used[ident] > 1:
+            ident = f"{ident}-{used[ident] - 1}"
+        body = lines[section.start_line : section.end_line]
+        sections.append(
+            {
+                "id": ident,
+                "title": " ".join(section.heading.split()),
+                "depth": section.id.count("."),
+                "page": page_of[section.start_line - 1] + 1,
+                "text": "\n".join(split_sentences(" ".join(body))),
+            }
+        )
+    return sections, len(found)
+
+
 def cut(pages: list[str], outline: Outline) -> tuple[list[dict[str, Any]], int]:
     """Cut page texts into sections at the bookmarked headings. Returns the sections
     (`{"id", "title", "depth", "page", "text"}`, `page` 1-based, `text` the sentences joined by newlines) and how
     many headings were found as a line of text (the rest fall back to the start of their page)."""
     count = len(pages)
-    per_page = [[ln for ln in (" ".join(raw.split()) for raw in text.splitlines()) if ln] for text in pages]
-    seen: Counter[str] = Counter()
-    for lines in per_page:
-        seen.update({furniture_key(ln) for ln in lines})
-    limit = max(3, count // 4)
-    cleaned = ["\n".join(ln for ln in lines if seen[furniture_key(ln)] < limit) for lines in per_page]
+    cleaned = ["\n".join(lines) for lines in clean_pages(pages)]
     starts: list[int] = []
     joined = ""
     for text in cleaned:
