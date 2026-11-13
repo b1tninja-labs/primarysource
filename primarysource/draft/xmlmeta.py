@@ -53,7 +53,7 @@ def inspect(data: bytes) -> XmlInfo:
     root = _ROOT_TAG.search(data[:_HEAD])
     if root is None:
         return XmlInfo(UNPARSEABLE, why=f"no <rfc> start tag in the first {_HEAD:,} bytes")
-    parser: ET.XMLPullParser = ET.XMLPullParser(events=("start",))
+    parser: ET.XMLPullParser[tuple[str, ET.Element]] = ET.XMLPullParser(events=("start",))
     try:
         # only the bytes up to the end of the root start tag are fed: whatever follows (entities a DTD would
         # define, a hostile body) is never seen by the parser
