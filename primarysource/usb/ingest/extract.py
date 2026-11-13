@@ -161,10 +161,42 @@ def _counters(found: list[tuple[str, str, int]]) -> dict[str, int]:
     """Rebuild the per-parent counters from the headings accepted so far."""
     last_child: dict[str, int] = {}
     for sec_id, _, _ in found:
-        key = _parent_key(sec_id)
-        last_child[key] = last_child.get(key, 0) + 1
-        last_child.setdefault(sec_id, 0)
+        _advance(last_child, sec_id)
     return last_child
+
+
+def _advance(last_child: dict[str, int], sec_id: str) -> None:
+    """Record ``sec_id`` as the latest child of its parent. Its own number, not a count: a heading admitted by
+    the contents after a gap (``_admitted_by_contents``) moves the counter past the gap."""
+    key = _parent_key(sec_id)
+    last_child[key] = max(last_child.get(key, 0), _ordinal(sec_id.rpartition(".")[2]))
+    last_child.setdefault(sec_id, 0)
+
+
+def _admitted_by_contents(
+    sec_id: str, heading: str, last_child: dict[str, int], toc: set[tuple[str, str]], toc_ids: set[str]
+) -> bool:
+    """A heading the sequence rule rejected, but which the document's own contents lists under the same number.
+
+    The sequence rule is what keeps list items and cross-references out, and it is also why one missed heading
+    used to drop every later sibling and child: the next one is never "next" (docs/validation.md, usb: 1,485 of
+    1,749 misses). The contents is an independent list of the real headings, so a heading it names may skip a
+    gap. Forward only, so a contents row met again later cannot rewind the counters, and its parent must be
+    known (seen, or itself in the contents).
+    """
+    if sec_id not in toc_ids:
+        return False
+    title = _normal(heading)
+    if not any(
+        toc_id == sec_id and (toc_title == title or toc_title.startswith(title) or title.startswith(toc_title))
+        for toc_id, toc_title in toc
+        if len(toc_title) >= 3
+    ):
+        return False
+    key = _parent_key(sec_id)
+    if not key.startswith("#") and key not in last_child and key not in toc_ids:
+        return False
+    return _ordinal(sec_id.rpartition(".")[2]) > last_child.get(key, 0)
 
 
 def _retract_premature_chapters(found: list[tuple[str, str, int]], sec_id: str) -> bool:
@@ -337,13 +369,13 @@ def split_sections(text: str) -> tuple[Section, ...]:
             and _reads_as_prose(heading)
         ):
             continue  # a cross-reference or table cell under a chapter the contents shows without subsections
-        if not _is_next(sec_id, last_child):
+        if not _is_next(sec_id, last_child) and not _admitted_by_contents(
+            sec_id, heading, last_child, toc, toc_ids
+        ):
             continue
         if "." in sec_id and _retract_premature_chapters(found, sec_id):
             last_child = _counters(found)
-        key = _parent_key(sec_id)
-        last_child[key] = last_child.get(key, 0) + 1
-        last_child.setdefault(sec_id, 0)
+        _advance(last_child, sec_id)
         found.append((sec_id, heading, number))
     found = _drop_childless_chapters(found, toc)
     sections: list[Section] = []

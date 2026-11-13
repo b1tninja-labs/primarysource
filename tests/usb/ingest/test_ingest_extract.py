@@ -402,3 +402,55 @@ def test_label_ending_in_a_colon_under_a_shallow_chapter_is_kept() -> None:
         ]
     )
     assert "4.1" in [s.id for s in split_sections(text)]
+
+
+def test_a_missed_heading_does_not_drop_its_later_siblings_listed_in_the_contents() -> None:
+    # 2.2's title starts lowercase, so it is not read as a heading. Before the fix, 2.3 was then never "next"
+    # and was dropped with everything after it (docs/validation.md, usb: 1,485 of 1,749 misses). The contents
+    # lists 2.3 and 2.4, so they are admitted, and the sequence resumes after them.
+    text = "\n".join(
+        [
+            "Contents",
+            "1 Scope ................................ 1",
+            "2 Widgets .............................. 2",
+            "2.1 Round Widgets ...................... 2",
+            "2.2 square widgets ..................... 3",
+            "2.3 Oval Widgets ....................... 4",
+            "2.4 Flat Widgets ....................... 5",
+            "",
+            "1 Scope",
+            "Invented text for a test.",
+            "2 Widgets",
+            "Widgets are invented.",
+            "2.1 Round Widgets",
+            "Round.",
+            "2.2 square widgets",
+            "Square.",
+            "2.3 Oval Widgets",
+            "Oval.",
+            "2.4 Flat Widgets",
+            "Flat.",
+            "2.4.1 Thin Flat Widgets",
+            "Thin.",
+        ]
+    )
+    ids = [s.id for s in split_sections(text)]
+    assert ids == ["1", "2", "2.1", "2.3", "2.4", "2.4.1"]
+
+
+def test_a_number_not_in_the_contents_still_needs_to_be_next() -> None:
+    # The contents admits only what it lists; an unlisted jump is still a list item or a cross-reference.
+    text = "\n".join(
+        [
+            "1 Scope ................................ 1",
+            "2 Widgets .............................. 2",
+            "",
+            "1 Scope",
+            "Invented.",
+            "2 Widgets",
+            "Invented.",
+            "2.5 Settings Described Elsewhere",
+            "Invented.",
+        ]
+    )
+    assert [s.id for s in split_sections(text)] == ["1", "2"]
