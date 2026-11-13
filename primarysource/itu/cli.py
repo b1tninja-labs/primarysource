@@ -1,11 +1,12 @@
-"""`itulib` - fetch, index, then ask.
+"""`primarysource itu` (formerly `itulib`) - fetch, index, then ask.
 
 `fetch` and `sync` are the only commands that touch the network, and they write outside the checkout by
 default. Everything that reads refuses to answer when the corpus or index is absent, naming the command that
 fixes it; an empty result here is always a real empty, never a swallowed failure.
 
 References use one grammar everywhere: `X.690§11.6¶2` (`¶n` is the nth sentence of the extracted clause), or
-the looser `X.690 11.6` and `11.6` (which means X.690).
+the looser `X.690 11.6` and `11.6` (which means X.690). `X.690§11.6¶5-` is the clause from its 5th sentence on,
+which is what a paged read says to continue with.
 """
 
 from __future__ import annotations
@@ -13,6 +14,8 @@ from __future__ import annotations
 import argparse
 import sys
 from collections.abc import Callable
+
+from primarysource.errors import LibError
 
 from . import __version__, corpus, index, sources, text
 from .errata import errata_text
@@ -62,7 +65,10 @@ def cmd_sync(args: argparse.Namespace) -> int:
             corpus.fetch(edition)
             count = index.build(edition)
             print(f"{edition.key:16} ok  {count:>5} clauses")
-        except (corpus.CorpusMissing, RuntimeError, OSError) as error:
+        except LibError as error:
+            failed.append(edition.key)
+            print(f"{edition.key:16} FAILED  {error.as_text()}", file=sys.stderr)
+        except (RuntimeError, OSError) as error:
             failed.append(edition.key)
             print(f"{edition.key:16} FAILED  {error}", file=sys.stderr)
     return 3 if failed else 0
@@ -77,14 +83,16 @@ def cmd_index(args: argparse.Namespace) -> int:
 def cmd_search(args: argparse.Namespace) -> int:
     edition = sources.resolve(args.edition)
     query = _join(args.query)
-    hits, relaxed = index.search_mode(edition, query, args.limit)
-    if relaxed:
+    found = index.search(edition, query, args.limit, args.start)
+    if found.relaxed:
         print("note: no clause contains every term; these contain some of them\n", file=sys.stderr)
-    if not hits:
+    if not found.hits:
         print(f"{edition.key}: no clause matches {query!r} (this is a real empty: the index is loaded)")
         return 1
-    for hit in hits:
+    for hit in found.hits:
         print(f"{index.citation(edition, hit.number)}  {hit.title}\n    {hit.excerpt}\n")
+    if found.next_start is not None:
+        print(f"[more: continue with --start {found.next_start}]")
     return 0
 
 
@@ -94,7 +102,11 @@ def cmd_read(args: argparse.Namespace) -> int:
     if document is not None:
         print(document.label, "", errata_text(document), sep="\n")
         return 0
-    edition, number, para = _resolve(ref)
+    target = text.parse_target(ref)
+    edition, number, para = sources.resolve(target.rec or DEFAULT), target.number, target.para
+    start = para if target.onward and para is not None else args.start
+    if target.onward:
+        para = None
     if args.view == "normative":
         found = index.normative_statements(edition, number)
         if found is None:
@@ -112,7 +124,7 @@ def cmd_read(args: argparse.Namespace) -> int:
             return 1
         print(f"{index.citation(edition, number, para)}\n\n{one}")
         return 0
-    page = index.page(edition, number, start=args.start, max_tokens=args.max_tokens)
+    page = index.page(edition, number, start=start, max_tokens=args.max_tokens)
     if page is None or page.total == 0:
         kids = index.children(edition, number)
         if kids:
@@ -128,7 +140,10 @@ def cmd_read(args: argparse.Namespace) -> int:
     print(f"{index.citation(edition, page.number)}  {page.title}\n")
     print(page.text)
     if page.next is not None:
-        print(f"\n[¶{page.first}-{page.last} of {page.total}; continue with --start {page.next}]")
+        doc = edition.rec if sources.resolve(edition.rec) is edition else edition.key
+        print(
+            f"\n[¶{page.first}-{page.last} of {page.total}; continue with: read '{doc}§{page.number}¶{page.next}-']"
+        )
     extra = index.fragments(edition, number) - 1
     if extra:
         print(
@@ -231,14 +246,14 @@ def cmd_catalog_show(args: argparse.Namespace) -> int:
     rec = args.rec
     entry = catalog.load(rec[0].upper()).get(rec)
     if entry is None:
-        print(f"{rec}: not in the catalogue. Run: itulib catalog sync {rec[0].upper()}", file=sys.stderr)
+        print(f"{rec}: not in the catalogue. Run: primarysource itu catalog sync {rec[0].upper()}", file=sys.stderr)
         return 1
     print(f"{rec}  [{entry.get('status')}]  {entry.get('title')}")
     if entry.get("note"):
         print(f"  note: {entry['note']}")
     components = entry.get("components")
     if components is None:
-        print(f"  no details yet. Run: itulib catalog sync {rec[0].upper()} --details")
+        print(f"  no details yet. Run: primarysource itu catalog sync {rec[0].upper()} --details")
         return 0
     for component in components:  # type: ignore[attr-defined]
         assets = component.get("assets") or []
@@ -255,11 +270,11 @@ def cmd_links(args: argparse.Namespace) -> int:
 
 def cmd_grep(args: argparse.Namespace) -> int:
     edition = sources.resolve(args.edition)
-    hits, truncated = index.grep(edition, args.pattern, max_tokens=args.max_tokens)
+    hits, more = index.grep(edition, args.pattern, start=args.start, max_tokens=args.max_tokens)
     for hit in hits:
-        print(f"{index.citation(edition, hit['number'])}\n    {hit['excerpt']}\n")
-    if truncated:
-        print("[truncated by --max-tokens; narrow the pattern or raise the budget]", file=sys.stderr)
+        print(f"{index.citation(edition, hit.number)}\n    {hit.excerpt}\n")
+    if more is not None:
+        print(f"[cut by --max-tokens; continue with --start {more}, or narrow the pattern]", file=sys.stderr)
     return 0 if hits else 1
 
 
@@ -305,9 +320,9 @@ def cmd_mcp(_args: argparse.Namespace) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="itulib", description=__doc__, formatter_class=argparse.RawTextHelpFormatter
+        prog="primarysource itu", description=__doc__, formatter_class=argparse.RawTextHelpFormatter
     )
-    parser.add_argument("--version", action="version", version=f"itulib {__version__}")
+    parser.add_argument("--version", action="version", version=f"primarysource itu {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
     def add(name: str, handler: Callable[[argparse.Namespace], int], help_text: str) -> argparse.ArgumentParser:
@@ -332,9 +347,10 @@ def build_parser() -> argparse.ArgumentParser:
     search.add_argument("edition")
     search.add_argument("query", nargs="+")
     search.add_argument("--limit", type=int, default=8)
+    search.add_argument("--start", type=int, default=0, help="0-based offset of the first hit (paging)")
 
     read = add("read", cmd_read, "print a clause (or one sentence, or an erratum) with its citation")
-    read.add_argument("ref", nargs="+", help="X.690§11.6, X.690 11.6¶2, 11.6, or an erratum key")
+    read.add_argument("ref", nargs="+", help="X.690§11.6, X.690 11.6¶2, X.690§11.6¶5-, 11.6, or an erratum key")
     read.add_argument("--start", type=int, default=1, help="first sentence to print (paging)")
     read.add_argument("--max-tokens", type=int, default=2000)
     read.add_argument("--view", choices=["text", "normative", "refs"], default="text")
@@ -354,6 +370,7 @@ def build_parser() -> argparse.ArgumentParser:
     grep.add_argument("edition")
     grep.add_argument("pattern")
     grep.add_argument("--max-tokens", type=int, default=1500)
+    grep.add_argument("--start", type=int, default=0, help="0-based offset of the first matching clause")
 
     browse = add("browse", cmd_browse, "ITU-T series, a series' recommendations, or a recommendation's clauses")
     browse.add_argument("path", nargs="?", default="")
@@ -407,16 +424,19 @@ def main(argv: list[str] | None = None) -> int:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
     args = build_parser().parse_args(argv)
     # A missing corpus is a known state with a known remedy, so it is reported as one rather than as a
-    # traceback: a stack ending in CorpusMissing reads like a crash, "run: itulib sync" reads as instructions.
+    # traceback: a stack ending in CorpusMissing reads like a crash, an `action:` line reads as instructions.
     try:
         return int(args.handler(args))
+    except LibError as error:
+        print(error.as_text(), file=sys.stderr)
+        return 3
     except KeyError as error:
         print(error.args[0], file=sys.stderr)
         return 2
     except ValueError as error:
         print(error, file=sys.stderr)
         return 2
-    except (corpus.CorpusMissing, RuntimeError) as error:
+    except RuntimeError as error:
         print(str(error), file=sys.stderr)
         return 3
 

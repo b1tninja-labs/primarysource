@@ -227,8 +227,9 @@ def test_sync_listing_keeps_details_and_refuses_an_empty_parse(home: Path) -> No
     empty, _ = make_fetcher(home / "cache2", Clock(), {f"{catalog.BASE}/rec/T-REC-Y/en": b"<html>moved</html>"})
     with pytest.raises(RuntimeError, match="parsed to 0 recommendations"):
         catalog.sync_listing("Y", empty)
-    with pytest.raises(corpus.CorpusMissing, match="itulib catalog sync Y"):
+    with pytest.raises(corpus.CorpusMissing, match="no catalogue for series Y") as missing:
         catalog.load("Y")
+    assert missing.value.action == "primarysource itu catalog sync Y --details", "the remedy is a human's command"
 
 
 def test_details_limit_stops_early(home: Path) -> None:
@@ -283,7 +284,28 @@ def test_cli_catalog_list_and_show(home: Path, capsys: pytest.CaptureFixture[str
     assert "superseded" in shown and "corrigendum" in shown and "prepublished" in shown
     assert cli.main(["catalog", "show", "Z.99"]) == 1
     assert cli.main(["catalog", "list", "--series", "Q"]) == 3, "no catalogue yet: error with the remedy, exit 3"
-    assert "itulib catalog sync Q" in capsys.readouterr().err
+    assert "action: primarysource itu catalog sync Q" in capsys.readouterr().err
+
+
+def test_itu_catalog_is_text_rows_paged_by_a_list_cursor(home: Path) -> None:
+    from primarysource.itu import mcp
+    from primarysource.render import parse_next_start
+
+    fetcher, _ = make_fetcher(home / "cache", Clock(), site())
+    catalog.sync_listing("Z", fetcher)
+    catalog.sync_details("Z", fetcher)
+    whole = mcp.itu_catalog("Z")
+    assert whole.startswith("series Z: 3 matching components; 1 of 2 recommendations have details")
+    assert "next:" not in whole, "everything fits: no cursor"
+    seen, start = [], 0
+    while True:
+        page = mcp.itu_catalog("Z", start=start, max_tokens=1)
+        seen += [line for line in page.splitlines() if line.startswith("Z.10  ")]
+        cursor = [line[len("next: ") :] for line in page.splitlines() if line.startswith("next: ")]
+        if not cursor:
+            break
+        start = parse_next_start(cursor[0])
+    assert len(seen) == 3, "a one-token budget still shows one row per page and loses none"
 
 
 def test_manifest_is_plain_json_under_the_corpus_home(home: Path) -> None:

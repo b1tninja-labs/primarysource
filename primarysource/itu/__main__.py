@@ -1,4 +1,4 @@
-"""`python -m itulib` is the same as the `itulib` command."""
+"""`python -m primarysource.itu` is the same as `primarysource itu`."""
 
 from __future__ import annotations
 

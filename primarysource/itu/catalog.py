@@ -304,7 +304,11 @@ def series_url(letter: str) -> str:
 def load(series: str) -> dict[str, dict[str, object]]:
     path = _manifest(series)
     if not path.is_file():
-        raise corpus.CorpusMissing(f"no catalogue for series {series}. Run: itulib catalog sync {series}")
+        raise corpus.CorpusMissing(
+            f"no catalogue for series {series}",
+            "",
+            f"primarysource itu catalog sync {series} --details",
+        )
     loaded = json.loads(path.read_text(encoding="utf-8"))
     recs = loaded.get("recs", {}) if isinstance(loaded, dict) else {}
     return recs if isinstance(recs, dict) else {}
