@@ -58,6 +58,8 @@ nist = []
 usb = []
 # ITU-T recommendations (primarysource/itu/, moved in from itulib): pypdf extracts the user-fetched PDFs.
 itu = ["pypdf>=5"]
+# ISO standards from the owner's own purchased PDFs (primarysource/iso/): pypdf reads them at import only.
+iso = ["pypdf>=5"]
 
 [project.scripts]
 primarysource = "primarysource.cli:main"
