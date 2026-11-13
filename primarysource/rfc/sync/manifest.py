@@ -16,8 +16,6 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
-import httpx
-
 from ..config import MANIFEST_URL, USER_AGENT, network_mode, require_network
 from ..fsutil import atomic_write_bytes
 
@@ -79,6 +77,7 @@ def download_manifest(dest: Path, force: bool = False, max_age_hours: float = 24
     if dest.exists() and network_mode() == "offline":
         return dest              # stale but usable; offline means offline
     require_network("the RFC index (rfc-index.xml)")
+    import httpx  # lazy: serving from an existing library never needs it
     with httpx.Client(follow_redirects=True, timeout=120.0) as client:
         r = client.get(MANIFEST_URL, headers={"User-Agent": USER_AGENT})
         r.raise_for_status()

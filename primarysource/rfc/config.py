@@ -19,6 +19,8 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
+from primarysource.errors import LibError
+
 from . import __version__
 
 BASE_URL = "https://www.rfc-editor.org"
@@ -55,8 +57,9 @@ def legacy_home() -> Path | None:
     return None
 
 
-class NetworkDisabled(RuntimeError):
-    """A fetch was needed but RFCLIB_NETWORK=offline forbids it."""
+class NetworkDisabled(LibError, RuntimeError):
+    """A fetch was needed but RFCLIB_NETWORK=offline (or read-only mode)
+    forbids it. `action` says what a human runs to get the document in."""
 
 
 def read_only() -> bool:
@@ -83,13 +86,13 @@ def require_network(what: str) -> None:
     if read_only():
         raise NetworkDisabled(
             f"{what} is not in this library and this server is read-only "
-            "(RFCLIB_READONLY); ask the shared rfclib server for it, or run "
-            "`rfclib sync` without RFCLIB_READONLY.")
+            "(RFCLIB_READONLY)", "ask the shared rfclib server for it",
+            "rfclib sync (without RFCLIB_READONLY)")
     if network_mode() == "offline":
         raise NetworkDisabled(
             f"{what} is not available locally and RFCLIB_NETWORK=offline "
-            "forbids fetching it; run `rfclib init` / `rfclib sync` while "
-            "online, or unset RFCLIB_NETWORK.")
+            "forbids fetching it", "",
+            "rfclib sync while online, or unset RFCLIB_NETWORK")
 
 
 @dataclass(frozen=True)

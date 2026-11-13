@@ -16,8 +16,6 @@ import sqlite3
 import time
 from datetime import datetime, timezone
 
-import httpx
-
 from .config import USER_AGENT, network_mode, require_network
 from .sync.state import _now, get_meta, set_meta
 
@@ -84,6 +82,7 @@ def parse_errata(page: str) -> list[dict]:
 
 def fetch(rfc_number: int) -> str:
     """One polite request to the errata service; caller throttles."""
+    import httpx  # lazy: serving from an existing library never needs it
     with httpx.Client(headers={"User-Agent": USER_AGENT},
                       follow_redirects=True,
                       timeout=httpx.Timeout(30.0)) as client:
@@ -113,6 +112,7 @@ def sync_bulk(conn: sqlite3.Connection, data: list[dict] | None = None) -> dict:
     """Replace the errata table with the RFC Editor's bulk feed."""
     if data is None:
         require_network("the errata feed")
+        import httpx  # lazy: serving from an existing library never needs it
         with httpx.Client(headers={"User-Agent": USER_AGENT},
                           follow_redirects=True,
                           timeout=httpx.Timeout(120.0)) as client:

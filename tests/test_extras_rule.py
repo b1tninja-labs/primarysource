@@ -30,10 +30,10 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "primarysource"
 CORE_SERVING = ("primarysource.cli", "primarysource.serve", "primarysource.scaffold", "primarysource.render")
 
-# Collections whose serving path still imports a package only their own extra installs. rfc: `views`, `subjects`
-# and `sync` import httpx at module level to fetch a missing file or the errata on demand; `mcp` 2.3 depends on
-# httpx2, not httpx, so `[mcp]` alone does not provide it. The fix is a lazy import in rfc, under cl.adopt_rfclib.
-NOT_YET: dict[str, frozenset[str]] = {"rfc": frozenset({"httpx"})}
+# Collections whose serving path still imports a package only their own extra installs. Empty: rfc, the last entry,
+# now imports httpx only inside the functions that fetch (`mcp` 2.3 depends on httpx2, not httpx, so `[mcp]` alone
+# would not provide it).
+NOT_YET: dict[str, frozenset[str]] = {}
 
 
 def _extra_packages() -> set[str]:

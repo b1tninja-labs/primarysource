@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 from typing import Any
 
 import pytest
@@ -41,7 +42,7 @@ def test_mcp_serves_the_collection_server(monkeypatch: pytest.MonkeyPatch) -> No
     own = registry.attribute(collection, collection.server, "server")
     served = {tool.name: tool for tool in seen["server"]._tool_manager.list_tools()}
     assert {f"rfc_{tool.name}" for tool in own._tool_manager.list_tools()} == set(served)
-    assert served["rfc_search"].fn.__wrapped__ is own._tool_manager.get_tool("search").fn
+    assert inspect.unwrap(served["rfc_search"].fn) is inspect.unwrap(own._tool_manager.get_tool("search").fn)
     assert (seen["transport"], seen["port"], seen["host"]) == ("http", 9999, "127.0.0.1")
     import os
 

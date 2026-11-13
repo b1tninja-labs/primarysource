@@ -26,10 +26,11 @@ from __future__ import annotations
 import bisect
 import re
 import sqlite3
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-import httpx
+from primarysource.errors import LibError
 
 from . import cite as _cite
 from . import query as q
@@ -41,8 +42,21 @@ NORM_RE = re.compile(r"\b(MUST NOT|MUST|SHALL NOT|SHALL|SHOULD NOT|SHOULD|"
                      r"NOT RECOMMENDED|RECOMMENDED|MAY|REQUIRED|OPTIONAL)\b")
 
 
-class RefError(ValueError):
-    """Bad or unresolvable reference; the message tells the agent what to do."""
+class RefError(LibError, ValueError):
+    """Bad or unresolvable reference, or a library not ready to answer. A
+    `LibError`: `hint` names the tool call to make next and `action` the
+    command a human runs (PLAN.md §5.10); the MCP server adds the ref forms
+    to a ref problem that names neither."""
+
+
+def _fetch_failed(exc: BaseException) -> bool:
+    """A fetch from rfc-editor.org failed: an OSError, or an httpx error.
+    httpx is imported only by the code that fetches, so when it is not
+    loaded no httpx error can have been raised."""
+    if isinstance(exc, OSError):
+        return True
+    httpx = sys.modules.get("httpx")
+    return httpx is not None and isinstance(exc, httpx.HTTPError)
 
 
 @dataclass
@@ -71,7 +85,7 @@ _REF = re.compile(
 def _require_library(conn: sqlite3.Connection) -> None:
     from . import library
     if not library.initialized(conn):
-        raise RefError(library.not_initialized_message(conn))
+        raise RefError(*library.not_initialized(conn))
 
 
 def _ensure_text(conn: sqlite3.Connection, doc: str) -> None:
@@ -81,11 +95,13 @@ def _ensure_text(conn: sqlite3.Connection, doc: str) -> None:
     try:
         library.ensure_indexed(conn, doc)
     except NetworkDisabled as e:
-        raise RefError(str(e)) from None
-    except (OSError, httpx.HTTPError) as e:
-        raise RefError(f"could not fetch {doc} from rfc-editor.org ({e}); "
-                       "retry later, or run `rfclib sync` while online") \
-            from None
+        raise RefError(e.message, e.hint, e.action) from None
+    except Exception as e:
+        if not _fetch_failed(e):
+            raise
+        raise RefError(f"could not fetch {doc} from rfc-editor.org ({e})",
+                       "retry the same call later",
+                       "rfclib sync (while online)") from None
 
 
 def parse_ref(conn: sqlite3.Connection, raw: str,
@@ -94,9 +110,7 @@ def parse_ref(conn: sqlite3.Connection, raw: str,
     (False for views that only need the catalog, e.g. errata)."""
     m = _REF.match(raw or "")
     if not m:
-        raise RefError(
-            f"can't parse ref {raw!r}. Use e.g. 'RFC9000', 'RFC9000§9.6', "
-            "'RFC9000§9.6¶3', 'RFC9000#table-2' or 'RFC9000:2964-2979'.")
+        raise RefError(f"can't parse ref {raw!r}")
     _require_library(conn)
     try:
         doc = q.normalize_doc_id(m.group("doc"))
@@ -242,7 +256,7 @@ def _text(conn, ref: Ref, mirror_root: Path) -> list[str]:
     text, _served, _p = q._served_text(conn, ref.served, "txt", mirror_root)
     if text is None:
         raise RefError(f"{ref.served} has no txt rendering locally or "
-                       "upstream; try get_rfc(format='html').")
+                       "upstream", f"read('{ref.served}', format='html')")
     return text.splitlines()
 
 
@@ -258,12 +272,12 @@ def _scope(conn, ref: Ref, total: int) -> tuple[int, int, str, str]:
     if ref.sec:
         span = q._resolve_section_arg(conn, ref.served, ref.sec)
         if not span.get("ok"):
-            hint = ""
+            similar = ""
             if span.get("suggestions"):
-                hint = " Similar: " + ", ".join(
-                    f"{ref.doc}§{x}" for x in span["suggestions"]) + "."
-            raise RefError(f"no section {ref.sec} in {ref.served}.{hint} "
-                           f"See get_toc('{ref.doc}').")
+                similar = "; similar: " + ", ".join(
+                    f"{ref.doc}§{x}" for x in span["suggestions"])
+            raise RefError(f"no section {ref.sec} in {ref.served}{similar}",
+                           f"outline('{ref.doc}')")
         return (span["start_line"], span["end_line"], span["sec_num"],
                 span.get("sec_title") or "")
     a = max(1, ref.start or 1)
@@ -471,10 +485,11 @@ def outline(conn: sqlite3.Connection, doc: str, depth: int | None = 2,
     if not all_rows:
         if contains and _s.toc(conn, served):
             raise RefError(f"no section of {served} has {contains!r} in its "
-                           f"number or title; call get_toc('{did}') without "
-                           "contains, or grep the text")
-        raise RefError(f"{served} is not section-indexed yet "
-                       "(run `rfclib index build`)")
+                           "number or title",
+                           f"outline('{did}') without contains, or "
+                           f"grep('{did}', {contains!r})")
+        raise RefError(f"{served} is not section-indexed yet",
+                       action="rfclib index build")
     want = None if contains else depth     # a filter searches every level
     rows = [r for r in all_rows if want is None or not r["sec_num"]
             or r["sec_num"].count(".") + 1 <= want]
@@ -606,7 +621,8 @@ def links(conn: sqlite3.Connection, raw: str, direction: str = "out",
     if direction == "related":
         from . import subjects as subj_mod
         if not subj_mod.subjects_ready(conn):
-            raise RefError("subject taxonomy not synced (rfclib subjects sync)")
+            raise RefError("the subject tree is not in the library yet",
+                           action="rfclib subjects sync")
         r = subj_mod.related(conn, ref.served, limit=limit)
         subs = ", ".join(s.get("name", "") for s in r.get("subjects", []))
         out = [f"{ref.served} subjects: {subs or '(none)'}",
@@ -717,8 +733,8 @@ def subjects_tree(conn: sqlite3.Connection, parent: str | None = None,
     the slug to pass on and the document count."""
     from . import subjects as subj_mod
     if not subj_mod.subjects_ready(conn):
-        raise RefError("the subject tree is not in the library yet: run "
-                       "`rfclib init` (or `rfclib subjects sync`)")
+        raise RefError("the subject tree is not in the library yet",
+                       action="rfclib subjects sync")
     kids = {r["parent"]: r["n"] for r in conn.execute(
         "SELECT parent, COUNT(*) n FROM subjects GROUP BY parent")}
 
@@ -730,8 +746,8 @@ def subjects_tree(conn: sqlite3.Connection, parent: str | None = None,
     if contains:
         rows = subj_mod.list_subjects(conn, contains=contains, limit=limit)
         if not rows:
-            raise RefError(f"no subject matches {contains!r}; browse() "
-                           "without arguments lists the top level")
+            raise RefError(f"no subject matches {contains!r}",
+                           "browse() lists the top level")
         par = {r["slug"]: r["parent"] for r in conn.execute(
             "SELECT slug, parent FROM subjects")}
         out = [f"{len(rows)} subject(s) matching {contains!r}:"]
@@ -747,8 +763,8 @@ def subjects_tree(conn: sqlite3.Connection, parent: str | None = None,
         row = conn.execute("SELECT slug FROM subjects WHERE slug=? OR "
                            "lower(name)=lower(?)", (parent, parent)).fetchone()
         if row is None:
-            raise RefError(f"unknown subject {parent!r}; try "
-                           f"browse(contains='{parent}')")
+            raise RefError(f"unknown subject {parent!r}",
+                           f"browse(contains={parent!r})")
         parent = row["slug"]
     rows = conn.execute(
         "SELECT * FROM subjects WHERE " + ("parent=?" if parent else
@@ -769,7 +785,7 @@ def subject_docs(conn: sqlite3.Connection, subject: str, offset: int = 0,
         g = subj_mod.get_subject(conn, subject, include_obsolete=include_obsolete,
                                  limit=limit, offset=offset)
     except subj_mod.SubjectNotFound as e:
-        raise RefError(str(e)) from None
+        raise RefError(str(e), f"browse(contains={subject!r})") from None
     s = g["subject"]
     out = [f"{s['slug']} — {s['name']}: {g['docs_total']} document(s)"
            + (" incl. subtopics" if g.get("children") else "")
@@ -913,7 +929,7 @@ def search_text(conn: sqlite3.Connection, query: str, *,
                             include_obsolete=include_obsolete, stream=stream,
                             status=status, subject=subject)
         except subj_mod.SubjectNotFound as e:
-            raise RefError(str(e)) from None
+            raise RefError(str(e), f"browse(contains={subject!r})") from None
         if not hits:
             return (f"no documents match {query!r}"
                     + (f" in subject {subject!r}" if subject else "")
@@ -937,10 +953,11 @@ def search_text(conn: sqlite3.Connection, query: str, *,
             hits = ix_hybrid.hybrid_search(conn, query, limit=limit + 6,
                                            include_obsolete=include_obsolete)
     except Exception as e:  # noqa: BLE001 - index missing or FTS syntax
-        raise RefError(f"search failed ({e}). mode='exact' takes FTS5 "
-                       "syntax: quoted phrases, AND/OR, prefix*, "
-                       "NEAR(a b, 40). Build indexes with `rfclib index "
-                       "build` / `index embed`.") from None
+        raise RefError(f"search failed ({e})",
+                       "mode='exact' takes FTS5 syntax: quoted phrases, "
+                       "AND/OR, prefix*, NEAR(a b, 40)",
+                       "rfclib index build (and rfclib index embed for "
+                       "mode='semantic')") from None
     hits = [h for h in hits if not _title_noise(query, h)][:limit]
     if not hits:
         note = library.coverage_note(conn)

@@ -71,16 +71,19 @@ def initialized(conn: sqlite3.Connection) -> bool:
     return conn.execute("SELECT 1 FROM docs LIMIT 1").fetchone() is not None
 
 
-def not_initialized_message(conn: sqlite3.Connection | None = None) -> str:
-    home = Paths.default().home
-    msg = (f"The RFC library at {home} is empty. Run `rfclib init` once (the "
-           "RFC index, errata and subject tree, about a minute); RFCs are "
-           "then fetched on first use. `rfclib init --content current` also "
-           "prefetches every current RFC for full-text search (~10 min).")
+def not_initialized(conn: sqlite3.Connection | None = None
+                    ) -> tuple[str, str, str]:
+    """(message, hint, action) for a library with no catalog yet: the
+    fields of the error every view raises (PLAN.md §5.10)."""
     if _bootstrap.running:
-        msg = ("The RFC library is being initialized in the background "
-               f"({_bootstrap.step}); retry in a minute.")
-    return msg
+        return ("The RFC library is being initialized in the background "
+                f"({_bootstrap.step})", "retry the same call in a minute", "")
+    home = Paths.default().home
+    return (f"The RFC library at {home} is empty; once its catalog is in "
+            "(the RFC index, errata and subject tree, about a minute), RFCs "
+            "are fetched on first use", "",
+            "rfclib init (or `rfclib init --content current`, which also "
+            "prefetches every current RFC for full-text search, ~10 min)")
 
 
 def coverage_note(conn: sqlite3.Connection) -> str:
@@ -118,8 +121,9 @@ def ensure_indexed(conn: sqlite3.Connection, doc_id: str) -> bool:
     if read_only():         # indexing is a write; the shared server does it
         raise NetworkDisabled(
             f"{doc_id} is not indexed in this library and this server is "
-            "read-only (RFCLIB_READONLY); read it through the shared rfclib "
-            "server once, or run `rfclib sync && rfclib index build`.")
+            "read-only (RFCLIB_READONLY)",
+            "read it through the shared rfclib server once",
+            "rfclib sync && rfclib index build")
     with _fetch_guard:
         lock = _fetch_locks.setdefault(doc_id, threading.Lock())
     with lock:

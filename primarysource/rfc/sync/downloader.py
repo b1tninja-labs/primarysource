@@ -13,8 +13,10 @@ import hashlib
 import re
 import sqlite3
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-import httpx
+if TYPE_CHECKING:
+    import httpx
 
 from ..config import BASE_URL, USER_AGENT, require_network
 from ..fsutil import atomic_write_bytes
@@ -96,6 +98,7 @@ async def fetch_docs_async(conn: sqlite3.Connection, mirror_root: Path,
     require_network(f"{todo[0][0]} ({todo[0][1]})" if len(todo) == 1 else
                     f"{len(todo)} document files ({todo[0][0]}, ...)")
 
+    import httpx  # lazy: serving from an existing library never needs it
     sem = asyncio.Semaphore(concurrency)
     limits = httpx.Limits(max_connections=concurrency)
     async with httpx.AsyncClient(
