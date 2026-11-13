@@ -31,7 +31,9 @@ def test_mcp_serves_the_collection_server(monkeypatch: pytest.MonkeyPatch) -> No
         seen.update(server=server, transport=transport, **kwargs)
 
     monkeypatch.setattr(serve, "run", fake_run)
-    monkeypatch.delenv("PRIMARYSOURCE_READONLY", raising=False)
+    # setenv, not delenv: delenv of an absent variable records nothing to restore, so the "1" the CLI sets
+    # would outlive this test and put every later test in read-only mode.
+    monkeypatch.setenv("PRIMARYSOURCE_READONLY", "")
     code = cli.main(["mcp", "--collection", "rfc", "--transport", "http", "--port", "9999", "--read-only"])
     assert code == 0
     collection = registry.load("rfc")
@@ -40,10 +42,16 @@ def test_mcp_serves_the_collection_server(monkeypatch: pytest.MonkeyPatch) -> No
     import os
 
     assert os.environ.get("PRIMARYSOURCE_READONLY") == "1"
-    monkeypatch.delenv("PRIMARYSOURCE_READONLY", raising=False)
 
 
 def test_http_off_loopback_without_allowed_hosts_warns(capsys: pytest.CaptureFixture[str]) -> None:
     assert serve.transport_security("0.0.0.0", ()) is None  # noqa: S104
     assert "no authentication" in capsys.readouterr().err
     assert serve.transport_security("127.0.0.1", ()) is None
+
+
+def test_read_only_mode_does_not_leak_into_later_tests() -> None:
+    # runs after test_mcp_serves_the_collection_server in file order
+    import os
+
+    assert os.environ.get("PRIMARYSOURCE_READONLY", "") == ""
