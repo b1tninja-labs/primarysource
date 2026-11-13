@@ -52,12 +52,16 @@ Legend: `[ok]` implemented and pinned by a named test -- `[part]` partial, with 
 | `cl.tool_prefix` | PLAN.md §5.4 | `[ ]` | rfclib, nistlib and usblib expose unprefixed `search`, `read`; itulib, zimlore and cvelib use `itu_`, `zim_`, `cve_` |
 | `cl.packaging_serving` | PLAN.md §3, §5.5 | `[ ]` | rfclib PR #1: Dockerfile and entrypoint, GHCR push, MCP Registry `server.json` (PyPI and OCI packages) |
 | `cl.test_kit` | PLAN.md §3 | `[ ]` | fixture-corpus builder, licence tripwire (itulib's and zimlore's licence tests), ROADMAP row gate (zimlore's roadmap-rows test, which checks every named test exists); this repository has no row gate yet |
-| `cl.adopt_nistlib` | PLAN.md §6 | `[ ]` | |
-| `cl.adopt_usblib` | PLAN.md §6 | `[ ]` | |
-| `cl.adopt_cvelib` | PLAN.md §6 | `[ ]` | `D:\code\cvelib`, uncommitted |
-| `cl.adopt_itulib` | PLAN.md §6 | `[ ]` | |
-| `cl.adopt_zimlore` | PLAN.md §6 | `[ ]` | |
-| `cl.adopt_rfclib` | PLAN.md §6 | `[ ]` | |
+| `cl.collection_registry` | PLAN.md §5.8 | `[ ]` | a collection registers name, prefix, unit, ref pattern and builders; the core imports none of them |
+| `cl.missing_extra_hint` | PLAN.md §5.8 | `[ ]` | selecting a collection whose extra is not installed raises `LibError` naming `pip install "primarysource[<name>]"` |
+| `cl.multi_collection_server` | PLAN.md §5.8 | `[ ]` | `primarysource mcp --collection a --collection b`: one process, separate databases, prefixed tools |
+| `cl.home_per_collection` | PLAN.md §5.8 | `[ ]` | `$PRIMARYSOURCE_HOME/<collection>/`, with the old `<LIB>_HOME`/`<LIB>_DATA` read as a fallback for one release |
+| `cl.adopt_nistlib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.nist` with its history and tests. Blocked on relicensing Apache-2.0 to MIT (PLAN.md §7) |
+| `cl.adopt_usblib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.usb`, together with nistlib, sharing one skeleton. Same licence block |
+| `cl.adopt_cvelib` | PLAN.md §5.8, §6 | `[ ]` | `D:\code\cvelib`, uncommitted; moves in as `primarysource.cve` if its author agrees |
+| `cl.adopt_itulib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.itu`, with `pypdf` behind `[itu]` |
+| `cl.adopt_zimlore` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.zim`, with `libzim` behind `[zim]` |
+| `cl.adopt_rfclib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.rfc`; `rfclib` on PyPI becomes a thin distribution that depends on `primarysource[rfc]` |
 
 ## 3. Non-goals
 

@@ -32,9 +32,10 @@ Measured:
 
 Two things at once:
 
-1. **A dependency**: model, ref grammar, pager, citation skeleton, index, readers, MCP scaffolding and base
-   classes. A library becomes a source registry plus the corpus-specific parsers, citation string and status
-   vocabulary.
+1. **The one package for every collection** (§5.8): model, ref grammar, pager, citation skeleton, index,
+   readers, MCP scaffolding and base classes in the core, with each library moved in as a collection
+   subpackage behind an optional extra. A collection is a source registry plus the corpus-specific parsers,
+   citation string and status vocabulary.
 2. **A tool in its own right**: point it at a folder of documents and search, read and cite them from a CLI or
    over MCP, with no library written for that folder.
 
@@ -92,8 +93,10 @@ Backends give different text, so the backend name and version are part of an ind
 2. **`¶n` keeps its per-library unit, and the unit is declared** (`primarysource/model.py::Unit`). RFCs have real
    paragraphs; an extracted PDF clause has only sentences. The section is the durable address.
 3. **Own repository.** `rfclib`'s repository is private and `itulib`'s is public; a public library cannot depend
-   on a private one.
-4. **A collection is the unit of serving**: one database, one tool-name prefix, one container.
+   on a private one. With §5.8 this repository becomes the home of every collection, so it must be public, and
+   rfclib's code becomes public when it moves in. That is already true of its published PyPI sdist.
+4. **A collection is the unit of storage and naming**: one database and one tool-name prefix. Since §5.8, one
+   server process or container may serve several collections.
 5. **Serving shape**: one long-lived HTTP server per library under `docker compose` on loopback. The Docker MCP
    Toolkit's gateway starts a container per server per client session (or per call), so it does not give one
    shared process; it can front these servers later.
@@ -104,8 +107,41 @@ Backends give different text, so the backend name and version are part of an ind
    collection. The core has no embeddings or vector store, and no shared server depends on one. This was the
    owner's instruction on 2026-11-12. rfclib's hybrid ranking stays rfclib's own optional extra, and its CI
    already checks that it degrades to keyword search without that extra.
+8. **One package, collections as optional extras** (owner's decision, 2026-11-12, chosen over one repository
+   holding separate distributions). The libraries move into this package and stop being separate projects:
+
+   | Collection | Subpackage | Extra | Tool prefix |
+   |---|---|---|---|
+   | RFC series | `primarysource.rfc` | `[rfc]` | `rfc_` (bare names kept until the owner decides, §7) |
+   | ITU-T | `primarysource.itu` | `[itu]` (`pypdf`) | `itu_` |
+   | NIST | `primarysource.nist` | `[nist]` | `nist_` |
+   | USB-IF | `primarysource.usb` | `[usb]` | `usb_` |
+   | Kiwix ZIM | `primarysource.zim` | `[zim]` (`libzim`) | `zim_` |
+   | CVE | `primarysource.cve` | `[cve]` | `cve_` |
+
+   Shared extras: `[mcp]` for the server and `[all]` for everything. Rules that follow from this:
+   - **The core never imports a collection.** A collection registers itself (name, tool prefix, unit, ref
+     pattern, builders), and the CLI and the MCP server serve whichever collections are named or installed:
+     `primarysource mcp --collection nist --collection usb`. A collection whose extra is missing fails with a
+     `LibError` that names `pip install "primarysource[<name>]"`, never with an `ImportError`.
+   - **One process can serve several collections**, each with its own database and its own tool prefix. §5.4
+     still holds: a collection is the unit of storage and naming. Serving more than one is now a flag instead of
+     another container.
+   - **An extra adds dependencies only.** Every collection's code ships in every wheel, so the package has one
+     version and one licence (MIT). Each move needs the owner's yes on the licence where the library declared
+     another (§7).
+   - **Each move keeps the library's history** (`git subtree add` into the collection's directory, then `git mv`
+     into place) and brings the library's tests with it. The old repository is then archived with a README that
+     points here. `rfclib` stays published on PyPI as a thin distribution that depends on `primarysource[rfc]`
+     and keeps the `rfclib` command, so that nobody's configuration breaks.
+   - **Tracked metadata moves; corpus text never does.** Catalogues, `sources.toml` and digests are package
+     data. Fetched text lives under the home directory, per collection (`$PRIMARYSOURCE_HOME/<collection>/`).
+     The old `<LIB>_HOME`/`<LIB>_DATA` variables are read as fallbacks for one release.
 
 ## 6. Adoption order
+
+Since §5.8, "adoption" means moving the library in as a collection subpackage, not depending on this package
+from outside. The order below stands.
 
 0. **Before any adoption**:
    - commit this repository (done 2026-11-12);
@@ -156,7 +192,11 @@ rfclib has no matrix, so its items are in `PORTFOLIO.md` §9 item 13:
 - **Tool prefix** (§5.4). rfclib, nistlib and usblib use bare names, and itulib, zimlore and cvelib use `itu_`,
   `zim_` and `cve_`. Renaming rfclib's tools breaks a published interface, so it needs the owner's yes.
 - **Licence of nistlib and usblib.** Both declare Apache-2.0 in `pyproject.toml` and ship no LICENSE file.
-  This package and the rest of the family are MIT.
+  This package and the rest of the family are MIT. Under §5.8 their code ships inside this MIT package, so
+  moving them in needs the owner to relicense them to MIT. **This blocks step 1 of §6.**
+- **The self-sufficiency rule** ("no third-party runtime dependencies"; the owner's rule, now applied
+  portfolio-wide) and the extras in §5.8 (`mcp`, `pypdf`, `libzim`) disagree. Either the rule allows optional
+  extras, or each of those needs becomes its own portfolio project first.
 - First commit made on 2026-11-12. There is no GitHub remote yet. The repository must be public, or
   public-compatible, because itulib is public and will depend on it.
 
