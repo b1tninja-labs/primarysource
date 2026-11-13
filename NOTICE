@@ -1,0 +1,17 @@
+primarysource
+Copyright 2026 Justin Capella. Licensed under the Apache License, Version 2.0 (LICENSE).
+
+The collections moved in from rfclib, itulib, zimlore, nistlib and usblib are the
+same author's original work and are relicensed here under the Apache License 2.0.
+
+Document text is not part of this software's licence
+----------------------------------------------------
+primarysource ships no document text, with one exception: the test fixtures in
+tests/rfc/fixtures/library are unmodified copies of a few RFCs and trimmed
+copies of RFC Editor metadata, published by the IETF Trust under the IETF Trust
+Legal Provisions (https://trustee.ietf.org/license-info), not under this
+software's licence. RFCs may be copied and distributed in full but not modified
+outside the IETF Standards Process.
+
+Every other collection's documents are fetched by the user, under their
+publishers' own terms, and are stored outside this package.

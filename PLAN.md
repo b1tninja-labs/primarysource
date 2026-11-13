@@ -81,7 +81,7 @@ RTF and DOCX were not met in any inventory. They are reader slots, not commitmen
 **PDF backends.** `pypdf` first: pure Python, gives bookmarks, no system package. `pdftotext` is an optional
 backend for layout-heavy documents. The owner has said needs were found elsewhere for `pypdfium2` and PyMuPDF;
 they are later backends, added when a document needs more than `pypdf` gives (tables, layout, rendering), each as
-its own extra. Before PyMuPDF is added, read its licence: it is not MIT, and this package is. (Not verified here.)
+its own extra. Before PyMuPDF is added, read its licence: it is not Apache-2.0, and this package is. (Not verified here.)
 Backends give different text, so the backend name and version are part of an index's source hash.
 
 ## 5. Decisions already made
@@ -131,8 +131,8 @@ Backends give different text, so the backend name and version are part of an ind
      still holds: a collection is the unit of storage and naming. Serving more than one is now a flag instead of
      another container.
    - **An extra adds dependencies only.** Every collection's code ships in every wheel, so the package has one
-     version and one licence (MIT). Each move needs the owner's yes on the licence where the library declared
-     another (§7).
+     version and one licence: Apache-2.0 since 2026-11-13 (PORTFOLIO.md §9 item 15). The libraries that move in
+     are the owner's original work and are relicensed by moving in; `NOTICE` says so.
    - **Each move brings the library's tests with it, and its commit names the source commit.** History stays
      in the old repository and is not imported. A `git subtree add` would publish a private repository's
      whole history, including files that never move here, inside this public one. rfclib moved on 2026-11-12
@@ -205,9 +205,9 @@ rfclib has no matrix, so its items are in `PORTFOLIO.md` §9 item 13:
   the integer `start` stays for lists only.
 - **Tool prefix** (§5.4). rfclib, nistlib and usblib use bare names, and itulib, zimlore and cvelib use `itu_`,
   `zim_` and `cve_`. Renaming rfclib's tools breaks a published interface, so it needs the owner's yes.
-- **Licence of nistlib and usblib.** Both declare Apache-2.0 in `pyproject.toml` and ship no LICENSE file.
-  This package and the rest of the family are MIT. Under §5.8 their code ships inside this MIT package, so
-  moving them in needs the owner to relicense them to MIT. **This blocks step 1 of §6.**
+- **Licence: decided 2026-11-13.** primarysource is Apache-2.0 (PORTFOLIO.md §9 item 15, confirmed by the
+  owner), like ctspy, asn1core and pgpenv. nistlib and usblib were already Apache-2.0. rfclib, itulib and zimlore
+  are the owner's own work and come in under Apache-2.0 too; `rfclib` on PyPI keeps its MIT releases.
 - **The self-sufficiency rule** ("no third-party runtime dependencies"; the owner's rule, now applied
   portfolio-wide) and the extras in §5.8 (`mcp`, `pypdf`, `libzim`) disagree. Either the rule allows optional
   extras, or each of those needs becomes its own portfolio project first.

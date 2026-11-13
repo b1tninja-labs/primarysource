@@ -7,8 +7,8 @@ name = "primarysource"
 dynamic = ["version"]
 description = "Shared core for citable document libraries: sectioned-document model, ref grammar, token-budgeted paging, and (planned) readers, a full-text index, a CLI and an MCP server."
 readme = "README.md"
-license = "MIT"
-license-files = ["LICENSE"]
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 requires-python = ">=3.12"
 authors = [{ name = "Justin Capella" }]
 keywords = ["documents", "citation", "full-text-search", "mcp", "model-context-protocol", "standards"]

@@ -56,8 +56,8 @@ Legend: `[ok]` implemented and pinned by a named test -- `[part]` partial, with 
 | `cl.missing_extra_hint` | PLAN.md §5.8 | `[ok]` | `tests/test_registry.py::test_a_missing_extra_names_the_install_command`, `tests/test_registry.py::test_an_unknown_collection_lists_the_registered_ones` |
 | `cl.multi_collection_server` | PLAN.md §5.8 | `[ ]` | `primarysource mcp --collection a --collection b`: one process, separate databases, prefixed tools |
 | `cl.home_per_collection` | PLAN.md §5.8 | `[ok]` | `primarysource/home.py::collection_home`: the old `<LIB>_HOME`, else `$PRIMARYSOURCE_HOME/<name>`, else an existing old per-user library, else per-user `primarysource/<name>`. `tests/test_model_render_home.py::test_collection_home_keeps_old_settings_and_libraries`, `tests/rfc/test_library.py::test_home_defaults_to_platform_dir_not_cwd` |
-| `cl.adopt_nistlib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.nist` with its history and tests. Blocked on relicensing Apache-2.0 to MIT (PLAN.md §7) |
-| `cl.adopt_usblib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.usb`, together with nistlib, sharing one skeleton. Same licence block |
+| `cl.adopt_nistlib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.nist` with its history and tests. Unblocked: primarysource is Apache-2.0, as nistlib is |
+| `cl.adopt_usblib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.usb`, together with nistlib, sharing one skeleton |
 | `cl.adopt_cvelib` | PLAN.md §5.8, §6 | `[ ]` | `D:\code\cvelib`, uncommitted; moves in as `primarysource.cve` if its author agrees |
 | `cl.adopt_itulib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.itu`, with `pypdf` behind `[itu]` |
 | `cl.adopt_zimlore` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.zim`, with `libzim` behind `[zim]` |
