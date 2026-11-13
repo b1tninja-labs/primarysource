@@ -14,6 +14,8 @@ from rich.console import Console
 from rich.markup import escape
 from rich.table import Table
 
+from primarysource.errors import LibError
+
 from . import errata as errata_mod
 from . import graph
 from . import query as q
@@ -449,7 +451,8 @@ def errata(doc_id: str = typer.Argument(
     try:
         res = errata_mod.ensure(conn, did, refresh=refresh)
     except Exception as e:  # noqa: BLE001 - network layer errors vary
-        console.print(f"[red]errata fetch failed:[/red] {escape(str(e))}")
+        text = e.as_text() if isinstance(e, LibError) else str(e)
+        console.print(f"[red]errata fetch failed:[/red] {escape(text)}")
         raise typer.Exit(code=1)
     rows = res["results"]
     verified = [e for e in rows if e["status"] == "Verified"]
@@ -883,10 +886,16 @@ def main(argv=None):
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
-    if argv is None:
-        app()
-    else:
-        app(args=list(argv), prog_name="primarysource rfc")
+    try:
+        if argv is None:
+            app()
+        else:
+            app(args=list(argv), prog_name="primarysource rfc")
+    except LibError as e:
+        # the same error:/hint:/action: lines an MCP client gets (PLAN.md
+        # §5.10); str(e) alone would drop the remedy
+        print(e.as_text(), file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

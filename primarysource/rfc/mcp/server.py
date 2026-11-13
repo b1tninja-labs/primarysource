@@ -14,9 +14,12 @@ import json
 import sqlite3
 
 from mcp.server.mcpserver import MCPServer
-from mcp.server.mcpserver.exceptions import ResourceError, ToolError
+from mcp.server.mcpserver.exceptions import ResourceError
 from mcp.types import (Completion, PromptReference, ResourceTemplateReference,
                        ToolAnnotations)
+
+from primarysource.errors import LibError
+from primarysource.scaffold import guard
 
 from .. import __version__, library
 from .. import query as q
@@ -64,8 +67,12 @@ def _conn():
         paths = Paths.default()
         try:
             return open_db(paths.db, read_only=True), paths
-        except sqlite3.OperationalError as e:
-            raise ToolError(str(e)) from None
+        except sqlite3.OperationalError:
+            raise LibError(
+                f"cannot open {paths.db}: a read-only server needs an "
+                "existing library", "",
+                "rfclib init, or start the shared rfclib server first"
+            ) from None
     paths = Paths.default().ensure()
     conn = open_db(paths.db)
     library.maybe_bootstrap(conn)       # no-op unless RFCLIB_AUTO_INIT=1
@@ -89,30 +96,33 @@ async def healthz(request):
 
 
 def _run(fn, *a, **k) -> str:
-    """Call a view; anticipated failures become isError results whose text
-    says how to fix the call."""
+    """Call a view; anticipated failures become a `LibError`, which `guard`
+    turns into an isError result of `error:`/`hint:`/`action:` lines
+    (PLAN.md §5.10): `hint` is the tool call to make next, `action` the
+    command a human runs."""
     try:
         return fn(*a, **k)
     except views.RefError as e:
-        msg = str(e)
-        if not msg.startswith("The RFC library"):   # ref problems get help
-            msg = f"{msg} {_REF_HELP}"
-        raise ToolError(msg) from None
+        # a ref problem that names no remedy of its own gets the ref forms
+        hint = e.hint or ("" if e.action else _REF_HELP)
+        raise LibError(e.message, hint, e.action) from None
     except q.NotFound as e:
-        raise ToolError(f"{e} is not in the local index (rfclib manifest "
-                        "--refresh updates it).") from None
+        raise LibError(f"{e} is not in the local index", "",
+                       "rfclib manifest --refresh") from None
     except NetworkDisabled as e:
-        raise ToolError(str(e)) from None
+        raise LibError(e.message, e.hint, e.action) from None
     except sqlite3.OperationalError as e:
         if "readonly" not in str(e) or not read_only():
             raise
-        raise ToolError(
+        raise LibError(
             "this server is read-only (RFCLIB_READONLY) and the library "
-            "needs a write first, most likely a schema update: open it once "
-            "with the shared rfclib server or `rfclib status`.") from None
+            "needs a write first, most likely a schema update",
+            "call it through the shared rfclib server once",
+            "rfclib status") from None
 
 
 @mcp.tool(annotations=RO, structured_output=False, meta=ALWAYS)
+@guard
 def search(query: str, scope: str = "sections", mode: str = "hybrid",
            limit: int = 8, subject: str | None = None,
            status: str | None = None, include_obsolete: bool = False,
@@ -137,6 +147,7 @@ def search(query: str, scope: str = "sections", mode: str = "hybrid",
 
 
 @mcp.tool(annotations=RO_NET, structured_output=False, meta=ALWAYS)
+@guard
 def read(ref: str, max_tokens: int = 2000, view: str = "text",
          lang: str | None = None, format: str = "txt") -> str:
     """Read RFC text by ref. Pages are cut at paragraph boundaries within
@@ -156,7 +167,8 @@ def read(ref: str, max_tokens: int = 2000, view: str = "text",
     fmt = (format or "txt").lower().strip(". ")
     if fmt != "txt":
         if fmt not in ("html", "xml", "json", "pdf"):
-            raise ToolError("format must be txt | html | xml | json")
+            raise LibError(f"unknown format {format!r}",
+                           "format is txt | html | xml | json")
         ref_ = _run(views.parse_ref, conn, ref, need_text=False)
         try:
             return q.read_document(conn, ref_.served, mirror_root=paths.mirror,
@@ -165,12 +177,13 @@ def read(ref: str, max_tokens: int = 2000, view: str = "text",
                                           - (ref_.start or 1) + 1),
                                    max_chars=max(400, max_tokens * 4))
         except q.NotFound as e:
-            raise ToolError(str(e)) from None
+            raise LibError(f"unknown document {e}", _REF_HELP) from None
     return _run(views.read, conn, ref, mirror_root=paths.mirror,
                 max_tokens=max_tokens, view=view, lang=lang)
 
 
 @mcp.tool(annotations=RO, structured_output=False)
+@guard
 def outline(ref: str, depth: int | None = 2,
             contains: str | None = None) -> str:
     """Section outline of one document (ref='RFC9112'): one line per section
@@ -183,6 +196,7 @@ def outline(ref: str, depth: int | None = 2,
 
 
 @mcp.tool(annotations=RO_NET, structured_output=False)
+@guard
 def grep(ref: str, pattern: str, max_hits: int = 25,
          ignore_case: bool = True) -> str:
     """Regex search inside ONE document or section (ref='RFC9110' or
@@ -195,6 +209,7 @@ def grep(ref: str, pattern: str, max_hits: int = 25,
 
 
 @mcp.tool(annotations=RO, structured_output=False)
+@guard
 def cite(ref: str, style: str = "verbose") -> str:
     """Checkable citation for a ref: label, title, date, status (warns when
     obsolete), anchor URL, errata status and a hash of the cited span.
@@ -205,6 +220,7 @@ def cite(ref: str, style: str = "verbose") -> str:
 
 
 @mcp.tool(annotations=RO, structured_output=False)
+@guard
 def links(ref: str, direction: str = "out", limit: int = 30) -> str:
     """Citation links of a document or section, section-precise where the
     text says so ('RFC9000§8.1 cites RFC9002 §6.2 [normative]').
@@ -215,6 +231,7 @@ def links(ref: str, direction: str = "out", limit: int = 30) -> str:
 
 
 @mcp.tool(annotations=RO, structured_output=False)
+@guard
 def info(ref: str, detail: str = "concise") -> str:
     """Bibliographic record and status of one document: title, status,
     current/OBSOLETE with successor, obsoletes/updates graph, BCP/STD
@@ -228,11 +245,13 @@ def info(ref: str, detail: str = "concise") -> str:
             return json.dumps(q.get_metadata(conn, q.normalize_doc_id(doc)),
                               ensure_ascii=False, indent=1)
         except (ValueError, q.NotFound) as e:
-            raise ToolError(f"unknown document {doc!r}: {e}") from None
+            raise LibError(f"unknown document {doc!r}: {e}",
+                           "search(<topic>, scope='documents')") from None
     return _run(views.info_text, conn, doc)
 
 
 @mcp.tool(annotations=RO, structured_output=False)
+@guard
 def browse(subject: str | None = None, parent: str | None = None,
            contains: str | None = None, recent: bool = False,
            offset: int = 0, limit: int = 30,
@@ -253,6 +272,7 @@ def browse(subject: str | None = None, parent: str | None = None,
 
 
 @mcp.tool(annotations=RO_NET, structured_output=False, meta=ALWAYS)
+@guard
 def errata(ref: str, status: str = "verified",
            section: str | None = None, max_tokens: int = 2000) -> str:
     """Errata for a document or one section, with the corrected text:
@@ -263,10 +283,12 @@ def errata(ref: str, status: str = "verified",
     try:
         return _run(views.errata_text, conn, ref, status=status,
                     section=section, max_tokens=max_tokens)
-    except ToolError:
+    except LibError:
         raise
     except Exception as e:  # noqa: BLE001 - upstream/network
-        raise ToolError(f"errata unavailable: {e}") from None
+        raise LibError(f"errata unavailable: {e}",
+                       "retry the same call later",
+                       "rfclib errata --sync-all (while online)") from None
 
 
 # --------------------------------------------------------------------------
@@ -281,7 +303,9 @@ def rfc_resource(ref: str) -> str:
     try:
         return views.read(conn, ref, mirror_root=paths.mirror,
                           max_tokens=4000)
-    except (views.RefError, q.NotFound) as e:
+    except views.RefError as e:
+        raise ResourceError(e.as_text()) from None
+    except q.NotFound as e:
         raise ResourceError(str(e)) from None
 
 

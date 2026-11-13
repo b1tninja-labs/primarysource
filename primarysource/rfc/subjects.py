@@ -24,9 +24,10 @@ import time
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
-from typing import Callable, Optional
+from typing import TYPE_CHECKING, Callable, Optional
 
-import httpx
+if TYPE_CHECKING:
+    import httpx
 
 from .config import BASE_URL, USER_AGENT, Paths, require_network
 
@@ -225,6 +226,7 @@ def sync(conn: sqlite3.Connection, paths: Paths, force: bool = False,
     limit>0 restricts to the first N subjects (smoke runs; the index is
     always fetched). Cached HTML under meta/subjects/ is reused unless
     force=True. Both tables are rebuilt atomically at the end."""
+    import httpx  # lazy: serving from an existing library never needs it
     say = progress or (lambda m: None)
     ensure_schema(conn)
     cache = _subject_dir(paths)
@@ -331,8 +333,7 @@ def resolve_subject(conn: sqlite3.Connection, name: str) -> str:
         opts = ", ".join(f"{r['slug']} ({r['name']})" for r in rows)
         raise SubjectNotFound(
             f"subject {name!r} is ambiguous; candidates: {opts}")
-    raise SubjectNotFound(f"no subject matches {name!r}; use list_subjects "
-                          "to see the taxonomy")
+    raise SubjectNotFound(f"no subject matches {name!r}")
 
 
 def list_subjects(conn: sqlite3.Connection, contains: str | None = None,

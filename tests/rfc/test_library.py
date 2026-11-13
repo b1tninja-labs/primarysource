@@ -84,8 +84,9 @@ def test_empty_library_says_what_to_run(home):
     for call in (lambda: views.search_text(conn, "tls"),
                  lambda: views.parse_ref(conn, "RFC9000"),
                  lambda: views.info_text(conn, "RFC9000")):
-        with pytest.raises(views.RefError, match="rfclib init"):
+        with pytest.raises(views.RefError, match="is empty") as err:
             call()
+        assert err.value.action.startswith("rfclib init")
 
 
 def test_catalog_answers_without_documents(library):
