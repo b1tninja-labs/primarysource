@@ -226,6 +226,26 @@ def test_run_records_digest_and_writes_index(
     assert "does not match the recorded" in capsys.readouterr().err
 
 
+def test_a_fetch_builds_the_search_index(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    from primarysource.pdfcorpus import fts, tools
+    from primarysource.usb.server.corpus import load_corpus
+
+    (tmp_path / "sources.toml").write_text(GOOD, encoding="utf-8")
+    pdf = tmp_path / "mine.pdf"
+    pdf.write_bytes(PDF)
+    monkeypatch.setattr(fetch, "find_pdftotext", lambda: "pdftotext")
+    monkeypatch.setattr(
+        fetch, "extract_text", lambda _pdf: "1. Intro\nbody\n2. Next\nwombat text\n"
+    )
+    assert run(tmp_path, {"a-1": pdf}, []) == 0
+    assert "indexed 2 section(s)" in capsys.readouterr().out
+    corpus = load_corpus(tmp_path / "corpus")
+    assert (tmp_path / "corpus" / fts.INDEX_FILE).is_file()
+    assert "a-1§2" in tools.search(corpus, "wombat")
+
+
 def test_run_rejects_unknown_doc_id(tmp_path: Path) -> None:
     (tmp_path / "sources.toml").write_text(GOOD, encoding="utf-8")
     with pytest.raises(SourcesError, match="not in sources.toml"):

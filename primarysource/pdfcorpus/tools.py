@@ -1,27 +1,41 @@
-"""The five tools as plain functions returning text. ``ToolError`` marks a caller mistake."""
+"""The five tools as plain functions returning `render()` text. ``ToolError`` marks a caller mistake.
+
+Every error is a `LibError`: the message says what is wrong, `hint` names the tool call that helps next (with the
+collection's prefix, `nist_outline('sp800-73pt2-5')`), and `action` the fetch or index command when a human must
+act. A search that matches nothing is text saying so, not an error.
+
+Cursors (PLAN.md §5.11): a read stops at its token budget and its `next:` is a ref, `<doc_id>:<first>-<last>`, that
+`read` takes back as its `doc`; search and outline are lists whose `next:` is `start=<n>`.
+"""
 
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 
+from primarysource import budget, index
+from primarysource.errors import LibError
+from primarysource.pdfcorpus import fts
 from primarysource.pdfcorpus.corpus import Corpus
 from primarysource.pdfcorpus.models import Document, Section
+from primarysource.refs import RefGrammar
+from primarysource.render import next_start, render
 
-MAX_READ_LINES = 400
-SNIPPET_LINES = 3
-_TOKEN = re.compile(r"[a-z0-9]+")
+# Document ids are file-safe slugs (`sp800-73pt2-5`, `sp800-53r5-oscal`), matched without regard to case.
+# Section ids are dotted numbers, appendix letters and control ids (`3.2.4`, `A.1`, `AC-2(1)`).
+GRAMMAR = RefGrammar(r"[A-Za-z0-9][A-Za-z0-9._-]*", r"[0-9A-Za-z][0-9A-Za-z.()_-]*")
+
+REF_FORMS = "use <doc_id>§<section> or <doc_id>:<first>-<last>"
+READ_TOKENS = 2000
+OUTLINE_ROWS = 200
 
 
-class ToolError(Exception):
-    """A bad argument or unknown reference; the message says what to do instead."""
+class ToolError(LibError):
+    """A bad argument or unknown reference; `hint` says what to call instead."""
 
 
 def _norm(s: str) -> str:
     return " ".join(s.lower().split())
-
-
-def tokens(text: str) -> list[str]:
-    return _TOKEN.findall(text.lower())
 
 
 def resolve_doc(corpus: Corpus, doc: str) -> Document:
@@ -41,105 +55,163 @@ def resolve_doc(corpus: Corpus, doc: str) -> Document:
                 if d.doc_id == wanted:
                     return d
     known = ", ".join(d.doc_id for d in corpus.documents) or "none"
-    raise ToolError(f"Unknown document {doc!r}. Known doc_ids: {known}.")
+    raise ToolError(f"unknown document {doc!r} (known doc_ids: {known})", f"{corpus.tool('search')}('<words>')")
 
 
-def resolve_section(document: Document, section: str) -> Section:
+def resolve_section(corpus: Corpus, document: Document, section: str) -> Section:
     sid = section.strip().lstrip("§").strip()
     for s in document.sections:
         if s.id == sid:
             return s
-    raise ToolError(
-        f"{document.doc_id} has no section {sid!r}. Use outline({document.doc_id!r}) to list section ids."
-    )
-
-
-def _numbered(lines: list[str], start: int, end: int) -> str:
-    width = len(str(end))
-    return "\n".join(f"{n:>{width}}: {lines[n - 1]}" for n in range(start, end + 1))
-
-
-def search(corpus: Corpus, query: str, doc: str | None = None, limit: int = 8) -> str:
-    qtoks = list(dict.fromkeys(tokens(query)))
-    if not qtoks:
-        raise ToolError("Empty query: give at least one word or number to search for.")
-    if limit < 1:
-        raise ToolError("limit must be at least 1.")
-    docs = [resolve_doc(corpus, doc)] if doc else list(corpus.documents)
-    hits: list[tuple[float, Document, Section, int, int]] = []
-    for d in docs:
-        lines = corpus.text_lines(d)
-        # A line belongs to the narrowest section containing it, so a parent
-        # section is not credited with its children's text.
-        owner: dict[int, Section] = {}
-        for s in sorted(d.sections, key=lambda s: s.end_line - s.start_line, reverse=True):
-            for n in range(s.start_line, min(s.end_line, len(lines)) + 1):
-                owner[n] = s
-        per_sec: dict[str, dict[int, set[str]]] = {}
-        for n, s in owner.items():
-            found = set(tokens(lines[n - 1])).intersection(qtoks)
-            if found:
-                per_sec.setdefault(s.id, {})[n] = found
-        by_id = {s.id: s for s in d.sections}
-        for sid, matched in per_sec.items():
-            s = by_id[sid]
-            head = set(tokens(s.heading)).intersection(qtoks)
-            body = [t for ln in matched for t in tokens(lines[ln - 1])]
-            distinct = set().union(*matched.values()) | head
-            score = float(sum(body.count(t) for t in qtoks)) + 3.0 * len(head) + 5.0 * len(distinct)
-            best = max(matched, key=lambda ln: (len(matched[ln]), -ln))
-            first = max(s.start_line, best - 1)
-            last = min(s.end_line, len(lines), first + SNIPPET_LINES - 1)
-            hits.append((score, d, s, first, last))
-    if not hits:
-        return f"No passages match {query!r}."
-    hits.sort(key=lambda h: (-h[0], h[1].doc_id, h[3]))
-    out = [f"{min(limit, len(hits))} of {len(hits)} passages for {query!r}:"]
-    for score, d, s, first, last in hits[:limit]:
-        snippet = _numbered(corpus.text_lines(d), first, last)
-        out.append(f"\n{d.doc_id} §{s.id} {s.heading} (lines {first}-{last}, score {score:g})\n{snippet}")
-    return "\n".join(out)
+    raise ToolError(f"{document.doc_id} has no section {sid!r}", f"{corpus.tool('outline')}({document.doc_id!r})")
 
 
 def parse_lines(spec: str) -> tuple[int, int]:
     m = re.fullmatch(r"\s*(\d+)\s*(?:[-:]\s*(\d+))?\s*", spec)
     if not m:
-        raise ToolError(f"Cannot parse lines={spec!r}; use 'START-END', e.g. '120-160'.")
+        raise ToolError(f"cannot parse lines={spec!r}", "give 'START-END', e.g. lines='120-160'")
     start = int(m.group(1))
     return start, int(m.group(2) or start)
 
 
-def read(corpus: Corpus, doc: str, section: str | None = None, lines: str | None = None) -> str:
-    d = resolve_doc(corpus, doc)
-    if (section is None) == (lines is None):
-        raise ToolError("Give exactly one of section (an id from outline) or lines ('START-END').")
-    text = corpus.text_lines(d)
+@dataclass(frozen=True, slots=True)
+class Target:
+    """What a read or cite names: a document and a section, a line range, or neither."""
+
+    document: Document
+    section: Section | None = None
+    lines: tuple[int, int] | None = None
+
+
+def resolve(corpus: Corpus, doc: str, section: str | None = None, lines: str | None = None) -> Target:
+    """`doc` is a doc_id, a number, or a ref: `<doc_id>§<section>` or `<doc_id>:<first>-<last>` (a read's `next:`).
+
+    A ref's section or range and an explicit `section`/`lines` argument may not both be given.
+    """
+    if section is not None and lines is not None:
+        raise ToolError("give one of section or lines, not both", "")
+    ref = None
+    if "§" in doc or "::" in doc or ":" in doc:
+        ref = GRAMMAR.parse(doc)
+        if ref.para is not None or ref.anchor is not None:
+            raise ToolError(f"{doc!r}: this collection has no ¶ or # refs", REF_FORMS)
+        if ref.doc is None:
+            raise ToolError(f"{doc!r} names no document", REF_FORMS)
+        if section is not None or lines is not None:
+            raise ToolError(f"{doc!r} already names a section or lines; drop the section/lines argument", "")
+    document = resolve_doc(corpus, ref.doc if ref is not None and ref.doc else doc)
+    if ref is not None and ref.section is not None:
+        section = ref.section
     if section is not None:
-        s = resolve_section(d, section)
-        start, end, label = s.start_line, s.end_line, f"{d.doc_id} §{s.id} {s.heading}"
-    elif lines is not None:
-        start, end = parse_lines(lines)
+        return Target(document, section=resolve_section(corpus, document, section))
+    span = ref.lines if ref is not None else (parse_lines(lines) if lines is not None else None)
+    return Target(document, lines=span)
+
+
+def _numbered(lines: list[str], start: int, end: int, width: int) -> list[str]:
+    return [f"{n:>{width}}: {lines[n - 1]}" for n in range(start, end + 1)]
+
+
+def _section_lines(document: Document) -> dict[str, Section]:
+    return {s.id: s for s in document.sections}
+
+
+def search(corpus: Corpus, query: str, doc: str | None = None, limit: int = 8, start: int = 0) -> str:
+    """Sections best matching `query` from the FTS5 index, `limit` from the 0-based `start`."""
+    if not index.query_terms(query):
+        raise ToolError("the query has no words to search for", f"{corpus.tool('search')}('<words>')")
+    if limit < 1:
+        raise ToolError("limit must be at least 1", "")
+    if start < 0:
+        raise ToolError("start is a 0-based offset", "pass the start=<n> of a next: line")
+    only = resolve_doc(corpus, doc).doc_id if doc else None
+    conn = fts.open_index(corpus)
+    try:
+        result = fts.search(conn, query, doc_id=only, limit=limit, start=start)
+    finally:
+        conn.close()
+    if not result.hits:
+        if start:
+            return render(f"No more passages for {query!r} after {start}.", {})
+        return render(f"No passages match {query!r}.", {})
+    documents = {d.doc_id: d for d in corpus.documents}
+    out = [f"Passages {start + 1}-{start + len(result.hits)} for {query!r}, best first:"]
+    for hit in result.hits:
+        document = documents.get(hit.doc_id)
+        section = _section_lines(document).get(hit.section_id) if document else None
+        where = f"lines {section.start_line}-{section.end_line}, " if section else ""
+        snippet = " ".join(hit.snippet.split())
+        out.append(f"\n{hit.doc_id}§{hit.section_id}  {hit.title}  ({where}score {hit.score:.3g})\n  {snippet}")
+    footer = {
+        "next": next_start(result.next_start),
+        "relaxed": "no section holds every query word; these hold some" if result.relaxed else "",
+    }
+    return render("\n".join(out), footer)
+
+
+def read(
+    corpus: Corpus,
+    doc: str,
+    section: str | None = None,
+    lines: str | None = None,
+    max_tokens: int = READ_TOKENS,
+) -> str:
+    """Numbered lines of a section or a line range, cut at whole lines within `max_tokens`."""
+    if max_tokens < 1:
+        raise ToolError("max_tokens must be at least 1", "")
+    target = resolve(corpus, doc, section, lines)
+    d = target.document
+    if target.section is not None:
+        s = target.section
+        start, end, label = s.start_line, s.end_line, f"{d.doc_id}§{s.id} {s.heading}"
+    elif target.lines is not None:
+        start, end = target.lines
         label = d.doc_id
+    else:
+        raise ToolError(
+            f"say what to read in {d.doc_id}: a section or a line range",
+            f"{corpus.tool('outline')}({d.doc_id!r}) lists sections; then {corpus.tool('read')}('{d.doc_id}§<id>')",
+        )
     if start < 1 or end < start:
-        raise ToolError(f"Invalid line range {start}-{end}.")
+        raise ToolError(f"invalid line range {start}-{end}", "lines are 1-based and START <= END")
+    text = corpus.text_lines(d)
     if end > len(text):
-        raise ToolError(f"Line range {start}-{end} is past the end of {d.doc_id} ({len(text)} lines).")
-    note = ""
-    if end - start + 1 > MAX_READ_LINES:
-        end = start + MAX_READ_LINES - 1
-        note = f"\n[truncated at {MAX_READ_LINES} lines; continue with lines='{end + 1}-...']"
-    return f"{label} (lines {start}-{end})\n{_numbered(text, start, end)}{note}"
+        raise ToolError(f"line range {start}-{end} is past the end of {d.doc_id} ({len(text)} lines)", "")
+    width = len(str(end))
+    taken: list[str] = []
+    used = 0
+    for row in _numbered(text, start, end, width):
+        cost = budget.tokens(row + "\n")
+        if taken and used + cost > max_tokens:
+            break
+        taken.append(row)
+        used += cost
+    last = start + len(taken) - 1
+    shown = f"lines {start}-{last}" + ("" if last == end else f" of {start}-{end}")
+    cite = f"{d.number} §{target.section.id}" if target.section is not None else f"{d.number}, lines {start}-{last}"
+    footer = {
+        "cite": cite,
+        "next": f"{d.doc_id}:{last + 1}-{end}" if last < end else "",
+        "warning": f"status is {d.status!r}, not 'final'" if d.status.lower() != "final" else "",
+    }
+    return render(f"{label} ({shown})\n" + "\n".join(taken), footer)
 
 
-def outline(corpus: Corpus, doc: str) -> str:
+def outline(corpus: Corpus, doc: str, start: int = 0, limit: int = OUTLINE_ROWS) -> str:
     d = resolve_doc(corpus, doc)
+    if limit < 1:
+        raise ToolError("limit must be at least 1", "")
+    if start < 0:
+        raise ToolError("start is a 0-based offset", "pass the start=<n> of a next: line")
     if not d.sections:
-        return f"{d.doc_id}: the index lists no sections for this document."
+        return render(f"{d.doc_id}: the index lists no sections for this document.", {})
+    rows = d.sections[start : start + limit]
     out = [f"{d.number}, {d.title}"]
-    for s in d.sections:
+    for s in rows:
         indent = "  " * s.id.count(".")
         out.append(f"{indent}{s.id}  {s.heading}  (lines {s.start_line}-{s.end_line})")
-    return "\n".join(out)
+    more = start + limit < len(d.sections)
+    return render("\n".join(out), {"next": next_start(start + limit if more else None)})
 
 
 def info(corpus: Corpus, doc: str) -> str:
@@ -154,14 +226,19 @@ def info(corpus: Corpus, doc: str) -> str:
         f"sha256: {d.sha256}",
         f"sections: {len(d.sections)}",
     ]
+    warning = ""
     if d.status.lower() != "final":
-        out.append(f"WARNING: status is {d.status!r}, not 'final'. Check for a current version before relying on it.")
-    return "\n".join(out)
+        warning = f"status is {d.status!r}, not 'final'. Check for a current version before relying on it."
+    return render("\n".join(out), {"warning": warning})
 
 
 def cite(corpus: Corpus, doc: str, section: str | None = None) -> str:
-    d = resolve_doc(corpus, doc)
-    if section is None:
-        return f"{d.number}\n{d.url}"
-    s = resolve_section(d, section)
-    return f"{d.number} §{s.id}\n{d.url}\nHeading: {s.heading}"
+    target = resolve(corpus, doc, section)
+    d = target.document
+    if target.section is not None:
+        s = target.section
+        return render(f"{d.number} §{s.id}\n{d.url}\nHeading: {s.heading}", {})
+    if target.lines is not None:
+        first, last = target.lines
+        return render(f"{d.number}, lines {first}-{last}\n{d.url}", {})
+    return render(f"{d.number}\n{d.url}", {})

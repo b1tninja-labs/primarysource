@@ -1,5 +1,5 @@
 """The shared skeleton of a fetched-document collection: user-fetched PDFs, extracted text, a section index,
-five tools (search, read, outline, info, cite) and an MCP server.
+a search index in the core FTS5 index (`fts`), five tools (search, read, outline, info, cite) and an MCP server.
 
 nistlib and usblib were one skeleton copied twice (primarysource PLAN.md §1). This is the one copy. A collection
 supplies a `CorpusSpec` (its names, where its corpus lives, its fetch command, and optional hooks such as NIST's
