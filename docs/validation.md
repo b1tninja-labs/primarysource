@@ -88,3 +88,26 @@ That belongs in the core segmenter (`cl.segment_numbered`), not in three copies.
   (line 931).
 - `usb-split-measure.json` labels 19 documents "good" that agree with the bookmarks below 0.8. Its counting checks
   cannot see a cascade, so it is superseded by this comparison.
+
+## After the fixes, 2026-11-13
+
+Remeasured with the same scripts and the same corpora:
+
+| Collection | Measure | Before | After |
+|---|---|---|---|
+| rfc | sections missed against RFCXML (1,384 RFCs) | 392 | 182 |
+| rfc | RFCs matching the XML exactly | 1,356 | 1,361 |
+| nist | median agreement with bookmarks (165 documents) | 0.600 | 0.929 |
+| nist | documents at 0.9 or above / below 0.5 | 31 / 71 | 96 / 29 |
+| usb | bookmark recall / precision (54 documents) | 0.785 / 0.978 | 0.832 / 0.978 |
+| usb | median agreement with bookmarks | 0.90 | 0.95 |
+| usb | recall against the printed contents (35 without bookmarks) | 0.727 | 0.897 |
+
+The last row is partly circular: the contents admission uses the same printed contents the score is measured
+against. The bookmark rows are independent.
+
+What changed: rfc's `txtseg` counts a heading's own child as its body; nist and usb share one splitter
+(`primarysource/pdfcorpus/split.py`, usblib's, which the bookmarks showed was the better of the two) with the
+contents admission, the running-header strip, zero-padded parent ids and the colon and dash appendix forms. Three
+USB documents lost 0.01 each; none lost more. An index that is already built keeps its old sections until its
+collection is fetched again.
