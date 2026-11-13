@@ -1,0 +1,10 @@
+{
+ "id": "standards-current",
+ "name": "Official Standards & BCPs",
+ "description": "Every RFC that is a member of a current STD (Internet Standard) or BCP (Best Current Practice), resolved from the alias series in rfc-index.xml. This is the closest thing the RFC Series has to an official 'essential' list.",
+ "docs": [],
+ "selectors": [
+  {"series": ["STD", "BCP"], "current": true, "members": true}
+ ],
+ "history": false
+}

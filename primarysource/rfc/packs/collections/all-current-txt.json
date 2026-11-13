@@ -1,0 +1,10 @@
+{
+ "id": "all-current-txt",
+ "name": "Full RFC Archive (current)",
+ "description": "Every non-obsolete document in the local mirror. Large (~1 GB uncompressed txt); build with --no-search unless you want the multi-hundred-MB FTS index too.",
+ "docs": [],
+ "selectors": [
+  {"current": true}
+ ],
+ "history": false
+}

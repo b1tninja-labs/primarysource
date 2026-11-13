@@ -1,0 +1,10 @@
+{
+ "id": "fyi-current",
+ "name": "FYI Notes",
+ "description": "Current FYI (For Your Information) notes — the RFC Series' informational essays (e.g. RFC 1918, the KISS principle, privacy considerations).",
+ "docs": [],
+ "selectors": [
+  {"series": ["FYI"], "current": true, "members": true}
+ ],
+ "history": false
+}

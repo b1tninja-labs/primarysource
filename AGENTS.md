@@ -26,7 +26,9 @@ decides line breaks. Never run a formatter from above this directory.
 ## Rules
 
 - **No document text in the tree.** Not a PDF, not an extract, not one clause in a fixture. ITU and USB-IF text
-  cannot be redistributed; tests use invented text, and must pass with no corpus anywhere.
+  cannot be redistributed; tests use invented text, and must pass with no corpus anywhere. One exception:
+  `tests/rfc/fixtures/library/`, moved in with rfclib, holds unmodified copies of six RFCs. RFCs may be
+  redistributed under the IETF Trust Legal Provisions, and the fixture's README says so. Add no other real text.
 - **Move code here behind the tests that already pin it.** A function lifted from a library arrives with the
   library's tests for it, and the library then imports it; a second copy that drifts is the problem this
   repository exists to end.

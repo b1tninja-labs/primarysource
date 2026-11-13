@@ -1,0 +1,10 @@
+{
+ "id": "year-2025",
+ "name": "RFCs Published in 2025",
+ "description": "Everything published in 2025 — an example of the year selector for keeping up with releases without watching the RSS feed daily.",
+ "docs": [],
+ "selectors": [
+  {"year": "2025", "current": false}
+ ],
+ "history": false
+}

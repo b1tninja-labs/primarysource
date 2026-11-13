@@ -1,0 +1,3 @@
+# RFC fixtures are byte-exact copies (sha256s, line numbers, form feeds):
+# never convert their line endings.
+tests/rfc/fixtures/** -text

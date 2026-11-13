@@ -1,0 +1,10 @@
+{
+ "id": "year-2026",
+ "name": "RFCs Published in 2026",
+ "description": "Everything published in 2026 so far — rebuild this pack any time after `rfclib sync` to pick up the month's releases.",
+ "docs": [],
+ "selectors": [
+  {"year": "2026", "current": false}
+ ],
+ "history": false
+}

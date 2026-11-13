@@ -1,0 +1,19 @@
+{
+ "id": "essentials",
+ "name": "Internet Essentials",
+ "description": "Hand-picked core protocols every RFC reader should have offline: keyword norms, IPv4/IPv6, TCP/UDP, DNS(+SEC), DHCP, email, HTTP/1.1+2+3, TLS 1.3, QUIC, and the RFC process documents. All current (non-obsolete) IDs; set \"history\": true in a copy to pull in the obsoleted lineage.",
+ "docs": [
+  "RFC2119", "RFC8174", "RFC2026", "RFC9920", "RFC7841",
+  "RFC9293", "RFC792", "RFC1112", "RFC2236", "RFC1071", "RFC1122", "RFC1123",
+  "RFC768", "RFC8200", "RFC4291", "RFC4443", "RFC1918", "RFC6890",
+  "RFC2131", "RFC2132", "RFC9915",
+  "RFC1034", "RFC1035", "RFC7766", "RFC6891", "RFC9331", "RFC9903", "RFC8078",
+  "RFC5321", "RFC5322", "RFC6409", "RFC6532", "RFC2045", "RFC2049",
+  "RFC1939", "RFC9051", "RFC9458",
+  "RFC3986", "RFC9110", "RFC9112", "RFC9113", "RFC9536", "RFC9114", "RFC9115",
+  "RFC9846", "RFC8447", "RFC8448", "RFC5280",
+  "RFC9000", "RFC9001", "RFC9002", "RFC9369"
+ ],
+ "selectors": [],
+ "history": false
+}

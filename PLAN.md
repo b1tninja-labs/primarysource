@@ -133,9 +133,11 @@ Backends give different text, so the backend name and version are part of an ind
    - **An extra adds dependencies only.** Every collection's code ships in every wheel, so the package has one
      version and one licence (MIT). Each move needs the owner's yes on the licence where the library declared
      another (§7).
-   - **Each move keeps the library's history** (`git subtree add` into the collection's directory, then `git mv`
-     into place) and brings the library's tests with it. The old repository is then archived with a README that
-     points here. `rfclib` stays published on PyPI as a thin distribution that depends on `primarysource[rfc]`
+   - **Each move brings the library's tests with it, and its commit names the source commit.** History stays
+     in the old repository and is not imported. A `git subtree add` would publish a private repository's
+     whole history, including files that never move here, inside this public one. rfclib moved on 2026-11-12
+     from rfclib PR #1's head, `b6d0cf1`, which includes the HTTP transport. The old repository is archived
+     once the move is complete, with a README that points here. `rfclib` stays published on PyPI as a thin distribution that depends on `primarysource[rfc]`
      and keeps the `rfclib` command, so that nobody's configuration breaks.
    - **Subpackage with its own semantics, or plain collection.** A publisher gets a subpackage with its own
      code only where status, edition or errata semantics need it: RFC, ITU and NIST. Every other source is a

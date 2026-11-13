@@ -44,9 +44,9 @@ Legend: `[ok]` implemented and pinned by a named test -- `[part]` partial, with 
 | `cl.next_is_a_ref` | PLAN.md §7 | `[ ]` | a read's `next` is a ref string `read` accepts back, as in rfclib and cvelib's read; itulib and zimlore return an integer `start` |
 | `cl.grep_bounded` | PLAN.md §3 | `[ ]` | itulib's `itu_grep` has no timeout |
 | `cl.cite_skeleton` | PLAN.md §3 | `[ ]` | exists in rfclib `cite.py` |
-| `cl.cli` | PLAN.md §2 | `[ ]` | |
-| `cl.mcp_stdio` | PLAN.md §2 | `[ ]` | |
-| `cl.mcp_http` | PLAN.md §5.5 | `[ ]` | prior art: rfclib PR #1 (branch `claude/shared-mcp-http-5bcf0e`, not merged): `--transport http`, stateless streamable HTTP with JSON responses on `/mcp`, `--host` plus a DNS-rebinding allow-list (`--allowed-host`) for a non-loopback host, `/healthz`, read-only mode; pinned by that branch's shared-server test module |
+| `cl.cli` | PLAN.md §2 | `[part]` | `tests/test_cli.py::test_collections_lists_rfc`, `tests/test_cli.py::test_an_unknown_collection_exits_2_with_a_hint`. `primarysource collections`, `primarysource mcp`, and `primarysource <collection> ...` passed to the collection's own command. Gap: no core `search`/`read`/`cite` commands of its own |
+| `cl.mcp_stdio` | PLAN.md §2 | `[ok]` | `tests/test_cli.py::test_mcp_serves_the_collection_server`, `tests/rfc/test_shared_server.py::test_stdio_is_the_default_transport` |
+| `cl.mcp_http` | PLAN.md §5.5 | `[ok]` | `primarysource/serve.py`, lifted from rfclib PR #1. `tests/rfc/test_shared_server.py::test_http_transport_binds_loopback_and_is_stateless`, `tests/rfc/test_shared_server.py::test_http_on_other_address_takes_allowed_hosts`, `tests/rfc/test_shared_server.py::test_http_server_rejects_foreign_host_header`, `tests/test_cli.py::test_http_off_loopback_without_allowed_hosts_warns`. `/healthz` is rfc's own route: `tests/rfc/test_shared_server.py::test_health_payload_is_json` |
 | `cl.mcp_error_contract` | PLAN.md §7 | `[ ]` | one shape for every library: rfclib `_run` (ToolError, `isError`), itulib `_fail` and cvelib `CvelibError.as_dict` (`error`/`hint` object as a normal result), zimlore `ZimloreError.as_mcp_dict` (`hint` vs `tool_hint` vs `user_command`) |
 | `cl.result_shape_measured` | PLAN.md §5.1, §7 | `[ ]` | tokens of text-with-footer against compact JSON on the same reads, before a second library adopts; three libraries return each shape today |
 | `cl.tool_prefix` | PLAN.md §5.4 | `[ ]` | rfclib, nistlib and usblib expose unprefixed `search`, `read`; itulib, zimlore and cvelib use `itu_`, `zim_`, `cve_` |
@@ -55,13 +55,13 @@ Legend: `[ok]` implemented and pinned by a named test -- `[part]` partial, with 
 | `cl.collection_registry` | PLAN.md §5.8 | `[part]` | `tests/test_registry.py::test_a_registered_collection_loads_by_name`, `tests/test_registry.py::test_builtins_win_over_plugins_and_nothing_is_imported`, `tests/test_registry.py::test_names_and_prefixes_are_checked`. `primarysource/registry.py`: built-ins and the `primarysource.collections` entry-point group. Gap: a `Collection` carries name, prefix, unit and grammar only, with no builders yet, and no collection is registered |
 | `cl.missing_extra_hint` | PLAN.md §5.8 | `[ok]` | `tests/test_registry.py::test_a_missing_extra_names_the_install_command`, `tests/test_registry.py::test_an_unknown_collection_lists_the_registered_ones` |
 | `cl.multi_collection_server` | PLAN.md §5.8 | `[ ]` | `primarysource mcp --collection a --collection b`: one process, separate databases, prefixed tools |
-| `cl.home_per_collection` | PLAN.md §5.8 | `[ ]` | `$PRIMARYSOURCE_HOME/<collection>/`, with the old `<LIB>_HOME`/`<LIB>_DATA` read as a fallback for one release |
+| `cl.home_per_collection` | PLAN.md §5.8 | `[ok]` | `primarysource/home.py::collection_home`: the old `<LIB>_HOME`, else `$PRIMARYSOURCE_HOME/<name>`, else an existing old per-user library, else per-user `primarysource/<name>`. `tests/test_model_render_home.py::test_collection_home_keeps_old_settings_and_libraries`, `tests/rfc/test_library.py::test_home_defaults_to_platform_dir_not_cwd` |
 | `cl.adopt_nistlib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.nist` with its history and tests. Blocked on relicensing Apache-2.0 to MIT (PLAN.md §7) |
 | `cl.adopt_usblib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.usb`, together with nistlib, sharing one skeleton. Same licence block |
 | `cl.adopt_cvelib` | PLAN.md §5.8, §6 | `[ ]` | `D:\code\cvelib`, uncommitted; moves in as `primarysource.cve` if its author agrees |
 | `cl.adopt_itulib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.itu`, with `pypdf` behind `[itu]` |
 | `cl.adopt_zimlore` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.zim`, with `libzim` behind `[zim]` |
-| `cl.adopt_rfclib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.rfc`; `rfclib` on PyPI becomes a thin distribution that depends on `primarysource[rfc]` |
+| `cl.adopt_rfclib` | PLAN.md §5.8, §6 | `[part]` | moved in as `primarysource.rfc` from rfclib `b6d0cf1` with its tests (`tests/rfc/`, 39 tests), served by `primarysource mcp --collection rfc`. Gaps: its code still uses rfclib's own error, pager and ref code instead of the core's; it is outside ruff and mypy (`pyproject.toml` excludes it); its hints still say `rfclib <command>`; the rfclib main checkout's uncommitted work is not in it; there is no thin `rfclib` distribution yet |
 
 ## 3. Non-goals
 

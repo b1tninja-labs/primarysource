@@ -73,3 +73,18 @@ def test_atomic_write_replaces_the_file_and_leaves_no_part_file(tmp_path: Path) 
     atomic_write(target, b"two")
     assert target.read_bytes() == b"two"
     assert [entry.name for entry in target.parent.iterdir()] == ["index.json"]
+
+
+def test_collection_home_keeps_old_settings_and_libraries(tmp_path: Path) -> None:
+    from primarysource.home import collection_home
+
+    base = {"LOCALAPPDATA": str(tmp_path), "XDG_DATA_HOME": str(tmp_path)}
+    plat = "linux"
+    assert collection_home("rfc", "rfclib", {**base, "RFCLIB_HOME": "/x", "PRIMARYSOURCE_HOME": "/y"}, plat) == Path(
+        "/x"
+    )
+    assert collection_home("rfc", "rfclib", {**base, "PRIMARYSOURCE_HOME": "/y"}, plat) == Path("/y") / "rfc"
+    assert collection_home("rfc", "rfclib", base, plat) == tmp_path / "primarysource" / "rfc"
+    (tmp_path / "rfclib").mkdir()
+    assert collection_home("rfc", "rfclib", base, plat) == tmp_path / "rfclib"
+    assert collection_home("nist", None, base, plat) == tmp_path / "primarysource" / "nist"

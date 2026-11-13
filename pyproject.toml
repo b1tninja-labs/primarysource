@@ -32,6 +32,15 @@ dependencies = []
 [project.optional-dependencies]
 dev = ["mypy>=1.20", "pytest>=8", "ruff>=0.15"]
 
+# The RFC series (primarysource/rfc/, moved in from rfclib). mcp serves any collection.
+rfc = ["httpx>=0.27", "typer>=0.12", "rich>=13"]
+rfc-semantic = ["primarysource[rfc]", "model2vec>=0.3", "sqlite-vec"]
+rfc-zim = ["primarysource[rfc]", "libzim>=3.7"]
+mcp = ["mcp>=2"]
+
+[project.scripts]
+primarysource = "primarysource.cli:main"
+
 [tool.hatch.version]
 path = "primarysource/__init__.py"
 
@@ -42,6 +51,8 @@ exclude = ["**/__pycache__"]
 [tool.ruff]
 line-length = 118
 target-version = "py312"
+# Moved in from rfclib with its own style; brought under these rules separately (ROADMAP cl.adopt_rfclib).
+extend-exclude = ["primarysource/rfc", "tests/rfc", "scripts/rfc_make_test_fixture.py"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "S", "B", "SIM"]
@@ -52,6 +63,12 @@ select = ["E", "F", "I", "UP", "S", "B", "SIM"]
 [tool.mypy]
 strict = true
 python_version = "3.12"
+exclude = ["^primarysource/rfc/", "^tests/rfc/"]
+
+[[tool.mypy.overrides]]
+module = ["primarysource.rfc", "primarysource.rfc.*", "mcp", "mcp.*"]
+follow_imports = "skip"
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
