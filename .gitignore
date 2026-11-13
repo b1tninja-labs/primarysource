@@ -1,0 +1,52 @@
+# No document text lives in this repository: tests use invented text only.
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.coverage
+.coverage.*
+htmlcov/
+
+# Anything that could carry a corpus, by file type. A stray download is then never staged.
+*.pdf
+*.epub
+*.doc
+*.docx
+*.rtf
+*.zip
+*.zim
+*.sqlite3
+*.sqlite3-journal
+*.db
+*.db-wal
+*.db-shm
+
+# Captures and secrets
+*.har
+.env
+.env.*
+*.pem
+*.key
+
+# Scratch: the workspace pre-commit hook refuses these
+probe_*.py
+*.log
+*.out
+*.tmp
+scratch/
+tmp/
+
+# Agent worktrees and local tool state
+.claude/worktrees/
+.claude/settings.local.json
+.vscode/
+.idea/
+
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "primarysource"
+dynamic = ["version"]
+description = "Shared core for citable document libraries: sectioned-document model, ref grammar, token-budgeted paging, and (planned) readers, a full-text index, a CLI and an MCP server."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+authors = [{ name = "Justin Capella" }]
+keywords = ["documents", "citation", "full-text-search", "mcp", "model-context-protocol", "standards"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Text Processing :: Indexing",
+    "Typing :: Typed",
+]
+# The core that exists today is standard library only. Readers that need a dependency (pypdf) arrive as extras
+# with the reader, not before it.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["mypy>=1.20", "pytest>=8", "ruff>=0.15"]
+
+[tool.hatch.version]
+path = "primarysource/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["primarysource"]
+exclude = ["**/__pycache__"]
+
+[tool.ruff]
+line-length = 118
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "S", "B", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
