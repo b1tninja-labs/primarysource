@@ -14,7 +14,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from primarysource import budget
+from primarysource import budget, cursor
 from primarysource.c2sp._fetch import sha256
 from primarysource.ecma import _pdf
 from primarysource.ecma.catalogue import NUMBER
@@ -56,7 +56,10 @@ def default_home() -> Path:
 
 def parse_ref(text: str) -> Ref:
     """Parse an ecma ref, accepting the `ecma:` prefix and `ECMA-427` for `427`."""
-    ref = grammar().parse(PREFIX.sub("", text.strip(), count=1))
+    body, doc_para = cursor.split_doc_para(PREFIX.sub("", text.strip(), count=1))
+    ref = grammar().parse(body)
+    if doc_para is not None:
+        ref = Ref(ref.doc, None, doc_para, None, None)
     if ref.lines is not None or ref.anchor is not None:
         raise LibError(f"not an ecma ref: {text!r}", "ecma refs are <number>[@edition][§clause][¶n]")
     if ref.doc is None:
@@ -85,7 +88,8 @@ def load(token: str, home: Path | None = None) -> Loaded:
         have = ", ".join(sorted(record["editions"])) or "nothing"
         raise LibError(
             f"ECMA-{number}{'@' + str(wanted) if wanted else ''} is not imported (have: {have})",
-            f"run: primarysource ecma import {number}",
+            "ecma_docs lists the catalogue",
+            f"primarysource ecma import {number}",
         )
     edition, key = max(candidates)
     pin = record["editions"][key].get("sha256")
@@ -94,12 +98,14 @@ def load(token: str, home: Path | None = None) -> Loaded:
     try:
         if not isinstance(pin, str) or sha256(pdf.read_bytes()) != pin:
             raise LibError(
-                f"{key}.pdf does not match its recorded sha256", f"re-import it: primarysource ecma import {number}"
+                f"{key}.pdf does not match its recorded sha256",
+                "",
+                f"re-import it: primarysource ecma import {number}",
             )
         raw = json.loads(stored.read_text(encoding="utf-8"))
     except (OSError, ValueError) as exc:
         raise LibError(
-            f"cannot read the import of ECMA-{number}: {exc}", f"re-import it: primarysource ecma import {number}"
+            f"cannot read the import of ECMA-{number}: {exc}", "", f"re-import it: primarysource ecma import {number}"
         ) from exc
     document = _pdf.PdfDocument.from_json(raw)
     return Loaded(
@@ -113,7 +119,7 @@ def load(token: str, home: Path | None = None) -> Loaded:
     )
 
 
-def _cite_text(doc: Loaded, section: _pdf.PdfSection | None, para: int | None) -> str:
+def _cite_text(doc: Loaded, section: _pdf.PdfSection | None, para: int | str | None) -> str:
     where = f", §{section.id} {section.title}" if section else ""
     if para:
         where += f" ¶{para}"
@@ -139,27 +145,24 @@ def _select(ref: Ref, home: Path | None) -> tuple[Loaded, _pdf.PdfSection | None
     return doc, doc.document.sections[index], doc.document.span(index), warning
 
 
-def read(ref_text: str, start: int = 1, max_tokens: int = 2000, home: Path | None = None) -> str:
-    """The text of a ref, cut at sentence boundaries within `max_tokens`; a `next:` footer says where to resume."""
+def read(ref_text: str, max_tokens: int = 2000, home: Path | None = None) -> str:
+    """The text of a ref, cut at sentence boundaries within `max_tokens`. A `¶n` ref starts at sentence n and runs to
+    the end of its scope; the `next:` footer is the ref that reads the next page."""
     ref = parse_ref(ref_text)
     doc, section, units, warning = _select(ref, home)
-    if ref.para is not None:
-        if ref.para > len(units):
-            raise LibError(f"{ref_text}: the span has {len(units)} sentences", f"use ¶1 to ¶{len(units)}")
-        units = (units[ref.para - 1],)
-        start = 1
     if not units:
         raise LibError(f"{ref_text}: that clause has no text of its own", "read its subsections, see ecma_outline")
-    chosen = budget.page(units, start=start, max_tokens=max_tokens)
+    first = cursor.first_unit(ref.para, len(units), "sentences", ref_text)
+    chosen = budget.page(units, start=first, max_tokens=max_tokens)
     body = "\n".join(chosen.units)
+    scope = f"ecma:{doc.number}@{doc.edition}" + (f"§{section.id}" if section else "")
     footer = {
-        "cite": _cite_text(doc, section, ref.para),
+        "cite": _cite_text(doc, section, cursor.para_label(ref.para, chosen)),
         "unit": "sentence",
         "span": span_hash(body),
+        "next": cursor.read_next(scope, chosen),
         "warning": warning,
     }
-    if chosen.next_start is not None:
-        footer["next"] = f"start={chosen.next_start}"
     return render(body, footer)
 
 
@@ -175,7 +178,7 @@ def outline(token: str, home: Path | None = None) -> str:
     return "\n".join(lines)
 
 
-def search(query: str, doc: str | None = None, limit: int = 10, start: int = 1, home: Path | None = None) -> str:
+def search(query: str, doc: str | None = None, limit: int = 10, start: int = 0, home: Path | None = None) -> str:
     """Sentences containing every query word (else at least half, flagged `relaxed`), best first: one line per
     hit, `<ref>¶n: <snippet>`."""
     terms = _pdf.query_terms(query)
@@ -183,7 +186,9 @@ def search(query: str, doc: str | None = None, limit: int = 10, start: int = 1, 
     record = read_record(home)
     keys = sorted(record["editions"])
     if not keys:
-        raise LibError("no Ecma standards are imported", "run: primarysource ecma import 427")
+        raise LibError(
+            "no Ecma standards are imported", "ecma_docs lists the catalogue", "primarysource ecma import 427"
+        )
     tokens = [doc] if doc else [k.replace("-", "@") for k in keys]
     scored: list[tuple[float, int, str, str]] = []
     relaxed = False
@@ -200,11 +205,9 @@ def search(query: str, doc: str | None = None, limit: int = 10, start: int = 1, 
     if not scored:
         return render("no matches", {})
     scored.sort()
-    window = scored[start - 1 : start - 1 + limit]
-    footer = {"relaxed": "only some query words matched" if relaxed else ""}
-    if start - 1 + limit < len(scored):
-        footer["next"] = f"start={start + limit}"
-    return render("\n".join(f"{ref}: {snip}" for _, _, ref, snip in window), footer)
+    shown, nxt = cursor.window(scored, start, limit)
+    footer = {"next": nxt, "relaxed": "only some query words matched" if relaxed else ""}
+    return render("\n".join(f"{ref}: {snip}" for _, _, ref, snip in shown), footer)
 
 
 def cite(ref_text: str, home: Path | None = None) -> str:

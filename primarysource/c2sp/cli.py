@@ -3,7 +3,7 @@
 primarysource c2sp import [--only ID ...]
 primarysource c2sp docs
 primarysource c2sp outline <doc>
-primarysource c2sp read <ref> [--start N] [--max-tokens N]
+primarysource c2sp read <ref> [--max-tokens N]
 primarysource c2sp search <query> [--doc ID] [--limit N] [--start N]
 primarysource c2sp cite <ref>
 """
@@ -27,13 +27,12 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("outline", help="a specification's headings with refs").add_argument("doc")
     read = commands.add_parser("read", help="read by ref")
     read.add_argument("ref")
-    read.add_argument("--start", type=int, default=1)
     read.add_argument("--max-tokens", type=int, default=2000)
     search = commands.add_parser("search", help="find blocks containing words")
     search.add_argument("query")
     search.add_argument("--doc")
     search.add_argument("--limit", type=int, default=10)
-    search.add_argument("--start", type=int, default=1)
+    search.add_argument("--start", type=int, default=0)
     commands.add_parser("cite", help="the citation for a ref").add_argument("ref")
     return parser
 
@@ -54,7 +53,7 @@ def main(argv: Sequence[str]) -> int:
         if args.command == "outline":
             return _out(library.outline(args.doc))
         if args.command == "read":
-            return _out(library.read(args.ref, start=args.start, max_tokens=args.max_tokens))
+            return _out(library.read(args.ref, max_tokens=args.max_tokens))
         if args.command == "search":
             return _out(library.search(args.query, doc=args.doc, limit=args.limit, start=args.start))
         return _out(library.cite(args.ref))

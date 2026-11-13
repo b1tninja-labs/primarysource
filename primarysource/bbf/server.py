@@ -28,25 +28,28 @@ INSTRUCTIONS = (
 )
 
 
-def bbf_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
-    """Read Broadband Forum text by ref, cut at unit boundaries within max_tokens. A 'next: start=N' footer line
-    means call again with start=N.
+def bbf_read(ref: str, max_tokens: int = 2000) -> str:
+    """Read Broadband Forum text by ref, cut at unit boundaries within max_tokens. A 'next: <ref>' footer line is
+    the ref that reads the next page: pass it back as ref.
 
-    ref: 'tr-069-1-6-1§3.5' (report clause, subsections included) | 'tr-069-1-6-1§3.5¶2' (one sentence) |
+    ref: 'tr-069-1-6-1§3.5' (report clause, subsections included) | 'tr-069-1-6-1§3.5¶2' (from its 2nd sentence) |
       'tr-181-2-22-0-ip§Device.IP.Interface.{i}' (a data-model object: header, contained names, description) |
-      '...{i}.Enable¶1' (one description paragraph). 'tr-181-2-22-0-ip' alone gives the file's overview."""
-    return library.read(ref, start=start, max_tokens=max_tokens)
+      '...{i}.Enable¶1' (from its 1st description paragraph). 'tr-181-2-22-0-ip' alone gives the file's overview.
+      bbf_cite gives exactly one unit."""
+    return library.read(ref, max_tokens=max_tokens)
 
 
-def bbf_search(query: str, doc: str | None = None, limit: int = 10, start: int = 1) -> str:
+def bbf_search(query: str, doc: str | None = None, limit: int = 10, start: int = 0) -> str:
     """Find units containing the query words (all of them, else at least half, flagged 'relaxed'). One line per
-    hit: '<ref>: <snippet>'. doc restricts to one document id. A 'next: start=N' footer resumes."""
+    hit: '<ref>: <snippet>'. doc restricts to one document id. A 'next: start=N' footer line means call again with
+    start=N (a 0-based offset)."""
     return library.search(query, doc=doc, limit=limit, start=start)
 
 
-def bbf_outline(doc: str, under: str = "", limit: int = 200, start: int = 1) -> str:
+def bbf_outline(doc: str, under: str = "", limit: int = 200, start: int = 0) -> str:
     """A report's clauses with refs and pages, or a data model's objects (indented by depth). under: a node path
-    to list everything below it, parameters included, e.g. 'Device.IP.Interface.{i}'."""
+    to list everything below it, parameters included, e.g. 'Device.IP.Interface.{i}'. A 'next: start=N' footer
+    line means call again with start=N."""
     return library.outline(doc, under=under, limit=limit, start=start)
 
 

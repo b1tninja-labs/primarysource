@@ -27,18 +27,19 @@ INSTRUCTIONS = (
 )
 
 
-def ecma_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
-    """Read Ecma text by ref, cut at sentence boundaries within max_tokens. A 'next: start=N' footer line means
-    call again with start=N.
+def ecma_read(ref: str, max_tokens: int = 2000) -> str:
+    """Read Ecma text by ref, cut at sentence boundaries within max_tokens. A 'next: <ref>' footer line is the ref
+    that reads the next page: pass it back as ref.
 
-    ref: 'ecma:427' (whole standard) | 'ecma:427§5.3' (a clause and its subsections) | 'ecma:427§5.3¶2' (one
-      sentence) | '427@1§A' (edition 1, Annex A)."""
-    return library.read(ref, start=start, max_tokens=max_tokens)
+    ref: 'ecma:427' (whole standard) | 'ecma:427§5.3' (a clause and its subsections) | 'ecma:427§5.3¶2' (from its
+      2nd sentence) | '427@1§A' (edition 1, Annex A). ecma_cite gives exactly one sentence."""
+    return library.read(ref, max_tokens=max_tokens)
 
 
-def ecma_search(query: str, doc: str | None = None, limit: int = 10, start: int = 1) -> str:
+def ecma_search(query: str, doc: str | None = None, limit: int = 10, start: int = 0) -> str:
     """Find sentences containing the query words (all of them, else at least half, flagged 'relaxed'). One line
-    per hit: '<ref>¶n: <snippet>'. doc restricts to one standard, e.g. '427'. A 'next: start=N' footer resumes."""
+    per hit: '<ref>¶n: <snippet>'. doc restricts to one standard, e.g. '427'. A 'next: start=N' footer line means
+    call again with start=N (a 0-based offset)."""
     return library.search(query, doc=doc, limit=limit, start=start)
 
 
