@@ -16,4 +16,5 @@ COLLECTION = Collection(
     grammar=RefGrammar(r"[A-Z]\.\d+(?:\.\d+)?(?:#[\d-]+)?"),
     server="primarysource.itu.mcp:build",
     cli="primarysource.itu.cli:main",
+    identify="primarysource.itu.identify:identify",
 )

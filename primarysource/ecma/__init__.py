@@ -43,6 +43,7 @@ ECMA = Collection(
     grammar=_Refs(),
     server="primarysource.ecma.server:server",
     cli="primarysource.ecma.cli:main",
+    identify="primarysource.ecma.identify:identify",
 )
 """Refs: `ecma:427§5.3¶2`. `§` names a clause by its number; `¶n` is the nth sentence of the clause's span (its own
 text, then each subsection as a `§5.3.1 Title` line and its text), because a PDF gives sentences, not paragraphs.

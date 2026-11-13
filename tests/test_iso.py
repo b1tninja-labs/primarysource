@@ -21,7 +21,6 @@ from primarysource.iso.designation import from_filename, parse
 from primarysource.iso.importer import (
     EXTRACTED,
     INDEX_FILE,
-    PURCHASED,
     import_file,
     import_folder,
     read_record,
@@ -39,9 +38,8 @@ def _pypdf_text(monkeypatch: pytest.MonkeyPatch) -> None:
 
 
 def _drop(home: Path, name: str = STORE_NAME, data: bytes = PDF) -> Path:
-    folder = home / PURCHASED
-    folder.mkdir(parents=True, exist_ok=True)
-    path = folder / name
+    home.mkdir(parents=True, exist_ok=True)
+    path = home / name
     path.write_bytes(data)
     return path
 
@@ -91,13 +89,13 @@ def test_store_file_names_carry_the_designation_and_others_do_not() -> None:
 def test_the_folder_import_stores_an_extraction_a_record_and_an_index_but_no_copy_of_the_pdf(home: Path) -> None:
     entry = read_record(home)["documents"]["9999@2024"]
     assert entry["designation"] == "ISO/IEC 9999:2024"
-    assert entry["source"] == str(home / PURCHASED / STORE_NAME)
+    assert entry["source"] == str(home / STORE_NAME)
     assert entry["size"] == len(PDF) and len(entry["sha256"]) == 64
     stored = json.loads((home / EXTRACTED / "9999_2024.json").read_text(encoding="utf-8"))
     assert [s["id"] for s in stored["sections"]] == IDS
     assert (home / INDEX_FILE).is_file()
     copies = [p for p in home.rglob("*") if p.is_file() and p.read_bytes() == PDF]
-    assert copies == [home / PURCHASED / STORE_NAME]
+    assert copies == [home / STORE_NAME]
 
 
 def test_a_second_folder_import_skips_unchanged_files_and_names_what_it_cannot_import(home: Path) -> None:
@@ -107,14 +105,14 @@ def test_a_second_folder_import_skips_unchanged_files_and_names_what_it_cannot_i
     assert done == []
     reasons = dict(skipped)
     assert reasons[STORE_NAME] == "already imported, unchanged"
-    assert "no designation in the file name" in reasons["notes.pdf"]
+    assert "no ISO designation found on its cover" in reasons["notes.pdf"]
     assert "is not a PDF" in reasons["ISO_1234_2020.pdf"]
 
 
 def test_one_file_imports_with_the_designation_printed_on_its_cover(tmp_path: Path) -> None:
     mine = tmp_path / "my copy.pdf"
     mine.write_bytes(PDF)
-    with pytest.raises(LibError, match="no ISO designation in the file name") as raised:
+    with pytest.raises(LibError, match="no ISO designation found on its cover") as raised:
         import_file(tmp_path / "iso", mine)
     assert "--designation" in raised.value.action
     result = import_file(tmp_path / "iso", mine, "ISO 8601-1:2019")
@@ -124,7 +122,7 @@ def test_one_file_imports_with_the_designation_printed_on_its_cover(tmp_path: Pa
 def test_a_missing_folder_is_an_error_naming_what_to_do(tmp_path: Path) -> None:
     with pytest.raises(LibError, match="does not exist") as raised:
         import_folder(tmp_path / "iso")
-    assert "put your ISO PDFs in it" in raised.value.action
+    assert "PRIMARYSOURCE_ISO_HOME" in raised.value.action
 
 
 # --- refs and reading ------------------------------------------------------------------------------------------
@@ -231,9 +229,9 @@ def test_nothing_imported_and_a_missing_index_are_errors_with_an_action(home: Pa
 
 def test_docs_says_when_a_source_pdf_changed_or_went_missing(home: Path) -> None:
     assert "(source unchanged)" in library.docs(home=home)
-    (home / PURCHASED / STORE_NAME).write_bytes(PDF + b"\n")
+    (home / STORE_NAME).write_bytes(PDF + b"\n")
     assert "(source changed since import)" in library.docs(home=home)
-    (home / PURCHASED / STORE_NAME).unlink()
+    (home / STORE_NAME).unlink()
     assert "(source file missing)" in library.docs(home=home)
     assert library.read("9999§1", home=home).startswith("The widget protocol defines gaskets.")
 
@@ -250,8 +248,8 @@ def test_the_collection_is_registered_with_its_extra() -> None:
 def test_the_command_imports_the_folder_and_reads_through_the_core_cli(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    monkeypatch.setenv("PRIMARYSOURCE_HOME", str(tmp_path))
-    _drop(tmp_path / "iso")
+    monkeypatch.setenv("PRIMARYSOURCE_ISO_HOME", str(tmp_path / "elsewhere"))
+    _drop(tmp_path / "elsewhere")
     assert cli.main(["iso", "import"]) == 0
     assert "imported iso:9999@2024 (ISO/IEC 9999:2024)" in capsys.readouterr().out
     assert cli.main(["iso", "read", "9999§2.1¶1"]) == 0

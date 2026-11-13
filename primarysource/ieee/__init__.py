@@ -50,6 +50,7 @@ IEEE802 = Collection(
     grammar=RefGrammar(IEEE802_DOC),
     server="primarysource.ieee.server:ieee802_server",
     cli="primarysource.ieee.cli:ieee802_main",
+    identify="primarysource.ieee.identify:identify",
 )
 """Refs: `802.1Q-2022§5.4¶2`. `§` names a numbered clause or annex (`5.4`, `A.1`); `¶n` is the nth sentence of the
 clause's extracted text, because a PDF gives sentences, not paragraphs."""

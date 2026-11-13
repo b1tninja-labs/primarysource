@@ -63,7 +63,7 @@ def _not_imported(what: str, home: Path) -> LibError:
     return LibError(
         f"{what} is not imported (have: {have})",
         "iso_docs lists what is imported",
-        f"put the PDF in {home / 'purchased'}, then run: {IMPORT_COMMAND}",
+        f"put the PDF in {home}, then run: {IMPORT_COMMAND}",
     )
 
 
@@ -189,7 +189,7 @@ def search(query: str, doc: str | None = None, limit: int = 10, start: int = 0, 
         raise LibError(
             "no ISO standards are imported",
             "iso_docs lists what is imported",
-            f"put your PDFs in {home / 'purchased'}, then run: {IMPORT_COMMAND}",
+            f"put your PDFs in {home}, then run: {IMPORT_COMMAND}",
         )
     wanted = resolve(doc, home) if doc else None
     try:
@@ -232,9 +232,7 @@ def docs(home: Path | None = None) -> str:
     home = home or default_home()
     record = read_record(home)["documents"]
     if not record:
-        return render(
-            f"nothing imported; put your purchased ISO PDFs in {home / 'purchased'} and run: {IMPORT_COMMAND}", {}
-        )
+        return render(f"nothing imported; put your purchased ISO PDFs in {home} and run: {IMPORT_COMMAND}", {})
     lines = []
     for doc, entry in sorted(record.items()):
         source = Path(str(entry.get("source", "")))

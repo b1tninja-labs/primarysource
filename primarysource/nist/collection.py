@@ -18,6 +18,7 @@ COLLECTION = Collection(
     grammar=GRAMMAR,
     server="primarysource.nist.server.mcp:mcp",
     cli="primarysource.nist.collection:main",
+    identify="primarysource.nist.identify:identify",
 )
 
 
