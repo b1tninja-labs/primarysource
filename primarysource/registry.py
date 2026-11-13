@@ -40,6 +40,7 @@ BUILTIN: dict[str, str] = {
     "cavp": "primarysource.cavp:COLLECTION",
     "usbids": "primarysource.usbids:COLLECTION",
     "draft": "primarysource.draft.collection:COLLECTION [draft]",
+    "c2sp": "primarysource.c2sp:C2SP",
 }
 
 _NAME = re.compile(r"[a-z][a-z0-9]*")

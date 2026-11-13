@@ -1,0 +1,231 @@
+{
+ "repo": "C2SP/C2SP",
+ "commit": "09f3e519fe79bcbdccadcf821182e3b488a14d71",
+ "raw_base": "https://raw.githubusercontent.com/C2SP/C2SP/",
+ "terms": {
+  "licence": "CC-BY-4.0",
+  "placement": "layer",
+  "terms_url": "https://github.com/C2SP/C2SP/blob/09f3e519fe79bcbdccadcf821182e3b488a14d71/.github/README.md",
+  "terms_read": "2026-11-12",
+  "summary": "All C2SP specifications are licensed CC BY 4.0 (the repository's README); attribution required. Code and data in the repository are BSD-1-Clause."
+ },
+ "specs": [
+  {
+   "id": "BLAKE3",
+   "path": "BLAKE3.md",
+   "title": "The BLAKE3 Hashing Framework",
+   "size": 32004,
+   "sha256": "85c336e9900538e572333dd16ddde9f605c000ec8293001dd4c2642193b9c07e"
+  },
+  {
+   "id": "FLOE",
+   "path": "FLOE.md",
+   "title": "Fast Lightweight Online Encryption (FLOE)",
+   "size": 19400,
+   "sha256": "7808f6995f098400009e363674013d71a4d980ad30fc3ca46cb34aae1fafc044"
+  },
+  {
+   "id": "XAES-256-GCM",
+   "path": "XAES-256-GCM.md",
+   "title": "The XAES-256-GCM extended-nonce AEAD",
+   "size": 14100,
+   "sha256": "bcce71811d53d1d19f0298dc52746fd4f92f42bc4aec55abad5d2bd1ab9b2810"
+  },
+  {
+   "id": "age",
+   "path": "age.md",
+   "title": "age",
+   "size": 27736,
+   "sha256": "b0a767b91a184c536e8a04002f7bba7521388fee3989f5891e23cc1aaa00232f"
+  },
+  {
+   "id": "age-plugin",
+   "path": "age-plugin.md",
+   "title": "Plugin system for age",
+   "size": 25210,
+   "sha256": "83623f2d3942fb99c0d59b45c4f9d8bad2b29bf5af178abade558b6fc8341c95"
+  },
+  {
+   "id": "chacha20-poly1305-siv",
+   "path": "chacha20-poly1305-siv.md",
+   "title": "ChaCha20-Poly1305-SIV",
+   "size": 42410,
+   "sha256": "b93e3c9bf3e63669b059947f89bef7f3f55c502a59ef2798b8f084086fb2854b"
+  },
+  {
+   "id": "chacha8rand",
+   "path": "chacha8rand.md",
+   "title": "ChaCha8Rand",
+   "size": 18839,
+   "sha256": "09610ec86f76f1fb0160f354b68801be7fdf9948a04daa2dc88544286b33cd8d"
+  },
+  {
+   "id": "chunked-encryption",
+   "path": "chunked-encryption.md",
+   "title": "Chunked encryption",
+   "size": 18366,
+   "sha256": "4c2efb7e9930d4df06835f64c111e13c475afb6eed314b85fbbaac59a8227201"
+  },
+  {
+   "id": "cocktail-dkg",
+   "path": "cocktail-dkg.md",
+   "title": "COCKTAIL Distributed Key Generation",
+   "size": 148605,
+   "sha256": "e7ded83da0b54d9bf0052368ddcd2ca9ad6e257ed7fd17abf14f7e69f44e717d"
+  },
+  {
+   "id": "det-keygen",
+   "path": "det-keygen.md",
+   "title": "Deterministic Key Generation",
+   "size": 20994,
+   "sha256": "d78969dbe85eb5461c5cbf9136617c85887bed884884ff66a0da8398e411f11a"
+  },
+  {
+   "id": "https-bastion",
+   "path": "https-bastion.md",
+   "title": "HTTPS Bastion",
+   "size": 7053,
+   "sha256": "a3939dd7075f3578fb996f87feafc96e5d6edc71b895c6e965343c0b0565d07c"
+  },
+  {
+   "id": "httpsig-pq",
+   "path": "httpsig-pq.md",
+   "title": "Post-Quantum Algorithms for HTTP Message Signatures",
+   "size": 47902,
+   "sha256": "363ed0952d224a4f4ab1276eb1aa1fe88a046f35e046265eaa4c37dc362027e2"
+  },
+  {
+   "id": "jq255",
+   "path": "jq255.md",
+   "title": "The jq255e and jq255s Groups, Key Exchange and Signatures",
+   "size": 60656,
+   "sha256": "d59fff0aae35128adb3753f72e7f23873d08685951619c9bf0939c4820810021"
+  },
+  {
+   "id": "kopis",
+   "path": "kopis.md",
+   "title": "The Kopis Key Encapsulation Mechanism",
+   "size": 14607,
+   "sha256": "9707bb224408d1ea48f5748c8492472c8968ca2f5318a79ee2594bfcb768c6bd"
+  },
+  {
+   "id": "mtc-tlog",
+   "path": "mtc-tlog.md",
+   "title": "Merkle Tree Certificates With Tiled Transparency Logs",
+   "size": 8019,
+   "sha256": "d4cb827114feb7e5bdf5a5083eddc8805afcf135ee102543319711e607abf978"
+  },
+  {
+   "id": "passkey-record",
+   "path": "passkey-record.md",
+   "title": "Passkey records",
+   "size": 6770,
+   "sha256": "5e33609021db3023bec58c5b9512c7fb9a9f7ffc52853afb9a20356d8f1a7c31"
+  },
+  {
+   "id": "phc-strings",
+   "path": "phc-strings.md",
+   "title": "PHC Strings",
+   "size": 16430,
+   "sha256": "b53e4460a558486388233f8ca5cd30ef1f0543c870b7e0bfeecc282c2fbc2bd9"
+  },
+  {
+   "id": "sequencehash",
+   "path": "sequencehash.md",
+   "title": "SequenceHash and SequenceMAC",
+   "size": 32689,
+   "sha256": "63a3db48455cf3643203ac8665720042ae1f62498e374351b0d228ec4157f101"
+  },
+  {
+   "id": "signed-note",
+   "path": "signed-note.md",
+   "title": "Note",
+   "size": 7841,
+   "sha256": "bd9bf002294385e0cf3c79aac74b193a3831ccc7b32073fb00baa727653816ae"
+  },
+  {
+   "id": "static-ct-api",
+   "path": "static-ct-api.md",
+   "title": "The Static Certificate Transparency API",
+   "size": 14179,
+   "sha256": "e7173ca6fc226ada35d4bffb2cb8bf5a68f6ba7f12a3057fbb696fc6d32b6b5a"
+  },
+  {
+   "id": "tlog-checkpoint",
+   "path": "tlog-checkpoint.md",
+   "title": "Transparency Log Checkpoints",
+   "size": 5999,
+   "sha256": "528317ad4dabb0568a1c20728b74fdab6fbad99749cc2fb089e8fe92c8ddf00e"
+  },
+  {
+   "id": "tlog-cosignature",
+   "path": "tlog-cosignature.md",
+   "title": "Transparency Log Cosignatures",
+   "size": 10715,
+   "sha256": "9cf3f0ef2690319697fcbb4d1e823b593d90a1769912fdcb859ab89a3f924fbe"
+  },
+  {
+   "id": "tlog-list",
+   "path": "tlog-list.md",
+   "title": "Transparency Log Lists",
+   "size": 2295,
+   "sha256": "9c83ee9dbe91b33fdd628f97e35aac7044ff092cfb9cd2e1458721651a0c5934"
+  },
+  {
+   "id": "tlog-mirror",
+   "path": "tlog-mirror.md",
+   "title": "Transparency Log Mirrors",
+   "size": 23273,
+   "sha256": "1aef508bd5fd8c4a341c307c5aa446ce4888a32ba6109c7c6da177a502c049e9"
+  },
+  {
+   "id": "tlog-policy",
+   "path": "tlog-policy.md",
+   "title": "Transparency log trust policy",
+   "size": 9389,
+   "sha256": "2a8745ba91627d976ff2922f18c29a1ecd3567a03107749d5ae164cc5825bbd3"
+  },
+  {
+   "id": "tlog-proof",
+   "path": "tlog-proof.md",
+   "title": "Transparency Log Proofs",
+   "size": 5733,
+   "sha256": "2b46a3a156ddb477fd88091bdb83b984135d9c42cba53cbed867d13d99afd5e8"
+  },
+  {
+   "id": "tlog-tiles",
+   "path": "tlog-tiles.md",
+   "title": "Tiled Transparency Logs",
+   "size": 12447,
+   "sha256": "951b7c96d57b1563a427ecc2c916a44daf4b12b0fa5d0d5188f9c0868855ab1b"
+  },
+  {
+   "id": "tlog-witness",
+   "path": "tlog-witness.md",
+   "title": "Transparency Log Witness Protocol",
+   "size": 14392,
+   "sha256": "c9eaf9f403f0e8b3e61229d19f174022b9d80a3851c8c008bfc0ca9ee1180b89"
+  },
+  {
+   "id": "upki-revocation",
+   "path": "upki-revocation.md",
+   "title": "UPKI Revocation",
+   "size": 37013,
+   "sha256": "e79976dfed9d73cf37ad1a1a7bc2d2e72dadd7ebbc57c4c0664d0181b0f90ab1"
+  },
+  {
+   "id": "vrf-r255",
+   "path": "vrf-r255.md",
+   "title": "ristretto255 VRF",
+   "size": 9450,
+   "sha256": "411c9aed374b4bf342f2afc277e3a3da3ffa22fb7be1f5fe3f4ffb1c4220a4c6"
+  },
+  {
+   "id": "well-known-ssh-hosts",
+   "path": "well-known-ssh-hosts.md",
+   "title": ".well-known/ssh-known-hosts",
+   "size": 2187,
+   "sha256": "9b1573f4d78c56e8cee08928a601cb58ff3a880db3fbffb374fc448958d7a66f"
+  }
+ ]
+}
