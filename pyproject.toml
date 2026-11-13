@@ -34,6 +34,7 @@ dev = ["mypy>=1.20", "pytest>=8", "ruff>=0.15"]
 # posix and ieee802 (primarysource/ieee/). pypdf is for importing 802 PDFs only; posix needs nothing.
 ieee = ["pypdf>=5"]
 iana = []
+cavp = []
 
 # The RFC series (primarysource/rfc/, moved in from rfclib). mcp serves any collection.
 rfc = ["httpx>=0.27", "typer>=0.12", "rich>=13"]

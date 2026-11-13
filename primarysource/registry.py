@@ -37,6 +37,7 @@ BUILTIN: dict[str, str] = {
     "posix": "primarysource.ieee:POSIX [ieee]",
     "ieee802": "primarysource.ieee:IEEE802 [ieee]",
     "iana": "primarysource.iana:COLLECTION [iana]",
+    "cavp": "primarysource.cavp:COLLECTION",
 }
 
 _NAME = re.compile(r"[a-z][a-z0-9]*")

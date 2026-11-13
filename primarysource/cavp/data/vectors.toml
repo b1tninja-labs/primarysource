@@ -1,0 +1,47 @@
+# Vector sets `primarysource cavp fetch` may download. Each entry pins the sha256 of the artifact it downloads (the
+# zip, or the ACVP prompt.json), measured 2026-11-13. No vector data is stored in this repository.
+#
+# CAVP zips are the ones CSRC lists on its "Digital Signatures" CAVP page for FIPS 186-4; the RSA zip is named
+# 186-3 upstream and holds the FIPS 186-4 RSA SigVer response files. ACVP files are pinned to a commit of
+# usnistgov/ACVP-Server (master at 2026-08-12), never to a branch.
+
+[[vector]]
+id = "cavp/ecdsa/SigVer.rsp"
+kind = "cavp"
+algorithm = "ECDSA"
+url = "https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Algorithm-Validation-Program/documents/dss/186-4ecdsatestvectors.zip"
+sha256 = "fe47cc92b4cee418236125c9ffbcd9bb01c8c34e74a4ba195d954bcb72824752"
+member = "186-4ecdsatestvectors/SigVer.rsp"
+
+[[vector]]
+id = "cavp/rsa/SigVer15_186-3.rsp"
+kind = "cavp"
+algorithm = "RSA"
+url = "https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Algorithm-Validation-Program/documents/dss/186-3rsatestvectors.zip"
+sha256 = "8405aeb3572a4f98ed4b1a3ccb3f2f49e725462dd28ec4759d6a15d88855d19c"
+member = "SigVer15_186-3.rsp"
+
+[[vector]]
+id = "cavp/rsa/SigVerPSS_186-3.rsp"
+kind = "cavp"
+algorithm = "RSA"
+url = "https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Algorithm-Validation-Program/documents/dss/186-3rsatestvectors.zip"
+sha256 = "8405aeb3572a4f98ed4b1a3ccb3f2f49e725462dd28ec4759d6a15d88855d19c"
+member = "SigVerPSS_186-3.rsp"
+
+[[vector]]
+id = "cavp/rsa/SigVer931_186-3.rsp"
+kind = "cavp"
+algorithm = "RSA"
+url = "https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Algorithm-Validation-Program/documents/dss/186-3rsatestvectors.zip"
+sha256 = "8405aeb3572a4f98ed4b1a3ccb3f2f49e725462dd28ec4759d6a15d88855d19c"
+member = "SigVer931_186-3.rsp"
+
+[[vector]]
+id = "acvp/ECDSA-SigVer-1.0"
+kind = "acvp"
+algorithm = "ECDSA"
+url = "https://raw.githubusercontent.com/usnistgov/ACVP-Server/975de31eb83d87039ec88934fdc47d8c312b892d/gen-val/json-files/ECDSA-SigVer-1.0/prompt.json"
+sha256 = "eb41243f151f14ecb8e906d5d20a2809262fa9d8442a48cb4299ced5e6f30f8b"
+expected_url = "https://raw.githubusercontent.com/usnistgov/ACVP-Server/975de31eb83d87039ec88934fdc47d8c312b892d/gen-val/json-files/ECDSA-SigVer-1.0/expectedResults.json"
+expected_sha256 = "8a2b5e18f08cfa4846dcbc64c5f38bde94127c9549feeb42130acc4fcfa5f97e"
