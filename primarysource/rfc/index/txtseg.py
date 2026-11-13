@@ -41,7 +41,8 @@ from .rfcxml import _FURNITURE, Block, ParsedXml, XRef, XSection, _toks
 
 VERSION = "2"
 
-_NUM = r"\d{1,3}(?:\.\d{1,3}){0,5}"
+# Up to 8 levels: RFC 8878 numbers sections to depth 7 (3.1.1.3.2.1.1).
+_NUM = r"\d{1,3}(?:\.\d{1,3}){0,7}"
 _APPX = r"(?:Appendix|APPENDIX|Annex)\s+[A-Z](?:\.\d{1,3})*"
 _LETTER = r"[A-Z](?:\.\d{1,3})+|[A-Z](?=\.)"
 _LABEL = rf"(?P<lab>{_APPX}|{_LETTER}|{_NUM})"
@@ -173,7 +174,30 @@ def parse_toc(lines: list[str]) -> tuple[list[TocEntry], int, int]:
         misses += 1
         if misses >= 3:
             break
+    _unnumber_quoted(entries, lines)
     return entries, start + 1, last + 1
+
+
+def _unnumber_quoted(entries: list[TocEntry], lines: list[str]) -> None:
+    """Numeric entries indented under an "Appendix X" entry belong to a quoted document.
+
+    RFC 9592's Appendix A reprints the last edition of the Tao, whose own "1 Introduction ...
+    2.2.1" numbering the ToC lists beneath the appendix; the RFCXML marks those sections
+    unnumbered. An RFC's own numbered sections never sit inside an appendix, so the label is
+    dropped and the entry is kept as an unnumbered one. Scoped by indentation: a numeric entry
+    back at the appendix's indent (or shallower) ends the quoted span.
+    """
+    app_ind: int | None = None
+    for e in entries:
+        ln = lines[e.line - 1].replace("\f", "")
+        ind = _indent(ln)
+        if re.match(r"(?:Appendix|APPENDIX|Annex)\s", ln.strip()):
+            app_ind = ind
+            continue
+        if app_ind is not None and ind <= app_ind:
+            app_ind = None
+        if app_ind is not None and re.fullmatch(r"\d+(?:\.\d+)*", e.sec_num):
+            e.sec_num = ""
 
 
 # --------------------------------------------------------------------------
@@ -284,11 +308,48 @@ def _scan_candidates(lines: list[str], lo: int, hi: int,
             continue
         if re.search(r"(\.\s?){4,}\s*\d+\s*$", ln):
             continue
-        title = _clean_title(m.group("title"))
+        # Both callers keep only structural successors of the previous heading
+        # (and, here, headings followed by body text), which is what makes the
+        # wider title rules below safe on this path and nowhere else.
+        lab = canon(m.group("lab"))
+        title = _clean_title(m.group("title"), allow_lowercase=True)
+        if title is None:
+            title = _guarded_title(m.group("title"), lab)
         if not title:
             continue
-        out.append((i + 1, canon(m.group("lab")), title))
+        out.append((i + 1, lab, title))
     return out
+
+
+# A relaxed title that ends on one of these is a wrapped line of prose.
+_CONNECTIVE = frozenset(
+    "and or but the a an of to in for with is are by as on that which where".split())
+
+
+def _guarded_title(raw: str, lab: str) -> str | None:
+    """Titles `_clean_title` refuses that are real when the number is structurally sound.
+
+    - An XML element or similar led by '<' (RFC 9022 4.6.2.1 "<rdeCsv:csv> Element").
+    - A comma title under a multi-level number (RFC 9788 C.1.2.1). Single-level numbers are
+      excluded: in old RFCs without a ToC they are numbered prose lists ("2. Any mapping of
+      COTS onto X.25 (usually X.25(80)), where X.25 is" in RFC 1277), which would otherwise take
+      a real heading's place in the successor chain.
+    A trailing connective means the line wrapped mid-sentence, so it is prose either way.
+    """
+    t = re.split(r"\s{2,}", raw.strip())[0].strip()
+    if not t or t.endswith(",") or re.search(r"\.\d{1,3}$", t):
+        return None
+    words = t.split()
+    if words[-1].lower() in _CONNECTIVE:
+        return None
+    if len(words) > 16 or (len(words) > 1 and t.endswith(".")):
+        return None
+    if t.startswith("<"):
+        return t
+    multi = "." in lab and not lab.startswith("Appendix")
+    if "," in t and multi:
+        return t
+    return None
 
 
 def find_headings(lines: list[str]) -> tuple[list[tuple[int, str, str]],

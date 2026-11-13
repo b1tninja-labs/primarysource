@@ -25,18 +25,30 @@ That belongs in the core segmenter (`cl.segment_numbered`), not in three copies.
 ## rfc: plain text against RFCXML (all 1,384 RFCs that have both)
 
 - Section tree: 1,356 RFCs (98.0%) agree exactly. 392 of 46,607 sections (0.84%) are missed, mostly at depth 4 or
-  deeper. There are no wrong numbers. The 60 extra sections are XML errors, and the XML parser has one bug of its
-  own (rfc9694: an unnumbered References section read as numbered).
+  deeper. There are no wrong numbers. The XML parser has one bug of its own (rfc9694: an unnumbered References
+  section read as numbered).
+- Extra sections are not XML errors, as first written here: 46 of the 49 that the text side reports beyond the XML
+  are rfc9592's quoted Tao numbering under Appendix A, which the XML rightly leaves unnumbered (now
+  `txtseg._unnumber_quoted`). The other 3 are appendices the XML marks `numbered="false"` while the text prints
+  "Appendix A." (rfc10049, rfc9773): a labelling choice, not a bug on either side.
+- Measured again on 2026-11-13 after the fixes below (cascade, title gate, depth, quoted numbering, plus rfclib's
+  lowercase-directive titles): 1,372 of 1,384 RFCs agree exactly, 36 sections are missed, 3 are extra (from 1,361,
+  182 and 49 on `claude/rfc-contract-6a191a`). On the 8,457 text-only RFCs the same changes add 773 headings and
+  drop 5 (a depth-7 heading swallowed into its parent's title in rfc6505, and prose in rfc803 and rfc1700). Still
+  missed: titles whose first line ends in a comma and wraps (rfc9788 C.3.13.x, rfc9288 4.4.19) and lowercase-led
+  identifiers ("pNFS Client", rfc8881 12.2.3).
 - Headings land on the right line for 53,299 of 53,300 matched sections. Section text agrees at a median similarity
   of 1.0.
 - Titles: 1,068 mismatches in 401 RFCs (truncated, or built from the contents' first line plus the heading's second).
 - Causes, in `txtseg.py`:
   - `_followed_by_body` rejects a heading followed by its child (rfc9288 line 338);
-  - the title check rejects lowercase, `<`, trailing `.digit` and comma titles (rfc8991:556, rfc9031:1549);
+  - the title check rejects lowercase, `<`, trailing `.digit` and comma titles (rfc8991:556, rfc9031:1549); now
+    widened on the structurally guarded scan only: single lowercase directive names, `<`-led titles, and comma
+    titles under multi-level numbers (`_guarded_title`);
   - `parse_toc` mishandles contents without page numbers, which is every RFC from 8650 on (rfc8953:66, rfc9930:70,
     rfc8700:70);
   - `segment` builds titles from the contents (rfc9787:2025);
-  - `_NUM` allows only 6 levels (rfc8878:941).
+  - `_NUM` allows only 6 levels (rfc8878:941); now 8.
 - Not covered: RFCs before 8650 have no XML, so the page-numbered layout (most of the 9,841) is unvalidated. By eye,
   RFC 2119's keyword list becomes sections.
 
