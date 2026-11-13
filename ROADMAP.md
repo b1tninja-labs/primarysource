@@ -133,6 +133,7 @@ Licence and placement as group F recorded them (side-session notes, `roadmap-F-r
 | `col.peps` | PLAN.md §5.8 | `[part]` | Python PEPs (RST). Licence public domain or CC0 (m). Placement: not recorded; layer if confirmed Built 2026-11-13 as the `pep` collection; tests and remaining gaps in `docs/pep.md`. |
 | `col.kconfig_docs` | PLAN.md §5.8 | `[part]` | Kconfig language docs from the kernel's Documentation (RST). Licence GPL-2.0 (m). Placement: not recorded; layer if confirmed Built 2026-11-13 as the `kconfig` collection; tests and remaining gaps in `docs/kconfig.md`. |
 | `col.bbf_trs` | PLAN.md §5.8 | `[part]` | Broadband Forum TRs (PDF), collection `bbf`. Free use, no modification, whole copy with notice (read through third-party copies, not BBF's own page). Placement: volume Built 2026-11-13 as the `bbf` collection; tests and remaining gaps in `docs/bbf.md`. |
+| `col.iso_purchased` | docs/iso.md | `[ ]` | the owner's own purchased ISO PDFs, placed in `$PRIMARYSOURCE_HOME/iso/purchased/` (created 2026-11-13, with a README). Single-user licence. Placement: personal volume, never an image or a shared server. Blocked: ISO's no-cost and OBP terms forbid text and data mining and AI use, and the paid-tier End Customer Licence Agreement was not read (403); nothing indexes or serves the files until the owner has read it |
 
 ## 6. Parser validation, 2026-11-13 (`docs/validation.md`)
 
