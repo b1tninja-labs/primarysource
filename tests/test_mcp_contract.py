@@ -257,3 +257,59 @@ def test_the_cli_refuses_a_clash_with_exit_2(
     err = capsys.readouterr().err
     assert "error: the tool 'search' is wanted by both 'nist' and 'usb'" in err
     assert "hint: drop --bare-names" in err
+
+
+# --- completions --------------------------------------------------------------------------------------------------
+
+
+def test_compose_carries_a_collections_completions_under_the_public_names() -> None:
+    from mcp.types import Completion, PromptReference, ResourceTemplateReference
+
+    asked: list[str] = []
+
+    def explain(ref: str) -> str:  # pragma: no cover - never rendered
+        return ref
+
+    def text(ref: str) -> str:  # pragma: no cover - never read
+        return ref
+
+    async def complete(ref: Any, argument: Any, context: Any) -> Completion:
+        asked.append(ref.name if isinstance(ref, PromptReference) else ref.uri)
+        return Completion(values=[f"{argument.value}1"])
+
+    def plain() -> str:  # pragma: no cover - never rendered
+        return "plain"
+
+    source = MCPServer("demo")
+    # called, not used as decorators: the SDK's decorators are untyped
+    source.prompt(name="explain")(explain)
+    source.resource("demo://{ref}")(text)
+    source.completion()(complete)
+    other = MCPServer("other")  # a collection with no completion handler of its own
+    other.prompt(name="plain")(plain)
+    server = scaffold.compose([_served("demo", server=source), _served("other", server=other)])
+
+    import anyio
+
+    async def drive() -> list[list[str]]:
+        async with Client(server) as client:
+            refs = [
+                PromptReference(type="ref/prompt", name="demo_explain"),
+                ResourceTemplateReference(type="ref/resource", uri="demo://{ref}"),
+                PromptReference(type="ref/prompt", name="other_plain"),
+            ]
+            return [(await client.complete(ref, {"name": "ref", "value": "D"})).completion.values for ref in refs]
+
+    assert anyio.run(drive) == [["D1"], ["D1"], []]
+    # the collection's handler saw its own prompt name, never the prefixed one
+    assert asked == ["explain", "demo://{ref}"]
+
+
+def test_a_composed_server_without_completions_does_not_offer_them() -> None:
+    def plain() -> str:  # pragma: no cover - never rendered
+        return "plain"
+
+    source = MCPServer("demo")
+    source.prompt(name="plain")(plain)
+    server = scaffold.compose([_served("demo", server=source)])
+    assert server._lowlevel_server.get_request_handler("completion/complete") is None

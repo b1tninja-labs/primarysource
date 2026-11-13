@@ -116,8 +116,9 @@ def compose(served: Sequence[Served], *, bare: bool = False) -> Any:
 
     Each tool is rebuilt from its function with `structured_output=False` and behind `guard`, so the contract
     holds whatever the collection registered. Each collection keeps its own state (database, home directory,
-    loaded corpus): its functions are reused, not copied. Completion handlers are not carried over: they are
-    keyed by the prompt and template names the collection knew. A clash raises `LibError` before anything runs.
+    loaded corpus): its functions are reused, not copied. A collection's completion handler is carried over: a
+    request for a renamed prompt reaches it under the prompt's own name, and one for a resource template reaches
+    the collection that owns the template. A clash raises `LibError` before anything runs.
     """
     if not served:
         raise LibError("no collection to serve", "primarysource mcp --collection <name>")
@@ -126,6 +127,8 @@ def compose(served: Sequence[Served], *, bare: bool = False) -> Any:
 
     tools: dict[str, tuple[str, Any]] = {}
     prompts: dict[str, tuple[str, Any]] = {}
+    prompt_names: dict[str, str] = {}  # public prompt name -> the name its collection gave it
+    completers: dict[str, Any] = {}  # collection -> its own `completion/complete` handler
     resources: dict[str, tuple[str, Any]] = {}
     templates: dict[str, tuple[str, Any]] = {}
     routes: dict[str, tuple[str, Any]] = {}
@@ -153,12 +156,16 @@ def compose(served: Sequence[Served], *, bare: bool = False) -> Any:
         for prompt in source._prompt_manager.list_prompts():
             name = public_name(item.name, prompt.name, bare=bare)
             claim(prompts, "prompt", name, item.name, prompt.model_copy(update={"name": name}))
+            prompt_names[name] = prompt.name
         for resource in source._resource_manager.list_resources():
             claim(resources, "resource", str(resource.uri), item.name, resource)
         for template in source._resource_manager.list_templates():
             claim(templates, "resource template", template.uri_template, item.name, template)
         for route in source._custom_starlette_routes:
             claim(routes, "HTTP route", f"{route.path} {sorted(route.methods or ())}", item.name, route)
+        entry = source._lowlevel_server.get_request_handler("completion/complete")
+        if entry is not None:
+            completers[item.name] = entry.handler
 
     name = served[0].server.name if len(served) == 1 else "primarysource"
     server = MCPServer(
@@ -174,7 +181,40 @@ def compose(served: Sequence[Served], *, bare: bool = False) -> Any:
     for _, template in templates.values():
         server._resource_manager._templates[template.uri_template] = template
     server._custom_starlette_routes.extend(route for _, route in routes.values())
+    if completers:
+        _carry_completions(server, completers, prompts, prompt_names, templates)
     return server
+
+
+def _carry_completions(
+    server: Any,
+    completers: dict[str, Any],
+    prompts: dict[str, tuple[str, Any]],
+    prompt_names: dict[str, str],
+    templates: dict[str, tuple[str, Any]],
+) -> None:
+    """Register one `completion/complete` handler on `server` that hands each request to the collection owning
+    the prompt or resource template it names, with the prompt's public name turned back into the collection's.
+    A request for something no collection completes gets no values, as the SDK answers when a handler returns
+    nothing."""
+    from mcp.types import CompleteRequestParams, CompleteResult, Completion, PromptReference
+
+    async def complete(ctx: Any, params: CompleteRequestParams) -> CompleteResult:
+        ref = params.ref
+        if isinstance(ref, PromptReference):
+            owner = prompts.get(ref.name, ("", None))[0]
+            if owner in completers:
+                original = ref.model_copy(update={"name": prompt_names[ref.name]})
+                params = params.model_copy(update={"ref": original})
+        else:
+            owner = templates.get(ref.uri, ("", None))[0]
+        handler = completers.get(owner)
+        if handler is None:
+            return CompleteResult(completion=Completion(values=[]))
+        result: CompleteResult = await handler(ctx, params)
+        return result
+
+    server._lowlevel_server.add_request_handler("completion/complete", CompleteRequestParams, complete)
 
 
 def _version() -> str:
