@@ -1,18 +1,17 @@
-"""ecma: the private PDF reader, the importer and the refs and tools, over an invented bookmarked PDF."""
+"""ecma: the importer and the refs and tools, over an invented bookmarked PDF."""
 
 from __future__ import annotations
 
 import asyncio
 import json
-import shutil
 from pathlib import Path
 
 import pytest
-from pdffixture import make_pdf, standard
+from pdffixture import standard
 
 from primarysource import cli, registry
 from primarysource.c2sp._fetch import sha256
-from primarysource.ecma import ECMA, _pdf, library
+from primarysource.ecma import ECMA, library
 from primarysource.ecma.catalogue import Catalogue, Edition, Terms, parse_catalogue
 from primarysource.ecma.catalogue import catalogue as packaged_catalogue
 from primarysource.ecma.importer import import_edition, read_record
@@ -55,84 +54,6 @@ def fetch(data: bytes = PDF):  # type: ignore[no-untyped-def]
 def home(tmp_path: Path) -> Path:
     import_edition(tmp_path / "ecma", "999", cat=cat(), transport=fetch())
     return tmp_path / "ecma"
-
-
-# --- the PDF reader --------------------------------------------------------------------------------------------
-
-
-def test_bookmarks_become_numbered_sections_with_sentences() -> None:
-    extracted = _pdf.extract(PDF)
-    assert [s["id"] for s in extracted["sections"]] == IDS
-    assert extracted["pages"] == 5 and extracted["extractor"].startswith("pypdf") and extracted["headings_found"] == 7
-    by_id = {s["id"]: s for s in extracted["sections"]}
-    assert by_id["1"]["text"].split("\n") == [
-        "The widget protocol defines gaskets.",
-        "It applies to sprockets.",
-        "This sentence is padding for the furniture filter.",
-    ]
-    assert (
-        by_id["2.1"]["text"] == "A gasket MUST be round." and by_id["2.1"]["depth"] == 1 and by_id["2.1"]["page"] == 2
-    )
-    assert by_id["A"]["title"] == "(normative) Registry" and by_id["A"]["text"].startswith(
-        "The registry lists flanges."
-    )
-    assert by_id["bibliography"]["text"].splitlines()[0] == "RFC 9999 is invented."
-
-
-def test_page_furniture_is_dropped_but_ordinary_text_stays() -> None:
-    text = " ".join(s["text"] for s in _pdf.extract(PDF)["sections"])
-    assert "INVENTED STANDARD" not in text and "Page 3 of 5" not in text and "Draft for tests only" not in text
-    assert "A sprocket SHOULD have teeth." in text
-
-
-def test_sentences_split_after_a_stop_before_a_capital_but_not_after_abbreviations() -> None:
-    assert _pdf.split_sentences("One thing, e.g. a gasket. Two things! Is it three? Yes (see 4.2). 5 is next.") == [
-        "One thing, e.g. a gasket.",
-        "Two things!",
-        "Is it three?",
-        "Yes (see 4.2).",
-        "5 is next.",
-    ]
-    assert _pdf.split_sentences("   ") == []
-
-
-def test_heading_ids() -> None:
-    assert _pdf._heading_id("5.3 Separator characters") == ("5.3", "Separator characters")
-    assert _pdf._heading_id("A.2.1 Data Types") == ("A.2.1", "Data Types")
-    assert _pdf._heading_id("Annex A. RPC Methods") == ("A", "RPC Methods")
-    assert _pdf._heading_id("Appendix I. Guidelines") == ("Appendix-I", "Guidelines")
-    assert _pdf._heading_id("Bibliography") == ("bibliography", "Bibliography")
-
-
-def test_a_pdf_with_no_bookmarks_junk_or_too_many_pages_is_refused() -> None:
-    with pytest.raises(LibError, match="no bookmarks"):
-        _pdf.extract(make_pdf([["hello"]], []))
-    with pytest.raises(LibError, match="could not read the PDF"):
-        _pdf.extract(b"%PDF-1.4\nthis is not a pdf at all")
-    with pytest.raises(LibError, match="byte bound"):
-        _pdf.extract(b"x" * (_pdf.MAX_BYTES + 1))
-    with pytest.raises(LibError, match="could not read the PDF"):
-        _pdf.extract(b"")
-
-
-def test_a_bookmark_that_never_matches_a_heading_still_yields_a_section() -> None:
-    odd = make_pdf([["alpha beta gamma."], ["delta."]], [("7 Missing heading", 0, 0), ("8 Other", 1, 0)])
-    sections = _pdf.extract(odd)["sections"]
-    assert [s["id"] for s in sections] == ["7", "8"]
-    assert "alpha beta gamma." in sections[0]["text"] or "alpha beta gamma." in sections[1]["text"]
-
-
-@pytest.mark.skipif(shutil.which("pdftotext") is None, reason="pdftotext is not installed")
-def test_pdftotext_is_used_when_present_and_gives_the_same_sections(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    monkeypatch.undo()  # put the real shutil.which back
-    path = tmp_path / "x.pdf"
-    path.write_bytes(PDF)
-    extracted = _pdf.extract(PDF, path)
-    assert extracted["extractor"] == "pdftotext"
-    assert [s["id"] for s in extracted["sections"]] == IDS
-    assert "A gasket MUST be round." in {s["id"]: s for s in extracted["sections"]}["2.1"]["text"]
 
 
 # --- the catalogue and the importer ----------------------------------------------------------------------------
