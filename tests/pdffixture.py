@@ -43,7 +43,7 @@ def make_pdf(pages: list[list[str]], outline: list[tuple[str, int, int]], title:
     parents: list[object] = []
     for heading, page_index, depth in outline:
         parent = parents[depth - 1] if depth > 0 else None
-        item = writer.add_outline_item(heading, page_index, parent=parent)  # type: ignore[arg-type]
+        item = writer.add_outline_item(title=heading, page_number=page_index, parent=parent)  # type: ignore[arg-type]
         del parents[depth:]
         parents.append(item)
     writer.add_metadata({"/Title": title})
