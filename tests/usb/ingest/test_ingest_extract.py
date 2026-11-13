@@ -454,3 +454,103 @@ def test_a_number_not_in_the_contents_still_needs_to_be_next() -> None:
         ]
     )
     assert [s.id for s in split_sections(text)] == ["1", "2"]
+
+
+def test_chapter_with_a_colon_is_a_chapter() -> None:
+    # The SuperSpeed electrical spec writes "Chapter 1: Introduction" with a colon, not a dot.
+    text = "\n".join(
+        [
+            "Chapter 1: Introduction",
+            "1.1 Related Documents",
+            "body",
+            "Chapter 2: Test Descriptions",
+            "2.1 Setup",
+            "body",
+        ]
+    )
+    sections = {s.id: s for s in split_sections(text)}
+    assert list(sections) == ["1", "1.1", "2", "2.1"]
+    assert sections["2"].heading == "Test Descriptions"
+
+
+def test_running_page_header_with_a_colon_and_columns_is_not_a_chapter() -> None:
+    # A page header pads the title out to a column: "Chapter 1: Introduction     Revision 1.1  3/3/2024".
+    text = "\n".join(
+        [
+            "Chapter 1: Introduction     Revision 1.1  3/3/2024",
+            "1.1 Scope",
+            "body",
+        ]
+    )
+    assert split_sections(text) == ()
+
+
+def test_bare_number_after_an_appendix_is_not_a_chapter() -> None:
+    # Appendices follow the chapters, so "3. Fixed the thing" in an appendix's revision list is a list item.
+    text = "\n".join(
+        [
+            "1 Introduction",
+            "1.1 Scope",
+            "2 Operation",
+            "2.1 Detail",
+            "Appendix A. Revision History",
+            "3. Fixed the thing",
+            "body",
+        ]
+    )
+    assert [s.id for s in split_sections(text)] == ["1", "1.1", "2", "2.1", "A"]
+
+
+def test_headings_between_two_siblings_that_are_not_inside_their_parent_are_retracted() -> None:
+    # A test prints the specification's own chapter headers inside its assertion table (3, 4, 4.1), then
+    # carries on with 2.4: the next child of 2 proves those were not part of 2's outline.
+    text = "\n".join(
+        [
+            "1 Introduction",
+            "1.1 Scope",
+            "2 Test Assertions",
+            "2.1 First suite",
+            "2.2 Second suite",
+            "2.3 Third suite",
+            "3 Port Power Requirements",
+            "4 Electrical Requirements",
+            "4.1 Source Requirements",
+            "2.4 Type-C Assertions",
+            "body",
+        ]
+    )
+    assert [s.id for s in split_sections(text)] == [
+        "1",
+        "1.1",
+        "2",
+        "2.1",
+        "2.2",
+        "2.3",
+        "2.4",
+    ]
+
+
+def test_a_sibling_after_a_subtree_does_not_retract_the_subtree() -> None:
+    text = "\n".join(
+        ["1 Introduction", "1.1 Scope", "1.1.1 Detail", "1.2 Purpose", "body"]
+    )
+    assert [s.id for s in split_sections(text)] == ["1", "1.1", "1.1.1", "1.2"]
+
+
+def test_header_repeated_behind_one_chapter_number_is_not_a_footer() -> None:
+    # "2. IAD Use Model Example" tops every page of chapter 2: the same title behind the same number.
+    # A footer is repeated behind a different page number each time (see the page-footer test above).
+    text = "\n".join(
+        [
+            "1. Overview",
+            "1.1 Scope",
+            "body",
+            "2. IAD Use Model Example",
+            "body",
+            "2. IAD Use Model Example",
+            "body",
+            "2. IAD Use Model Example",
+            "body",
+        ]
+    )
+    assert [s.id for s in split_sections(text)] == ["1", "1.1", "2"]

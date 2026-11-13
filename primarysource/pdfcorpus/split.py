@@ -28,11 +28,17 @@ _LETTERED = re.compile(r"^\f?\s*(?P<id>[A-Z](?:\.\d+)+)\.?\s*(?P<heading>[A-Z].*
 _NUMBERED = re.compile(r"^\f?\s*(?P<id>\d+(?:\.\d+)*)(?P<dot>\.?)\s*(?P<heading>[A-Z].*)$")
 _CHAPTER = re.compile(r"^\f?\s*Chapter\s+(?P<id>\d+)\.?\s+(?P<heading>[A-Z].*)$")
 _CHAPTER_NUMBER_ONLY = re.compile(r"^\f?\s*Chapter\s+(?P<id>\d+)\.?\s*$")
+# "Chapter 1: Introduction". The title must be single-spaced to the end of the line: a running page header
+# pads the title out to a column ("Chapter 1: Introduction     Revision 1.1  3/3/2024") and is not a heading.
+# (usblib d15f16d: SuperSpeed electrical compliance, 2 wrong sections to 4 right ones.)
+_CHAPTER_COLON = re.compile(r"^\f?\s*Chapter\s+(?P<id>\d+):\s+(?P<heading>[A-Z]\S*(?: \S+)*)\s*$")
 _LEADER = re.compile(r"\.{4,}|(?:\. ){4,}")
 # A contents row without a dot leader: "1 Introduction        15", a page number after a run of spaces.
 _CONTENTS_ROW = re.compile(r"^\f?\s*(?P<id>\d+)\s+(?P<heading>[A-Z].*?[A-Za-z)])\s{3,}\d+\s*$")
 _MAX_HEADING = 120
 _MIN_RUNNING_REPEATS = 3
+# The foreign headings `_retract_foreign_tail` may drop at once (USB's case was 3: chapters 3, 4 and 4.1).
+_MAX_FOREIGN_TAIL = 3
 
 
 _MARGIN_NUMBER = re.compile(r"^(\f?\s*)\d{1,4}\s{2,}(?=\d+(?:\.\d+)*\.?\s+[A-Z])")
@@ -47,7 +53,7 @@ def _strip_margin(line: str) -> str:
 def _heading_at(lines: list[str], index: int) -> tuple[str, str] | None:
     """Heading at ``lines[index]``: ``Chapter N. Title``, ``Chapter N`` with the title next, or a numbered line."""
     line = _strip_margin(lines[index])
-    m = _CHAPTER.match(line)
+    m = _CHAPTER.match(line) or _CHAPTER_COLON.match(line)
     if m is not None:
         return _accept_title(m.group("id"), m.group("heading"))
     m = _CHAPTER_NUMBER_ONLY.match(line)
@@ -116,10 +122,19 @@ def _running_titles(hits: Iterable[tuple[str, str]]) -> set[str]:
     """Titles that follow a bare number on many lines: page footers and headers such as ``5   Revision 1.0``.
 
     A chapter title is not repeated behind three different chapter numbers, but a footer is repeated behind
-    every page number, and the next page number would otherwise pass as the next chapter.
+    every page number, and the next page number would otherwise pass as the next chapter. A title repeated
+    behind one number only (``2. IAD Use Model Example`` at the top of every page of chapter 2) is that
+    chapter's running header, not a footer, and is left alone (usblib 2ff1feb).
     """
-    counts = Counter(heading for sec_id, heading in hits if "." not in sec_id and sec_id.isdigit())
-    return {heading for heading, count in counts.items() if count >= _MIN_RUNNING_REPEATS}
+    counts: Counter[str] = Counter()
+    numbers: dict[str, set[str]] = {}
+    for sec_id, heading in hits:
+        if "." not in sec_id and sec_id.isdigit():
+            counts[heading] += 1
+            numbers.setdefault(heading, set()).add(sec_id)
+    return {
+        heading for heading, count in counts.items() if count >= _MIN_RUNNING_REPEATS and len(numbers[heading]) >= 2
+    }
 
 
 def _counters(found: list[tuple[str, str, int]]) -> dict[str, int]:
@@ -178,6 +193,44 @@ def _retract_premature_chapters(found: list[tuple[str, str, int]], sec_id: str) 
         found.pop()
         dropped = True
     return dropped
+
+
+def _number_after_appendix(sec_id: str, last_child: dict[str, int], toc_ids: set[str]) -> bool:
+    """Appendices follow the chapters, so a bare number after one is a list item (usblib d15f16d: USB PD's
+    revision-history item "11. VCONN Ownership" was read as chapter 11) unless the contents lists it as a
+    chapter. Without that exception a stray early "Appendix A" line (a cross-reference in the front matter)
+    blocked every chapter after it: NIST sp800-204d fell from 0.97 to 0.05 against its bookmarks."""
+    return sec_id.isdigit() and "#appendix" in last_child and _canon(sec_id) not in {_canon(t) for t in toc_ids}
+
+
+def _retract_foreign_tail(found: list[tuple[str, str, int]], sec_id: str) -> bool:
+    """Drop the headings accepted after ``X.(n-1)``'s subtree when ``X.n`` shows they were not inside ``X``.
+
+    A compliance test prints another specification's chapter headers inside its own assertion table, so a
+    ``3``, ``4`` and ``4.1`` can be accepted between ``2.3`` and ``2.4``. When ``2.4`` arrives as the next child
+    of ``2``, those headings cannot belong to ``2``'s outline. Nothing is dropped when any of them is a
+    descendant of ``X``, so an ordinary subsection is never retracted by its sibling (usblib d15f16d). Nor when
+    the tail is longer than ``_MAX_FOREIGN_TAIL``: then ``X.n`` is more likely a cross-reference deep in a later
+    chapter than the end of a short foreign table, and retracting would drop real chapters (measured on NIST:
+    unlimited, the median agreement fell from 0.929 to 0.880).
+    Ids are compared in their counting form, so ``03.01.02`` finds ``03.01.01``.
+    """
+    parent, _, last = sec_id.rpartition(".")
+    if not parent or not last.isdigit() or int(last) < 2:
+        return False
+    parent = _canon(parent)
+    previous = f"{parent}.{int(last) - 1}"
+    position = next((i for i in range(len(found) - 1, -1, -1) if _canon(found[i][0]) == previous), None)
+    if position is None:
+        return False
+    start = position + 1
+    while start < len(found) and _canon(found[start][0]).startswith(previous + "."):
+        start += 1
+    tail = found[start:]
+    if not tail or len(tail) > _MAX_FOREIGN_TAIL or any(_canon(entry[0]).startswith(parent + ".") for entry in tail):
+        return False
+    del found[start:]
+    return True
 
 
 def _retract_unexplained_chapters(found: list[tuple[str, str, int]], chapter_id: str, explicit: set[int]) -> bool:
@@ -296,7 +349,7 @@ def split_sections(text: str) -> tuple[Section, ...]:
     chapter_lines = {
         number
         for number, line in enumerate(lines, start=1)
-        if _CHAPTER.match(line) or _CHAPTER_NUMBER_ONLY.match(line)
+        if _CHAPTER.match(line) or _CHAPTER_COLON.match(line) or _CHAPTER_NUMBER_ONLY.match(line)
     }
     running = _running_titles(hit for number, hit in hits if hit is not None and number not in chapter_lines)
     found: list[tuple[str, str, int]] = []
@@ -320,8 +373,12 @@ def split_sections(text: str) -> tuple[Section, ...]:
             and _reads_as_prose(heading)
         ):
             continue  # a cross-reference or table cell under a chapter the contents shows without subsections
+        if _number_after_appendix(sec_id, last_child, toc_ids):
+            continue
         if not _is_next(sec_id, last_child) and not _admitted_by_contents(sec_id, heading, last_child, toc, toc_ids):
             continue
+        if "." in sec_id and _retract_foreign_tail(found, sec_id):
+            last_child = _counters(found)
         if "." in sec_id and _retract_premature_chapters(found, sec_id):
             last_child = _counters(found)
         _advance(last_child, sec_id)

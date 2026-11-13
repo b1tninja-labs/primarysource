@@ -67,3 +67,58 @@ def test_appendix_headings_with_a_colon_or_dash() -> None:
         ]
     )
     assert _ids(text) == ["1", "A", "B", "C"]
+
+
+def test_a_chapter_the_contents_lists_survives_a_stray_early_appendix_line() -> None:
+    # The appendix rule (a bare number after an appendix is a list item) must not block a chapter the
+    # contents lists: a front-matter "Appendix A. ..." line would otherwise drop every chapter (NIST sp800-204d).
+    text = "\n".join(
+        [
+            "1 Introduction ............ 1",
+            "2 Scope ................... 2",
+            "",
+            "Appendix A. Invented Cross-Reference In The Front Matter",
+            "1 Introduction",
+            "Invented.",
+            "1.1 Purpose",
+            "Invented.",
+            "2 Scope",
+            "Invented.",
+            "2.1 Audience",
+            "Invented.",
+        ]
+    )
+    assert [s.id for s in split_sections(text)] == ["A", "1", "1.1", "2", "2.1"]
+
+
+def test_a_long_tail_is_not_retracted_as_foreign() -> None:
+    # A late "2.4" that is really a cross-reference must not retract the chapters accepted since 2.3
+    # (more than _MAX_FOREIGN_TAIL of them): measured on NIST, unlimited retraction cost 0.05 median agreement.
+    text = "\n".join(
+        [
+            "1 Introduction",
+            "Invented.",
+            "1.1 Purpose",
+            "Invented.",
+            "2 Design",
+            "Invented.",
+            "2.1 Parts",
+            "Invented.",
+            "2.2 Joins",
+            "Invented.",
+            "2.3 Finish",
+            "Invented.",
+            "3 Use",
+            "Invented.",
+            "3.1 Setup",
+            "Invented.",
+            "4 Care",
+            "Invented.",
+            "4.1 Cleaning",
+            "Invented.",
+            "2.4 As Described In The Design Chapter",
+            "Invented.",
+        ]
+    )
+    ids = [s.id for s in split_sections(text)]
+    assert ids[:10] == ["1", "1.1", "2", "2.1", "2.2", "2.3", "3", "3.1", "4", "4.1"]
