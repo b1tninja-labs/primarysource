@@ -89,7 +89,7 @@ Backends give different text, so the backend name and version are part of an ind
 1. **Tool results are text**, with `cite:`, `unit:`, `span:`, `next:`, `relaxed:`, `warning:` footer lines in that
    order (`primarysource/render.py`). The passage dominates the tokens and JSON escapes every newline in it; `rfclib`,
    the only published library, already returns text. Structured content can be added later without breaking text
-   readers. No token comparison of the two shapes was measured.
+   readers. Measured on 2026-11-13; the figures are in item 9.
 2. **`¶n` keeps its per-library unit, and the unit is declared** (`primarysource/model.py::Unit`). RFCs have real
    paragraphs; an extracted PDF clause has only sentences. The section is the durable address.
 3. **Own repository.** `rfclib`'s repository is private and `itulib`'s is public; a public library cannot depend
@@ -112,7 +112,7 @@ Backends give different text, so the backend name and version are part of an ind
 
    | Collection | Subpackage | Extra | Tool prefix |
    |---|---|---|---|
-   | RFC series | `primarysource.rfc` | `[rfc]` | `rfc_` (bare names kept until the owner decides, §7) |
+   | RFC series | `primarysource.rfc` | `[rfc]` | `rfc_` (the `rfclib mcp` command keeps the bare names, item 12) |
    | ITU-T | `primarysource.itu` | `[itu]` (`pypdf`) | `itu_` |
    | NIST | `primarysource.nist` | `[nist]` | `nist_` |
    | USB-IF | `primarysource.usb` | `[usb]` | `usb_` |
@@ -151,6 +151,86 @@ Backends give different text, so the backend name and version are part of an ind
    - **Tracked metadata moves; corpus text never does.** Catalogues, `sources.toml` and digests are package
      data. Fetched text lives under the home directory, per collection (`$PRIMARYSOURCE_HOME/<collection>/`).
      The old `<LIB>_HOME`/`<LIB>_DATA` variables are read as fallbacks for one release.
+
+Items 9 to 13 were decided on 2026-11-13 by the agent the owner told to "research and decide". Each settles a
+question that §7 had left open, and the owner can overrule any of them by writing the change into this section.
+
+9. **Text results, confirmed by measurement.**
+   - Method: the same passages in three shapes:
+     - `render()` text with its footer;
+     - compact JSON (`separators=(",", ":")`, `ensure_ascii=False`), as itulib, zimlore and cvelib send it;
+     - `json.dumps` defaults.
+   - Samples, each capped at one 2000-token page and read from the owner's local corpora:
+     - 400 RFC sections from wrapped `.txt`;
+     - 400 RFCXML sections as `[§x¶n]` paragraphs;
+     - 300 code and artwork blocks;
+     - 400 ITU clauses.
+   - Tokens were counted with `tiktoken`'s `o200k_base`. It stands in for Claude's tokenizer, which needs an API
+     key, so the percentages carry over better than the absolute counts.
+   - Results:
+
+     | Sample | Compact JSON | Default JSON | Median extra tokens per read (compact, default) |
+     |---|---|---|---|
+     | RFC `.txt` sections | +3.0% | +6.9% | +7, +22 |
+     | RFCXML paragraphs | +4.0% | +13.7% | +18, +68 |
+     | Code and artwork | +7.0% | +11.0% | +8, +16 |
+     | ITU clauses | +2.2% | +9.6% | +3, +18 |
+
+   - The gap is small: escaping costs a few percent, not the large share the original argument implied. Text wins
+     on three counts:
+     - It is never the more expensive shape.
+     - Code and artwork, the passages an agent copies verbatim, suffer most from escaping.
+     - The MCP SDK, if a tool returns structured output, sends the JSON twice: once as text content and once as
+       `structuredContent` (`mcp` 2.3, `func_metadata.convert_result`).
+   - So tools register with `structured_output=False` and return `render()` text. A list result (search hits,
+     outline rows) is text too, one hit per line, with the same footer.
+10. **One error contract.**
+    - A failure raises `LibError(message, hint)`. The MCP scaffold turns it into the SDK's `ToolError`, which
+      becomes an `isError: true` result whose text is fixed lines in a fixed order:
+      - `error: <message>`;
+      - `hint: <what to call next>`;
+      - `action: <command a human must run>`, only when a human must act.
+    - In the CLI the same error prints `hint` as a command and exits 2.
+    - Reasons for `isError`:
+      - It is the protocol's own failure signal, and clients count and display it.
+      - An `error` object returned as an ordinary result reads as success to everything except the model.
+      - The SDK already logs a `ToolError`'s message at info level and an unexpected exception with its
+        traceback (`mcpserver/server.py::_handle_call_tool`).
+    - zimlore's two audiences survive as `hint` (tool names, for MCP) and `action` (for a human). Its
+      `tool_hint`/`hint` split becomes those two fields.
+    - **An empty result is never an error.** A search that matches nothing returns text saying so. Missing,
+      stale and partial corpora remain errors that name the fix.
+11. **One cursor convention.** The footer's `next:` value is always exactly what to pass back:
+    - for a read, a ref string that `read` accepts;
+    - for a list (search, outline, browse, grep), `start=<n>`, a 0-based offset given to the same tool's `start`
+      argument.
+    itulib's 1-based ¶ `start` for reads and zimlore's integer read cursor move to ref strings when they adopt the
+    pager.
+12. **Prefixed tool names everywhere, with bare names kept for the old commands.**
+    - `primarysource mcp` always names a collection's tools `<prefix>_<tool>` (`rfc_search`, `nist_read`),
+      because one process may serve several collections and two `search` tools cannot share it.
+    - The thin `rfclib` distribution's `rfclib mcp` serves the `rfc` collection alone and keeps the bare names
+      (`search`, `read`, ...). Clients already namespace them (`mcp__rfclib__search`), and existing configurations
+      keep working. The same compatibility applies to nistlib's and usblib's old commands for one release.
+    - No published interface is renamed.
+13. **Optional extras and the self-sufficiency rule.** The owner delegated this ("if it makes sense to have
+    [extras] you're free to organize the repos/projects that way", `PORTFOLIO.md` §9 item 14). An extra is allowed
+    when three conditions all hold:
+    - (a) the core and every other collection import, run and pass their tests without it;
+    - (b) a shared server that answers from an existing index needs nothing beyond the standard library and
+      `[mcp]`;
+    - (c) the need it fills is named, with the project that could own it.
+
+    Applied to each dependency:
+    - **`mcp`**: allowed as the serving extra. It implements the wire protocol. Owning a second implementation is
+      a project of its own and is not justified while one SDK serves every collection.
+    - **`pypdf`**: allowed as an ingest-time extra for `itu`, `ieee`, `bbf` and `ecma`, and never imported when
+      serving. The need is recorded as a candidate support library, a PDF text and outline reader, citing
+      ISO 32000. It is not registered yet. `pdfcraft` in the workspace is unrelated (a Rust graphics project).
+      Until that reader exists, the backend name and version go into each index's source hash (§4).
+    - **`libzim`**: allowed for the `zim` collection alone. It is GPL-3.0-or-later, as `zimlore/PLAN.md` §5
+      already records. Owning a ZIM reader against the openZIM format description is the replacement path, not
+      started.
 
 ## 6. Adoption order
 
@@ -194,23 +274,16 @@ rfclib has no matrix, so its items are in `PORTFOLIO.md` §9 item 13:
 - Not in `PORTFOLIO.md`. Proposed: an untiered reference-library entry, like `rfclib`, `itulib` and `zimlore`.
   `nistlib`, `usblib` and `cvelib` are not registered either. `PORTFOLIO.md` §9 item 13 puts the registration
   to the maintainer.
-- **Result shape is a decision taken without a measurement** (§5.1). rfclib, nistlib and usblib return text,
-  while itulib, zimlore and cvelib return compact JSON. Measure both shapes on the same reads before the second
-  library adopts either.
-- **Error contract.** rfclib and nistlib raise an MCP tool error (`isError`). itulib, zimlore and cvelib return
-  an `error`/`hint` object as an ordinary result. Proposed: one `LibError` that renders as an `isError` result
-  and keeps zimlore's two audiences.
-- **One cursor shape.** `next` is a ref string in rfclib and in cvelib's read, and an integer `start` in itulib,
-  zimlore and cvelib's search. Proposed: a read's `next` is always a ref string that `read` accepts back, and
-  the integer `start` stays for lists only.
-- **Tool prefix** (§5.4). rfclib, nistlib and usblib use bare names, and itulib, zimlore and cvelib use `itu_`,
-  `zim_` and `cve_`. Renaming rfclib's tools breaks a published interface, so it needs the owner's yes.
+- **Decided 2026-11-13; see §5 items 9 to 13:**
+  - result shape: text, measured;
+  - error contract: `isError` with `error:`, `hint:` and `action:` lines;
+  - cursor: `next:` is exactly what to pass back;
+  - tool names: prefixed in `primarysource mcp`, bare in `rfclib mcp`;
+  - extras under the self-sufficiency rule.
+  Implementing them is the `cl.mcp_error_contract`, `cl.next_is_a_ref` and `cl.tool_prefix` rows.
 - **Licence: decided 2026-11-13.** primarysource is Apache-2.0 (PORTFOLIO.md §9 item 15, confirmed by the
   owner), like ctspy, asn1core and pgpenv. nistlib and usblib were already Apache-2.0. rfclib, itulib and zimlore
   are the owner's own work and come in under Apache-2.0 too; `rfclib` on PyPI keeps its MIT releases.
-- **The self-sufficiency rule** ("no third-party runtime dependencies"; the owner's rule, now applied
-  portfolio-wide) and the extras in §5.8 (`mcp`, `pypdf`, `libzim`) disagree. Either the rule allows optional
-  extras, or each of those needs becomes its own portfolio project first.
 - First commit made on 2026-11-12. There is no GitHub remote yet. The repository must be public, or
   public-compatible, because itulib is public and will depend on it.
 
