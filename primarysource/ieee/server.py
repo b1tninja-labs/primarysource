@@ -34,13 +34,14 @@ IEEE802_INSTRUCTIONS = (
 )
 
 
-def posix_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
-    """Read POSIX text by ref, cut at block boundaries within max_tokens. A 'next: start=N' footer line means
-    call again with start=N.
+def posix_read(ref: str, max_tokens: int = 2000) -> str:
+    """Read POSIX text by ref, cut at block boundaries within max_tokens. A 'next: <ref>' footer line is the ref
+    that reads the next page: pass it back as ref.
 
     ref: 'posix-2024§functions/open' (whole page) | 'posix-2024§functions/open#tag_17_372_03' (one heading's
-      section, subsections included) | '...#tag_17_372_03¶2' (one block). 'functions/open' alone also works."""
-    return posix.read(ref, start=start, max_tokens=max_tokens)
+      section, subsections included) | '...#tag_17_372_03¶2' (from its 2nd block). 'functions/open' alone also
+      works."""
+    return posix.read(ref, max_tokens=max_tokens)
 
 
 def posix_outline(page: str) -> str:
@@ -49,9 +50,10 @@ def posix_outline(page: str) -> str:
     return posix.outline(page)
 
 
-def posix_grep(text: str, volume: str | None = None, limit: int = 20, start: int = 1) -> str:
+def posix_grep(text: str, volume: str | None = None, limit: int = 20, start: int = 0) -> str:
     """Find blocks containing text (case-insensitive, literal, at most 200 characters). One line per hit:
-    '<ref>: <snippet>'. volume: functions | utilities | basedefs | xrat. A 'next: start=N' footer resumes."""
+    '<ref>: <snippet>'. volume: functions | utilities | basedefs | xrat. A 'next: start=N' footer line means call
+    again with start=N (a 0-based page offset)."""
     return posix.grep(text, volume=volume, limit=limit, start=start)
 
 

@@ -4,7 +4,7 @@ primarysource bbf import-models [ID ...]
 primarysource bbf import-report <ID> [--file PDF]
 primarysource bbf docs [FILTER]
 primarysource bbf outline <doc> [--under PATH] [--limit N] [--start N]
-primarysource bbf read <ref> [--start N] [--max-tokens N]
+primarysource bbf read <ref> [--max-tokens N]
 primarysource bbf search <query> [--doc ID] [--limit N] [--start N]
 primarysource bbf cite <ref>
 """
@@ -37,16 +37,15 @@ def _parser() -> argparse.ArgumentParser:
     outline.add_argument("doc")
     outline.add_argument("--under", default="")
     outline.add_argument("--limit", type=int, default=200)
-    outline.add_argument("--start", type=int, default=1)
+    outline.add_argument("--start", type=int, default=0)
     read = commands.add_parser("read", help="read by ref")
     read.add_argument("ref")
-    read.add_argument("--start", type=int, default=1)
     read.add_argument("--max-tokens", type=int, default=2000)
     search = commands.add_parser("search", help="find units containing words")
     search.add_argument("query")
     search.add_argument("--doc")
     search.add_argument("--limit", type=int, default=10)
-    search.add_argument("--start", type=int, default=1)
+    search.add_argument("--start", type=int, default=0)
     commands.add_parser("cite", help="the citation for a ref").add_argument("ref")
     return parser
 
@@ -71,7 +70,7 @@ def main(argv: Sequence[str]) -> int:
         if args.command == "outline":
             return _out(library.outline(args.doc, under=args.under, limit=args.limit, start=args.start))
         if args.command == "read":
-            return _out(library.read(args.ref, start=args.start, max_tokens=args.max_tokens))
+            return _out(library.read(args.ref, max_tokens=args.max_tokens))
         if args.command == "search":
             return _out(library.search(args.query, doc=args.doc, limit=args.limit, start=args.start))
         return _out(library.cite(args.ref))

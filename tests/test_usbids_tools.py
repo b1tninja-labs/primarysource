@@ -6,6 +6,7 @@ import asyncio
 from pathlib import Path
 
 import pytest
+from cursor_check import follow_list, follow_read
 from usbids_fixture import DIGEST, install
 
 from primarysource import cli, registry
@@ -35,13 +36,16 @@ def test_a_vendor_lists_its_devices_and_a_device_its_interfaces(base: Path) -> N
 
 def test_a_long_vendor_pages_and_the_footer_says_where_to_resume(base: Path) -> None:
     first = tools.lookup("usbids:0001", max_tokens=1)
-    assert "span: 1-1 of 3" in first and "next: start=2" in first
-    second = tools.lookup("usbids:0001", start=2, max_tokens=1)
+    assert "span: 1-1 of 3" in first and "next: usbids:0001¶2" in first
+    second = tools.lookup("usbids:0001¶2", max_tokens=1)
     assert second.startswith("within:") is False and "span: 2-2 of 3" in second
-    last = tools.lookup("usbids:0001", start=3, max_tokens=1000)
+    last = tools.lookup("usbids:0001¶3", max_tokens=1000)
     assert "next:" not in last
-    with pytest.raises(LibError, match="positive"):
-        tools.lookup("usbids:0001", start=0)
+    with pytest.raises(LibError, match="span has 3 lines"):
+        tools.lookup("usbids:0001¶4")
+    whole = tools.lookup("usbids:0001").split("\n\n")[0]
+    bodies, refs = follow_read(lambda ref: tools.lookup(ref, max_tokens=1), "0001")
+    assert refs == ["0001", "usbids:0001¶2", "usbids:0001¶3"] and "\n".join(bodies) == whole
 
 
 def test_other_sections_resolve(base: Path) -> None:
@@ -76,8 +80,10 @@ def test_search_ranks_whole_words_first_and_counts_a_vendor_name_for_its_devices
 
 def test_search_pages_and_an_empty_result_means_nothing_matched(base: Path) -> None:
     first = tools.search("frobnicator", limit=1)
-    assert "next: start=2" in first
-    assert "span: 3-3 of 3" in tools.search("frobnicator", limit=1, start=3)
+    assert "next: start=1" in first
+    assert "span: 3-3 of 3" in tools.search("frobnicator", limit=1, start=2)
+    every = tools.search("frobnicator").split("\n\n")[0].split("\n")
+    assert follow_list(lambda start: tools.search("frobnicator", limit=1, start=start)) == every
     none = tools.search("zzyzx")
     assert none.startswith("no entry matches 'zzyzx'") and "span:" not in none
 
@@ -90,7 +96,7 @@ def test_search_pages_and_an_empty_result_means_nothing_matched(base: Path) -> N
         ({"text": "a", "section": "nope"}, "unknown section"),
         ({"text": "a", "limit": 0}, "limit must be"),
         ({"text": "a", "limit": 201}, "limit must be"),
-        ({"text": "a", "start": 0}, "limit must be"),
+        ({"text": "a", "start": -1}, "limit must be"),
     ],
 )
 def test_search_refuses_hostile_arguments(base: Path, kwargs: dict[str, object], message: str) -> None:
@@ -134,14 +140,14 @@ def test_not_imported_is_an_error_naming_the_import_command(tmp_path: Path, monk
     monkeypatch.setenv("PRIMARYSOURCE_HOME", str(tmp_path))
     with pytest.raises(LibError, match="not imported") as caught:
         tools.lookup("usbids:0001")
-    assert caught.value.hint == "primarysource usbids import"
+    assert caught.value.action == "primarysource usbids import" and caught.value.hint == ""
 
 
 def test_a_file_changed_after_import_is_refused_not_served(base: Path) -> None:
     (base / "usb.ids").write_bytes((base / "usb.ids").read_bytes() + b"0c0c  Added by hand\n")
     with pytest.raises(LibError, match="changed after import") as caught:
         store.load(base)
-    assert "--force" in caught.value.hint
+    assert "--force" in caught.value.action
 
 
 def test_the_library_lives_under_primarysource_home(base: Path, tmp_path: Path) -> None:
@@ -177,7 +183,7 @@ def test_the_command_reports_an_error_with_its_remedy(
     monkeypatch.setenv("PRIMARYSOURCE_HOME", str(tmp_path))
     assert cli.main(["usbids", "lookup", "usbids:0001"]) == 1
     err = capsys.readouterr().err
-    assert "error: usb.ids is not imported" in err and "hint: primarysource usbids import" in err
+    assert "error: usb.ids is not imported" in err and "action: primarysource usbids import" in err
 
 
 def test_the_server_offers_the_four_prefixed_tools() -> None:

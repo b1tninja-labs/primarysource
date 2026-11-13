@@ -27,18 +27,20 @@ INSTRUCTIONS = (
 )
 
 
-def c2sp_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
-    """Read C2SP text by ref, cut at block boundaries within max_tokens. A 'next: start=N' footer line means call
-    again with start=N.
+def c2sp_read(ref: str, max_tokens: int = 2000) -> str:
+    """Read C2SP text by ref, cut at block boundaries within max_tokens. A 'next: <ref>' footer line is the ref
+    that reads the next page: pass it back as ref.
 
     ref: 'static-ct-api' (whole document) | 'static-ct-api§Log Entries' (a section, subsections included) |
-      '...§Log Entries¶2' (one block) | 'static-ct-api@09f3e51§...' (pinned commit). A 'c2sp:' prefix is allowed."""
-    return library.read(ref, start=start, max_tokens=max_tokens)
+      '...§Log Entries¶2' (from its 2nd block) | 'static-ct-api@09f3e51§...' (pinned commit). A 'c2sp:' prefix is
+      allowed. c2sp_cite gives exactly one block."""
+    return library.read(ref, max_tokens=max_tokens)
 
 
-def c2sp_search(query: str, doc: str | None = None, limit: int = 10, start: int = 1) -> str:
+def c2sp_search(query: str, doc: str | None = None, limit: int = 10, start: int = 0) -> str:
     """Find blocks containing the query words (all of them, else at least half, flagged 'relaxed'). One line per
-    hit: '<ref>¶n: <snippet>'. doc restricts to one specification. A 'next: start=N' footer resumes."""
+    hit: '<ref>¶n: <snippet>'. doc restricts to one specification. A 'next: start=N' footer line means call again
+    with start=N (a 0-based offset)."""
     return library.search(query, doc=doc, limit=limit, start=start)
 
 

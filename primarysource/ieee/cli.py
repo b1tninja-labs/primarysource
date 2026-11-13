@@ -3,7 +3,7 @@
 primarysource posix import <susv5.tgz>
 primarysource posix pages [volume]
 primarysource posix outline <page>
-primarysource posix read <ref> [--start N] [--max-tokens N]
+primarysource posix read <ref> [--max-tokens N]
 primarysource posix grep <text> [--volume V] [--limit N] [--start N]
 primarysource ieee802 import <file.pdf> <designation>
 primarysource ieee802 outline <designation>
@@ -27,13 +27,12 @@ def _posix_parser() -> argparse.ArgumentParser:
     commands.add_parser("outline", help="a page's headings with refs").add_argument("page")
     read = commands.add_parser("read", help="read by ref")
     read.add_argument("ref")
-    read.add_argument("--start", type=int, default=1)
     read.add_argument("--max-tokens", type=int, default=2000)
     grep = commands.add_parser("grep", help="find blocks containing text")
     grep.add_argument("text")
     grep.add_argument("--volume")
     grep.add_argument("--limit", type=int, default=20)
-    grep.add_argument("--start", type=int, default=1)
+    grep.add_argument("--start", type=int, default=0)
     return parser
 
 
@@ -62,7 +61,7 @@ def posix_main(argv: Sequence[str]) -> int:
         if args.command == "outline":
             return _run(posix.outline(args.page))
         if args.command == "read":
-            return _run(posix.read(args.ref, start=args.start, max_tokens=args.max_tokens))
+            return _run(posix.read(args.ref, max_tokens=args.max_tokens))
         return _run(posix.grep(args.text, volume=args.volume, limit=args.limit, start=args.start))
     except LibError as exc:
         print(exc.as_text(), file=sys.stderr)

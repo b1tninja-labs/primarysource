@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 import pytest
+from cursor_check import follow_list, follow_read
 from pdffixture import standard
 
 from primarysource import cli, registry
@@ -153,10 +154,19 @@ def test_read_a_clause_a_sentence_and_a_page(home: Path) -> None:
     assert library.read("999§A", home=home).startswith("The registry lists flanges.")
     assert library.read("999§bibliography¶2", home=home).startswith("So is everything here.")
     paged = library.read("999§2", max_tokens=1, home=home)
-    assert "next: start=2" in paged
-    assert library.read("999§2", start=2, max_tokens=1, home=home).startswith("A sprocket is a toothed wheel.")
+    assert "next: ecma:999@1§2¶2" in paged
+    assert library.read("ecma:999@1§2¶2", max_tokens=1, home=home).startswith("A sprocket is a toothed wheel.")
     whole = library.read("999", max_tokens=5000, home=home)
     assert whole.startswith("§1 Scope\n") and "§bibliography Bibliography\nRFC 9999 is invented." in whole
+
+
+def test_a_read_cursor_is_a_ref_that_read_accepts_back(home: Path) -> None:
+    for ref in ("999§2", "ecma:999", "999§2¶2"):
+        whole = library.read(ref, max_tokens=5000, home=home).rsplit("\n\ncite: ", 1)[0]
+        bodies, refs = follow_read(lambda r: library.read(r, max_tokens=1, home=home), ref)
+        assert len(refs) > 1 and "\n".join(bodies) == whole
+    hits = library.search("a", limit=100, home=home).rstrip("\n").split("\n")
+    assert follow_list(lambda start: library.search("a", limit=2, start=start, home=home)) == hits
 
 
 def test_unknown_things_fail_with_a_remedy(home: Path, tmp_path: Path) -> None:
@@ -167,7 +177,8 @@ def test_unknown_things_fail_with_a_remedy(home: Path, tmp_path: Path) -> None:
         library.read("999§2¶99", home=home)
     with pytest.raises(LibError, match="ECMA-427 is not imported") as missing:
         library.read("427§5.3", home=home)
-    assert missing.value.hint == "run: primarysource ecma import 427"
+    assert missing.value.action == "primarysource ecma import 427"
+    assert missing.value.hint == "ecma_docs lists the catalogue"
     with pytest.raises(LibError, match="ECMA-999@2 is not imported"):
         library.read("999@2§1", home=home)
     with pytest.raises(LibError, match="not imported"):

@@ -74,7 +74,11 @@ class RevMeta:
                 values[key] = str(values[key])
             return RevMeta(**values)
         except (ValueError, KeyError, TypeError) as exc:
-            raise LibError("a stored revision's meta.json is damaged", "import that revision again") from exc
+            raise LibError(
+                "a stored revision's meta.json is damaged",
+                "",
+                "import that revision again: primarysource draft import",
+            ) from exc
 
 
 class Store:
@@ -115,11 +119,14 @@ class Store:
                 have = ", ".join(stored) or "none"
                 raise LibError(
                     f"revision {rev} of {name} is not stored (stored: {have})",
+                    f"draft_info('{name}') says which revisions exist",
                     f"primarysource draft import {name}-{rev}",
                 )
             return rev, False
         if not stored:
-            raise LibError(f"{name} is not stored", f"primarysource draft import {name}")
+            raise LibError(
+                f"{name} is not stored", "draft_list lists what is stored", f"primarysource draft import {name}"
+            )
         return stored[-1], True
 
     def meta(self, name: str, rev: str) -> RevMeta:
@@ -127,7 +134,11 @@ class Store:
         try:
             return RevMeta.from_json(path.read_text(encoding="utf-8"))
         except OSError as exc:
-            raise LibError(f"{name}-{rev} is not stored", f"primarysource draft import {name}-{rev}") from exc
+            raise LibError(
+                f"{name}-{rev} is not stored",
+                "draft_info says which revisions are",
+                f"primarysource draft import {name}-{rev}",
+            ) from exc
 
     def status(self, name: str) -> Status | None:
         """The datatracker snapshot for `name`, or None if it was never fetched."""
@@ -144,7 +155,9 @@ class Store:
         try:
             return (self._dir(name, rev) / "draft.txt").read_bytes()
         except OSError as exc:
-            raise LibError(f"{name}-{rev} has no stored text", f"primarysource draft import {name}-{rev}") from exc
+            raise LibError(
+                f"{name}-{rev} has no stored text", "", f"primarysource draft import {name}-{rev}"
+            ) from exc
 
     def segmented(self, name: str, rev: str) -> segment.Segmented:
         """The sections of a stored revision, from the cache when it is current, else from the stored text (and the

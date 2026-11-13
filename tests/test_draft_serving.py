@@ -90,7 +90,7 @@ def test_import_needs_a_name_or_tracked_and_a_digest_needs_one_explicit_revision
 def test_errors_name_their_remedy_and_exit_nonzero(home: Path, capsys: pytest.CaptureFixture[str]) -> None:
     assert cli.main(["draft", "read", f"{NAME}-03§1"]) == 1
     err = capsys.readouterr().err
-    assert "error:" in err and f"hint: primarysource draft import {NAME}-03" in err
+    assert "error:" in err and f"action: primarysource draft import {NAME}-03" in err
     assert cli.main(["draft", "info", "draft-nobody-nothing"]) == 1
     assert cli.main(["draft", "search", "word"]) == 1
 
@@ -140,7 +140,7 @@ def test_a_tool_answers_text_with_the_banner_and_a_failure_names_the_remedy(
 
     from primarysource.draft.server import server
 
-    with pytest.raises(ToolError, match=f"hint: primarysource draft import {NAME}"):
+    with pytest.raises(ToolError, match=f"action: primarysource draft import {NAME}"):
         asyncio.run(server.call_tool("draft_read", {"ref": f"{NAME}§1"}))
     assert cli.main(["draft", "import", "draft-example-gone-proto"]) == 0
     result = str(asyncio.run(server.call_tool("draft_read", {"ref": "draft-example-gone-proto§1¶1"})))

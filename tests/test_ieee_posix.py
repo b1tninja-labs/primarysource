@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+from cursor_check import follow_list, follow_read
 from ieee_posixfixture import CHAPTER, FROB, archive
 
 from primarysource.errors import LibError
@@ -81,9 +82,18 @@ def test_read_a_section_a_block_and_a_whole_page(installed: tuple[Path, Edition]
 def test_a_long_read_pages_and_says_where_to_continue(installed: tuple[Path, Edition]) -> None:
     home, pinned = installed
     first = posix.read("posix-2024§functions/frob", max_tokens=3, home=home, edition=pinned)
-    assert "next: start=2" in first
-    rest = posix.read("posix-2024§functions/frob", start=2, max_tokens=10_000, home=home, edition=pinned)
+    assert "next: posix-2024§functions/frob¶2" in first
+    rest = posix.read("posix-2024§functions/frob¶2", max_tokens=10_000, home=home, edition=pinned)
     assert "next:" not in rest and "RETURN VALUE" in rest
+
+
+def test_a_read_cursor_is_a_ref_that_read_accepts_back(installed: tuple[Path, Edition]) -> None:
+    home, pinned = installed
+    for ref in ("posix-2024§functions/frob", "posix-2024§functions/frob#tag_99_01_02"):
+        whole = posix.read(ref, home=home, edition=pinned).rsplit("\n\ncite: ", 1)[0]
+        bodies, refs = follow_read(lambda r: posix.read(r, max_tokens=3, home=home, edition=pinned), ref)
+        assert len(refs) > 1 and all(r.startswith(ref + "¶") for r in refs[1:])
+        assert "\n\n".join(bodies) == whole
 
 
 def test_outline_lists_headings_with_their_refs(installed: tuple[Path, Edition]) -> None:
@@ -105,8 +115,12 @@ def test_grep_names_the_section_and_block_of_each_hit(installed: tuple[Path, Edi
 
 def test_grep_is_bounded_and_resumable(installed: tuple[Path, Edition]) -> None:
     home, pinned = installed
-    text = posix.grep("gasket", limit=1, home=home, edition=pinned)
-    assert text.count("posix-2024§") == 1 and "next: start=" in text
+    every = posix.grep("a", limit=200, home=home, edition=pinned).split("\n\n")[0].split("\n")
+    assert len(every) > 2
+    rows = follow_list(lambda start: posix.grep("a", limit=1, start=start, home=home, edition=pinned))
+    assert rows == every  # pages are taken whole, so a small limit skips no hit
+    with pytest.raises(LibError, match="0-based"):
+        posix.grep("a", start=-1, home=home, edition=pinned)
     with pytest.raises(LibError):
         posix.grep("x" * 201, home=home, edition=pinned)
 
@@ -132,4 +146,4 @@ def test_the_bracket_utility_has_a_page_id(installed: tuple[Path, Edition]) -> N
 def test_reading_before_import_names_the_download_and_the_import_command(tmp_path: Path) -> None:
     with pytest.raises(LibError, match="not imported") as caught:
         posix.read("posix-2024§functions/open", home=tmp_path)
-    assert "susv5.tgz" in caught.value.hint and "primarysource posix import" in caught.value.hint
+    assert "susv5.tgz" in caught.value.action and "primarysource posix import" in caught.value.action

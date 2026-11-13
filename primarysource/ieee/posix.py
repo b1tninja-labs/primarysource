@@ -15,6 +15,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+from primarysource import cursor
 from primarysource.budget import page as budget_page
 from primarysource.errors import LibError
 from primarysource.ieee import POSIX, POSIX_PAGE, _html
@@ -22,7 +23,7 @@ from primarysource.ieee.catalogue import POSIX_2024, Edition
 from primarysource.ieee.importer import INSTALL_RECORD, collection_home
 from primarysource.model import Document, Section, span_hash
 from primarysource.refs import Ref
-from primarysource.render import render
+from primarysource.render import next_start, render
 
 VOLUMES = {"basedefs": "XBD", "functions": "XSH", "utilities": "XCU", "xrat": "XRAT"}
 """The four volumes' directories and their usual short names."""
@@ -73,6 +74,7 @@ def installed(edition: Edition = POSIX_2024, home: Path | None = None) -> Path:
     if not (root / INSTALL_RECORD).is_file():
         raise LibError(
             f"POSIX {edition.id} is not imported",
+            "",
             f"download {edition.source_url} (personal use, see docs/ieee.md), then run "
             f"primarysource posix import {edition.archive}",
         )
@@ -98,7 +100,7 @@ def load_page(page: str, *, edition: Edition = POSIX_2024, home: Path | None = N
     return parse_page(path.read_bytes(), page, edition)
 
 
-def cite(page: Page, section: Section | None = None, para: int | None = None) -> str:
+def cite(page: Page, section: Section | None = None, para: int | str | None = None) -> str:
     """`IEEE Std 1003.1-2024 (The Open Group Base Specifications Issue 8), XSH open, DESCRIPTION ¶2`."""
     volume = VOLUMES.get(page.page.split("/")[0], "")
     where = f"{volume} {page.document.title}".strip()
@@ -122,11 +124,9 @@ def outline(page: str, *, edition: Edition = POSIX_2024, home: Path | None = Non
     return render(body, {"cite": cite(loaded), "unit": POSIX.unit})
 
 
-def read(
-    ref: str, *, start: int = 1, max_tokens: int = 2000, edition: Edition = POSIX_2024, home: Path | None = None
-) -> str:
-    """A page, a section (`#anchor`) or one block (`¶n`), as text with the fixed footer. Long results are paged:
-    the `next:` footer says which `start` continues."""
+def read(ref: str, *, max_tokens: int = 2000, edition: Edition = POSIX_2024, home: Path | None = None) -> str:
+    """A page or a section (`#anchor`), from block n with `¶n`, as text with the fixed footer. Long results are
+    paged: the `next:` footer is the ref that reads the next page."""
     if "§" not in ref and "::" not in ref and _PAGE.match(ref.strip()):
         ref = f"{edition.id}§{ref.strip()}"  # a bare page (`functions/open#tag_17_372_03`) reads this edition
     parsed = POSIX.grammar.parse(ref)
@@ -147,20 +147,18 @@ def read(
             hint = ("did you mean " + ", ".join(near)) if near else f"posix_outline {parsed.section} lists them"
             raise LibError(f"no anchor {parsed.anchor!r} on {parsed.section}", hint)
         units = section.units
-    if parsed.para is not None:
-        if parsed.para > len(units):
-            raise LibError(f"{ref!r}: there are {len(units)} blocks here", "")
-        units = (units[parsed.para - 1],)
-    result = budget_page(units, start, max_tokens)
+    if parsed.para is not None and parsed.para > len(units):
+        raise LibError(f"{ref!r}: there are {len(units)} blocks here", f"use ¶1 to ¶{len(units)}" if units else "")
+    result = budget_page(units, parsed.para or 1, max_tokens)
     body = "\n\n".join(result.units)
     footer = {
-        "cite": cite(loaded, section, parsed.para),
+        "cite": cite(loaded, section, cursor.para_label(parsed.para, result)),
         "unit": POSIX.unit,
         "span": span_hash(body) if body else "",
-        "next": f"start={result.next_start}" if result.next_start else "",
+        "next": cursor.read_next(_ref_text(edition.id, parsed.section, parsed.anchor), result),
         "warning": "one block is larger than max_tokens" if result.oversize else "",
     }
-    return render(body or f"(nothing at block {start}; {result.total} blocks here)", footer)
+    return render(body or "(this section has no blocks of its own)", footer)
 
 
 def _plain(block: str) -> str:
@@ -172,46 +170,52 @@ def grep(
     *,
     volume: str | None = None,
     limit: int = 20,
-    start: int = 1,
+    start: int = 0,
     seconds: float = 10.0,
     edition: Edition = POSIX_2024,
     home: Path | None = None,
 ) -> str:
     """Pages whose converted text contains `needle`, case-insensitively, one line per matching block.
 
-    Bounded three ways: at most `limit` hits, at most `seconds` of scanning, and a needle of at most 200
-    characters. A literal, not a pattern, so no input can make the scan super-linear. When a bound stops the scan,
-    `next: start=<n>` says which page to resume from."""
+    Bounded three ways: at most `limit` hits (or every hit of the first page, if it alone has more), at most
+    `seconds` of scanning, and a needle of at most 200 characters. A literal, not a pattern, so no input can make
+    the scan super-linear. Pages are taken whole, so no hit is skipped: when a bound stops the scan,
+    `next: start=<n>` is the 0-based index of the page to resume from, in the order `pages` lists them."""
     wanted = needle.strip().casefold()
     if not wanted or len(wanted) > MAX_NEEDLE:
         raise LibError("grep needs between 1 and 200 characters of text", "")
     limit = max(1, min(limit, MAX_HITS))
+    if start < 0:
+        raise LibError(f"start is a 0-based page offset, not {start}", "pass the start= value of the last next: line")
     listing = pages(volume, edition=edition, home=home)
     root = installed(edition, home)
     deadline = time.monotonic() + seconds
     hits: list[str] = []
     resume: int | None = None
-    for index in range(max(start, 1) - 1, len(listing)):
+    for index in range(start, len(listing)):
         if len(hits) >= limit or time.monotonic() > deadline:
-            resume = index + 1
+            resume = index
             break
         page = listing[index]
         raw = root.joinpath(*page.split("/")).with_name(page.split("/")[-1] + ".html").read_bytes()
         rough = html.unescape(_TAGS.sub("", raw.decode("utf-8", errors="replace")))
         if wanted not in re.sub(r"\s+", " ", rough).casefold():
             continue
-        loaded = parse_page(raw, page, edition)
-        hits.extend(_page_hits(loaded, wanted, edition.id, limit - len(hits)))
+        found = _page_hits(parse_page(raw, page, edition), wanted, edition.id)
+        if hits and len(hits) + len(found) > limit:
+            resume = index
+            break
+        hits.extend(found)
     body = "\n".join(hits) if hits else f"no block contains {needle!r}"
     footer = {
         "unit": POSIX.unit,
-        "next": f"start={resume}" if resume is not None else "",
-        "warning": f"stopped at page {resume} of {len(listing)}" if resume is not None else "",
+        "next": next_start(resume),
+        "warning": f"stopped before page {resume + 1} of {len(listing)}" if resume is not None else "",
     }
     return render(body, footer)
 
 
-def _page_hits(loaded: Page, wanted: str, edition_id: str, room: int) -> list[str]:
+def _page_hits(loaded: Page, wanted: str, edition_id: str) -> list[str]:
     heads = [h for h in loaded.converted.headings if h.kind == "heading"]
     found: list[str] = []
     for index, block in enumerate(loaded.converted.blocks):
@@ -226,6 +230,4 @@ def _page_hits(loaded: Page, wanted: str, edition_id: str, room: int) -> list[st
         at = text.casefold().find(wanted)
         snippet = text[max(0, at - 60) : at + len(wanted) + 60]
         found.append(f"{ref}: {snippet}")
-        if len(found) >= room:
-            break
     return found

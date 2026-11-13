@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 from c2sp_fixture import BASE, COMMIT, DOCS, Clock, catalogue, install, sha, transport
+from cursor_check import follow_list, follow_read
 
 from primarysource import cli, registry
 from primarysource.c2sp import C2SP, library
@@ -133,8 +134,15 @@ def test_read_a_section_a_block_and_a_page(home: Path) -> None:
     one = library.read("c2sp:invented-log@0123456§Log Entries¶2", home=home)
     assert one.startswith("Second entry paragraph, mentioning the origin line.\n")
     paged = library.read("invented-log§Log Entries", max_tokens=1, home=home)
-    assert "next: start=2" in paged
-    assert library.read("invented-log§Log Entries", start=2, max_tokens=1, home=home).startswith("Second entry")
+    assert "next: invented-log@0123456§log-entries¶2" in paged
+    assert library.read("invented-log@0123456§log-entries¶2", max_tokens=1, home=home).startswith("Second entry")
+
+
+def test_a_read_cursor_is_a_ref_that_read_accepts_back(home: Path) -> None:
+    for ref in ("invented-log§Log Entries", "invented-note", "c2sp:invented-log"):
+        whole = library.read(ref, home=home).rsplit("\n\ncite: ", 1)[0]
+        bodies, refs = follow_read(lambda r: library.read(r, max_tokens=1, home=home), ref)
+        assert len(refs) > 1 and "\n\n".join(bodies) == whole
 
 
 def test_a_slug_names_a_heading_with_a_colon_and_duplicates_are_told_apart(home: Path) -> None:
@@ -165,12 +173,13 @@ def test_unknown_things_fail_with_a_remedy(home: Path, tmp_path: Path) -> None:
         library.read("invented-log§Log Entries¶99", home=home)
     with pytest.raises(LibError, match="static-ct-api is not imported") as missing:
         library.read("static-ct-api§X", home=home)
-    assert missing.value.hint == "run: primarysource c2sp import"
+    assert missing.value.action == "primarysource c2sp import"
     with pytest.raises(LibError, match="imported commits: 0123456"):
         library.read("invented-log@abcdef0§Log Entries", home=home)
     with pytest.raises(LibError, match="no C2SP specifications are imported") as empty:
         library.read("invented-log", home=tmp_path / "empty")
-    assert empty.value.hint == "run: primarysource c2sp import"
+    assert empty.value.action == "primarysource c2sp import"
+    assert empty.value.hint == "c2sp_docs lists the catalogue"
     with pytest.raises(LibError, match="not a ref"):
         library.read("../evil§X", home=home)
 
@@ -202,8 +211,10 @@ def test_outline_search_and_cite(home: Path) -> None:
 
 def test_search_pages_with_next(home: Path) -> None:
     first = library.search("the", limit=1, home=home)
-    assert "next: start=2" in first
-    assert library.search("the", limit=1, start=2, home=home).splitlines()[0] != first.splitlines()[0]
+    assert "next: start=1" in first
+    assert library.search("the", limit=1, start=1, home=home).splitlines()[0] != first.splitlines()[0]
+    whole = library.search("the", limit=100, home=home).rstrip("\n").split("\n")
+    assert follow_list(lambda start: library.search("the", limit=1, start=start, home=home)) == whole
 
 
 def test_docs_lists_the_packaged_catalogue_and_marks_imports(home: Path) -> None:

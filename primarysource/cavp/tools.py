@@ -1,8 +1,9 @@
 """The vector tools as plain functions over a `Store`, returning text with the core's fixed footer.
 
 Each result is a body (one line per item, or one case in full), then footer lines: `cite:` names the set, its
-source file and pinned sha256, `span:` is the hash of the exact text returned (case reads), `next:` is
-`start=N` when a listing was cut at the token budget.
+source file and pinned sha256, `span:` is the hash of the exact text returned (case reads). When the token budget
+cuts a page, `next:` is exactly what to pass back: for `read`, the ref that reads on (`<set or group ref>¶<n>`,
+the nth line of that listing); for `groups` and `find`, `start=<n>`, a 0-based line offset.
 """
 
 from __future__ import annotations
@@ -10,6 +11,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
+from primarysource import cursor
 from primarysource.budget import page
 from primarysource.cavp.model import (
     CREDIT,
@@ -25,7 +27,7 @@ from primarysource.cavp.model import (
 )
 from primarysource.errors import LibError
 from primarysource.model import span_hash
-from primarysource.render import render
+from primarysource.render import next_start, render
 
 SHOWN = 60  # characters of a field value in a listing; a case read is never shortened
 
@@ -46,13 +48,22 @@ def _cite(s: VectorSet, where: str = "") -> str:
     return f"{head}{rev}{where}; {s.source_url}; sha256:{s.sha256}"
 
 
-def _paged(lines: list[str], start: int, max_tokens: int, cite: str) -> str:
-    try:
-        got = page(lines, start, max_tokens)
-    except ValueError as exc:
-        raise LibError(str(exc), "start is 1-based; max_tokens is positive") from None
+def _listed(lines: list[str], start: int, max_tokens: int, cite: str) -> str:
+    """A list cut at the token budget from the 0-based line `start`; `next: start=<n>` continues."""
+    if start < 0 or max_tokens < 1:
+        raise LibError(f"start is a 0-based offset and max_tokens positive (got {start}, {max_tokens})", "")
+    got = page(lines, start + 1, max_tokens)
     body = "\n".join(got.units) if got.units else f"nothing at start={start} ({got.total} lines)"
-    return render(body, {"cite": cite, "next": f"start={got.next_start}" if got.next_start else ""})
+    resume = None if got.next_start is None else got.next_start - 1
+    return render(body, {"cite": cite, "next": next_start(resume)})
+
+
+def _read_page(lines: list[str], scope: str, line: int | None, max_tokens: int, cite: str) -> str:
+    """A read cut at the token budget from line `line` (1-based); `next:` is the ref that reads on."""
+    if max_tokens < 1:
+        raise LibError("max_tokens must be positive", "")
+    got = page(lines, cursor.first_unit(line, len(lines), "lines", f"{scope}¶{line}"), max_tokens)
+    return render("\n".join(got.units), {"cite": cite, "next": cursor.read_next(scope, got)})
 
 
 def sets(store: Store, query: str | None = None, limit: int = 50) -> str:
@@ -84,20 +95,23 @@ def _case_body(s: VectorSet, g: Group, c: Case) -> str:
     return "\n".join(lines)
 
 
-def groups(store: Store, set_ref: str, start: int = 1, max_tokens: int = 2000) -> str:
+def groups(store: Store, set_ref: str, start: int = 0, max_tokens: int = 2000) -> str:
     """The groups of a set, one line each, as refs."""
     ref = parse_ref(set_ref)
     s = store.load(ref.set_id)
-    return _paged([_group_line(s, g) for g in s.groups], start, max_tokens, _cite(s))
+    return _listed([_group_line(s, g) for g in s.groups], start, max_tokens, _cite(s))
 
 
-def read(store: Store, ref_text: str, start: int = 1, max_tokens: int = 2000) -> str:
-    """A set (its header and groups), a group (its cases, values shortened) or one case in full."""
-    ref = parse_ref(ref_text)
+def read(store: Store, ref_text: str, max_tokens: int = 2000) -> str:
+    """A set (its header and groups), a group (its cases, values shortened) or one case in full. `<ref>¶n` reads a
+    set or a group from line n of its listing."""
+    text, line = cursor.split_para(ref_text)
+    ref = parse_ref(text)
     s = store.load(ref.set_id)
     if ref.group is None:
         header = [f"# {h.lstrip('# ')}" for h in s.header[:5]]
-        return _paged(header + [_group_line(s, g) for g in s.groups], start, max_tokens, _cite(s))
+        lines = header + [_group_line(s, g) for g in s.groups]
+        return _read_page(lines, format_ref(s.id), line, max_tokens, _cite(s))
     g = find_group(s, ref.group)
     if ref.case is None:
         lines = [
@@ -108,7 +122,9 @@ def read(store: Store, ref_text: str, start: int = 1, max_tokens: int = 2000) ->
             )
             for c in g.cases
         ]
-        return _paged(lines, start, max_tokens, _cite(s, f", group {g.label}"))
+        return _read_page(lines, format_ref(s.id, g.label), line, max_tokens, _cite(s, f", group {g.label}"))
+    if line is not None:
+        raise LibError(f"{ref_text}: a case is read whole", f"read {format_ref(s.id, g.label, ref.case)}")
     c = find_case(g, ref.case)
     body = _case_body(s, g, c)
     return render(body, {"cite": _cite(s, f", group {g.label}, case {c.id}"), "span": span_hash(body)})
@@ -120,7 +136,7 @@ def find(
     field: str,
     value: str,
     group: str | None = None,
-    start: int = 1,
+    start: int = 0,
     max_tokens: int = 2000,
 ) -> str:
     """The cases of a set whose `field` equals `value` (compared as hex: case and `0x` ignored), as refs with the
@@ -137,7 +153,7 @@ def find(
                 lines.append(f"{format_ref(s.id, g.label, c.id)}: {_short(held)}")
     if not lines:
         return f"no case in {format_ref(s.id)} has {field} = {_short(value)}\n"
-    return _paged(lines, start, max_tokens, _cite(s))
+    return _listed(lines, start, max_tokens, _cite(s))
 
 
 def cite(store: Store, ref_text: str) -> str:

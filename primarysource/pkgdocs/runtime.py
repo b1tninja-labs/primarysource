@@ -7,6 +7,11 @@ module holds the behaviour every one of them shares, so a collection directory i
 Refs: `[<collection>:]<doc>[@<commit>][§<section>][#<anchor>][¶<n>]`. `§` takes a section id (`5.6.1`), an anchor
 (`s-f-Source`), a heading, or a unique part of one; `@<commit>` (four or more hex digits, or a pin's label) picks
 an imported edition other than the newest; `¶n` is the nth block of the section.
+
+A read of `§s¶n` starts at block n and runs on through the subsections of `s`, so a count past the section's own
+blocks goes on into them, one unit per subsection heading and per block, in reading order. That is what makes a
+read's `next:` footer a ref: `§s¶<n>` where the next page starts. Lists (`docs`, `outline`, `search`) take a
+0-based `start` and print `next: start=<n>`.
 """
 
 from __future__ import annotations
@@ -18,6 +23,7 @@ from datetime import UTC, datetime
 from difflib import get_close_matches
 from pathlib import Path
 
+from primarysource import cursor
 from primarysource.budget import page
 from primarysource.errors import LibError
 from primarysource.home import collection_home
@@ -26,7 +32,7 @@ from primarysource.pkgdocs import fetch, index, store
 from primarysource.pkgdocs.model import Doc, Sec
 from primarysource.refs import Ref, RefGrammar
 from primarysource.registry import Collection
-from primarysource.render import render
+from primarysource.render import next_start, render
 
 DOC_PATTERN = r"[A-Za-z0-9][A-Za-z0-9._/+-]*(?:@[0-9A-Za-z][0-9A-Za-z._-]{1,39})?"
 SECTION_PATTERN = r"[^#¶\n]+?"
@@ -139,7 +145,7 @@ class Library:
         root = self._home / self.spec.name if self._home is not None else collection_home(self.spec.name)
         return root / tree
 
-    def _hint(self) -> str:
+    def _import(self) -> str:
         return f"primarysource {self.spec.name} import"
 
     def _editions(self) -> list[tuple[TreeSpec, store.Edition]]:
@@ -150,7 +156,11 @@ class Library:
             if editions:
                 found.append((tree, editions[0]))
         if not found:
-            raise LibError(f"{self.spec.title} is not imported (nothing under {self.base('')})", self._hint())
+            raise LibError(
+                f"{self.spec.title} is not imported (nothing under {self.base('')})",
+                f"{self.spec.prefix}status says what is pinned",
+                self._import(),
+            )
         return found
 
     def _by_commit(self, token: str) -> list[tuple[TreeSpec, store.Edition]]:
@@ -288,7 +298,7 @@ class Library:
     def _find_doc(self, token: str, commit: str | None) -> tuple[TreeSpec, store.Edition, str]:
         pool = self._by_commit(commit) if commit else self._editions()
         if commit and not pool:
-            raise LibError(f"no imported edition matches {commit!r}", f"primarysource {self.spec.name} status")
+            raise LibError(f"no imported edition matches {commit!r}", f"{self.spec.prefix}status lists them")
         for tree, edition in pool:
             if token in edition.entries:
                 return tree, edition, token
@@ -301,7 +311,7 @@ class Library:
                     return tree, edition, lowered[token.lower()]
         known = sorted({k for _, e in pool for k in e.entries})
         close = get_close_matches(token, known, n=5, cutoff=0.6)
-        hint = f"did you mean: {', '.join(close)}" if close else f"primarysource {self.spec.name} docs"
+        hint = f"did you mean: {', '.join(close)}" if close else f"{self.spec.prefix}docs lists them"
         raise LibError(f"no document {token!r} in {self.spec.title}", hint)
 
     def _section(self, doc: Doc, token: str | None, anchor: str | None) -> tuple[Sec, str]:
@@ -335,10 +345,12 @@ class Library:
             raise LibError(f"{token!r} matches {len(partial)} sections of {doc.id}", f"name one by id: {listing}")
         titles = [s.title for s in doc.sections]
         close = get_close_matches(token or "", titles, n=3, cutoff=0.5)
-        hint = f"did you mean: {'; '.join(close)}" if close else f"primarysource {self.spec.name} outline {doc.id}"
+        hint = f"did you mean: {'; '.join(close)}" if close else f"{self.spec.prefix}outline('{doc.id}') lists them"
         raise LibError(f"no section {token or anchor!r} in {doc.id}", hint)
 
-    def _target(self, text: str) -> tuple[store.Edition, Doc, Sec, str, int | None]:
+    def _target(self, text: str, *, subtree: bool = False) -> tuple[store.Edition, Doc, Sec, str, int | None]:
+        """The edition, document, section, warning and `¶n` a ref names. `subtree` lets `¶n` count on past the
+        section's own blocks into its subsections, as a read does."""
         ref, commit = self._parse(text)
         if ref.lines is not None:
             raise LibError("a line range is not a ref in this collection", "name a section: <doc>§<section>")
@@ -353,10 +365,12 @@ class Library:
         _, edition, doc_id = self._find_doc(doc_token, commit)
         doc = edition.load(doc_id)
         sec, warning = self._section(doc, section, ref.anchor)
-        if ref.para is not None and not 1 <= ref.para <= len(sec.units):
+        count = len(self._ordered(doc, sec)) - 1 if subtree else len(sec.units)
+        if ref.para is not None and not 1 <= ref.para <= count:
+            what = "blocks" if count == len(sec.units) else "blocks and headings with its subsections"
             raise LibError(
-                f"{doc.id}§{sec.id} has {len(sec.units)} blocks; there is no ¶{ref.para}",
-                f"primarysource {self.spec.name} read {doc.id}§{sec.id}",
+                f"{doc.id}§{sec.id} has {count} {what}; there is no ¶{ref.para}",
+                f"{self.spec.prefix}read('{self._ref(edition, doc, sec)}')",
             )
         return edition, doc, sec, warning, ref.para
 
@@ -384,18 +398,33 @@ class Library:
 
     # -- the tools -------------------------------------------------------------------------------------------
 
-    def docs(self, prefix: str = "", limit: int = 200, start: int = 1) -> str:
+    @staticmethod
+    def _ordered(doc: Doc, sec: Sec) -> list[str]:
+        """The units a read of `sec` pages through: its heading, its blocks, then each subsection's heading and
+        blocks. `¶n` is `ordered[n]`, so the section's own `¶n` keeps its meaning."""
+        ordered: list[str] = []
+        inside = False
+        for candidate in doc.sections:
+            if candidate is sec:
+                inside = True
+            elif inside and candidate.depth <= sec.depth:
+                break
+            if inside:
+                ordered.append("#" * min(candidate.depth, 6) + f" {candidate.id} {candidate.title}")
+                ordered.extend(candidate.units)
+        return ordered
+
+    def docs(self, prefix: str = "", limit: int = 200, start: int = 0) -> str:
         """One line per document: `<id>  <title>`, optionally those whose id starts with `prefix`."""
         rows: list[str] = []
         for _, edition in self._editions():
             rows.extend(f"{e.id}  {e.title}" for e in edition.entries.values() if e.id.startswith(prefix))
         if not rows:
             return f"no documents with an id starting {prefix!r}\n" if prefix else "no documents\n"
-        chosen = rows[start - 1 : start - 1 + limit]
-        footer = {"next": f"start={start + limit}"} if start - 1 + limit < len(rows) else {}
-        return render("\n".join(chosen), {"unit": f"{len(rows)} documents", **footer})
+        chosen, nxt = cursor.window(rows, start, limit)
+        return render("\n".join(chosen), {"unit": f"{len(rows)} documents", "next": nxt})
 
-    def outline(self, ref: str, start: int = 1, max_tokens: int = 4000) -> str:
+    def outline(self, ref: str, start: int = 0, max_tokens: int = 4000) -> str:
         """A document's sections, each with the ref that reads it. `ref` names a document (`gitformat-pack`)."""
         parsed, commit = self._parse(ref)
         token = parsed.doc or (parsed.section or "").split(".")[0]
@@ -407,46 +436,31 @@ class Library:
             f"{'  ' * (s.depth - 1)}{s.id}  {s.title}  [{len(s.units)}]  {self._ref(edition, doc, s)}"
             for s in doc.sections
         ]
-        taken = page(lines, start, max_tokens)
+        if start < 0:
+            raise LibError(f"start is a 0-based offset, not {start}", "pass the start= value of the last next: line")
+        taken = page(lines, start + 1, max_tokens)
         footer: dict[str, str] = {"cite": self._citation(edition, doc, doc.sections[0], None)} if doc.sections else {}
         footer["unit"] = "block (the [n] after a title counts them)"
-        if taken.next_start is not None:
-            footer["next"] = f"start={taken.next_start}"
+        footer["next"] = next_start(None if taken.next_start is None else taken.next_start - 1)
         if doc.warnings:
             footer["warning"] = "; ".join(doc.warnings)
         return render(f"{doc.title}\n" + "\n".join(taken.units), footer)
 
-    def read(self, ref: str, start: int = 1, max_tokens: int = 2000) -> str:
-        """The text of a section (its subsections included) or of one block, cut at block boundaries."""
-        edition, doc, sec, warning, para = self._target(ref)
-        footer: dict[str, str] = {"unit": "block (¶n counts the blocks of one section)"}
-        if para is not None:
-            body = sec.units[para - 1]
-            footer = {
-                "cite": self._citation(edition, doc, sec, para),
-                "unit": footer["unit"],
-                "span": span_hash(body),
-            }
-        else:
-            ordered: list[str] = []
-            subtree = False
-            for candidate in doc.sections:
-                if candidate is sec:
-                    subtree = True
-                elif subtree and candidate.depth <= sec.depth:
-                    break
-                if subtree:
-                    ordered.append("#" * min(candidate.depth, 6) + f" {candidate.id} {candidate.title}")
-                    ordered.extend(candidate.units)
-            taken = page(ordered, start, max_tokens)
-            body = "\n\n".join(taken.units)
-            footer = {
-                "cite": self._citation(edition, doc, sec, None),
-                "unit": footer["unit"],
-                "span": span_hash(body),
-            }
-            if taken.next_start is not None:
-                footer["next"] = f"start={taken.next_start}"
+    def read(self, ref: str, max_tokens: int = 2000) -> str:
+        """The text of a section, its subsections included, cut at block boundaries: from its heading, or from block
+        n with `¶n`. The `next:` footer is the ref that reads the next page."""
+        edition, doc, sec, warning, para = self._target(ref, subtree=True)
+        if max_tokens < 1:
+            raise LibError("max_tokens must be positive", "")
+        taken = page(self._ordered(doc, sec), (para or 0) + 1, max_tokens)
+        body = "\n\n".join(taken.units)
+        one = para if para is not None and len(taken.units) == 1 and para <= len(sec.units) else None
+        footer = {
+            "cite": self._citation(edition, doc, sec, one),
+            "unit": "block (¶n counts the blocks of one section, then on through its subsections)",
+            "span": span_hash(body),
+            "next": "" if taken.next_start is None else self._ref(edition, doc, sec, taken.next_start - 1),
+        }
         notes = [w for w in (warning, *doc.warnings) if w]
         if notes:
             footer["warning"] = "; ".join(notes)
@@ -458,15 +472,15 @@ class Library:
         text = sec.units[para - 1] if para else "\n\n".join(sec.units)
         return render(self._citation(edition, doc, sec, para), {"span": span_hash(text)})
 
-    def search(self, query: str, limit: int = 10, start: int = 1, doc_prefix: str = "") -> str:
+    def search(self, query: str, limit: int = 10, start: int = 0, doc_prefix: str = "") -> str:
         """Sections matching the words of `query`, best first, one line each with the ref that reads it."""
-        if start < 1 or limit < 1:
-            raise LibError("start and limit are 1-based and positive", "")
+        if start < 0 or limit < 1:
+            raise LibError(f"start is a 0-based offset and limit positive (got {start}, {limit})", "")
         scored: list[tuple[float, str]] = []
         relaxed = False
         for _, edition in self._editions():
             hits, was_relaxed = index.search(
-                edition.index_path, query, limit=start - 1 + limit + 1, doc_prefix=doc_prefix
+                edition.index_path, query, limit=start + limit + 1, doc_prefix=doc_prefix
             )
             relaxed = relaxed or was_relaxed
             for hit in hits:
@@ -474,15 +488,13 @@ class Library:
                 ref = f"{self.spec.name}:{hit.doc}@{edition.commit[:12]}§{hit.section}"
                 scored.append((hit.score, f"{ref}: {doc.title} / {hit.title} -- {hit.snippet}"))
         scored.sort(key=lambda row: row[0])
-        chosen = [line for _, line in scored[start - 1 : start - 1 + limit]]
-        if not chosen:
+        window, nxt = cursor.window([line for _, line in scored], start, limit)
+        if not window:
             return render("no sections matched", {})
-        footer: dict[str, str] = {}
-        if len(scored) > start - 1 + limit:
-            footer["next"] = f"start={start + limit}"
+        footer: dict[str, str] = {"next": nxt}
         if relaxed:
             footer["relaxed"] = "no section had every word; these have some of them"
-        return render("\n".join(chosen), footer)
+        return render("\n".join(window), footer)
 
     def status(self) -> str:
         """What is pinned, what is imported, and the licence."""

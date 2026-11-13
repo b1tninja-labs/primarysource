@@ -64,11 +64,11 @@ def search(path: Path, query: str, limit: int = 10, offset: int = 0, doc_prefix:
     if not terms:
         raise LibError(f"nothing to search for in {query!r}", "give at least one word")
     if not path.is_file():
-        raise LibError(f"there is no search index at {path}", "import the edition again")
+        raise LibError(f"there is no search index at {path}", "", "import the edition again")
     try:
         with contextlib.closing(sqlite3.connect(f"{path.resolve().as_uri()}?mode=ro", uri=True)) as db:
             if db.execute("PRAGMA user_version").fetchone()[0] != SCHEMA_VERSION:
-                raise LibError("the search index has a different schema version", "import the edition again")
+                raise LibError("the search index has a different schema version", "", "import the edition again")
             for relaxed, joiner in ((False, "AND"), (True, "OR")):
                 if relaxed and len(terms) == 1:
                     break
@@ -85,5 +85,5 @@ def search(path: Path, query: str, limit: int = 10, offset: int = 0, doc_prefix:
                         Hit(str(r[0]), str(r[1]), str(r[2]), " ".join(str(r[3]).split()), float(r[4])) for r in found
                     ], relaxed
     except sqlite3.DatabaseError as exc:
-        raise LibError(f"the search index is unreadable ({exc})", "import the edition again") from exc
+        raise LibError(f"the search index is unreadable ({exc})", "", "import the edition again") from exc
     return [], False

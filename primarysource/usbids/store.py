@@ -24,7 +24,7 @@ from primarysource.usbids.parse import Limits, UsbIds, parse
 
 FILE = "usb.ids"
 MANIFEST = "manifest.json"
-IMPORT_HINT = "primarysource usbids import"
+IMPORT = "primarysource usbids import"
 LICENCE = "GPL-2.0-or-later OR BSD-3-Clause"
 
 
@@ -39,9 +39,9 @@ def read_manifest(base: Path) -> dict[str, Any]:
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (ValueError, OSError) as exc:
-        raise LibError(f"{path} is not a readable manifest", "delete it and import again") from exc
+        raise LibError(f"{path} is not a readable manifest", "", f"delete {path}, then {IMPORT} --force") from exc
     if not isinstance(data, dict) or not isinstance(data.get("file"), dict):
-        raise LibError(f"{path} is not a readable manifest", "delete it and import again")
+        raise LibError(f"{path} is not a readable manifest", "", f"delete {path}, then {IMPORT} --force")
     return dict(data["file"])
 
 
@@ -64,7 +64,7 @@ def load(base: Path | None = None) -> Loaded:
     root = base or home()
     path = root / FILE
     if not path.is_file():
-        raise LibError(f"usb.ids is not imported (looked in {root})", IMPORT_HINT)
+        raise LibError(f"usb.ids is not imported (looked in {root})", "", IMPORT)
     stat = path.stat()
     ids, digest = _load(str(path), stat.st_mtime_ns, stat.st_size)
     manifest = read_manifest(root)
@@ -72,8 +72,9 @@ def load(base: Path | None = None) -> Loaded:
     if recorded and recorded != digest:
         raise LibError(
             f"{path} has sha256 {digest}, but the manifest recorded {recorded}: the file changed after import",
-            IMPORT_HINT + " --force",
+            "",
+            IMPORT + " --force",
         )
     if not ids.entries:
-        raise LibError(f"{path} holds no usb.ids entries", IMPORT_HINT + " --force")
+        raise LibError(f"{path} holds no usb.ids entries", "", IMPORT + " --force")
     return Loaded(ids, manifest, digest, path)

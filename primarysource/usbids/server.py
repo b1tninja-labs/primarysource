@@ -26,17 +26,18 @@ INSTRUCTIONS = (
 )
 
 
-def usbids_lookup(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
+def usbids_lookup(ref: str, max_tokens: int = 2000) -> str:
     """Read one entry by ref with its parents and children. ref: 'usbids:1d6b' (a vendor, lists its devices),
     'usbids:1d6b:0002' (a device), 'usbids:class/09' (a class, lists subclasses), 'usbids:hut/01' (a HID usage
-    page). A 'next: start=N' footer line means call again with start=N."""
-    return tools.lookup(ref, start=start, max_tokens=max_tokens)
+    page), 'usbids:1d6b¶40' (that listing from its 40th line). A 'next: <ref>' footer line is the ref that reads
+    the next page: pass it back as ref."""
+    return tools.lookup(ref, max_tokens=max_tokens)
 
 
-def usbids_search(text: str, section: str | None = None, limit: int = 20, start: int = 1) -> str:
+def usbids_search(text: str, section: str | None = None, limit: int = 20, start: int = 0) -> str:
     """Find entries whose name contains every word of text (a vendor's name counts for its devices). One line per
     hit: '<ref>  <name>'. section: vendor (vendors, devices, interfaces) | class | hut | lang | at | hid | item |
-    bias | phy | hcc | vt. A 'next: start=N' footer line resumes."""
+    bias | phy | hcc | vt. A 'next: start=N' footer line means call again with start=N (a 0-based offset)."""
     return tools.search(text, section=section, limit=limit, start=start)
 
 

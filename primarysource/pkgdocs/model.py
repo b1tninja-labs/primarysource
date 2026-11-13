@@ -73,4 +73,4 @@ class Doc:
                 tuple(str(w) for w in data["warnings"]),
             )
         except (KeyError, IndexError, TypeError, ValueError) as exc:
-            raise LibError(f"a stored document is damaged ({exc!r})", "import the edition again") from exc
+            raise LibError(f"a stored document is damaged ({exc!r})", "", "import the edition again") from exc

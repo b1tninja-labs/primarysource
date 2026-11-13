@@ -37,9 +37,9 @@ def read_manifest(base: Path) -> dict[str, dict[str, Any]]:
     try:
         files = json.loads(path.read_text(encoding="utf-8"))["files"]
     except (ValueError, KeyError, TypeError) as exc:
-        raise LibError(f"{path} is not a readable manifest", "delete it and import again") from exc
+        raise LibError(f"{path} is not a readable manifest", "", f"delete {path} and import again") from exc
     if not isinstance(files, dict):
-        raise LibError(f"{path} is not a readable manifest", "delete it and import again")
+        raise LibError(f"{path} is not a readable manifest", "", f"delete {path} and import again")
     return {str(k): dict(v) for k, v in files.items() if isinstance(v, dict)}
 
 
@@ -72,7 +72,11 @@ def load(name: str, base: Path | None = None) -> Loaded:
     root = base or home()
     path = root / f"{name}.xml"
     if not path.is_file():
-        raise LibError(f"registry {name!r} is not imported (looked in {root})", f"primarysource iana import {name}")
+        raise LibError(
+            f"registry {name!r} is not imported (looked in {root})",
+            "iana_list shows the catalogue and what is imported",
+            f"primarysource iana import {name}",
+        )
     stat = path.stat()
     parsed, digest = _parse(str(path), stat.st_mtime_ns, stat.st_size, name)
     recorded = read_manifest(root).get(name, {}).get("sha256")

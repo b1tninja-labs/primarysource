@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 from bbf_fixture import BASE, COMMIT, MODEL_XML, REPORT_URL, catalogue, install, pdf, sha, transport
+from cursor_check import follow_list, follow_read
 
 from primarysource import cli, registry
 from primarysource.bbf import BBF, _xml, datamodel, library
@@ -301,14 +302,28 @@ def test_read_a_model_overview_object_parameter_and_paragraph(home: Path) -> Non
     assert "{{param}}" in library.read(f"{NODE}§Device.Widget.Enable¶1", home=home)  # macros stay as published
     with pytest.raises(LibError, match="1 paragraphs"):
         library.read(f"{NODE}§Device.Widget.Enable¶2", home=home)
-    with pytest.raises(LibError, match="not a ref"):
+    with pytest.raises(LibError, match="¶ needs a node"):
         library.read(f"{NODE}¶1", home=home)
 
 
 def test_a_paged_model_read_continues(home: Path) -> None:
     first = library.read(f"{NODE}§Device.Widget", max_tokens=1, home=home)
-    assert "next: start=2" in first
-    assert "second paragraph" in library.read(f"{NODE}§Device.Widget", start=2, max_tokens=1, home=home)
+    assert f"next: bbf:{NODE}§Device.Widget¶2" in first
+    second = library.read(f"bbf:{NODE}§Device.Widget¶2", max_tokens=1, home=home)
+    assert second.startswith("It has a second paragraph") and "next:" not in second
+
+
+def test_a_read_cursor_is_a_ref_that_read_accepts_back(home: Path) -> None:
+    whole = library.read("tr-999-1-0-0§2", home=home).split("\n\n")[0]
+    bodies, refs = follow_read(lambda ref: library.read(ref, max_tokens=1, home=home), "tr-999-1-0-0§2")
+    assert refs[1:] == [f"bbf:tr-999-1-0-0§2¶{n}" for n in range(2, len(refs) + 1)]
+    assert "\n".join(bodies) == whole
+    report = library.read("tr-999-1-0-0", home=home).split("\n\n")[0]
+    bodies, refs = follow_read(lambda ref: library.read(ref, max_tokens=8, home=home), "tr-999-1-0-0")
+    assert refs[1].startswith("bbf:tr-999-1-0-0¶") and "\n".join(bodies) == report
+    obj = library.read(f"{NODE}§Device.Widget", home=home).split("\n\n", 2)[2].rsplit("\n\n", 1)[0]
+    bodies, _ = follow_read(lambda ref: library.read(ref, max_tokens=1, home=home), f"{NODE}§Device.Widget¶1")
+    assert "\n\n".join(bodies) == obj
 
 
 def test_outline_of_a_model_pages_and_goes_below_a_node(home: Path) -> None:
@@ -320,7 +335,12 @@ def test_outline_of_a_model_pages_and_goes_below_a_node(home: Path) -> None:
     assert "parameter Device.Widget.Enable" in below and "command Device.Widget.Spin()" in below
     assert "parameter Device.Widget.Spin().Input.Turns" in below
     paged = library.outline(NODE, under="Device.Widget", limit=2, home=home)
-    assert "next: start=3" in paged
+    assert "next: start=2" in paged
+    rows = follow_list(lambda start: library.outline(NODE, under="Device.Widget", limit=2, start=start, home=home))
+    whole = library.outline(NODE, under="Device.Widget", home=home).rstrip("\n").split("\n")
+    assert [row for row in rows if not row.startswith("Invented")] == whole[1:]
+    with pytest.raises(LibError, match="0-based"):
+        library.outline(NODE, start=-1, home=home)
     with pytest.raises(LibError, match="nothing under"):
         library.outline(NODE, under="Device.Nope", home=home)
 
@@ -349,7 +369,10 @@ def test_an_edited_install_and_unknown_documents_fail_with_a_remedy(home: Path, 
         library.read(f"{NODE}§Device.Widget", home=home)
     with pytest.raises(LibError, match="tr-181-2-22-0-ip is not imported") as missing:
         library.read("tr-181-2-22-0-ip§Device.IP", home=home)
-    assert "import-models" in missing.value.hint
+    assert (
+        "import-models" in missing.value.action
+        and missing.value.hint == "bbf_docs lists what is catalogued and imported"
+    )
     with pytest.raises(LibError, match="not a Broadband Forum document id"):
         library.load("../evil", home)
     with pytest.raises(LibError, match="no Broadband Forum documents are imported"):
@@ -371,7 +394,7 @@ def test_read_a_report_clause_its_sentences_and_a_page(home: Path) -> None:
     assert one.startswith("A sprocket is a toothed wheel.\n")
     assert library.read("tr-999-1-0-0§A", home=home).startswith("The registry lists flanges.")
     assert library.read("tr-999-1-0-0§bibliography¶1", home=home).startswith("RFC 9999 is invented.")
-    assert "next: start=2" in library.read("tr-999-1-0-0§2", max_tokens=1, home=home)
+    assert "next: bbf:tr-999-1-0-0§2¶2" in library.read("tr-999-1-0-0§2", max_tokens=1, home=home)
     with pytest.raises(LibError, match="span has"):
         library.read("tr-999-1-0-0§2¶99", home=home)
     with pytest.raises(LibError) as raised:

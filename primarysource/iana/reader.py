@@ -7,7 +7,11 @@ Refs (grammar in `docs/iana.md`):
     dns-parameters§dns-parameters-4         one registry: header, then its records
     dns-parameters#dns-parameters-4         the same, in IANA's own URL-fragment spelling
     bgp-parameters§bgp-parameters-2#3       the record(s) whose value is 3 (a range containing 3 counts)
-    bgp-parameters§bgp-parameters-2¶4       the 4th record of the registry, in file order
+    bgp-parameters§bgp-parameters-2¶4       from the 4th record of the registry, in file order
+    bgp-parameters§bgp-parameters-2#3¶2     from the 2nd record whose value is 3
+    dns-parameters¶5                        the file's registry listing, from its 5th registry
+
+A read's `next:` footer is the ref that reads the next page; a `¶n` read starts at record n and runs on.
     iana:bgp-parameters§bgp-parameters-2¶4  an `iana:` prefix is accepted and dropped
 """
 
@@ -16,6 +20,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
+from primarysource import cursor
 from primarysource.budget import page as budget_page
 from primarysource.errors import LibError
 from primarysource.iana import catalogue, store
@@ -48,6 +53,7 @@ def parse_ref(text: str) -> Target:
     body = text.strip()
     if body[:5].lower() == "iana:":
         body = body[5:]
+    body, listing_para = cursor.split_doc_para(body)
     parsed = _GRAMMAR.parse(body)
     if parsed.lines is not None:
         raise LibError(f"not an iana ref: {text!r}", "registries have no line ranges; use ¶n for the nth record")
@@ -61,7 +67,7 @@ def parse_ref(text: str) -> Target:
         return Target(parsed.doc, parsed.anchor, None, parsed.para)
     if parsed.para is not None:
         raise LibError(f"not an iana ref: {text!r}", "¶n needs a registry: dns-parameters§dns-parameters-4¶2")
-    return Target(parsed.doc)
+    return Target(parsed.doc, None, None, listing_para)
 
 
 def format_ref(file: str, registry: str | None = None, value: str | None = None, para: int | None = None) -> str:
@@ -154,8 +160,9 @@ def _cite(file: RegistryFile, registry: Registry | None = None, record: Record |
     return out
 
 
-def read(ref: str, start: int = 1, max_tokens: int = 2000, base: Path | None = None) -> str:
-    """Read by ref (see the module docstring). Pages are whole records; `next: start=N` continues."""
+def read(ref: str, max_tokens: int = 2000, base: Path | None = None) -> str:
+    """Read by ref (see the module docstring). Pages are whole records; the `next:` footer is the ref that reads the
+    next page."""
     target = parse_ref(ref)
     loaded = store.load(target.file, base)
     file = loaded.file
@@ -164,44 +171,41 @@ def read(ref: str, start: int = 1, max_tokens: int = 2000, base: Path | None = N
             f"{'  ' * _depth(file, r)}{format_ref(file.name, r.id)}  {r.title}  ({len(r.records)} records)"
             for r in file.registries
         )
-        result = budget_page(units, start, max_tokens)
+        result = budget_page(units, cursor.first_unit(target.para, len(units), "registries", ref), max_tokens)
         body = f"{file.title}  (file updated {file.updated or 'unknown'})\nsource: {_url(file.name)}\n\n"
-        body += "\n".join(result.units) if result.units else f"(nothing at registry {start}; {result.total} here)"
+        body += "\n".join(result.units)
         footer = {
             "cite": _cite(file),
             "unit": "registry (the listing is in file order)",
-            "next": f"start={result.next_start}" if result.next_start else "",
+            "next": cursor.read_next(file.name, result),
             "warning": _warning(loaded),
         }
         return render(body, footer)
     registry = _registry(loaded, target)
     records: tuple[Record, ...] = registry.records
-    if target.para is not None:
-        if target.para > len(records):
-            raise LibError(
-                f"{ref!r}: {registry.id} has {len(records)} records", f"read {format_ref(file.name, registry.id)}"
-            )
-        records = (records[target.para - 1],)
-    elif target.value is not None:
+    if target.value is not None:
         records = tuple(r for r in records if matches(r, target.value or ""))
         if not records:
             return render(
                 f"no record in {registry.id} has value {target.value!r}",
                 {"cite": _cite(file, registry), "unit": UNIT, "warning": _warning(loaded)},
             )
-    single = len(records) == 1 and (target.para is not None or target.value is not None)
+    if target.para is not None and target.para > len(records):
+        where = f"{len(records)} records" + (f" with value {target.value!r}" if target.value is not None else "")
+        raise LibError(f"{ref!r}: {registry.id} has {where}", f"read {format_ref(file.name, registry.id)}")
     units = tuple(_row(r) for r in records)
-    result = budget_page(units, start, max_tokens)
-    body = "\n".join(result.units) if result.units else f"(nothing at record {start}; {result.total} here)"
-    if target.para is None and target.value is None and start == 1:
+    result = budget_page(units, target.para or 1, max_tokens)
+    body = "\n".join(result.units)
+    if target.para is None and target.value is None:
         body = _header(file, registry) + "\n\n" + body
-    elif target.value is not None and result.units:
+    elif target.value is not None:
         body = f"{registry.title}  [{registry.id}]\n\n" + body
+    one = records[result.first - 1] if len(result.units) == 1 and (target.para or target.value) else None
     footer = {
-        "cite": _cite(file, registry, records[0] if single else None),
+        "cite": _cite(file, registry, one),
         "unit": UNIT,
-        "span": span_hash(body) if result.units else "",
-        "next": f"start={result.next_start}" if result.next_start else "",
+        "span": span_hash(body),
+        "next": cursor.read_next(format_ref(file.name, registry.id, target.value), result),
         "warning": _warning(loaded),
     }
     return render(body, footer)
@@ -254,18 +258,18 @@ def lookup(where: str, value: str, base: Path | None = None) -> str:
     return render("\n".join(lines), footer)
 
 
-def search(text: str, file: str | None = None, limit: int = 20, start: int = 1, base: Path | None = None) -> str:
+def search(text: str, file: str | None = None, limit: int = 20, start: int = 0, base: Path | None = None) -> str:
     """Records whose registry title and columns contain every word of `text` (case-insensitive, literal, at most
     200 characters), across every imported file or one. One line per hit: `<ref>  <registry>: <record>`."""
     words = text.casefold().split()
     if not words or len(text) > MAX_QUERY:
         raise LibError(f"not a search: {text!r}", f"give 1 to {MAX_QUERY} characters")
-    if limit < 1 or start < 1:
-        raise LibError("limit and start are 1-based and positive", "")
     names = (file,) if file else store.imported(base)
     if not names:
         raise LibError(
-            "no registry is imported", "primarysource iana import --all  (or name one, e.g. dns-parameters)"
+            "no registry is imported",
+            "iana_list shows the catalogue",
+            "primarysource iana import --all  (or name one, e.g. dns-parameters)",
         )
     hits: list[str] = []
     warnings: list[str] = []
@@ -282,12 +286,11 @@ def search(text: str, file: str | None = None, limit: int = 20, start: int = 1, 
                 if all(w in title or w in row.casefold() for w in words):
                     snippet = row if len(row) <= _SNIPPET else row[: _SNIPPET - 1] + "…"
                     hits.append(f"{format_ref(name, registry.id, para=record.ordinal)}  {registry.title}: {snippet}")
-    window = hits[start - 1 : start - 1 + limit]
-    nxt = start + limit if start - 1 + limit < len(hits) else None
-    body = "\n".join(window) if window else f"no record matches {text!r}"
+    shown, nxt = cursor.window(hits, start, limit)
+    body = "\n".join(shown) if shown else f"no record matches {text!r}"
     footer = {
         "unit": UNIT,
-        "next": f"start={nxt}" if nxt else "",
+        "next": nxt,
         "warning": ("files differ from their recorded sha256: " + ", ".join(warnings)) if warnings else "",
     }
     return render(body, footer)

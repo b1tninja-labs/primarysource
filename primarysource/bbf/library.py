@@ -20,7 +20,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from primarysource import budget
+from primarysource import budget, cursor
 from primarysource.bbf import datamodel
 from primarysource.bbf.catalogue import DOC_ID
 from primarysource.bbf.catalogue import catalogue as packaged_catalogue
@@ -70,7 +70,11 @@ def _parse_model(digest: str, path: str) -> datamodel.DataModel:
 
 
 def parse_ref(text: str) -> Ref:
-    ref = grammar().parse(PREFIX.sub("", text.strip(), count=1))
+    """Parse a bbf ref, accepting the optional `bbf:` prefix and `<doc>¶n` (unit n of a whole-report read)."""
+    body, doc_para = cursor.split_doc_para(PREFIX.sub("", text.strip(), count=1))
+    ref = grammar().parse(body)
+    if doc_para is not None:
+        ref = Ref(ref.doc, None, doc_para, None, None)
     if ref.lines is not None or ref.anchor is not None:
         raise LibError(f"not a bbf ref: {text!r}", "bbf refs are <doc>[§<section>][¶n]")
     if ref.doc is None:
@@ -97,11 +101,12 @@ def load(token: str, home: Path | None = None) -> LoadedModel | LoadedReport:
             digest = sha256(path.read_bytes())
         except OSError as exc:
             raise LibError(
-                f"cannot read {path.name}: {exc}", f"re-import it: primarysource bbf import-models {token}"
+                f"cannot read {path.name}: {exc}", "", f"re-import it: primarysource bbf import-models {token}"
             ) from exc
         if digest != record["models"][token]:
             raise LibError(
                 f"{token}.xml does not match its recorded sha256",
+                "",
                 f"re-import it: primarysource bbf import-models {token}",
             )
         return LoadedModel(token, _parse_model(digest, str(path)), str(record.get("commit", "")))
@@ -113,12 +118,15 @@ def load(token: str, home: Path | None = None) -> LoadedModel | LoadedReport:
             if not isinstance(pin, str) or sha256(pdf.read_bytes()) != pin:
                 raise LibError(
                     f"{token}.pdf does not match its recorded sha256",
+                    "",
                     f"re-import it: primarysource bbf import-report {token}",
                 )
             raw = json.loads(stored.read_text(encoding="utf-8"))
         except (OSError, ValueError) as exc:
             raise LibError(
-                f"cannot read the import of {token}: {exc}", f"re-import it: primarysource bbf import-report {token}"
+                f"cannot read the import of {token}: {exc}",
+                "",
+                f"re-import it: primarysource bbf import-report {token}",
             ) from exc
         document = _pdf.PdfDocument.from_json(raw)
         return LoadedReport(
@@ -130,7 +138,9 @@ def load(token: str, home: Path | None = None) -> LoadedModel | LoadedReport:
         )
     have = ", ".join(sorted({*record["models"], *record["reports"]})[:12]) or "nothing"
     raise LibError(
-        f"{token} is not imported (have: {have})", "run: primarysource bbf import-models | import-report <id>"
+        f"{token} is not imported (have: {have})",
+        "bbf_docs lists what is catalogued and imported",
+        f"primarysource bbf import-models {token}  (a data model) or primarysource bbf import-report {token}",
     )
 
 
@@ -138,7 +148,7 @@ def _blob_url(model: LoadedModel) -> str:
     return f"https://github.com/BroadbandForum/cwmp-data-models/blob/{model.commit}/{model.id}.xml"
 
 
-def _cite_model(doc: LoadedModel, node: datamodel.Node | None, para: int | None) -> str:
+def _cite_model(doc: LoadedModel, node: datamodel.Node | None, para: int | str | None) -> str:
     where = f", {node.kind} {node.id}" if node else ""
     if para:
         where += f" ¶{para}"
@@ -148,7 +158,7 @@ def _cite_model(doc: LoadedModel, node: datamodel.Node | None, para: int | None)
     )
 
 
-def _cite_report(doc: LoadedReport, section: _pdf.PdfSection | None, para: int | None) -> str:
+def _cite_report(doc: LoadedReport, section: _pdf.PdfSection | None, para: int | str | None) -> str:
     where = f", §{section.id} {section.title}" if section else ""
     if para:
         where += f" ¶{para}"
@@ -181,8 +191,9 @@ def _overview(doc: LoadedModel) -> str:
     return "\n".join(lines)
 
 
-def read(ref_text: str, start: int = 1, max_tokens: int = 2000, home: Path | None = None) -> str:
-    """The text of a ref, cut at unit boundaries within `max_tokens`; a `next:` footer says where to resume."""
+def read(ref_text: str, max_tokens: int = 2000, home: Path | None = None) -> str:
+    """The text of a ref, cut at unit boundaries within `max_tokens`. A `¶n` ref starts at unit n and runs to the end
+    of its scope; the `next:` footer is the ref that reads the next page."""
     ref = parse_ref(ref_text)
     doc = load(_doc(ref), home)
     if isinstance(doc, LoadedModel):
@@ -192,74 +203,55 @@ def read(ref_text: str, start: int = 1, max_tokens: int = 2000, home: Path | Non
             return render(_overview(doc), {"cite": _cite_model(doc, None, None), "unit": "paragraph"})
         node, warning = doc.model.find(ref.section)
         paragraphs = node.paragraphs
-        head = node.header()
-        if ref.para is not None:
-            if ref.para > len(paragraphs):
-                raise LibError(
-                    f"{ref_text}: the description has {len(paragraphs)} paragraphs", "use a ¶ within range"
-                )
-            body = paragraphs[ref.para - 1]
-            footer = {
-                "cite": _cite_model(doc, node, ref.para),
-                "unit": "paragraph",
-                "span": span_hash(body),
-                "warning": warning,
-            }
-            return render(body, footer)
-        chosen = budget.page(paragraphs, start=start, max_tokens=max_tokens) if paragraphs else None
-        parts = [head]
+        first = cursor.first_unit(ref.para, len(paragraphs), "paragraphs", ref_text)
+        chosen = budget.page(paragraphs, start=first, max_tokens=max_tokens) if paragraphs else None
+        parts = [] if ref.para is not None else [node.header()]
         contents = doc.model.children(node)
-        if contents and start == 1:
-            names = [
-                c.id.rsplit(".", 1)[-1] if c.kind == "parameter" else c.id.rsplit(".", 1)[-1] for c in contents[:80]
-            ]
+        if contents and ref.para is None:
+            names = [c.id.rsplit(".", 1)[-1] for c in contents[:80]]
             more = f" (+{len(contents) - 80} more)" if len(contents) > 80 else ""
             parts.append("contains: " + ", ".join(names) + more)
         if chosen is not None:
             parts.extend(chosen.units)
         body = "\n\n".join(parts)
         footer = {
-            "cite": _cite_model(doc, node, None),
+            "cite": _cite_model(doc, node, cursor.para_label(ref.para, chosen) if chosen else None),
             "unit": "paragraph",
             "span": span_hash(body),
+            "next": cursor.read_next(f"bbf:{doc.id}§{node.id}", chosen) if chosen else "",
             "warning": warning,
         }
-        if chosen is not None and chosen.next_start is not None:
-            footer["next"] = f"start={chosen.next_start}"
         return render(body, footer)
     section, units, warning = _report_units(doc, ref)
-    if ref.para is not None:
-        if ref.para > len(units):
-            raise LibError(f"{ref_text}: the span has {len(units)} sentences", f"use ¶1 to ¶{len(units)}")
-        units = (units[ref.para - 1],)
-        start = 1
     if not units:
         raise LibError(f"{ref_text}: that clause has no text of its own", "read its subsections, see bbf_outline")
-    chosen = budget.page(units, start=start, max_tokens=max_tokens)
+    first = cursor.first_unit(ref.para, len(units), "sentences", ref_text)
+    chosen = budget.page(units, start=first, max_tokens=max_tokens)
     body = "\n".join(chosen.units)
+    scope = f"bbf:{doc.id}" + (f"§{section.id}" if section else "")
     footer = {
-        "cite": _cite_report(doc, section, ref.para),
+        "cite": _cite_report(doc, section, cursor.para_label(ref.para, chosen)),
         "unit": "sentence",
         "span": span_hash(body),
+        "next": cursor.read_next(scope, chosen),
         "warning": warning,
     }
-    if chosen.next_start is not None:
-        footer["next"] = f"start={chosen.next_start}"
     return render(body, footer)
 
 
-def outline(token: str, under: str = "", limit: int = 200, start: int = 1, home: Path | None = None) -> str:
+def outline(token: str, under: str = "", limit: int = 200, start: int = 0, home: Path | None = None) -> str:
     """A document's structure. A report: its bookmarked clauses with refs and pages. A data model: its objects,
     commands, events, profiles and data types, indented by path depth; `under` (a node path) lists everything
-    below that node, parameters included. Paged by `limit` and `start`."""
+    below that node, parameters included. Both are paged by `limit` and the 0-based `start`."""
     doc = load(token, home)
     if isinstance(doc, LoadedReport):
-        lines = [f"{doc.designation} {doc.title}, {doc.edition}  [{doc.id}, {doc.document.pages} pages]"]
-        for section in doc.document.sections:
-            lines.append(
-                f"{'  ' * section.depth}{section.id} {section.title}  bbf:{doc.id}§{section.id}  (p. {section.page})"
-            )
-        return "\n".join(lines)
+        head = f"{doc.designation} {doc.title}, {doc.edition}  [{doc.id}, {doc.document.pages} pages]"
+        clauses = [
+            f"{'  ' * section.depth}{section.id} {section.title}  bbf:{doc.id}§{section.id}  (p. {section.page})"
+            for section in doc.document.sections
+        ]
+        shown, nxt = cursor.window(clauses, start, limit)
+        return render("\n".join([head, *shown]), {"next": nxt})
     prefix = under.strip().rstrip(".")
     rows = []
     for node in doc.model.nodes:
@@ -272,10 +264,9 @@ def outline(token: str, under: str = "", limit: int = 200, start: int = 1, home:
         rows.append(f"{'  ' * max(0, min(depth, 12))}{node.kind} {node.id}")
     if not rows:
         raise LibError(f"nothing under {under!r} in {doc.id}", "omit under to list the objects")
-    window = rows[start - 1 : start - 1 + limit]
+    shown, nxt = cursor.window(rows, start, limit)
     header = f"{doc.model.title}  [{doc.id}]  refs: bbf:{doc.id}§<path>"
-    footer = {"next": f"start={start + limit}"} if start - 1 + limit < len(rows) else {}
-    return render("\n".join([header, *window]), footer)
+    return render("\n".join([header, *shown]), {"next": nxt})
 
 
 def _documents(doc: str | None, home: Path) -> list[str]:
@@ -284,11 +275,15 @@ def _documents(doc: str | None, home: Path) -> list[str]:
         return [doc]
     ids = [*sorted(record["reports"]), *sorted(record["models"])]
     if not ids:
-        raise LibError("no Broadband Forum documents are imported", "run: primarysource bbf import-models")
+        raise LibError(
+            "no Broadband Forum documents are imported",
+            "bbf_docs lists the catalogue",
+            "primarysource bbf import-models",
+        )
     return ids
 
 
-def search(query: str, doc: str | None = None, limit: int = 10, start: int = 1, home: Path | None = None) -> str:
+def search(query: str, doc: str | None = None, limit: int = 10, start: int = 0, home: Path | None = None) -> str:
     """Units containing every query word (else at least half, flagged `relaxed`), best first: one line per hit,
     `<ref>: <snippet>`. A data-model node whose path matches is a hit with no ¶."""
     terms = _pdf.query_terms(query)
@@ -316,11 +311,9 @@ def search(query: str, doc: str | None = None, limit: int = 10, start: int = 1, 
     if not scored:
         return render("no matches", {})
     scored.sort()
-    window = scored[start - 1 : start - 1 + limit]
-    footer = {"relaxed": "only some query words matched" if relaxed else ""}
-    if start - 1 + limit < len(scored):
-        footer["next"] = f"start={start + limit}"
-    return render("\n".join(f"{ref}: {snip}" for _, _, ref, snip in window), footer)
+    shown, nxt = cursor.window(scored, start, limit)
+    footer = {"next": nxt, "relaxed": "only some query words matched" if relaxed else ""}
+    return render("\n".join(f"{ref}: {snip}" for _, _, ref, snip in shown), footer)
 
 
 def cite(ref_text: str, home: Path | None = None) -> str:

@@ -14,7 +14,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from primarysource import budget
+from primarysource import budget, cursor
 from primarysource.c2sp import markdown
 from primarysource.c2sp._fetch import sha256
 from primarysource.c2sp.catalogue import DOC_ID
@@ -26,6 +26,7 @@ from primarysource.refs import Ref, RefGrammar
 from primarysource.render import render
 
 PREFIX = "c2sp:"
+IMPORT = "primarysource c2sp import"
 _COMMIT_PREFIX = re.compile(r"[0-9a-f]{7,40}")
 _UNSAFE_IN_REF = re.compile(r"[:#¶§]")
 _HEADING_LINE = re.compile(r"#{1,6}(?: |$)")
@@ -78,7 +79,7 @@ def installs(home: Path) -> list[tuple[str, dict[str, object]]]:
 def _split_doc(token: str) -> tuple[str, str | None]:
     doc, _, version = token.partition("@")
     if not DOC_ID.fullmatch(doc):
-        raise LibError(f"not a C2SP specification id: {doc!r}", "see c2sp_docs / `primarysource c2sp docs`")
+        raise LibError(f"not a C2SP specification id: {doc!r}", "c2sp_docs lists the specification ids")
     if version and not _COMMIT_PREFIX.fullmatch(version):
         raise LibError(f"not a commit prefix: {version!r}", "use at least 7 lowercase hex digits of the commit")
     return doc, version or None
@@ -90,7 +91,7 @@ def load(token: str, home: Path | None = None) -> Loaded:
     doc_id, version = _split_doc(token)
     available = installs(home)
     if not available:
-        raise LibError("no C2SP specifications are imported", "run: primarysource c2sp import")
+        raise LibError("no C2SP specifications are imported", "c2sp_docs lists the catalogue", IMPORT)
     for commit, record in available:
         if version and not commit.startswith(version):
             continue
@@ -102,12 +103,12 @@ def load(token: str, home: Path | None = None) -> Loaded:
         if data is None:
             continue
         if sha256(data) != pin:
-            raise LibError(f"{doc_id}@{commit[:7]} on disk does not match its recorded sha256", "re-import it")
+            raise LibError(f"{doc_id}@{commit[:7]} on disk does not match its recorded sha256", "", IMPORT)
         parsed = markdown.parse(data)
         return Loaded(doc_id, commit, parsed.title or doc_id, parsed)
     have = ", ".join(f"{c[:7]}" for c, _ in available)
     what = f"{doc_id}@{version}" if version else doc_id
-    raise LibError(f"{what} is not imported (imported commits: {have})", "run: primarysource c2sp import")
+    raise LibError(f"{what} is not imported (imported commits: {have})", "c2sp_docs lists what is imported", IMPORT)
 
 
 def parse_ref(text: str) -> Ref:
@@ -115,7 +116,10 @@ def parse_ref(text: str) -> Ref:
     body = text.strip()
     if body.lower().startswith(PREFIX):
         body = body[len(PREFIX) :]
+    body, doc_para = cursor.split_doc_para(body)
     ref = grammar().parse(body)
+    if doc_para is not None:
+        ref = Ref(ref.doc, None, doc_para, None, None)
     if ref.lines is not None:
         raise LibError(f"not a c2sp ref: {text!r}", "c2sp refs address headings and blocks, not line ranges")
     if ref.anchor is not None:
@@ -152,7 +156,7 @@ def section_ref(doc: Loaded, heading: markdown.Heading) -> str:
     return f"{doc.id}@{doc.short}§{heading.slug if use_slug else heading.title}"
 
 
-def _cite_text(doc: Loaded, heading: markdown.Heading | None, para: int | None) -> str:
+def _cite_text(doc: Loaded, heading: markdown.Heading | None, para: int | str | None) -> str:
     where = f", §{heading.title}" if heading else ""
     if para:
         where += f" ¶{para}"
@@ -177,27 +181,24 @@ def _select(ref: Ref, home: Path | None) -> tuple[Loaded, markdown.Heading | Non
     return doc, heading, heading.units, warning
 
 
-def read(ref_text: str, start: int = 1, max_tokens: int = 2000, home: Path | None = None) -> str:
-    """The text of a ref, cut at block boundaries within `max_tokens`; a `next:` footer says where to resume."""
+def read(ref_text: str, max_tokens: int = 2000, home: Path | None = None) -> str:
+    """The text of a ref, cut at block boundaries within `max_tokens`. A `¶n` ref starts at block n and runs to the
+    end of its scope; the `next:` footer is the ref that reads the next page."""
     ref = parse_ref(ref_text)
     doc, heading, units, warning = _select(ref, home)
-    if ref.para is not None:
-        if ref.para > len(units):
-            raise LibError(f"{ref_text}: the span has {len(units)} blocks", f"use ¶1 to ¶{len(units)}")
-        units = (units[ref.para - 1],)
-        start = 1
     if not units:
         raise LibError(f"{ref_text}: that section has no text of its own", "read its subsections, see c2sp_outline")
-    chosen = budget.page(units, start=start, max_tokens=max_tokens)
+    first = cursor.first_unit(ref.para, len(units), "blocks", ref_text)
+    chosen = budget.page(units, start=first, max_tokens=max_tokens)
     body = "\n\n".join(chosen.units)
+    scope = section_ref(doc, heading) if heading else f"{doc.id}@{doc.short}"
     footer = {
-        "cite": _cite_text(doc, heading, ref.para),
+        "cite": _cite_text(doc, heading, cursor.para_label(ref.para, chosen)),
         "unit": "block",
         "span": span_hash(body),
+        "next": cursor.read_next(scope, chosen),
         "warning": warning,
     }
-    if chosen.next_start is not None:
-        footer["next"] = f"start={chosen.next_start}"
     return render(body, footer)
 
 
@@ -230,7 +231,7 @@ def search(
     query: str,
     doc: str | None = None,
     limit: int = 10,
-    start: int = 1,
+    start: int = 0,
     home: Path | None = None,
 ) -> str:
     """Blocks containing every query word (else at least half of them, flagged `relaxed`), best first: one line
@@ -239,7 +240,7 @@ def search(
     home = home or default_home()
     available = installs(home)
     if not available:
-        raise LibError("no C2SP specifications are imported", "run: primarysource c2sp import")
+        raise LibError("no C2SP specifications are imported", "c2sp_docs lists the catalogue", IMPORT)
     ids: list[str] = []
     if doc:
         ids = [doc]
@@ -270,12 +271,9 @@ def search(
     if not scored:
         return render("no matches", {})
     scored.sort()
-    window = scored[start - 1 : start - 1 + limit]
-    body = "\n".join(f"{ref}: {snip}" for _, _, ref, snip in window)
-    footer = {"relaxed": "only some query words matched" if relaxed else ""}
-    if start - 1 + limit < len(scored):
-        footer["next"] = f"start={start + limit}"
-    return render(body, footer)
+    shown, nxt = cursor.window(scored, start, limit)
+    body = "\n".join(f"{ref}: {snip}" for _, _, ref, snip in shown)
+    return render(body, {"next": nxt, "relaxed": "only some query words matched" if relaxed else ""})
 
 
 def cite(ref_text: str, home: Path | None = None) -> str:

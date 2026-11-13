@@ -10,6 +10,7 @@ import zipfile
 from pathlib import Path
 
 import pytest
+from cursor_check import follow_list, follow_read
 
 from primarysource import cli, registry
 from primarysource.cavp import COLLECTION, importer, tools
@@ -135,8 +136,22 @@ def test_read_a_case_in_full_with_cite_and_span(store: Store) -> None:
 def test_read_a_set_and_a_group_and_page_them(store: Store) -> None:
     assert "nist:cavp/test/SigVer.rsp#[P-384,SHA-384]: 1 cases" in tools.read(store, "nist:cavp/test/SigVer.rsp")
     group = tools.read(store, "nist:cavp/test/SigVer.rsp#[P-256,SHA-256]", max_tokens=1)
-    assert group.count("#[P-256,SHA-256]/") == 1 and "next: start=2" in group
-    assert "#[P-256,SHA-256]/2" in tools.read(store, "nist:cavp/test/SigVer.rsp#[P-256,SHA-256]", start=2)
+    assert group.count("#[P-256,SHA-256]/") == 1 and "next: nist:cavp/test/SigVer.rsp#[P-256,SHA-256]¶2" in group
+    assert "#[P-256,SHA-256]/2" in tools.read(store, "nist:cavp/test/SigVer.rsp#[P-256,SHA-256]¶2")
+    for ref in ("nist:cavp/test/SigVer.rsp", "nist:cavp/test/SigVer.rsp#[P-256,SHA-256]"):
+        whole = tools.read(store, ref).split("\n\ncite: ")[0]
+        bodies, refs = follow_read(lambda r: tools.read(store, r, max_tokens=1), ref)
+        assert len(refs) > 1 and "\n".join(bodies) == whole
+    with pytest.raises(LibError, match="read whole"):
+        tools.read(store, "nist:cavp/test/SigVer.rsp#[P-256,SHA-256]/1¶2")
+
+
+def test_groups_and_find_page_by_a_zero_based_start(store: Store) -> None:
+    every = tools.groups(store, "nist:cavp/test/SigVer.rsp").split("\n\ncite: ")[0].split("\n")
+    assert len(every) > 1 and "next: start=1" in tools.groups(store, "nist:cavp/test/SigVer.rsp", max_tokens=1)
+    assert follow_list(lambda start: tools.groups(store, "nist:cavp/test/SigVer.rsp", start, max_tokens=1)) == every
+    with pytest.raises(LibError, match="0-based"):
+        tools.groups(store, "nist:cavp/test/SigVer.rsp", -1)
 
 
 def test_find_compares_hex_without_case_and_says_when_nothing_matches(store: Store) -> None:
@@ -166,7 +181,7 @@ def test_errors_name_the_remedy(store: Store, tmp_path: Path) -> None:
         tools.read(store, "nist:cavp/test/SigVer.rsp#[P-384,SHA-384]/9")
     with pytest.raises(LibError) as empty:
         tools.sets(Store(tmp_path / "empty"))
-    assert empty.value.hint == "primarysource cavp fetch"
+    assert empty.value.action == "primarysource cavp fetch"
 
 
 def _home_store(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Store:
@@ -194,7 +209,7 @@ def test_the_cavp_command_reads_the_store_in_the_collection_home(
     assert main(["pin", str(tmp_path / "z.zip")]) == 0
     assert len(capsys.readouterr().out.strip()) == 64
     assert main(["read", "nist:cavp/test/SigVer.rsp#[nope]"]) == 1
-    assert "hint: primarysource cavp groups" in capsys.readouterr().err
+    assert "hint: cavp_groups('nist:" in capsys.readouterr().err
     assert main(["import", "cavp/not/listed.rsp", str(tmp_path / "z.zip")]) == 1
     assert "not in vectors.toml" in capsys.readouterr().err
 
@@ -220,4 +235,4 @@ def test_server_tools_are_prefixed_read_only_and_errors_name_the_remedy(
     assert "Msg = cc" in str(ok)
     with pytest.raises(Exception, match="no vector set") as failed:
         asyncio.run(server.call_tool("cavp_read", {"ref": "nist:cavp/x/y.rsp"}))
-    assert "hint: primarysource cavp sets" in str(failed.value)
+    assert "hint: cavp_sets lists what is imported" in str(failed.value)

@@ -118,7 +118,7 @@ def test_an_older_revision_can_be_imported_beside_the_latest(tmp_path: Path) -> 
     assert store.resolve(NAME, "01") == ("01", False)
     with pytest.raises(LibError, match="not stored") as caught:
         store.resolve(NAME, "02")
-    assert caught.value.hint == f"primarysource draft import {NAME}-02"
+    assert caught.value.action == f"primarysource draft import {NAME}-02"
 
 
 def test_a_revision_the_datatracker_does_not_list_is_refused(tmp_path: Path) -> None:

@@ -157,13 +157,13 @@ def set_to_json(s: VectorSet) -> dict[str, Any]:
 
 def _text(where: str, value: object) -> str:
     if not isinstance(value, str):
-        raise LibError(f"{where}: expected a string", "re-import the set")
+        raise LibError(f"{where}: expected a string", "", "primarysource cavp fetch")
     return value
 
 
 def set_from_json(raw: object, where: str) -> VectorSet:
     if not isinstance(raw, dict) or raw.get("schema") != SCHEMA_VERSION:
-        raise LibError(f"{where}: not a schema {SCHEMA_VERSION} vector set", "re-import the set")
+        raise LibError(f"{where}: not a schema {SCHEMA_VERSION} vector set", "", "primarysource cavp fetch")
     groups: list[Group] = []
     for g in raw.get("groups", []):
         cases = tuple(
@@ -218,14 +218,14 @@ class Store:
             return [IndexEntry(**e) for e in data["sets"]]
         except (ValueError, KeyError, TypeError) as exc:
             raise LibError(
-                f"{path} is not a schema {SCHEMA_VERSION} index ({exc})", "primarysource cavp fetch"
+                f"{path} is not a schema {SCHEMA_VERSION} index ({exc})", "", "primarysource cavp fetch"
             ) from None
 
     def require(self) -> list[IndexEntry]:
         """The entries, or an error that names the import command when there are none."""
         found = self.entries()
         if not found:
-            raise LibError(f"no vector sets imported under {self.root}", "primarysource cavp fetch")
+            raise LibError(f"no vector sets imported under {self.root}", "", "primarysource cavp fetch")
         return found
 
     def load(self, set_id: str) -> VectorSet:
@@ -233,16 +233,16 @@ class Store:
         entry = next((e for e in found if e.id == set_id), None)
         if entry is None:
             names = ", ".join(e.id for e in found)
-            raise LibError(f"no vector set {set_id!r} (imported: {names})", "primarysource cavp sets")
+            raise LibError(f"no vector set {set_id!r} (imported: {names})", "cavp_sets lists what is imported")
         path = (self.root / entry.file).resolve()
         if not path.is_relative_to(self.root.resolve()):
-            raise LibError(f"{set_id}: {entry.file!r} escapes the store", "re-import the set")
+            raise LibError(f"{set_id}: {entry.file!r} escapes the store", "", "primarysource cavp fetch")
         try:
             return set_from_json(json.loads(path.read_text(encoding="utf-8")), set_id)
         except FileNotFoundError:
-            raise LibError(f"{set_id}: {entry.file} is missing", "primarysource cavp fetch") from None
+            raise LibError(f"{set_id}: {entry.file} is missing", "", "primarysource cavp fetch") from None
         except (ValueError, KeyError, TypeError) as exc:
-            raise LibError(f"{path} is damaged ({exc})", "re-import the set") from None
+            raise LibError(f"{path} is damaged ({exc})", "", "primarysource cavp fetch") from None
 
     def write(self, s: VectorSet) -> IndexEntry:
         rel = f"{SETS_DIR}/{s.id.replace('/', '__')}.json"
@@ -269,7 +269,7 @@ def find_group(s: VectorSet, label: str) -> Group:
         if g.label == label:
             return g
     shown = ", ".join(g.label for g in s.groups[:10]) + (", ..." if len(s.groups) > 10 else "")
-    raise LibError(f"{s.id} has no group {label!r} (groups: {shown})", f"primarysource cavp groups nist:{s.id}")
+    raise LibError(f"{s.id} has no group {label!r} (groups: {shown})", f"cavp_groups('nist:{s.id}') lists them")
 
 
 def find_case(g: Group, case_id: str) -> Case:

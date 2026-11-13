@@ -38,16 +38,16 @@ def _library() -> Store:
     return Store()
 
 
-def draft_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
-    """Read a stored Internet-Draft by ref, cut at paragraph boundaries within max_tokens. A 'next: start=N'
-    footer line means call again with start=N. Read the banner and warning: lines first: they say if the draft is
-    expired, replaced, withdrawn or an RFC now, and if the revision is not the latest.
+def draft_read(ref: str, max_tokens: int = 2000) -> str:
+    """Read a stored Internet-Draft by ref, cut at paragraph boundaries within max_tokens. A 'next: <ref>' footer
+    line is the ref that reads the next page: pass it back as ref. Read the banner and warning: lines first: they
+    say if the draft is expired, replaced, withdrawn or an RFC now, and if the revision is not the latest.
 
-    ref: 'draft-ietf-sidrops-8210bis-17' (abstract and outline) | '...-17§5.1' (a section) | '...-17§5.1¶2' (one
-      paragraph) | '...-17:100-120' (lines of the text) | without '-17' the latest stored revision, said so.
+    ref: 'draft-ietf-sidrops-8210bis-17' (abstract and outline) | '...-17§5.1' (a section) | '...-17§5.1¶2' (from
+      its 2nd paragraph) | '...-17:100-120' (lines of the text) | without '-17' the latest stored revision, said so.
       Sections are numbered as the draft prints them; 'A.1' is Appendix A.1; unnumbered ones are 'abstract',
       'security-considerations'."""
-    return views.read(_library(), ref, start=start, max_tokens=max_tokens)
+    return views.read(_library(), ref, max_tokens=max_tokens)
 
 
 def draft_outline(name: str) -> str:
