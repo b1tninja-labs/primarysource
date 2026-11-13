@@ -63,13 +63,25 @@ def _looks_like_title(title: str) -> bool:
     return bool(re.search(r"[A-Za-z]", title))
 
 
-def _clean_title(raw: str) -> str | None:
+# A bare lowercase name, no spaces: "class", "holdconnect", "client/server".
+# Legacy (pre-1998) RFCs title directive subsections this way -- RFC 2167 3.3.5
+# is "holdconnect". Never matches a run-on of prose, which always has a space.
+_DIRECTIVE_TITLE = re.compile(r"[a-z][a-z0-9]*(?:[._/-][a-z0-9]+)*\Z")
+
+
+def _clean_title(raw: str, *, allow_lowercase: bool = False) -> str | None:
     """Extract a real section title from the heading line's tail.
 
     Real RFC section titles: a short Title Case noun phrase (no commas,
     <=12 words, start uppercase/digit). Two-or-more spaces after the first
     token means an inline definition ("1. MUST   This word ...") -> keep
     the term only. Wrapped prose caught by the number prefix is rejected.
+
+    `allow_lowercase` widens only the single-token lowercase case, for the
+    caller that has a structural guard to back it up (txtseg's scan rejects a
+    heading whose number is not the successor of the previous one). Left off by
+    default because elsewhere in the corpus a lowercase line-initial is wrapped
+    prose, not a title.
     """
     t = re.split(r"\s{2,}", raw.strip())[0].strip()
     if not t or t.endswith(","):
@@ -79,7 +91,8 @@ def _clean_title(raw: str) -> str | None:
     if re.fullmatch(r"[\d.,\s]+", t):
         return None  # digit/figure runs ("0 1 2", hex offsets), never titles
     if not re.match(r"[A-Z0-9\"'(]", t):
-        return None
+        if not (allow_lowercase and _DIRECTIVE_TITLE.fullmatch(t)):
+            return None
     if re.search(r"\.\d{1,3}$", t):
         return None  # ToC page-number bleed: "...Dates.89"
     words = t.split()
