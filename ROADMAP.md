@@ -52,8 +52,8 @@ Legend: `[ok]` implemented and pinned by a named test -- `[part]` partial, with 
 | `cl.tool_prefix` | PLAN.md §5.4 | `[ ]` | rfclib, nistlib and usblib expose unprefixed `search`, `read`; itulib, zimlore and cvelib use `itu_`, `zim_`, `cve_` |
 | `cl.packaging_serving` | PLAN.md §3, §5.5 | `[ ]` | rfclib PR #1: Dockerfile and entrypoint, GHCR push, MCP Registry `server.json` (PyPI and OCI packages) |
 | `cl.test_kit` | PLAN.md §3 | `[ ]` | fixture-corpus builder, licence tripwire (itulib's and zimlore's licence tests), ROADMAP row gate (zimlore's roadmap-rows test, which checks every named test exists); this repository has no row gate yet |
-| `cl.collection_registry` | PLAN.md §5.8 | `[ ]` | a collection registers name, prefix, unit, ref pattern and builders; the core imports none of them |
-| `cl.missing_extra_hint` | PLAN.md §5.8 | `[ ]` | selecting a collection whose extra is not installed raises `LibError` naming `pip install "primarysource[<name>]"` |
+| `cl.collection_registry` | PLAN.md §5.8 | `[part]` | `tests/test_registry.py::test_a_registered_collection_loads_by_name`, `tests/test_registry.py::test_builtins_win_over_plugins_and_nothing_is_imported`, `tests/test_registry.py::test_names_and_prefixes_are_checked`. `primarysource/registry.py`: built-ins and the `primarysource.collections` entry-point group. Gap: a `Collection` carries name, prefix, unit and grammar only, with no builders yet, and no collection is registered |
+| `cl.missing_extra_hint` | PLAN.md §5.8 | `[ok]` | `tests/test_registry.py::test_a_missing_extra_names_the_install_command`, `tests/test_registry.py::test_an_unknown_collection_lists_the_registered_ones` |
 | `cl.multi_collection_server` | PLAN.md §5.8 | `[ ]` | `primarysource mcp --collection a --collection b`: one process, separate databases, prefixed tools |
 | `cl.home_per_collection` | PLAN.md §5.8 | `[ ]` | `$PRIMARYSOURCE_HOME/<collection>/`, with the old `<LIB>_HOME`/`<LIB>_DATA` read as a fallback for one release |
 | `cl.adopt_nistlib` | PLAN.md §5.8, §6 | `[ ]` | moves in as `primarysource.nist` with its history and tests. Blocked on relicensing Apache-2.0 to MIT (PLAN.md §7) |

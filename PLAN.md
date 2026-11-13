@@ -123,7 +123,10 @@ Backends give different text, so the backend name and version are part of an ind
    - **The core never imports a collection.** A collection registers itself (name, tool prefix, unit, ref
      pattern, builders), and the CLI and the MCP server serve whichever collections are named or installed:
      `primarysource mcp --collection nist --collection usb`. A collection whose extra is missing fails with a
-     `LibError` that names `pip install "primarysource[<name>]"`, never with an `ImportError`.
+     `LibError` that names `pip install "primarysource[<name>]"`, never with an `ImportError`. The registry is
+     `primarysource/registry.py`. It reads the built-in table and the `primarysource.collections` entry-point
+     group the same way, so a collection whose licence or release cadence must differ can ship as its own
+     package that depends on `primarysource` and registers itself. A built-in always wins a name clash.
    - **One process can serve several collections**, each with its own database and its own tool prefix. §5.4
      still holds: a collection is the unit of storage and naming. Serving more than one is now a flag instead of
      another container.
