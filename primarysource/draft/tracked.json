@@ -1,0 +1,104 @@
+{
+ "schema": 1,
+ "terms": {
+  "licence": "IETF Trust Legal Provisions 5.0 §3.c, with BCP 78 (RFC 5378)",
+  "placement": "volume",
+  "terms_url": "https://trustee.ietf.org/documents/trust-legal-provisions/tlp-5/",
+  "terms_read": "2026-11-13",
+  "summary": "Authors keep the copyright in their Internet-Drafts (RFC 5378 §3.6); the IETF Trust may sublicense. TLP 5.0 §3.c allows copying and distributing a Contribution in full and without modification, or unmodified portions with attribution, but only for Contributions submitted after 2015-03-25 and not where a draft's own legend forbids it. Drafts are fetched by the reader onto a volume; none is shipped in an image."
+ },
+ "drafts": [
+  {
+   "name": "draft-ietf-sidrops-8210bis",
+   "why": "RPKI-to-Router protocol version 2 and the ASPA PDU: the specification rtrkit implements beyond RFC 8210.",
+   "consumers": [
+    "rtrkit"
+   ],
+   "rev_read": "29",
+   "state": "Active",
+   "replaced_by": [],
+   "became_rfc": null,
+   "expires": "2027-05-16",
+   "checked": "2026-11-13",
+   "pins": {
+    "29": {
+     "txt": "9519b014550e43630ba484c2eda50c48a2a6bad4ec286690e695b9b6aa9681cf",
+     "xml": "1ce63b8f7338d9e2a073e47b8f82012f8c9f86ead6d0afe9d71b4986a0841292"
+    }
+   }
+  },
+  {
+   "name": "draft-ietf-sidrops-aspa-profile",
+   "why": "The ASPA signed-object profile that draft-ietf-sidrops-8210bis section 1.2 cites for the ASPA PDU; no portfolio row names it yet.",
+   "consumers": [],
+   "rev_read": "31",
+   "state": "Active",
+   "replaced_by": [],
+   "became_rfc": null,
+   "expires": "2027-05-14",
+   "checked": "2026-11-13",
+   "pins": {
+    "31": {
+     "txt": "6f4b8381e1ef85164dd855a04c7692c476ae454b7e269d56d023df8b94db5b56",
+     "xml": "762ebb9587b186fe29b9a9e133f6572daaa4286fd0854dc5ba6c8278b3d14199"
+    }
+   }
+  },
+  {
+   "name": "draft-ietf-sidrops-aspa-verification",
+   "why": "ASPA-based AS_PATH verification. RFC 9774 section 9.2 cites it as a Work in Progress.",
+   "consumers": [
+    "routevalid",
+    "asnkit"
+   ],
+   "rev_read": "29",
+   "state": "Active",
+   "replaced_by": [],
+   "became_rfc": null,
+   "expires": "2027-04-19",
+   "checked": "2026-11-13",
+   "pins": {
+    "29": {
+     "txt": "3203e57006b2700b67570394951b94f68b98967afc14d75f4b52b2e90220b699",
+     "xml": "bdf3e0200c22eefab17264bf2abd89adcad73d88dc6397aadea84aaa4874fccb"
+    }
+   }
+  },
+  {
+   "name": "draft-koch-librepgp",
+   "why": "LibrePGP message format, an extension of OpenPGP (RFC 4880, 5581, 6637, all since obsoleted by RFC 9580, which is a different line): what pgpenv needs for LibrePGP.",
+   "consumers": [
+    "pgpenv"
+   ],
+   "rev_read": "06",
+   "state": "Active",
+   "replaced_by": [],
+   "became_rfc": null,
+   "expires": "2027-03-11",
+   "checked": "2026-11-13",
+   "pins": {
+    "06": {
+     "txt": "c82a7412d728408ed442b2c940e225a58f3db96d288008290e31f45741b2fdc1"
+    }
+   }
+  },
+  {
+   "name": "draft-uberti-behave-turn-rest",
+   "why": "A REST API for obtaining ephemeral TURN credentials. The datatracker shows it expired in 2014, neither replaced nor published as an RFC.",
+   "consumers": [
+    "turnkit"
+   ],
+   "rev_read": "00",
+   "state": "Expired",
+   "replaced_by": [],
+   "became_rfc": null,
+   "expires": "2014-01-16",
+   "checked": "2026-11-13",
+   "pins": {
+    "00": {
+     "txt": "ebcd0450f37481dfb2817482af1bc09532fdf7691016542498b6e4a64bbb7636"
+    }
+   }
+  }
+ ]
+}

@@ -39,6 +39,7 @@ BUILTIN: dict[str, str] = {
     "iana": "primarysource.iana:COLLECTION [iana]",
     "cavp": "primarysource.cavp:COLLECTION",
     "usbids": "primarysource.usbids:COLLECTION",
+    "draft": "primarysource.draft.collection:COLLECTION [draft]",
 }
 
 _NAME = re.compile(r"[a-z][a-z0-9]*")
