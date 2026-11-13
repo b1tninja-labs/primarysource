@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import pytest
 
-from primarysource.ieee._html import convert
+from primarysource.readers.html import convert
 
 # --- a stray close tag inside a skipped element ------------------------------------------------------------------
 
