@@ -71,7 +71,7 @@ class PdfDocument:
             )
             return cls(str(raw.get("title", "")), int(raw["pages"]), str(raw.get("extractor", "")), sections)
         except (AssertionError, KeyError, TypeError, ValueError) as exc:
-            raise LibError("the stored extraction is malformed", "re-import the document") from exc
+            raise LibError("the stored extraction is malformed", "", "re-import the document") from exc
 
     def find(self, wanted: str) -> tuple[int, str]:
         """Index of the section `wanted` names (its id, else its title's slug, else its title ignoring case),

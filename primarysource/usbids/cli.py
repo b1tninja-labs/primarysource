@@ -2,7 +2,7 @@
 
 primarysource usbids import [--latest] [--sha256 H] [--force]
 primarysource usbids sections
-primarysource usbids lookup <ref> [--start N] [--max-tokens N]
+primarysource usbids lookup <ref> [--max-tokens N]
 primarysource usbids search <text> [--section S] [--limit N] [--start N]
 primarysource usbids classify <class> [subclass [protocol]]
 """
@@ -27,13 +27,12 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("sections", help="the imported snapshot and its counts")
     lookup = commands.add_parser("lookup", help="one entry by ref")
     lookup.add_argument("ref")
-    lookup.add_argument("--start", type=int, default=1)
     lookup.add_argument("--max-tokens", type=int, default=2000)
     search = commands.add_parser("search", help="entries by name")
     search.add_argument("text")
     search.add_argument("--section")
     search.add_argument("--limit", type=int, default=20)
-    search.add_argument("--start", type=int, default=1)
+    search.add_argument("--start", type=int, default=0)
     classify = commands.add_parser("classify", help="name a class code triple")
     classify.add_argument("base_class")
     classify.add_argument("subclass", nargs="?")
@@ -57,7 +56,7 @@ def main(argv: Sequence[str]) -> int:
         if args.command == "sections":
             return _run(tools.sections())
         if args.command == "lookup":
-            return _run(tools.lookup(args.ref, start=args.start, max_tokens=args.max_tokens))
+            return _run(tools.lookup(args.ref, max_tokens=args.max_tokens))
         if args.command == "search":
             return _run(tools.search(args.text, section=args.section, limit=args.limit, start=args.start))
         return _run(tools.classify(args.base_class, args.subclass, args.protocol))

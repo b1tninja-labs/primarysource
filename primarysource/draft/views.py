@@ -16,7 +16,7 @@ from collections import Counter
 from dataclasses import dataclass
 from datetime import date
 
-from primarysource import budget
+from primarysource import budget, cursor
 from primarysource.draft import catalogue, datatracker, licence, names
 from primarysource.draft.segment import Block, DSection, Segmented, normalise
 from primarysource.draft.status import STALE_DAYS, Lifecycle, Status, lifecycle, staleness
@@ -97,7 +97,7 @@ def section_anchor(section: DSection) -> str:
     return "section-" + section.num.lower()
 
 
-def cite_string(meta: RevMeta, section: DSection | None = None, para: int | None = None) -> str:
+def cite_string(meta: RevMeta, section: DSection | None = None, para: int | str | None = None) -> str:
     """`Authors, "Title", Work in Progress, Internet-Draft, name-NN, date, <url#anchor>, Section 5.1, paragraph 2.`
     "Work in Progress" is the only way RFC 2026 §2.2 and the drafts' own status text allow one to be cited."""
     anchor = section_anchor(section) if section else ""
@@ -109,7 +109,7 @@ def cite_string(meta: RevMeta, section: DSection | None = None, para: int | None
         where = f"Section {section.num.removeprefix('Appendix ')}" if section.num else f'"{section.title}"'
         if section.num.startswith("Appendix "):
             where = f"Appendix {section.num.split(' ', 1)[1]}"
-        text += f", {where}" + (f", paragraph {para}" if para else "")
+        text += f", {where}" + (f", paragraph{'s' if isinstance(para, str) else ''} {para}" if para else "")
     return text + "."
 
 
@@ -154,9 +154,10 @@ def _block_text(block: Block) -> str:
     return block.text
 
 
-def read(store: Store, text: str, start: int = 1, max_tokens: int = 2000) -> str:
-    """Read by ref: `name[-rev]` (abstract and outline), `§section` (its paragraphs, paged), `§section¶n` (one
-    paragraph) or `:first-last` (those lines of the stored text)."""
+def read(store: Store, text: str, max_tokens: int = 2000) -> str:
+    """Read by ref: `name[-rev]` (abstract and outline), `§section` (its paragraphs, paged), `§section¶n` (from
+    paragraph n, paged) or `:first-last` (those lines of the stored text). The `next:` footer is the ref that reads
+    the next page."""
     target = resolve(store, text)
     meta = store.meta(target.name, target.rev)
     notes, banner = standing(store, target.name, target.rev, target.chosen)
@@ -170,31 +171,22 @@ def read(store: Store, text: str, start: int = 1, max_tokens: int = 2000) -> str
     if section is None:
         raise _section_not_found(seg, ref.section, target.doc)
     head = f"{target.doc}§{section.id} {section.title}".rstrip()
-    if ref.para is not None:
-        if ref.para > len(section.blocks):
-            raise LibError(f"{head} has {len(section.blocks)} paragraphs, not {ref.para}", "")
-        body = section.blocks[ref.para - 1].text
-        return render(
-            "\n".join(x for x in (banner, body) if x),
-            _footer(cite_string(meta, section, ref.para), notes, span_hash(body)),
-        )
+    if ref.para is not None and ref.para > len(section.blocks):
+        raise LibError(f"{head} has {len(section.blocks)} paragraphs, not {ref.para}", "")
     units = tuple(_block_text(b) for b in section.blocks)
     if not units:
         body = "(no text under this heading; see its subsections in the outline)"
         return render("\n".join(x for x in (banner, head, body) if x), _footer(cite_string(meta, section), notes))
-    try:
-        page = budget.page(units, start, max_tokens)
-    except ValueError as exc:
-        raise LibError(str(exc), "start is 1-based and max_tokens positive") from exc
-    if not page.units:
-        raise LibError(f"{head} has {page.total} paragraphs; there is nothing at start={start}", "")
+    if max_tokens < 1:
+        raise LibError("max_tokens must be positive", "")
+    page = budget.page(units, ref.para or 1, max_tokens)
     body = "\n\n".join(page.units)
+    nxt = cursor.read_next(f"{target.doc}§{section.id}", page)
+    cite = cite_string(meta, section, cursor.para_label(ref.para, page))
+    if ref.para is not None:  # a ¶ read is the paragraphs themselves, as a search hit's ref promises
+        return render("\n".join(x for x in (banner, body) if x), _footer(cite, notes, span_hash(body), nxt))
     top = [banner, f"{head}  (paragraphs {page.first}-{page.last} of {page.total})"]
-    nxt = f"start={page.next_start}" if page.next_start else ""
-    return render(
-        "\n".join(x for x in top if x) + "\n\n" + body,
-        _footer(cite_string(meta, section), notes, span_hash(body), nxt),
-    )
+    return render("\n".join(x for x in top if x) + "\n\n" + body, _footer(cite, notes, span_hash(body), nxt))
 
 
 def _read_lines(
@@ -278,7 +270,11 @@ def info(store: Store, text: str) -> str:
     status = store.status(name)
     tracked = catalogue.TRACKED.get(name)
     if not stored and status is None and tracked is None:
-        raise LibError(f"{name} is neither stored nor tracked", f"primarysource draft import {name}")
+        raise LibError(
+            f"{name} is neither stored nor tracked",
+            "draft_list lists what is tracked",
+            f"primarysource draft import {name}",
+        )
     lines = [name]
     if status is not None:
         lines += [
@@ -387,7 +383,9 @@ def search(store: Store, query: str, limit: int = 10, name: str | None = None) -
     else:
         chosen = [(n, store.revisions(n)[-1]) for n in store.names()]
     if not chosen:
-        raise LibError("no draft is stored", "primarysource draft import <name>")
+        raise LibError(
+            "no draft is stored", "draft_list lists the drafts to import", "primarysource draft import <name>"
+        )
     rows: list[tuple[str, str, DSection, Counter[str], int, Status | None]] = []
     for n, rev in chosen:
         seg = store.segmented(n, rev)

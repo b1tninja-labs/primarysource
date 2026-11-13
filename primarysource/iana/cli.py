@@ -2,7 +2,7 @@
 
 primarysource iana list
 primarysource iana import <name>... | --all [--force] [--interval SECONDS]
-primarysource iana read <ref> [--start N] [--max-tokens N]
+primarysource iana read <ref> [--max-tokens N]
 primarysource iana lookup <registry-ref> <value>
 primarysource iana search <text> [--file NAME] [--limit N] [--start N]
 """
@@ -28,7 +28,6 @@ def _parser() -> argparse.ArgumentParser:
     imp.add_argument("--interval", type=float, default=importer.MIN_INTERVAL, help="seconds between requests (>= 1)")
     read = commands.add_parser("read", help="read by ref")
     read.add_argument("ref")
-    read.add_argument("--start", type=int, default=1)
     read.add_argument("--max-tokens", type=int, default=2000)
     look = commands.add_parser("lookup", help="the record(s) with a value")
     look.add_argument("registry")
@@ -37,7 +36,7 @@ def _parser() -> argparse.ArgumentParser:
     find.add_argument("text")
     find.add_argument("--file")
     find.add_argument("--limit", type=int, default=20)
-    find.add_argument("--start", type=int, default=1)
+    find.add_argument("--start", type=int, default=0)
     return parser
 
 
@@ -61,7 +60,7 @@ def main(argv: Sequence[str]) -> int:
                 print(f"{o.name}: {o.status}, updated {o.updated or '-'}, {o.size:,} bytes, sha256 {o.sha256[:16]}")
             return 0
         if args.command == "read":
-            return _out(reader.read(args.ref, start=args.start, max_tokens=args.max_tokens))
+            return _out(reader.read(args.ref, max_tokens=args.max_tokens))
         if args.command == "lookup":
             return _out(reader.lookup(args.registry, args.value))
         return _out(reader.search(args.text, file=args.file, limit=args.limit, start=args.start))

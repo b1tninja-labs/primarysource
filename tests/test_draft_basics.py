@@ -165,7 +165,7 @@ def test_a_status_snapshot_round_trips_and_a_damaged_one_names_its_remedy() -> N
     assert Status.from_json(snapshot.to_json()) == snapshot
     with pytest.raises(LibError, match="damaged") as caught:
         Status.from_json('{"name": 3}')
-    assert "refresh" in caught.value.hint
+    assert "refresh" in caught.value.action
     assert status.staleness(snapshot, date(2026, 11, 13)) == 12
 
 

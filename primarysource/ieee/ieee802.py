@@ -25,6 +25,7 @@ def installed(designation: str, home: Path | None = None) -> Path:
     if not (root / INSTALL_RECORD).is_file():
         raise LibError(
             f"{pinned.id} is not imported",
+            "",
             f"obtain the PDF yourself from {pinned.page_url} (IEEE GET Program terms, see docs/ieee.md), then run "
             f"primarysource ieee802 import <file.pdf> {pinned.id}",
         )

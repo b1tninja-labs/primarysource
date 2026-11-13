@@ -31,15 +31,17 @@ def cavp_sets(query: str | None = None, limit: int = 50) -> str:
     return tools.sets(open_store(), query, limit)
 
 
-def cavp_groups(set_ref: str, start: int = 1, max_tokens: int = 2000) -> str:
-    """List a set's groups as refs with their case counts and parameters. set_ref: 'nist:cavp/ecdsa/SigVer.rsp'."""
+def cavp_groups(set_ref: str, start: int = 0, max_tokens: int = 2000) -> str:
+    """List a set's groups as refs with their case counts and parameters. set_ref: 'nist:cavp/ecdsa/SigVer.rsp'.
+    A 'next: start=N' footer line means call again with start=N (a 0-based offset)."""
     return tools.groups(open_store(), set_ref, start, max_tokens)
 
 
-def cavp_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
+def cavp_read(ref: str, max_tokens: int = 2000) -> str:
     """Read by ref: a set ('nist:cavp/ecdsa/SigVer.rsp'), a group ('...#[P-256,SHA-256]', values shortened) or one
-    case in full ('...#[P-256,SHA-256]/3'). A 'next: start=N' footer line means call again with start=N."""
-    return tools.read(open_store(), ref, start, max_tokens)
+    case in full ('...#[P-256,SHA-256]/3'). A 'next: <ref>' footer line is the ref that reads the next page: pass
+    it back as ref."""
+    return tools.read(open_store(), ref, max_tokens)
 
 
 def cavp_find(
@@ -47,11 +49,12 @@ def cavp_find(
     field: str,
     value: str,
     group: str | None = None,
-    start: int = 1,
+    start: int = 0,
     max_tokens: int = 2000,
 ) -> str:
     """Find cases in a set whose field equals value (hex compared without case or 0x), e.g. field='Msg'.
-    Returns refs. field may be 'expected.<name>' for an ACVP answer."""
+    Returns refs. field may be 'expected.<name>' for an ACVP answer. A 'next: start=N' footer line means call
+    again with start=N (a 0-based offset)."""
     return tools.find(open_store(), set_ref, field, value, group, start, max_tokens)
 
 

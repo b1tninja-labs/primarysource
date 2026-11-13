@@ -78,7 +78,7 @@ class Status:
                 checked=str(raw["checked"]),
             )
         except (ValueError, KeyError, TypeError) as exc:
-            raise LibError("a stored status snapshot is damaged", "run: primarysource draft refresh") from exc
+            raise LibError("a stored status snapshot is damaged", "", "primarysource draft refresh") from exc
 
     def published(self, rev: str) -> str:
         """The date revision `rev` was posted (YYYY-MM-DD), or ''."""

@@ -1,7 +1,7 @@
 """The usbids readers: lookup, search, classify and a summary. Plain text with the core's fixed footer.
 
-Each takes the imported database from `store.load()` and never writes or fetches. A missing database is a
-`LibError` naming the import command; a ref that names nothing is a `LibError` too, with a hint, so an empty
+Each takes the imported database from `store.load()` and never writes or fetches. A missing database is an
+error whose `action` is the import command; a ref that names nothing is a `LibError` too, with a hint, so an empty
 result always means a search matched nothing.
 """
 
@@ -10,9 +10,9 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from primarysource import budget
+from primarysource import budget, cursor
 from primarysource.errors import LibError
-from primarysource.render import render
+from primarysource.render import next_start, render
 from primarysource.usbids import store
 from primarysource.usbids.parse import SECTION_REF, Entry, UsbIds, format_ref, parse_ref
 
@@ -42,9 +42,11 @@ def _ancestors(ids: UsbIds, entry: Entry) -> list[Entry]:
     return found
 
 
-def lookup(ref: str, start: int = 1, max_tokens: int = 2000, base: Path | None = None) -> str:
-    """One entry by ref, its ancestors and its children, paged by token budget."""
-    section, key = parse_ref(ref)
+def lookup(ref: str, max_tokens: int = 2000, base: Path | None = None) -> str:
+    """One entry by ref, its ancestors and its children, paged by token budget. `<ref>¶n` starts at line n of that
+    listing; the `next:` footer is the ref that reads the next page."""
+    text, line = cursor.split_para(ref)
+    section, key = parse_ref(text)
     loaded = store.load(base)
     ids = loaded.ids
     entry = ids.get(section, key)
@@ -61,14 +63,15 @@ def lookup(ref: str, start: int = 1, max_tokens: int = 2000, base: Path | None =
     units = [f"{_line(entry)}  [{entry.level_name}]"]
     units += [f"within: {_line(a)}  [{a.level_name}]" for a in _ancestors(ids, entry)]
     units += [f"  {_line(kid)}" for kid in ids.kids(entry)]
-    if start < 1 or max_tokens < 1:
-        raise LibError("start and max_tokens must be positive", "")
-    page = budget.page(units, start, max_tokens)
-    footer = {"cite": _cite(loaded, entry), "unit": "line"}
-    if page.first:
-        footer["span"] = f"{page.first}-{page.last} of {page.total}"
-    if page.next_start:
-        footer["next"] = f"start={page.next_start}"
+    if max_tokens < 1:
+        raise LibError("max_tokens must be positive", "")
+    page = budget.page(units, cursor.first_unit(line, len(units), "lines", ref), max_tokens)
+    footer = {
+        "cite": _cite(loaded, entry),
+        "unit": "line",
+        "span": f"{page.first}-{page.last} of {page.total}",
+        "next": cursor.read_next(entry.ref, page),
+    }
     return render("\n".join(page.units), footer)
 
 
@@ -76,7 +79,7 @@ def search(
     text: str,
     section: str | None = None,
     limit: int = 20,
-    start: int = 1,
+    start: int = 0,
     base: Path | None = None,
 ) -> str:
     """Entries whose name contains every word of `text` (a vendor's name counts for its devices), best first."""
@@ -87,8 +90,8 @@ def search(
     terms = _WORD.findall(text.lower())[:MAX_TERMS]
     if not terms:
         raise LibError("query has no letters or digits", "give a name or part of one, e.g. 'hub' or 'logitech'")
-    if not 1 <= limit <= MAX_LIMIT or start < 1:
-        raise LibError(f"limit must be 1 to {MAX_LIMIT} and start 1 or more", "")
+    if not 1 <= limit <= MAX_LIMIT or start < 0:
+        raise LibError(f"limit must be 1 to {MAX_LIMIT} and start (0-based) 0 or more", "")
     loaded = store.load(base)
     ids = loaded.ids
     hits: list[tuple[int, int, Entry, str]] = []
@@ -108,13 +111,12 @@ def search(
         score = sum(3 if t in words else 2 if any(w.startswith(t) for w in words) else 1 for t in terms)
         hits.append((-score, order, entry, shown))
     hits.sort(key=lambda h: (h[0], h[1]))
-    window = hits[start - 1 : start - 1 + limit]
+    window = hits[start : start + limit]
     body = "\n".join(f"{e.ref}  {shown}" for _, _, e, shown in window) if window else f"no entry matches {text!r}"
     footer = {"cite": _cite(loaded), "unit": "line"}
     if window:
-        footer["span"] = f"{start}-{start + len(window) - 1} of {len(hits)}"
-    if start - 1 + limit < len(hits):
-        footer["next"] = f"start={start + limit}"
+        footer["span"] = f"{start + 1}-{start + len(window)} of {len(hits)}"
+    footer["next"] = next_start(start + limit if start + limit < len(hits) else None)
     return render(body, footer)
 
 

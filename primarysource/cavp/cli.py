@@ -5,7 +5,7 @@ primarysource cavp import <id> <file> [<expected-file>]   import files you alrea
 primarysource cavp pin <file>                             print the sha256 to pin
 primarysource cavp sets [query]
 primarysource cavp groups <set-ref>
-primarysource cavp read <ref> [--start N] [--max-tokens N]
+primarysource cavp read <ref> [--max-tokens N]
 primarysource cavp find <set-ref> <field> <value> [--group G]
 primarysource cavp cite <ref>
 """
@@ -36,7 +36,6 @@ def _parser() -> argparse.ArgumentParser:
     sub.add_parser("groups").add_argument("ref")
     read = sub.add_parser("read")
     read.add_argument("ref")
-    read.add_argument("--start", type=int, default=1)
     read.add_argument("--max-tokens", type=int, default=2000)
     find = sub.add_parser("find")
     find.add_argument("ref")
@@ -76,7 +75,7 @@ def main(argv: Sequence[str]) -> int:
         if args.command == "groups":
             return _say(tools.groups(store, args.ref))
         if args.command == "read":
-            return _say(tools.read(store, args.ref, args.start, args.max_tokens))
+            return _say(tools.read(store, args.ref, args.max_tokens))
         if args.command == "find":
             return _say(tools.find(store, args.ref, args.field, args.value, args.group))
         return _say(tools.cite(store, args.ref))

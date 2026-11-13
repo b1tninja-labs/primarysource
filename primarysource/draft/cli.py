@@ -5,7 +5,7 @@ primarysource draft refresh [<name> ...]      fetch only the datatracker's curre
 primarysource draft list                      tracked and stored drafts, with state and replacement
 primarysource draft info <name>               standing, revisions, expiry, replaced-by, licence legend
 primarysource draft outline <name>[-rev]      a stored draft's sections
-primarysource draft read <ref> [--start N] [--max-tokens N]
+primarysource draft read <ref> [--max-tokens N]
 primarysource draft search <words> [--name N] [--limit N]
 primarysource draft cite <ref>
 
@@ -46,7 +46,6 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("outline", help="a stored draft's sections").add_argument("name")
     read = commands.add_parser("read", help="read by ref")
     read.add_argument("ref")
-    read.add_argument("--start", type=int, default=1)
     read.add_argument("--max-tokens", type=int, default=2000)
     search = commands.add_parser("search", help="search the stored drafts")
     search.add_argument("query")
@@ -141,7 +140,7 @@ def main(argv: Sequence[str]) -> int:
         if args.command == "outline":
             return _emit(views.outline(store, args.name))
         if args.command == "read":
-            return _emit(views.read(store, args.ref, start=args.start, max_tokens=args.max_tokens))
+            return _emit(views.read(store, args.ref, max_tokens=args.max_tokens))
         if args.command == "search":
             return _emit(views.search(store, args.query, limit=args.limit, name=args.name))
         return _emit(views.cite(store, args.ref))

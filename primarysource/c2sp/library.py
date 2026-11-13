@@ -79,7 +79,7 @@ def installs(home: Path) -> list[tuple[str, dict[str, object]]]:
 def _split_doc(token: str) -> tuple[str, str | None]:
     doc, _, version = token.partition("@")
     if not DOC_ID.fullmatch(doc):
-        raise LibError(f"not a C2SP specification id: {doc!r}", "see c2sp_docs / `primarysource c2sp docs`")
+        raise LibError(f"not a C2SP specification id: {doc!r}", "c2sp_docs lists the specification ids")
     if version and not _COMMIT_PREFIX.fullmatch(version):
         raise LibError(f"not a commit prefix: {version!r}", "use at least 7 lowercase hex digits of the commit")
     return doc, version or None

@@ -105,7 +105,7 @@ def test_a_real_collection_served_by_primarysource_mcp_follows_the_contract(
     assert result.is_error is True
     lines = result.content[0].text.splitlines()[1:]
     assert lines[0].startswith("error: ") and "not imported" in lines[0]
-    assert lines[1] == "hint: primarysource usbids import"
+    assert lines[1:] == ["action: primarysource usbids import"]  # a command only a person can run
 
 
 # --- cl.structured_output_off -----------------------------------------------------------------------------------

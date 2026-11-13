@@ -20,6 +20,7 @@ from primarysource.errors import LibError
 from primarysource.render import next_start
 
 _DOC_PARA = re.compile(r"(?P<head>[^§#¶]+?)\s*¶\s*(?P<para>\d+)\s*")
+_TRAILING_PARA = re.compile(r"(?P<head>[^¶]+?)\s*¶\s*(?P<para>\d+)\s*")
 
 
 def window[T](rows: Sequence[T], start: int, limit: int) -> tuple[Sequence[T], str]:
@@ -37,6 +38,18 @@ def split_doc_para(text: str) -> tuple[str, int | None]:
     if "§" in text or "::" in text or "#" in text:
         return text, None
     match = _DOC_PARA.fullmatch(text)
+    if match is None:
+        return text, None
+    para = int(match["para"])
+    if para < 1:
+        raise LibError(f"not a ref: {text!r}", "¶ is 1-based")
+    return match["head"].strip(), para
+
+
+def split_para(text: str) -> tuple[str, int | None]:
+    """A trailing `¶n` as (the rest, n), for a collection whose own ref grammar has no `¶` (`usbids:1d6b¶40`,
+    `nist:cavp/...#[P-256]¶3`); any other text as (text, None)."""
+    match = _TRAILING_PARA.fullmatch(text)
     if match is None:
         return text, None
     para = int(match["para"])

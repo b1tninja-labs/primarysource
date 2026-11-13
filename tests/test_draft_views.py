@@ -6,6 +6,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
+from cursor_check import follow_read
 from draft_fixture import NAME, Clock, DraftSpec, FakeIetf, build_txt
 
 from primarysource.draft import importer, views
@@ -50,17 +51,11 @@ def test_a_ref_without_a_revision_reads_the_latest_stored_and_says_so(alive: Sto
 
 
 def test_a_section_pages_by_paragraph_and_next_leads_to_the_rest(alive: Store) -> None:
-    pieces: list[str] = []
-    start = 1
-    while True:
-        text = views.read(alive, f"{NAME}-03§2.1", start=start, max_tokens=1)
-        body = text.split("\n\n", 1)[1].rsplit("\n\n", 1)[0]
-        pieces.append(body)
-        nxt = footer(text).get("next")
-        if not nxt:
-            break
-        assert nxt.startswith("start=")
-        start = int(nxt.removeprefix("start="))
+    first = views.read(alive, f"{NAME}-03§2.1", max_tokens=1)
+    assert footer(first)["next"] == f"{NAME}-03§2.1¶2"
+    bodies, refs = follow_read(lambda ref: views.read(alive, ref, max_tokens=1), f"{NAME}-03§2.1")
+    assert refs == [f"{NAME}-03§2.1", f"{NAME}-03§2.1¶2", f"{NAME}-03§2.1¶3"]
+    pieces = [bodies[0].split("\n\n", 1)[1], *bodies[1:]]
     assert len(pieces) == 3
     assert "Messages are carried in frames." in pieces[0] and "+--------+" in pieces[1] and "flange once" in pieces[2]
     whole = views.read(alive, f"{NAME}-03§2.1")
@@ -135,11 +130,9 @@ def test_a_section_that_is_not_there_says_what_is_close(alive: Store) -> None:
 
 def test_start_and_budget_are_checked(alive: Store) -> None:
     with pytest.raises(LibError):
-        views.read(alive, f"{NAME}-03§2.1", start=0)
-    with pytest.raises(LibError):
         views.read(alive, f"{NAME}-03§2.1", max_tokens=0)
-    with pytest.raises(LibError, match="nothing at start=9"):
-        views.read(alive, f"{NAME}-03§2.1", start=9)
+    with pytest.raises(LibError, match="has 3 paragraphs, not 9"):
+        views.read(alive, f"{NAME}-03§2.1¶9")
 
 
 @pytest.mark.parametrize(
@@ -269,4 +262,4 @@ def test_a_damaged_stored_revision_names_its_remedy(alive: Store) -> None:
     (alive.root / NAME / "03" / "meta.json").write_text("{not json", encoding="utf-8")
     with pytest.raises(LibError, match="damaged") as caught:
         views.read(alive, f"{NAME}-03§1")
-    assert "import that revision again" in caught.value.hint
+    assert "import that revision again" in caught.value.action

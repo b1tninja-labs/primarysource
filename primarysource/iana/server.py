@@ -28,13 +28,14 @@ INSTRUCTIONS = (
 )
 
 
-def iana_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
-    """Read an IANA registry by ref, cut at record boundaries within max_tokens ('next: start=N' continues).
+def iana_read(ref: str, max_tokens: int = 2000) -> str:
+    """Read an IANA registry by ref, cut at record boundaries within max_tokens. A 'next: <ref>' footer line is the
+    ref that reads the next page: pass it back as ref.
 
     ref: 'dns-parameters' (list its registries) | 'dns-parameters§dns-parameters-4' (a registry: procedure,
       notes, then records) | 'bgp-parameters§bgp-parameters-2#3' (records whose value is 3) |
-      'bgp-parameters§bgp-parameters-2¶4' (the 4th record). 'dns-parameters#dns-parameters-4' also works."""
-    return reader.read(ref, start=start, max_tokens=max_tokens)
+      'bgp-parameters§bgp-parameters-2¶4' (from the 4th record). 'dns-parameters#dns-parameters-4' also works."""
+    return reader.read(ref, max_tokens=max_tokens)
 
 
 def iana_lookup(registry: str, value: str) -> str:
@@ -45,10 +46,10 @@ def iana_lookup(registry: str, value: str) -> str:
     return reader.lookup(registry, value)
 
 
-def iana_search(text: str, file: str | None = None, limit: int = 20, start: int = 1) -> str:
+def iana_search(text: str, file: str | None = None, limit: int = 20, start: int = 0) -> str:
     """Find records whose registry title and columns contain every word of text (case-insensitive, literal, at most
     200 characters). file: restrict to one registry file, e.g. 'stun-parameters'. One line per hit:
-    '<ref>  <registry>: <record>'. A 'next: start=N' footer resumes."""
+    '<ref>  <registry>: <record>'. A 'next: start=N' footer line means call again with start=N (0-based)."""
     return reader.search(text, file=file, limit=limit, start=start)
 
 

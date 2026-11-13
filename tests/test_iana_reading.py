@@ -6,6 +6,7 @@ import asyncio
 from pathlib import Path
 
 import pytest
+from cursor_check import follow_list, follow_read
 from iana_fixture import NAME, install, widgets
 
 from primarysource import cli, registry
@@ -42,7 +43,7 @@ def test_the_ref_grammar_spells_a_file_a_registry_a_value_and_a_record() -> None
     assert reader.format_ref("a", "b", "3", 4) == "a§b#3¶4"
 
 
-@pytest.mark.parametrize("bad", ["", "§x", "dns-parameters¶3", "dns-parameters:1-5", "DNS Parameters", "a§b c"])
+@pytest.mark.parametrize("bad", ["", "§x", "¶3", "dns-parameters:1-5", "DNS Parameters", "a§b c"])
 def test_a_malformed_ref_is_refused_with_a_hint(bad: str) -> None:
     with pytest.raises(LibError) as caught:
         reader.parse_ref(bad)
@@ -78,16 +79,13 @@ def test_reading_a_registry_gives_its_procedure_notes_ranges_and_records(home: P
 
 
 def test_a_registry_pages_by_whole_records_and_next_resumes_without_loss(home: Path) -> None:
-    seen: list[str] = []
-    start = 1
-    while True:
-        out = reader.read(f"{NAME}§{NAME}-1", start=start, max_tokens=20)
-        seen += [line for line in out.splitlines() if line.startswith("¶")]
-        nxt = [line for line in out.splitlines() if line.startswith("next: start=")]
-        if not nxt:
-            break
-        start = int(nxt[0].removeprefix("next: start="))
+    bodies, refs = follow_read(lambda ref: reader.read(ref, max_tokens=20), f"{NAME}§{NAME}-1")
+    seen = [line for body in bodies for line in body.splitlines() if line.startswith("¶")]
     assert [line.split()[0] for line in seen] == ["¶1", "¶2", "¶3", "¶4", "¶5"]
+    assert all(ref.startswith(f"{NAME}§{NAME}-1¶") for ref in refs[1:])
+    listing = reader.read(NAME).split("\n\ncite: ")[0].split("\n\n", 1)[1]
+    bodies, refs = follow_read(lambda ref: reader.read(ref, max_tokens=1), NAME)
+    assert refs[1] == f"{NAME}¶2" and "\n".join(b.split("\n\n", 1)[1] for b in bodies) == listing
 
 
 def test_a_value_ref_finds_the_record_including_ranges_and_hex(home: Path) -> None:
@@ -103,8 +101,10 @@ def test_a_value_with_no_record_is_a_plain_statement_not_an_error(home: Path) ->
 
 
 def test_a_paragraph_ref_is_the_nth_record_and_out_of_range_is_refused(home: Path) -> None:
-    out = reader.read(f"{NAME}§{NAME}-1¶2")
-    assert "name: HELLO" in out and ", value 1, https://" in out
+    out = reader.read(f"{NAME}§{NAME}-1¶2", max_tokens=1)
+    assert out.startswith("¶2 ") and "name: HELLO" in out and ", value 1, https://" in out
+    assert reader.read(f"{NAME}§{NAME}-1¶2").startswith("¶2 ")  # a ¶ read runs on from that record
+    assert reader.parse_ref(f"{NAME}¶3") == reader.Target(NAME, None, None, 3)  # the listing, from registry 3
     with pytest.raises(LibError, match="has 5 records") as caught:
         reader.read(f"{NAME}§{NAME}-1¶6")
     assert NAME in caught.value.hint
@@ -119,7 +119,8 @@ def test_an_unknown_registry_names_where_to_look(home: Path) -> None:
 def test_a_registry_that_is_not_imported_says_how_to_import_it(home: Path) -> None:
     with pytest.raises(LibError, match="is not imported") as caught:
         reader.read("dns-parameters")
-    assert caught.value.hint == "primarysource iana import dns-parameters"
+    assert caught.value.action == "primarysource iana import dns-parameters"
+    assert caught.value.hint == "iana_list shows the catalogue and what is imported"
 
 
 def test_lookup_by_number_range_hex_and_text(home: Path) -> None:
@@ -152,9 +153,11 @@ def test_search_matches_every_word_across_title_and_columns_and_pages(home: Path
     assert out.splitlines()[0].startswith(f"{NAME}§{NAME}-2¶1  Widget Flags: bit: bit 3 | flag: QZ")
     assert "no record matches" in reader.search("quiesce frob")
     many = reader.search("widget", limit=2)
-    assert len([ln for ln in many.splitlines() if "§" in ln]) == 2 and "next: start=3" in many
-    rest = reader.search("widget", limit=2, start=3)
-    assert "next: start=5" in rest
+    assert len([ln for ln in many.splitlines() if "§" in ln]) == 2 and "next: start=2" in many
+    rest = reader.search("widget", limit=2, start=2)
+    assert "next: start=4" in rest
+    every = reader.search("widget", limit=500).split("\n\n")[0].split("\n")
+    assert [r for r in follow_list(lambda s: reader.search("widget", limit=2, start=s)) if "§" in r] == every
     assert reader.search("rfc9901", file=NAME).count("\n") >= 3
     with pytest.raises(LibError):
         reader.search("")
@@ -166,7 +169,7 @@ def test_search_with_nothing_imported_names_the_import_command(
     monkeypatch.setenv("PRIMARYSOURCE_HOME", str(tmp_path))
     with pytest.raises(LibError, match="no registry is imported") as caught:
         reader.search("anything")
-    assert "primarysource iana import" in caught.value.hint
+    assert "primarysource iana import" in caught.value.action
 
 
 def test_a_file_that_differs_from_its_recorded_sha256_is_flagged(home: Path) -> None:
