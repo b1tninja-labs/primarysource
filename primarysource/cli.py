@@ -1,10 +1,14 @@
 """The `primarysource` command.
 
     primarysource collections                       list what is registered
-    primarysource mcp --collection rfc [--transport http] [--host H] [--port P] [--allowed-host H] [--read-only]
+    primarysource mcp --collection rfc [--collection nist ...] [--bare-names]
+                      [--transport http] [--host H] [--port P] [--allowed-host H] [--read-only]
     primarysource rfc <command> ...                 the collection's own commands (sync, index, status, ...)
 
-One collection per server today; serving several from one process is `cl.multi_collection_server`.
+`mcp` serves every named collection from one process, each with its own database and its tools named
+`<collection>_<tool>` (PLAN.md §5.12). `--bare-names` keeps a collection's own tool names instead; it is how the
+old single-collection commands (`rfclib mcp`) stay compatible, and two collections with the same bare names are
+refused at startup.
 """
 
 from __future__ import annotations
@@ -13,8 +17,9 @@ import argparse
 import os
 import sys
 from collections.abc import Sequence
+from typing import Any
 
-from primarysource import registry, serve
+from primarysource import registry, scaffold, serve
 from primarysource.errors import LibError
 
 
@@ -22,14 +27,38 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="primarysource", description="Search, read and cite primary sources.")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("collections", help="list the registered collections")
-    mcp = commands.add_parser("mcp", help="run the MCP server for a collection")
-    mcp.add_argument("--collection", required=True, help="the collection to serve, e.g. rfc")
+    mcp = commands.add_parser("mcp", help="run the MCP server for one or more collections")
+    mcp.add_argument(
+        "--collection", action="append", required=True, help="a collection to serve, e.g. rfc (repeatable)"
+    )
+    mcp.add_argument(
+        "--bare-names",
+        action="store_true",
+        help="keep each collection's own tool names (search, read) instead of <collection>_<tool>",
+    )
     mcp.add_argument("--transport", default="stdio", help="stdio (one server per client) or http (one shared server)")
     mcp.add_argument("--host", default="127.0.0.1", help="http: address to bind; there is no authentication")
     mcp.add_argument("--port", type=int, default=serve.MCP_HTTP_PORT, help="http: TCP port")
     mcp.add_argument("--allowed-host", action="append", default=[], help="http: Host header to accept (repeatable)")
     mcp.add_argument("--read-only", action="store_true", help="never write the library and never fetch")
     return parser
+
+
+def collection_server(collection: registry.Collection) -> Any:
+    """The `MCPServer` a collection's own module builds; a factory such as itu's `build()` is called."""
+    server = registry.attribute(collection, collection.server, "server")
+    if not hasattr(server, "run") and callable(server):
+        server = server()
+    return server
+
+
+def build_server(names: Sequence[str], *, bare: bool = False) -> Any:
+    """The one server for `names`, in the order given; a name given twice is served once."""
+    served = []
+    for name in dict.fromkeys(names):
+        collection = registry.load(name)
+        served.append(scaffold.Served(collection.name, collection.title, collection_server(collection)))
+    return scaffold.compose(served, bare=bare)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -46,15 +75,13 @@ def main(argv: Sequence[str] | None = None) -> int:
             for name in registry.available():
                 print(name)
             return 0
-        collection = registry.load(args.collection)
         transport = serve.normalise_transport(args.transport)
         if args.read_only:
             os.environ["PRIMARYSOURCE_READONLY"] = "1"
-        server = registry.attribute(collection, collection.server, "server")
-        if not hasattr(server, "run") and callable(server):
-            server = server()  # a factory such as itu's build()
+        server = build_server(args.collection, bare=args.bare_names)
         if transport == "http":
-            print(f"primarysource mcp: {collection.name} at http://{args.host}:{args.port}/mcp", file=sys.stderr)
+            names = ", ".join(dict.fromkeys(args.collection))
+            print(f"primarysource mcp: {names} at http://{args.host}:{args.port}/mcp", file=sys.stderr)
         serve.run(server, transport, host=args.host, port=args.port, allowed_hosts=args.allowed_host)
         return 0
     except LibError as exc:

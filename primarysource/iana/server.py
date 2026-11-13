@@ -7,17 +7,14 @@ files only; none writes or fetches (importing is `primarysource iana import`).
 
 from __future__ import annotations
 
-import functools
-from collections.abc import Callable
 from typing import Any
 
 from mcp.server.mcpserver import MCPServer
-from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import ToolAnnotations
 
 from primarysource import __version__
-from primarysource.errors import LibError
 from primarysource.iana import reader
+from primarysource.scaffold import add_tools
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False)
 
@@ -29,17 +26,6 @@ INSTRUCTIONS = (
     "3), '...¶4' (the 4th record). Each row carries its RFC citations (RFC4271§4.3 reads in the rfc collection). "
     "The cite: footer line is the citation. If a registry is not imported the error says how."
 )
-
-
-def _guard(fn: Callable[..., str]) -> Callable[..., str]:
-    @functools.wraps(fn)  # the SDK reads the tool's schema from the wrapped signature
-    def wrapped(*args: Any, **kwargs: Any) -> str:
-        try:
-            return fn(*args, **kwargs)
-        except LibError as exc:
-            raise ToolError(exc.as_text()) from None
-
-    return wrapped
 
 
 def iana_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
@@ -73,8 +59,7 @@ def iana_list() -> str:
 
 def _server() -> Any:
     server = MCPServer("primarysource-iana", version=__version__, instructions=INSTRUCTIONS)
-    for tool in (iana_read, iana_lookup, iana_search, iana_list):
-        server.add_tool(_guard(tool), name=tool.__name__, annotations=READ_ONLY, structured_output=False)
+    add_tools(server, (iana_read, iana_lookup, iana_search, iana_list), annotations=READ_ONLY)
     return server
 
 

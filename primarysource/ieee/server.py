@@ -7,17 +7,15 @@ error (`isError`) whose text names the remedy. Every tool reads local files only
 
 from __future__ import annotations
 
-import functools
 from collections.abc import Callable
 from typing import Any
 
 from mcp.server.mcpserver import MCPServer
-from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import ToolAnnotations
 
 from primarysource import __version__
-from primarysource.errors import LibError
 from primarysource.ieee import ieee802, posix
+from primarysource.scaffold import add_tools
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False)
 
@@ -34,19 +32,6 @@ IEEE802_INSTRUCTIONS = (
     "ieee802_outline('802.1Q-2022') lists clauses as refs ('802.1Q-2022§5.4') with their PDF pages. Reading "
     "clause text is not built yet."
 )
-
-
-def _guard(fn: Callable[..., str]) -> Callable[..., str]:
-    """Run a tool, turning a LibError into a tool error with its hint."""
-
-    @functools.wraps(fn)  # the SDK reads the tool's schema from the wrapped signature
-    def wrapped(*args: Any, **kwargs: Any) -> str:
-        try:
-            return fn(*args, **kwargs)
-        except LibError as exc:
-            raise ToolError(exc.as_text()) from None
-
-    return wrapped
 
 
 def posix_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
@@ -82,8 +67,7 @@ def ieee802_outline(designation: str) -> str:
 
 def _server(name: str, instructions: str, tools: list[Callable[..., str]]) -> Any:
     server = MCPServer(name, version=__version__, instructions=instructions)
-    for tool in tools:
-        server.add_tool(_guard(tool), name=tool.__name__, annotations=READ_ONLY, structured_output=False)
+    add_tools(server, tools, annotations=READ_ONLY)
     return server
 
 

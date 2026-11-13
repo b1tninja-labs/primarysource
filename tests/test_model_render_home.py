@@ -4,10 +4,11 @@ from pathlib import Path
 
 import pytest
 
+from primarysource.budget import page
 from primarysource.errors import LibError
 from primarysource.home import atomic_write, resolve_home
 from primarysource.model import Document, Section, Unit, span_hash
-from primarysource.render import render
+from primarysource.render import next_start, parse_next_start, render
 
 
 def _document() -> Document:
@@ -52,6 +53,38 @@ def test_an_unknown_footer_key_or_a_multiline_value_is_a_bug() -> None:
         render("Body.", {"citation": "x"})
     with pytest.raises(ValueError):
         render("Body.", {"cite": "one\ntwo"})
+
+
+def test_a_list_footer_says_next_start_and_the_value_is_what_to_pass_back() -> None:
+    # a list page continuing at 0-based offset 40: the footer line, and parsing it, give back exactly 40
+    text = render("hit 1\nhit 2", {"next": next_start(40)})
+    assert text.endswith("\nnext: start=40\n")
+    value = text.rstrip("\n").rsplit("\n", 1)[1].removeprefix("next: ")
+    assert parse_next_start(value) == 40
+    assert next_start(0) == "start=0"
+    # the last page has no cursor, and render then prints no next: line at all
+    assert next_start(None) == ""
+    assert "next:" not in render("last hit", {"next": next_start(None)})
+
+
+def test_a_list_cursor_follows_a_pager_to_the_end_without_loss() -> None:
+    units = [f"hit {n}" * 30 for n in range(12)]
+    seen: list[str] = []
+    cursor: str = next_start(0)
+    while cursor:
+        offset = parse_next_start(cursor)
+        got = page(units, start=offset + 1, max_tokens=200)  # the pager is 1-based; the cursor is 0-based
+        seen.extend(got.units)
+        cursor = next_start(None if got.next_start is None else got.next_start - 1)
+    assert seen == units
+
+
+@pytest.mark.parametrize("value", ["40", "start=-1", "start=01", "start=", "next=4", "start=4 more"])
+def test_a_malformed_list_cursor_is_refused(value: str) -> None:
+    with pytest.raises(ValueError, match="not a list cursor"):
+        parse_next_start(value)
+    with pytest.raises(ValueError):
+        next_start(-1)
 
 
 def test_an_error_carries_its_hint_into_the_text() -> None:

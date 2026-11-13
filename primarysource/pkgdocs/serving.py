@@ -10,14 +10,14 @@ library.
 from __future__ import annotations
 
 import argparse
-import functools
 import sys
-from collections.abc import Callable, Sequence
+from collections.abc import Sequence
 from typing import Any
 
 from primarysource import __version__
 from primarysource.errors import LibError
 from primarysource.pkgdocs.runtime import Library, Spec
+from primarysource.scaffold import add_tools
 
 DEFAULT_MAX_TOKENS = 2000
 
@@ -25,21 +25,10 @@ DEFAULT_MAX_TOKENS = 2000
 def build_server(spec: Spec, library: Library | None = None) -> Any:
     """An `MCPServer` with read, outline, search, cite, docs and status tools for `spec`."""
     from mcp.server.mcpserver import MCPServer
-    from mcp.server.mcpserver.exceptions import ToolError
     from mcp.types import ToolAnnotations
 
     lib = library or Library(spec)
     examples = "; ".join(spec.example_refs)
-
-    def guard(fn: Callable[..., str]) -> Callable[..., str]:
-        @functools.wraps(fn)  # the SDK reads the tool's schema from the wrapped signature
-        def wrapped(*args: Any, **kwargs: Any) -> str:
-            try:
-                return fn(*args, **kwargs)
-            except LibError as exc:
-                raise ToolError(exc.as_text()) from None
-
-        return wrapped
 
     def read(ref: str, start: int = 1, max_tokens: int = DEFAULT_MAX_TOKENS) -> str:
         return lib.read(ref, start=start, max_tokens=max_tokens)
@@ -81,10 +70,7 @@ def build_server(spec: Spec, library: Library | None = None) -> Any:
     annotations = ToolAnnotations(
         read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False
     )
-    for tool in (read, outline, search, cite, docs, status):
-        server.add_tool(
-            guard(tool), name=spec.prefix + tool.__name__, annotations=annotations, structured_output=False
-        )
+    add_tools(server, (read, outline, search, cite, docs, status), prefix=spec.prefix, annotations=annotations)
     return server
 
 

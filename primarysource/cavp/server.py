@@ -6,18 +6,13 @@ the remedy. Read-only, local files only.
 
 from __future__ import annotations
 
-import functools
-from collections.abc import Callable
-from typing import Any
-
 from mcp.server.mcpserver import MCPServer
-from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import ToolAnnotations
 
 from primarysource import __version__
 from primarysource.cavp import tools
 from primarysource.cavp.paths import open_store
-from primarysource.errors import LibError
+from primarysource.scaffold import add_tools
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False)
 INSTRUCTIONS = (
@@ -28,17 +23,6 @@ INSTRUCTIONS = (
     "'nist:acvp/ECDSA-SigVer-1.0#1/3'. The cite: footer line is the citation. If nothing is imported the error "
     "says how."
 )
-
-
-def _guard(fn: Callable[..., str]) -> Callable[..., str]:
-    @functools.wraps(fn)  # the SDK reads the tool's schema from the wrapped signature
-    def wrapped(*args: Any, **kwargs: Any) -> str:
-        try:
-            return fn(*args, **kwargs)
-        except LibError as exc:
-            raise ToolError(exc.as_text()) from None
-
-    return wrapped
 
 
 def cavp_sets(query: str | None = None, limit: int = 50) -> str:
@@ -77,5 +61,4 @@ def cavp_cite(ref: str) -> str:
 
 
 cavp_server = MCPServer("primarysource-cavp", version=__version__, instructions=INSTRUCTIONS)
-for _tool in (cavp_sets, cavp_groups, cavp_read, cavp_find, cavp_cite):
-    cavp_server.add_tool(_guard(_tool), name=_tool.__name__, annotations=READ_ONLY, structured_output=False)
+add_tools(cavp_server, (cavp_sets, cavp_groups, cavp_read, cavp_find, cavp_cite), annotations=READ_ONLY)

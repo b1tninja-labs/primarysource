@@ -7,17 +7,14 @@ reads local files only; none writes or fetches.
 
 from __future__ import annotations
 
-import functools
-from collections.abc import Callable
 from typing import Any
 
 from mcp.server.mcpserver import MCPServer
-from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import ToolAnnotations
 
 from primarysource import __version__
 from primarysource.ecma import library
-from primarysource.errors import LibError
+from primarysource.scaffold import add_tools
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False)
 
@@ -28,17 +25,6 @@ INSTRUCTIONS = (
     "refs with PDF pages; ecma_cite('<ref>') gives the citation and the hash of the cited text. A clause's span is "
     "its own text and then each subsection. If nothing is imported, the error says how."
 )
-
-
-def _guard(fn: Callable[..., str]) -> Callable[..., str]:
-    @functools.wraps(fn)  # the SDK reads the tool's schema from the wrapped signature
-    def wrapped(*args: Any, **kwargs: Any) -> str:
-        try:
-            return fn(*args, **kwargs)
-        except LibError as exc:
-            raise ToolError(exc.as_text()) from None
-
-    return wrapped
 
 
 def ecma_read(ref: str, start: int = 1, max_tokens: int = 2000) -> str:
@@ -73,8 +59,7 @@ def ecma_docs() -> str:
 
 def _build() -> Any:
     built = MCPServer("primarysource-ecma", version=__version__, instructions=INSTRUCTIONS)
-    for tool in (ecma_read, ecma_search, ecma_outline, ecma_cite, ecma_docs):
-        built.add_tool(_guard(tool), name=tool.__name__, annotations=READ_ONLY, structured_output=False)
+    add_tools(built, (ecma_read, ecma_search, ecma_outline, ecma_cite, ecma_docs), annotations=READ_ONLY)
     return built
 
 
