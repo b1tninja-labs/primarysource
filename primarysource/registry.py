@@ -34,6 +34,7 @@ BUILTIN: dict[str, str] = {
     "rfc": "primarysource.rfc.collection:COLLECTION [rfc]",
     "nist": "primarysource.nist.collection:COLLECTION",
     "usb": "primarysource.usb.collection:COLLECTION",
+    "itu": "primarysource.itu.collection:COLLECTION",
     "posix": "primarysource.ieee:POSIX [ieee]",
     "ieee802": "primarysource.ieee:IEEE802 [ieee]",
     "iana": "primarysource.iana:COLLECTION [iana]",
