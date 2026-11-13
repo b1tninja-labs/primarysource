@@ -1,0 +1,244 @@
+{
+  "schema": 1,
+  "note": "Catalogue metadata only. Registry content is fetched by the importer into $PRIMARYSOURCE_HOME/iana/ and never belongs in this repository.",
+  "terms": {
+    "licence": "CC0-1.0",
+    "placement": "layer",
+    "terms_url": "https://www.iana.org/help/licensing-terms",
+    "terms_read": "2026-11-13",
+    "summary": "Joint IANA/IETF statement (revised 2021-11-10): the Protocol Registries linked from iana.org/protocols may be freely used by any party for any purpose, under the CC0 1.0 dedication. It excludes the root zone, .INT and .ARPA, the IDN repository, the number registries and RIR allocation data (IP address and AS number registries) and the Time Zone Database. No warranty; third-party rights are not guaranteed absent. Nothing on iana.org or robots.txt states a request rate; the importer sends at most one request per second."
+  },
+  "registries": [
+    {
+      "name": "dns-parameters",
+      "title": "DNS parameters (classes, RR types, opcodes, rcodes, EDNS, EDE)",
+      "url": "https://www.iana.org/assignments/dns-parameters/dns-parameters.xml",
+      "likely_users": "namespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "dns-sec-alg-numbers",
+      "title": "DNS Security Algorithm Numbers",
+      "url": "https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xml",
+      "likely_users": "namespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "dnskey-flags",
+      "title": "DNSKEY RR Flags",
+      "url": "https://www.iana.org/assignments/dnskey-flags/dnskey-flags.xml",
+      "likely_users": "namespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "ds-rr-types",
+      "title": "Delegation Signer (DS) Resource Record Type Digest Algorithms",
+      "url": "https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xml",
+      "likely_users": "namespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "dnssec-nsec3-parameters",
+      "title": "DNSSEC NSEC3 Parameters",
+      "url": "https://www.iana.org/assignments/dnssec-nsec3-parameters/dnssec-nsec3-parameters.xml",
+      "likely_users": "namespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "dns-svcb",
+      "title": "DNS Service Bindings (SVCB)",
+      "url": "https://www.iana.org/assignments/dns-svcb/dns-svcb.xml",
+      "likely_users": "namespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "bootp-dhcp-parameters",
+      "title": "DHCP and BOOTP parameters (options, message types)",
+      "url": "https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xml",
+      "likely_users": "leasespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "dhcpv6-parameters",
+      "title": "DHCPv6 parameters",
+      "url": "https://www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xml",
+      "likely_users": "leasespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "bgp-parameters",
+      "title": "BGP parameters (message types, path attributes, capabilities, error codes)",
+      "url": "https://www.iana.org/assignments/bgp-parameters/bgp-parameters.xml",
+      "likely_users": "rtrkit, pathattr, bmpkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "bgp-extended-communities",
+      "title": "BGP Extended Communities",
+      "url": "https://www.iana.org/assignments/bgp-extended-communities/bgp-extended-communities.xml",
+      "likely_users": "pathattr, bmpkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "bgp-well-known-communities",
+      "title": "BGP Well-known Communities",
+      "url": "https://www.iana.org/assignments/bgp-well-known-communities/bgp-well-known-communities.xml",
+      "likely_users": "pathattr, bmpkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "bgp-tunnel-encapsulation",
+      "title": "BGP Tunnel Encapsulation",
+      "url": "https://www.iana.org/assignments/bgp-tunnel-encapsulation/bgp-tunnel-encapsulation.xml",
+      "likely_users": "pathattr",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "bgp-ls-parameters",
+      "title": "BGP-LS parameters",
+      "url": "https://www.iana.org/assignments/bgp-ls-parameters/bgp-ls-parameters.xml",
+      "likely_users": "pathattr, bmpkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "rpki",
+      "title": "Resource Public Key Infrastructure (RPKI) parameters",
+      "url": "https://www.iana.org/assignments/rpki/rpki.xml",
+      "likely_users": "rtrkit, rpkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "stun-parameters",
+      "title": "STUN parameters (methods, attributes, error codes)",
+      "url": "https://www.iana.org/assignments/stun-parameters/stun-parameters.xml",
+      "likely_users": "turnkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "tls-parameters",
+      "title": "TLS parameters (cipher suites, groups, signature schemes, alerts)",
+      "url": "https://www.iana.org/assignments/tls-parameters/tls-parameters.xml",
+      "likely_users": "certledger, ctspy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "tls-extensiontype-values",
+      "title": "TLS extension types",
+      "url": "https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xml",
+      "likely_users": "certledger, ctspy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "http-methods",
+      "title": "HTTP method registry",
+      "url": "https://www.iana.org/assignments/http-methods/http-methods.xml",
+      "likely_users": "h3tunnel, sfields",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "http-status-codes",
+      "title": "HTTP status codes",
+      "url": "https://www.iana.org/assignments/http-status-codes/http-status-codes.xml",
+      "likely_users": "h3tunnel, sfields",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "http-fields",
+      "title": "HTTP field name registry",
+      "url": "https://www.iana.org/assignments/http-fields/http-fields.xml",
+      "likely_users": "sfields",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "pkix-parameters",
+      "title": "PKIX parameters",
+      "url": "https://www.iana.org/assignments/pkix-parameters/pkix-parameters.xml",
+      "likely_users": "pkix, certledger",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "protocol-numbers",
+      "title": "IP protocol numbers",
+      "url": "https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml",
+      "likely_users": "pathattr, syslogkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "address-family-numbers",
+      "title": "Address family numbers",
+      "url": "https://www.iana.org/assignments/address-family-numbers/address-family-numbers.xml",
+      "likely_users": "bmpkit, pathattr",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "icmp-parameters",
+      "title": "ICMP parameters",
+      "url": "https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xml",
+      "likely_users": "namespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "icmpv6-parameters",
+      "title": "ICMPv6 parameters",
+      "url": "https://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xml",
+      "likely_users": "namespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "ikev2-parameters",
+      "title": "IKEv2 parameters",
+      "url": "https://www.iana.org/assignments/ikev2-parameters/ikev2-parameters.xml",
+      "likely_users": "srtpkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "ipfix",
+      "title": "IP Flow Information Export (IPFIX) entities",
+      "url": "https://www.iana.org/assignments/ipfix/ipfix.xml",
+      "likely_users": "syslogkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "ppp-numbers",
+      "title": "Point-to-Point Protocol field assignments",
+      "url": "https://www.iana.org/assignments/ppp-numbers/ppp-numbers.xml",
+      "likely_users": "leasespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "radius-types",
+      "title": "RADIUS types",
+      "url": "https://www.iana.org/assignments/radius-types/radius-types.xml",
+      "likely_users": "tacacs",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "syslog-parameters",
+      "title": "Syslog parameters",
+      "url": "https://www.iana.org/assignments/syslog-parameters/syslog-parameters.xml",
+      "likely_users": "syslogkit",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "ethernet-numbers",
+      "title": "Ethernet numbers",
+      "url": "https://www.iana.org/assignments/ethernet-numbers/ethernet-numbers.xml",
+      "likely_users": "leasespy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "ntp-parameters",
+      "title": "NTP parameters",
+      "url": "https://www.iana.org/assignments/ntp-parameters/ntp-parameters.xml",
+      "likely_users": "ntspy",
+      "read": "2026-11-13"
+    },
+    {
+      "name": "tcp-parameters",
+      "title": "TCP parameters (options, flags)",
+      "url": "https://www.iana.org/assignments/tcp-parameters/tcp-parameters.xml",
+      "likely_users": "h3tunnel",
+      "read": "2026-11-13"
+    }
+  ]
+}

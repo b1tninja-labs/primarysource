@@ -36,6 +36,7 @@ BUILTIN: dict[str, str] = {
     "usb": "primarysource.usb.collection:COLLECTION",
     "posix": "primarysource.ieee:POSIX [ieee]",
     "ieee802": "primarysource.ieee:IEEE802 [ieee]",
+    "iana": "primarysource.iana:COLLECTION [iana]",
 }
 
 _NAME = re.compile(r"[a-z][a-z0-9]*")
