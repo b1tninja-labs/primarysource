@@ -137,6 +137,15 @@ Backends give different text, so the backend name and version are part of an ind
      into place) and brings the library's tests with it. The old repository is then archived with a README that
      points here. `rfclib` stays published on PyPI as a thin distribution that depends on `primarysource[rfc]`
      and keeps the `rfclib` command, so that nobody's configuration breaks.
+   - **Subpackage with its own semantics, or plain collection.** A publisher gets a subpackage with its own
+     code only where status, edition or errata semantics need it: RFC, ITU and NIST. Every other source is a
+     plain collection, declared by a manifest (licence, placement as image layer or volume, pinned source and
+     digest) and read by the core's readers. Planned plain collections:
+     - `posix`: IEEE 1003.1-2024, the same text as The Open Group Base Specifications Issue 8. Free HTML,
+       downloaded by the user, digest-pinned, on a volume.
+     - `ieee802`: from IEEE's free-access programme, as PDFs.
+     IEEE 754, 1588 and 1284 are paid and out of reach. The research is in the side-session notes,
+     `roadmap-F-reference/ieeelib.md`.
    - **Tracked metadata moves; corpus text never does.** Catalogues, `sources.toml` and digests are package
      data. Fetched text lives under the home directory, per collection (`$PRIMARYSOURCE_HOME/<collection>/`).
      The old `<LIB>_HOME`/`<LIB>_DATA` variables are read as fallbacks for one release.
