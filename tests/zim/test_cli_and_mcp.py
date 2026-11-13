@@ -15,7 +15,7 @@ from mcp.client.stdio import stdio_client  # noqa: E402
 from zimfixture import build_zim, contract_server, tool_error  # noqa: E402
 
 from primarysource.errors import LibError  # noqa: E402
-from primarysource.zim import cli, mcp  # noqa: E402
+from primarysource.zim import _libzim, cli, mcp  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 TOOLS = {
@@ -61,7 +61,7 @@ def test_cli_info_works_without_any_zim_and_reports_the_binding(
 ) -> None:
     code, out, _ = run(capsys, "info", "--json")
     data = json.loads(out)
-    assert code == 0 and data["installed"] == 0 and data["libzim"] is True
+    assert code == 0 and data["installed"] == 0 and data["libzim"] is _libzim.available()
     assert data["home"] == str(home)
 
 

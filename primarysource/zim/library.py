@@ -426,7 +426,7 @@ def empty_library_error(scanned: Scan) -> ZimloreError:
     fix = (
         "download one: primarysource zim catalog flask ; primarysource zim get devdocs_en_flask "
         "(or copy a .zim into that directory)"
-        if _libzim.available()
+        if not scanned.problems or _libzim.available()
         else _libzim.REMEDY
     )
     return ZimloreError(

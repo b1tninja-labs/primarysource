@@ -249,6 +249,7 @@ def test_add_copies_a_local_zim_records_the_source_and_a_locally_computed_hash(h
 
 
 def test_add_refuses_a_file_libzim_cannot_open_and_copies_nothing(home: Path, tmp_path: Path) -> None:
+    pytest.importorskip("libzim")
     bad = tmp_path / "elsewhere" / "broken.zim"
     bad.parent.mkdir()
     bad.write_bytes(b"this is not a zim file at all" * 10)

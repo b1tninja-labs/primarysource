@@ -1,3 +1,11 @@
+> **Moved into primarysource (2026-11-13).** This is zimlore's README as of `1903b46`, kept for its design
+> content. In this repository the package is `primarysource.zim`; install it with
+> `pip install "primarysource[zim,mcp]"`; `zimlore <command>` is `primarysource zim <command>`;
+> `ZIMLORE_HOME`, `ZIMLORE_ZIM_PATH` and `ZIMLORE_MAX_ENTRY_BYTES` still work, beside `PRIMARYSOURCE_ZIM_HOME`,
+> `PRIMARYSOURCE_ZIM_PATH` and `PRIMARYSOURCE_ZIM_MAX_ENTRY_BYTES`. The tools return text with a footer (`cite:`,
+> `next:`, ...) rather than the JSON objects described below, and a read's `next:` is a ref, not `{"ref", "start"}`
+> (ROADMAP.md section 3a and `cl.adopt_zimlore`).
+
 # zimlore
 
 A [Kiwix](https://kiwix.org) library (ZIM files) served to AI agents over MCP: **offline, citable,

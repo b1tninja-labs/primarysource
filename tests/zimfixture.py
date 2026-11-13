@@ -125,9 +125,9 @@ PEP_LIKE = shell(
 
 
 def _item_class() -> Any:
-    from libzim import writer
+    writer = pytest.importorskip("libzim.writer")
 
-    class Item(writer.Item):  # type: ignore[misc]
+    class Item(writer.Item):  # type: ignore[misc, name-defined]
         def __init__(self, path: str, title: str, mimetype: str, content: str | bytes, front: bool = True) -> None:
             super().__init__()
             self._path, self._title, self._mimetype, self._front = path, title, mimetype, front
@@ -169,7 +169,7 @@ def build_zim(
     source: str = "",
     tags: str = "devdocs;acme;_ftindex:yes",
 ) -> Path:
-    from libzim import writer
+    writer = pytest.importorskip("libzim.writer")
 
     item = _item_class()
     directory.mkdir(parents=True, exist_ok=True)
@@ -208,8 +208,8 @@ def build_redirect_loop_zim(directory: Path, filename: str = "loop_en_x_2026-10.
     checksum no longer matches; the reader does not check it on open."""
     import struct
 
-    from libzim import writer
-    from libzim.reader import Archive
+    writer = pytest.importorskip("libzim.writer")
+    Archive = pytest.importorskip("libzim.reader").Archive
 
     item = _item_class()
     directory.mkdir(parents=True, exist_ok=True)
