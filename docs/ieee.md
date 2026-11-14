@@ -1,9 +1,10 @@
 # IEEE collections: `posix` and `ieee802`
 
-Two collections in one subpackage, `primarysource/ieee/`, both installed by one extra:
+Two collections in one subpackage, `primarysource/ieee/`. `posix` has its own extra, `[posix]`, which adds no
+dependency; `ieee802` needs `[ieee]` (`pypdf`, to import PDFs), the umbrella for both:
 
 ```
-pip install "primarysource[ieee]"
+pip install "primarysource[posix]"             # or "primarysource[ieee]" for posix and ieee802
 primarysource posix import susv5.tgz          # your own download, see section 4
 primarysource mcp --collection posix            # tools posix_read, posix_outline, posix_grep, posix_pages
 primarysource mcp --collection ieee802          # tool ieee802_outline
@@ -240,7 +241,7 @@ Also for the core:
 - `home.collection_home` is used through `importer.collection_home`, which only adds an explicit-home override
   for tests.
 
-**Dependencies.** `pypdf>=5`, the `[ieee]` extra, is imported only by the 802 PDF import. `posix` needs nothing
+**Dependencies.** `pypdf>=5`, the `[ieee]` extra, is imported only by the 802 PDF import. `posix` has its own empty `[posix]` extra and needs nothing
 outside the standard library to import or read, and `mcp` only to be served. The rfc collection's extras
 (b7ea38e) landed first, so `pypdf` is not this package's first third-party dependency. It is the first one a
 document reader needs. The owner's self-sufficiency rule (no third-party runtime dependencies) against optional

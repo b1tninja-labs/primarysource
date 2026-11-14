@@ -1,4 +1,5 @@
-"""IEEE standards: two collections in one subpackage, both installed by `pip install "primarysource[ieee]"`.
+"""IEEE standards: two collections in one subpackage, `posix` by `[posix]` (no
+dependency) and `ieee802` by `[ieee]` (`pypdf`).
 
 - `posix`: IEEE Std 1003.1-2024, which is The Open Group Base Specifications Issue 8 (one text, also published
   as ISO/IEC/IEEE 9945). The free HTML edition, downloaded by the user and imported from its archive.

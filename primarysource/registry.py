@@ -29,13 +29,13 @@ ENTRY_POINT_GROUP = "primarysource.collections"
 
 # name -> "module:attribute" or "module:attribute [extra]", the entry-point spelling. A collection is added here
 # when it moves in (PLAN.md §6). Without "[extra]" the extra is the collection's name; two collections that share
-# one extra (posix and ieee802 in `[ieee]`) both name it.
+# one extra both name it (`[ieee]` is also an umbrella, but only ieee802 needs it).
 BUILTIN: dict[str, str] = {
     "rfc": "primarysource.rfc.collection:COLLECTION [rfc]",
     "nist": "primarysource.nist.collection:COLLECTION",
     "usb": "primarysource.usb.collection:COLLECTION",
     "itu": "primarysource.itu.collection:COLLECTION",
-    "posix": "primarysource.ieee:POSIX [ieee]",
+    "posix": "primarysource.ieee:POSIX [posix]",
     "ieee802": "primarysource.ieee:IEEE802 [ieee]",
     "iana": "primarysource.iana:COLLECTION [iana]",
     "cavp": "primarysource.cavp:COLLECTION",
