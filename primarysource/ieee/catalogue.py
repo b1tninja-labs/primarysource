@@ -116,21 +116,49 @@ POSIX_2024 = EDITIONS["posix-2024"]
 
 @dataclass(frozen=True, slots=True)
 class FamilyEntry:
-    """One IEEE 1003.x (or ISO adoption) standard as IEEE prints it: status metadata, never text."""
+    """One IEEE 1003.x (or ISO adoption) standard as IEEE prints it: metadata, never text.
+
+    `title` is None where the page's printed title was not verified. `not_stated` names the fields the page did
+    not state, so an empty `superseded_by` there means unknown rather than none.
+    """
 
     designation: str
+    title: str | None
     status: str
-    published: str
-    relation: str
+    published: str | None
+    superseded_by: tuple[str, ...]
+    supersedes: tuple[str, ...]
+    not_stated: tuple[str, ...]
+    notes: str
     url: str
     read: str
 
 
 def _family(raw: str) -> tuple[FamilyEntry, ...]:
-    return tuple(FamilyEntry(**row) for row in json.loads(raw)["posix_family"]["standards"])
+    rows = json.loads(raw)["posix_family"]["standards"]
+    return tuple(
+        FamilyEntry(
+            **{
+                **row,
+                "superseded_by": tuple(row["superseded_by"]),
+                "supersedes": tuple(row["supersedes"]),
+                "not_stated": tuple(row["not_stated"]),
+            }
+        )
+        for row in rows
+    )
 
 
 POSIX_FAMILY = _family(resources.files("primarysource.ieee").joinpath("catalogue.json").read_text(encoding="utf-8"))
+
+
+def family_entry(designation: str) -> FamilyEntry:
+    """The family entry whose designation matches (case-insensitive), or a LibError listing the known ones."""
+    for entry in POSIX_FAMILY:
+        if entry.designation.casefold() == designation.strip().casefold():
+            return entry
+    known = ", ".join(e.designation for e in POSIX_FAMILY)
+    raise LibError(f"{designation!r} is not in the 1003.x family catalogue", f"known designations: {known}")
 
 
 def edition(collection: str, edition_id: str) -> Edition:

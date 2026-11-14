@@ -76,109 +76,256 @@
     }
   },
   "posix_family": {
-    "note": "Status metadata read from standards.ieee.org pages on 2026-11-13 (via a page summariser, so verify before quoting). Unverified: 1003.1-1990, 1003.13-1998, a 1003.5-1999 edition. No text.",
+    "note": "IEEE 1003.x family metadata, each row read from its standards.ieee.org page on 2026-11-13 through a page summariser, so verify exact title punctuation before quoting. 'not_stated' lists fields the page did not state: they are empty because unknown, not because none exists. No text.",
     "standards": [
       {
         "designation": "IEEE Std 1003.1-2024",
+        "title": "IEEE/Open Group Standard for Information Technology--Portable Operating System Interface (POSIX(TM)) Base Specifications, Issue 8",
         "status": "Active Standard",
         "published": "2024-06-14",
-        "relation": "supersedes 1003.1-2017; Cor 1 (P1003.1-2024/Cor 1) in development",
+        "superseded_by": [],
+        "supersedes": [
+          "1003.1-2017"
+        ],
+        "not_stated": [
+          "revision_of"
+        ],
+        "notes": "Also IEEE/Open Group; Issue 8. Board approval 2024-05-20, PAR 2019-09-05. Page says only 'Superseding 1003.1-2017' and names no successor. P1003.1-2024/Cor 1 in development.",
         "url": "https://standards.ieee.org/ieee/1003.1/7700/",
         "read": "2026-11-13"
       },
       {
         "designation": "IEEE Std 1003.1-2017",
+        "title": "IEEE Standard for Information Technology--Portable Operating System Interface (POSIX(TM)) Base Specifications, Issue 7",
         "status": "Superseded Standard",
         "published": "2018-01-31",
-        "relation": "superseded by 1003.1-2024; supersedes 1003.1-2008",
+        "superseded_by": [
+          "1003.1-2024"
+        ],
+        "supersedes": [
+          "1003.1-2008"
+        ],
+        "not_stated": [],
+        "notes": "Issue 7; IEEE/Open Group 1003.1-2017. Board approval 2017-12-06, PAR 2017-06-15.",
         "url": "https://standards.ieee.org/ieee/1003.1/7101",
         "read": "2026-11-13"
       },
       {
         "designation": "IEEE Std 1003.1-2008",
+        "title": "IEEE Standard for Information Technology - Portable Operating System Interface (POSIX(TM))",
         "status": "Superseded Standard",
         "published": "2008-12-01",
-        "relation": "superseded by 1003.1-2017; supersedes 1003.1-2001",
+        "superseded_by": [
+          "1003.1-2017"
+        ],
+        "supersedes": [
+          "1003.1-2001"
+        ],
+        "not_stated": [
+          "revision_of"
+        ],
+        "notes": "Board approval 2008-09-26, ANSI 2009-07-06. Cor 1-2013, Cor 2-2016.",
         "url": "https://standards.ieee.org/ieee/1003.1/4020",
         "read": "2026-11-13"
       },
       {
         "designation": "IEEE Std 1003.1-2001",
+        "title": "IEEE Standard for IEEE Information Technology - Portable Operating System Interface (POSIX(TM))",
         "status": "Superseded Standard",
         "published": "2001-12-06",
-        "relation": "superseded by 1003.1-2008",
+        "superseded_by": [
+          "1003.1-2008"
+        ],
+        "supersedes": [
+          "1003.1-1990"
+        ],
+        "not_stated": [],
+        "notes": "Page describes it as the common revision of 1003.1-1996, 1003.2-1992 and the Open Group Single UNIX Specification v2 base. Board approval 2001-12-06, PAR 1999-06-26, ANSI 2002-05-14. Cor 1-2002, Cor 2-2004.",
         "url": "https://standards.ieee.org/ieee/1003.1/1389",
         "read": "2026-11-13"
       },
       {
+        "designation": "IEEE Std 1003.1-1990",
+        "title": "Portable Operating System Interface (POSIX(TM)) -- Part 1: System Application Program Interface (API) [C Language]",
+        "status": "Superseded Standard",
+        "published": "1990-12-07",
+        "superseded_by": [
+          "1003.1-2001"
+        ],
+        "supersedes": [
+          "1003.1-1988"
+        ],
+        "not_stated": [],
+        "notes": "Board approval 1990-09-28, ANSI 1991-04-15, reaffirmed 1995-12-12.",
+        "url": "https://standards.ieee.org/ieee/1003.1/1385",
+        "read": "2026-11-13"
+      },
+      {
         "designation": "IEEE Std 1003.2-1992",
+        "title": "IEEE Standard for Information Technology--Portable Operating System Interfaces (POSIX(TM))--Part 2: Shell and Utilities",
         "status": "Superseded Standard",
         "published": "1993-06-23",
-        "relation": "no superseding standard named; folded into 1003.1-2001",
+        "superseded_by": [],
+        "supersedes": [],
+        "not_stated": [],
+        "notes": "No superseding standard named (only amendment 1003.2d-1994). IEEE's 1003.1-2001 page calls 1003.1-2001 the common revision that includes 1003.2-1992. ANSI 1993-04-05, board approval 1992-09-17.",
         "url": "https://standards.ieee.org/standard/1003_2-1992.html",
         "read": "2026-11-13"
       },
       {
+        "designation": "IEEE/ISO/IEC 9945-2-1993",
+        "title": "ISO/IEC International Standard - Information technology--Portable Operating System Interface (POSIX(TM)) -- Part 2: Shell and Utilities - Volume 2",
+        "status": "Superseded Standard",
+        "published": "1993-12-22",
+        "superseded_by": [
+          "9945-2-2003"
+        ],
+        "supersedes": [],
+        "not_stated": [],
+        "notes": "ISO adoption of 1003.2.",
+        "url": "https://standards.ieee.org/ieee/9945-2/2368",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE 9945-2-2003",
+        "title": null,
+        "status": "Superseded Standard",
+        "published": "2003-09-02",
+        "superseded_by": [],
+        "supersedes": [
+          "9945-2-1993"
+        ],
+        "not_stated": [
+          "title",
+          "superseded_by"
+        ],
+        "notes": "The page prints 'ISO/IEC 9945-2:2003 (E) ... Part 2: System Interfaces', which looks like a title oddity and was not verified against the standard; no title is recorded.",
+        "url": "https://standards.ieee.org/ieee/9945-2/3454",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.13-1998",
+        "title": "IEEE Standard for Information Technology - Standardized Application Environment Profile - POSIX(TM) Realtime Application Support (AEP)",
+        "status": "Superseded Standard",
+        "published": "1999-09-03",
+        "superseded_by": [
+          "1003.13-2003"
+        ],
+        "supersedes": [],
+        "not_stated": [
+          "supersedes"
+        ],
+        "notes": "Board approval 1998-03-19.",
+        "url": "https://standards.ieee.org/ieee/1003.13/1444",
+        "read": "2026-11-13"
+      },
+      {
         "designation": "IEEE Std 1003.13-2003",
+        "title": "IEEE Standard for Information Technology - Standardized Application Environment Profile (AEP) - POSIX(TM) Realtime and Embedded Application Support",
         "status": "Inactive-Reserved Standard (inactivated 2021-03-25)",
         "published": "2004-09-10",
-        "relation": "supersedes 1003.13-1998; no successor listed",
+        "superseded_by": [],
+        "supersedes": [
+          "1003.13-1998"
+        ],
+        "not_stated": [
+          "superseded_by",
+          "revision_of"
+        ],
+        "notes": "Board approval 2003-12-10, ANSI 2004-04-26, reaffirmed 2010-06-17, PAR 2002-06-13. Superseded-by and revision-of not listed.",
         "url": "https://standards.ieee.org/standard/1003_13-2003.html",
         "read": "2026-11-13"
       },
       {
         "designation": "IEEE Std 1003.26-2003",
+        "title": "IEEE Standard for Information Technology - Portable Operating System Interface (POSIX(TM)) - Part 26: Device Control Application Program Interface (API) [C Language]",
         "status": "Inactive-Reserved Standard (inactivated 2021-03-25)",
         "published": "2004-09-09",
-        "relation": "no successor listed",
+        "superseded_by": [],
+        "supersedes": [],
+        "not_stated": [],
+        "notes": "Board approval 2003-12-10, ANSI 2004-04-26, reaffirmed 2010-06-17. Older page: https://standards.ieee.org/standard/1003_26-2003.html. No relations listed.",
         "url": "https://standards.ieee.org/ieee/1003.26/3042",
         "read": "2026-11-13"
       },
       {
         "designation": "IEEE Std 1003.0-1995",
+        "title": "IEEE Guide to the POSIX Open System Environment (OSE)",
         "status": "Inactive-Withdrawn Standard (withdrawn 2002-01-10)",
         "published": "1994-11-30",
-        "relation": "no successor listed",
+        "superseded_by": [],
+        "supersedes": [],
+        "not_stated": [],
+        "notes": "Board approval 1995-05-02, ANSI 1995-12-19. No relations listed.",
         "url": "https://standards.ieee.org/standard/1003_0-1995.html",
         "read": "2026-11-13"
       },
       {
         "designation": "IEEE Std 1003.3-1991",
+        "title": "IEEE Standard for Information Technology-Test Methods for Measuring Conformance to POSIX",
         "status": "Inactive-Withdrawn Standard (withdrawn 1997-12-09)",
         "published": "1991-04-15",
-        "relation": "no successor listed",
+        "superseded_by": [],
+        "supersedes": [],
+        "not_stated": [],
+        "notes": "Board approval 1991-03-21, ANSI 1991-08-09. No relations listed.",
         "url": "https://standards.ieee.org/standard/1003_3-1991.html",
         "read": "2026-11-13"
       },
       {
         "designation": "IEEE Std 1003.5-1992",
+        "title": "IEEE Standard for Information Technology--POSIX(TM) Ada Language Interfaces--PART 1: Binding for System Application Program Interface (API)",
         "status": "Inactive-Withdrawn Standard (withdrawn 2010-01-09)",
         "published": "1994-03-24",
-        "relation": "superseded by 1003.5-1998",
+        "superseded_by": [
+          "1003.5-1998"
+        ],
+        "supersedes": [],
+        "not_stated": [],
+        "notes": "Page also prints Superseded-by 1003.5-1998 while Withdrawn. Board approval 1992-06-18, ANSI 1993-01-07, reaffirmed 2004-09-23. Amendments 1003.5b-1996, 1003.5c-1998. New-style page: https://standards.ieee.org/ieee/1003.5/1423. No 1003.5-1999 edition exists on the page.",
         "url": "https://standards.ieee.org/standard/1003_5-1992.html",
         "read": "2026-11-13"
       },
       {
         "designation": "IEEE Std 1003.5-1998",
+        "title": "IEEE Standard for Information Technology--POSIX(TM) Ada Language Interfaces--PART 1: Binding for System Application Program Interface (API)",
         "status": "Superseded Standard",
-        "published": "",
-        "relation": "supersedes 1003.5-1992; successor not stated",
+        "published": null,
+        "superseded_by": [],
+        "supersedes": [
+          "1003.5-1992"
+        ],
+        "not_stated": [
+          "published",
+          "superseded_by"
+        ],
+        "notes": "Title taken as same as 1003.5-1992 per the notes. Board approval 1998-12-08.",
         "url": "https://standards.ieee.org/ieee/1003.5/1427",
         "read": "2026-11-13"
       },
       {
         "designation": "IEEE Std 1003.23-1998",
+        "title": "IEEE Guide for Developing User Open System Environment (OSE) Profiles",
         "status": "Inactive-Withdrawn Standard (withdrawn 2004-01-16)",
         "published": "1999-08-11",
-        "relation": "no successor listed",
+        "superseded_by": [],
+        "supersedes": [],
+        "not_stated": [],
+        "notes": "Board approval 1998-12-08, ANSI 1999-11-16. No relations listed.",
         "url": "https://standards.ieee.org/standard/1003_23-1998.html",
         "read": "2026-11-13"
       },
       {
         "designation": "ISO/IEC/IEEE 9945",
+        "title": "ISO/IEC/IEEE International Standard, Information technology, Portable Operating System Interface (POSIX(TM)) Base Specifications, Issue 8",
         "status": "Active Standard",
         "published": "2026-03-24",
-        "relation": "IEEE's page lists 1003.1-2017 as replaced; Cor 1 in development",
+        "superseded_by": [],
+        "supersedes": [],
+        "not_stated": [
+          "supersedes"
+        ],
+        "notes": "Page states no supersedes but lists 1003.1-2017 under replaced. Cor 1 in development.",
         "url": "https://standards.ieee.org/ieee/9945/12489",
         "read": "2026-11-13"
       }

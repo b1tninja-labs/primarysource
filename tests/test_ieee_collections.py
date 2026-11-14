@@ -160,9 +160,43 @@ def test_the_posix_family_is_metadata_and_agrees_with_the_edition() -> None:
     from primarysource.ieee.catalogue import POSIX_FAMILY
 
     by_name = {e.designation: e for e in POSIX_FAMILY}
-    assert len(by_name) == len(POSIX_FAMILY) >= 13
+    assert len(by_name) == len(POSIX_FAMILY) == 17
     current = by_name[POSIX_2024.designations[0]]
     assert current.status == "Active Standard" and current.published == POSIX_2024.edition_date
     assert by_name["IEEE Std 1003.1-2017"].status == "Superseded Standard"
     assert by_name["IEEE Std 1003.13-2003"].status.startswith("Inactive-Reserved")
     assert all(e.url.startswith("https://standards.ieee.org/") and e.read for e in POSIX_FAMILY)
+
+
+def test_the_1003_1_chain_is_stated_both_ways() -> None:
+    from primarysource.ieee.catalogue import family_entry
+
+    chain = ["2024", "2017", "2008", "2001", "1990"]
+    for newer, older in zip(chain, chain[1:], strict=False):
+        assert f"1003.1-{older}" in family_entry(f"IEEE Std 1003.1-{newer}").supersedes
+        assert f"1003.1-{newer}" in family_entry(f"IEEE Std 1003.1-{older}").superseded_by
+    assert family_entry("IEEE Std 1003.1-2024").superseded_by == ()
+
+
+def test_what_the_page_did_not_state_is_marked_not_filled() -> None:
+    from primarysource.ieee.catalogue import POSIX_FAMILY, family_entry
+
+    assert "superseded_by" in family_entry("IEEE Std 1003.13-2003").not_stated
+    assert "published" in family_entry("IEEE Std 1003.5-1998").not_stated
+    assert family_entry("IEEE Std 1003.5-1998").published is None
+    oddity = family_entry("IEEE 9945-2-2003")
+    assert oddity.title is None and "title" in oddity.not_stated
+    for entry in POSIX_FAMILY:
+        assert set(entry.not_stated) <= {"title", "published", "superseded_by", "supersedes", "revision_of"}
+        for field in ("title", "published"):
+            assert (getattr(entry, field) is None) == (field in entry.not_stated)
+
+
+def test_family_metadata_carries_no_document_text_and_unknown_is_a_lib_error() -> None:
+    from primarysource.ieee.catalogue import POSIX_FAMILY, family_entry
+
+    assert all(len(e.notes) < 600 and len(e.title or "") < 250 for e in POSIX_FAMILY)
+    assert family_entry("ieee std 1003.1-2008").published == "2008-12-01"
+    with pytest.raises(LibError) as err:
+        family_entry("IEEE Std 1003.99")
+    assert "IEEE Std 1003.1-2024" in err.value.hint
