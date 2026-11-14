@@ -31,6 +31,9 @@ and sha256 digests) and invented test pages. Text you import lives under `$PRIMA
   to an automated fetch), so they are not verified from the primary page. The ISO edition is sold and is not
   imported here.
 
+The catalogue's `posix_family` block (`catalogue.POSIX_FAMILY`) records status metadata for the 1003.x family:
+succession and status as IEEE prints them (read 2026-11-13, through a page summariser), no text.
+
 IEEE publishes the 2024 edition as "IEEE/Open Group Standard for Information Technology--Portable Operating
 System Interface (POSIX) Base Specifications, Issue 8", designation IEEE 1003.1-2024, an Active Standard
 published 2024-06-14 (standards.ieee.org, read 2026-11-13). A cite names IEEE first, then Issue 8, because the

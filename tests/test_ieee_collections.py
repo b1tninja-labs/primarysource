@@ -154,3 +154,15 @@ def test_no_file_in_the_tree_carries_the_standard_s_notice() -> None:
         for path in (root / folder).rglob("*"):
             if path.is_file() and path.suffix in {".py", ".json", ".md", ".html", ".txt"}:
                 assert NOTICE not in path.read_text(encoding="utf-8", errors="replace"), path
+
+
+def test_the_posix_family_is_metadata_and_agrees_with_the_edition() -> None:
+    from primarysource.ieee.catalogue import POSIX_FAMILY
+
+    by_name = {e.designation: e for e in POSIX_FAMILY}
+    assert len(by_name) == len(POSIX_FAMILY) >= 13
+    current = by_name[POSIX_2024.designations[0]]
+    assert current.status == "Active Standard" and current.published == POSIX_2024.edition_date
+    assert by_name["IEEE Std 1003.1-2017"].status == "Superseded Standard"
+    assert by_name["IEEE Std 1003.13-2003"].status.startswith("Inactive-Reserved")
+    assert all(e.url.startswith("https://standards.ieee.org/") and e.read for e in POSIX_FAMILY)

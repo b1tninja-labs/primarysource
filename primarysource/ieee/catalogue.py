@@ -114,6 +114,25 @@ IEEE802_TERMS = TERMS["ieee802"]
 POSIX_2024 = EDITIONS["posix-2024"]
 
 
+@dataclass(frozen=True, slots=True)
+class FamilyEntry:
+    """One IEEE 1003.x (or ISO adoption) standard as IEEE prints it: status metadata, never text."""
+
+    designation: str
+    status: str
+    published: str
+    relation: str
+    url: str
+    read: str
+
+
+def _family(raw: str) -> tuple[FamilyEntry, ...]:
+    return tuple(FamilyEntry(**row) for row in json.loads(raw)["posix_family"]["standards"])
+
+
+POSIX_FAMILY = _family(resources.files("primarysource.ieee").joinpath("catalogue.json").read_text(encoding="utf-8"))
+
+
 def edition(collection: str, edition_id: str) -> Edition:
     """The catalogued edition, or a LibError that lists the ones this collection knows."""
     found = EDITIONS.get(edition_id)

@@ -16,7 +16,7 @@
             "The Open Group Base Specifications Issue 8",
             "ISO/IEC/IEEE 9945:2026"
           ],
-          "designation_note": "One text under three covers. IEEE's page for 1003.1-2024 (standards.ieee.org, read 2026-11-13) says it is simultaneously IEEE Std 1003.1-2024 and The Open Group Base Specifications Issue 8, and lists the ISO/IEC/IEEE 9945 International Standard with the same Issue 8 title. ISO/IEC/IEEE 9945:2026 (edition 2, 2026-03, replacing the 2009 first edition) is known only from search-result snippets: iso.org answered HTTP 403 to an automated fetch, so its date and its identity with this HTML are not verified from the primary page. It is sold; this collection neither holds nor imports it.",
+          "designation_note": "One text under three covers. IEEE's page for 1003.1-2024 (standards.ieee.org, read 2026-11-13) says it is simultaneously IEEE Std 1003.1-2024 and The Open Group Base Specifications Issue 8, and lists the ISO/IEC/IEEE 9945 International Standard with the same Issue 8 title. ISO/IEC/IEEE 9945:2026 (edition 2, 2026-03, replacing the 2009 first edition) is known from search-result snippets and from IEEE's own ISO/IEC/IEEE 9945 page (standards.ieee.org/ieee/9945/12489, Active, published 2026-03-24, read 2026-11-13 via a page summariser); iso.org answered HTTP 403 to an automated fetch, so its identity with this HTML is not verified from ISO. It is sold; this collection neither holds nor imports it.",
           "title": "IEEE/Open Group Standard for Information Technology--Portable Operating System Interface (POSIX) Base Specifications, Issue 8",
           "publisher": "IEEE and The Open Group",
           "edition_date": "2024-06-14",
@@ -44,7 +44,9 @@
       "editions": [
         {
           "id": "802.1Q-2022",
-          "designations": ["IEEE Std 802.1Q-2022"],
+          "designations": [
+            "IEEE Std 802.1Q-2022"
+          ],
           "title": "IEEE Standard for Local and Metropolitan Area Networks--Bridges and Bridged Networks",
           "publisher": "IEEE",
           "edition_date": "2022-12-22",
@@ -57,7 +59,9 @@
         },
         {
           "id": "802.3-2022",
-          "designations": ["IEEE Std 802.3-2022"],
+          "designations": [
+            "IEEE Std 802.3-2022"
+          ],
           "title": "IEEE Standard for Ethernet",
           "publisher": "IEEE",
           "edition_date": "2022-07-29",
@@ -70,5 +74,114 @@
         }
       ]
     }
+  },
+  "posix_family": {
+    "note": "Status metadata read from standards.ieee.org pages on 2026-11-13 (via a page summariser, so verify before quoting). Unverified: 1003.1-1990, 1003.13-1998, a 1003.5-1999 edition. No text.",
+    "standards": [
+      {
+        "designation": "IEEE Std 1003.1-2024",
+        "status": "Active Standard",
+        "published": "2024-06-14",
+        "relation": "supersedes 1003.1-2017; Cor 1 (P1003.1-2024/Cor 1) in development",
+        "url": "https://standards.ieee.org/ieee/1003.1/7700/",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.1-2017",
+        "status": "Superseded Standard",
+        "published": "2018-01-31",
+        "relation": "superseded by 1003.1-2024; supersedes 1003.1-2008",
+        "url": "https://standards.ieee.org/ieee/1003.1/7101",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.1-2008",
+        "status": "Superseded Standard",
+        "published": "2008-12-01",
+        "relation": "superseded by 1003.1-2017; supersedes 1003.1-2001",
+        "url": "https://standards.ieee.org/ieee/1003.1/4020",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.1-2001",
+        "status": "Superseded Standard",
+        "published": "2001-12-06",
+        "relation": "superseded by 1003.1-2008",
+        "url": "https://standards.ieee.org/ieee/1003.1/1389",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.2-1992",
+        "status": "Superseded Standard",
+        "published": "1993-06-23",
+        "relation": "no superseding standard named; folded into 1003.1-2001",
+        "url": "https://standards.ieee.org/standard/1003_2-1992.html",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.13-2003",
+        "status": "Inactive-Reserved Standard (inactivated 2021-03-25)",
+        "published": "2004-09-10",
+        "relation": "supersedes 1003.13-1998; no successor listed",
+        "url": "https://standards.ieee.org/standard/1003_13-2003.html",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.26-2003",
+        "status": "Inactive-Reserved Standard (inactivated 2021-03-25)",
+        "published": "2004-09-09",
+        "relation": "no successor listed",
+        "url": "https://standards.ieee.org/ieee/1003.26/3042",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.0-1995",
+        "status": "Inactive-Withdrawn Standard (withdrawn 2002-01-10)",
+        "published": "1994-11-30",
+        "relation": "no successor listed",
+        "url": "https://standards.ieee.org/standard/1003_0-1995.html",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.3-1991",
+        "status": "Inactive-Withdrawn Standard (withdrawn 1997-12-09)",
+        "published": "1991-04-15",
+        "relation": "no successor listed",
+        "url": "https://standards.ieee.org/standard/1003_3-1991.html",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.5-1992",
+        "status": "Inactive-Withdrawn Standard (withdrawn 2010-01-09)",
+        "published": "1994-03-24",
+        "relation": "superseded by 1003.5-1998",
+        "url": "https://standards.ieee.org/standard/1003_5-1992.html",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.5-1998",
+        "status": "Superseded Standard",
+        "published": "",
+        "relation": "supersedes 1003.5-1992; successor not stated",
+        "url": "https://standards.ieee.org/ieee/1003.5/1427",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "IEEE Std 1003.23-1998",
+        "status": "Inactive-Withdrawn Standard (withdrawn 2004-01-16)",
+        "published": "1999-08-11",
+        "relation": "no successor listed",
+        "url": "https://standards.ieee.org/standard/1003_23-1998.html",
+        "read": "2026-11-13"
+      },
+      {
+        "designation": "ISO/IEC/IEEE 9945",
+        "status": "Active Standard",
+        "published": "2026-03-24",
+        "relation": "IEEE's page lists 1003.1-2017 as replaced; Cor 1 in development",
+        "url": "https://standards.ieee.org/ieee/9945/12489",
+        "read": "2026-11-13"
+      }
+    ]
   }
 }
