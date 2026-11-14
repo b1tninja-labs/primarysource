@@ -23,7 +23,17 @@ and sha256 digests) and invented test pages. Text you import lives under `$PRIMA
 **POSIX is one edition with three designations.** The same text is published as:
 - IEEE Std 1003.1-2024;
 - The Open Group Base Specifications Issue 8;
-- ISO/IEC/IEEE 9945 (not examined here: its year and its identity with this HTML are not verified).
+- ISO/IEC/IEEE 9945: the second edition is 9945:2026 (replacing the 2009 first edition). IEEE's own page for
+  1003.1-2024 (standards.ieee.org, read 2026-11-13) lists the ISO/IEC/IEEE 9945 standard with the same Issue 8
+  title. The 2026 year and the March 2026 date come from search-result snippets only (iso.org answered HTTP 403
+  to an automated fetch), so they are not verified from the primary page. The ISO edition is sold and is not
+  imported here.
+
+IEEE publishes the 2024 edition as "IEEE/Open Group Standard for Information Technology--Portable Operating
+System Interface (POSIX) Base Specifications, Issue 8", designation IEEE 1003.1-2024, an Active Standard
+published 2024-06-14 (standards.ieee.org, read 2026-11-13). A cite names IEEE first, then Issue 8, because the
+IEEE designation is the one the standard is published under. The edition id `posix-2024` is the year of
+IEEE Std 1003.1-2024; an earlier edition (`posix-2017`) is not catalogued and is refused as not imported.
 
 The collection holds the HTML edition: four volumes, XBD (`basedefs/`), XSH (`functions/`), XCU (`utilities/`)
 and XRAT (`xrat/`), plus front matter, index and help pages.
