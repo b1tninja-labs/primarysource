@@ -23,16 +23,22 @@ COLLECTION = Collection(
 
 
 def main(argv: Sequence[str]) -> int:
-    """`primarysource nist fetch ...` (download, extract, index), `primarysource nist oscal ...` and
-    `primarysource nist index` (rebuild the search index from the fetched corpus)."""
-    commands = {"fetch": "primarysource.nist.ingest.fetch", "oscal": "primarysource.nist.ingest.oscal"}
+    """`primarysource nist fetch ...` (download, extract, index), `primarysource nist oscal ...`,
+    `primarysource nist index` (rebuild the search index from the fetched corpus) and `primarysource nist status`
+    (write `defaults.json`, so a bare name such as "NIST SP 800-53" resolves to its current final revision)."""
+    commands = {
+        "fetch": "primarysource.nist.ingest.fetch",
+        "oscal": "primarysource.nist.ingest.oscal",
+        "status": "primarysource.nist.ingest.status",
+    }
     if argv and argv[0] == "index":
         from primarysource.nist.spec import SPEC
         from primarysource.pdfcorpus import fts
 
         return fts.main(SPEC, argv[1:])
     if not argv or argv[0] not in commands:
-        print(f"usage: primarysource nist {{{','.join([*commands, "index"])}}} [args]", flush=True)
+        names = ",".join([*commands, "index"])
+        print(f"usage: primarysource nist {{{names}}} [args]", flush=True)
         return 2
     import importlib
 

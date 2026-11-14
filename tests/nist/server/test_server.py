@@ -4,6 +4,7 @@ tested once, in tests/test_pdfcorpus.py."""
 from __future__ import annotations
 
 import asyncio
+import json
 import shutil
 from pathlib import Path
 
@@ -60,3 +61,15 @@ def test_the_collection_cli_builds_the_search_index(
     assert main(["index"]) == 0
     assert "synth-a§2.1" in server_mcp.SERVER.search("quokka")
     server_mcp.SERVER.reset()
+
+
+def test_the_collection_cli_writes_the_defaults_file(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    corpus = tmp_path / "corpus"
+    shutil.copytree(FIXTURES, corpus)
+    monkeypatch.setenv("NISTLIB_CORPUS", str(corpus))
+    assert main(["status"]) == 0
+    written = json.loads((corpus / "defaults.json").read_text(encoding="utf-8"))
+    assert written["schema"] == 1 and written["defaults"] == {}
+    assert main([]) == 2 and "status" in capsys.readouterr().out
