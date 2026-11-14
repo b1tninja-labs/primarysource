@@ -14,7 +14,7 @@ from mcp.server.mcpserver import MCPServer
 from mcp.types import ToolAnnotations
 
 from primarysource import __version__
-from primarysource.ieee import ieee802, posix
+from primarysource.ieee import ieee802, posix, posix_index
 from primarysource.scaffold import add_tools
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=False)
@@ -22,7 +22,9 @@ READ_ONLY = ToolAnnotations(read_only_hint=True, idempotent_hint=True, destructi
 POSIX_INSTRUCTIONS = (
     "POSIX: IEEE Std 1003.1-2024, the same text as The Open Group Base Specifications Issue 8, from the user's "
     "own imported copy of the HTML edition. Pages are addressed by path: functions/open (XSH), utilities/pax "
-    "(XCU), basedefs/stdio.h and basedefs/V1_chap03 (XBD), xrat/... (rationale). Loop: posix_grep('<words>') or "
+    "(XCU), basedefs/stdio.h and basedefs/V1_chap03 (XBD), xrat/... (rationale). "
+    "Loop: posix_info('<name>') (open, pax, stdio.h), posix_search('<question>') (ranked sections), "
+    "posix_grep('<words>') (literal) or "
     "posix_outline('<page>') -> posix_read('<ref>'). Refs: 'posix-2024§functions/open' (page), "
     "'posix-2024§functions/open#tag_17_372_03' (a heading's anchor), '...¶2' (the 2nd block under it). The "
     "cite: footer line is the citation. If the edition is not imported, the error says how."
@@ -57,6 +59,20 @@ def posix_grep(text: str, volume: str | None = None, limit: int = 20, start: int
     return posix.grep(text, volume=volume, limit=limit, start=start)
 
 
+def posix_info(name: str) -> str:
+    """Resolve a function, utility or header name to its pages, each as a ref: 'open' -> functions/open (XSH),
+    utilities/open (XCU) when they exist; 'stdio.h' or 'stdio' -> basedefs/stdio.h (XBD). Pass a ref to posix_read."""
+    return posix.info(name)
+
+
+def posix_search(query: str, limit: int = 8, start: int = 0) -> str:
+    """Find the sections of POSIX that best answer a question, ranked (headings weigh more than body text, words are
+    stemmed). One entry per hit: a ref ('posix-2024§functions/open#tag_17_372_03¶2', pass it to posix_read), the
+    page title and heading, and a snippet. A 'next: start=N' footer line means call again with start=N. If the
+    index is missing or stale the error's action: line is the command to run; no hits means nothing matched."""
+    return posix_index.search(query, limit=limit, start=start)
+
+
 def posix_pages(volume: str | None = None) -> str:
     """List page ids, optionally of one volume: functions (XSH), utilities (XCU), basedefs (XBD), xrat."""
     return "\n".join(posix.pages(volume)) or "no pages"
@@ -74,6 +90,8 @@ def _server(name: str, instructions: str, tools: list[Callable[..., str]]) -> An
 
 
 posix_server = _server(
-    "primarysource-posix", POSIX_INSTRUCTIONS, [posix_read, posix_outline, posix_grep, posix_pages]
+    "primarysource-posix",
+    POSIX_INSTRUCTIONS,
+    [posix_read, posix_outline, posix_search, posix_grep, posix_pages, posix_info],
 )
 ieee802_server = _server("primarysource-ieee802", IEEE802_INSTRUCTIONS, [ieee802_outline])

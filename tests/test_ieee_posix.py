@@ -160,3 +160,37 @@ def test_another_edition_is_refused_not_silently_read(installed: tuple[Path, Edi
     home, pinned = installed
     with pytest.raises(LibError, match="posix-2017"):
         posix.read("posix-2017§functions/frob", edition=pinned, home=home)
+
+
+def test_info_resolves_a_bare_name_to_its_pages(installed: tuple[Path, Edition]) -> None:
+    home, pinned = installed
+    out = posix.info("frob", home=home, edition=pinned)
+    assert out.startswith("posix-2024§functions/frob  XSH frob")
+    assert "cite: IEEE Std 1003.1-2024 (The Open Group Base Specifications Issue 8), XSH frob" in out
+    assert posix.info("FROB", home=home, edition=pinned).splitlines()[0] == out.splitlines()[0]
+    assert posix.info("functions/frob", home=home, edition=pinned).startswith("posix-2024§functions/frob")
+    assert posix.info("[", home=home, edition=pinned).startswith("posix-2024§utilities/[")
+
+
+def test_info_adds_the_header_suffix_and_lists_each_volume(tmp_path: Path) -> None:
+    from ieee_posixfixture import FROB, archive
+
+    members = {f"susv5-html/{p}.html": FROB.encode() for p in ("functions/frob", "utilities/frob", "basedefs/frob.h")}
+    path, pinned = archive(tmp_path, members)
+    import_posix(path, home=tmp_path / "h", pinned=pinned)
+    rows = posix.info("frob", home=tmp_path / "h", edition=pinned).split("\n\n")[0].splitlines()
+    assert [r.split("  ")[0] for r in rows] == [
+        "posix-2024§basedefs/frob.h",
+        "posix-2024§functions/frob",
+        "posix-2024§utilities/frob",
+    ]
+    assert posix.info("frob.h", home=tmp_path / "h", edition=pinned).count("posix-2024§") == 1
+
+
+def test_info_with_no_match_suggests_near_names(installed: tuple[Path, Edition]) -> None:
+    home, pinned = installed
+    with pytest.raises(LibError, match="no POSIX page") as caught:
+        posix.info("frab", home=home, edition=pinned)
+    assert "functions/frob" in caught.value.hint
+    with pytest.raises(LibError):
+        posix.info(" ", home=home, edition=pinned)

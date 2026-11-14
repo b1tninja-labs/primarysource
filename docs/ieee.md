@@ -5,8 +5,9 @@ dependency; `ieee802` needs `[ieee]` (`pypdf`, to import PDFs), the umbrella for
 
 ```
 pip install "primarysource[posix]"             # or "primarysource[ieee]" for posix and ieee802
-primarysource posix import susv5.tgz          # your own download, see section 4
-primarysource mcp --collection posix            # tools posix_read, posix_outline, posix_grep, posix_pages
+primarysource posix import susv5.tgz          # your own download, see section 4 (also builds the search index)
+primarysource posix search "sprocket gasket"   # ranked sections; `primarysource posix index` rebuilds the index
+primarysource mcp --collection posix            # tools posix_read, posix_outline, posix_search, posix_grep, posix_pages, posix_info
 primarysource mcp --collection ieee802          # tool ieee802_outline
 ```
 
@@ -168,15 +169,24 @@ The HTML has real paragraphs, but it also has lists, tables and code, so block i
   - `posix_outline(page)`: the page's headings, each with its ref.
   - `posix_read(ref, start, max_tokens)`: text paged by the core's `budget.page`. The core's footer follows
     (`cite:`, `unit:`, `span:`, and `next: start=N` when there is more).
+  - `posix_search(query, limit, start)`: the sections that best answer a question, from the core FTS5 index
+    (`primarysource/ieee/posix_index.py`). One core document per page, one section per heading keyed by its
+    anchor, indexed with the blocks it owns (not its subsections'); a heading word weighs four times a body word,
+    words are stemmed, and every word is required before any is relaxed (`relaxed:` says so). A hit is
+    `posix-2024§page#anchor¶n` (`¶n` is the block holding most of the query's words, left off when only the
+    heading matched), then the page title, heading and a snippet; `next: start=N` pages. The index is
+    `$PRIMARYSOURCE_HOME/posix/posix-2024.sqlite`, built at the end of `posix import` or by `posix index`. It is
+    stale when the edition's `install.json` changed (a re-import) and then refused, with `action: primarysource
+    posix index`; a missing index says the same. Nothing matching is `nothing matches '<query>'`.
   - `posix_grep(text, volume, limit, start)`: one `<ref>: <snippet>` line per matching block. The match is
     literal and case-insensitive. It is bounded by the hit limit (at most 200), a 10-second scan budget and a
     200-character needle, and it resumes with `start`.
   - `posix_pages(volume)`: page ids.
   - A citation reads `IEEE Std 1003.1-2024 (The Open Group Base Specifications Issue 8), XSH open, DESCRIPTION ¶2`.
 - **ieee802**: `ieee802_outline(designation)`: the clauses from the PDF's bookmarks, as refs with their pages.
-- **Search** waits for the core's FTS5 index (`cl.index_fts5`). No second index is built here.
+- **Search**: see `posix_search` above. ieee802 has no clause text yet, so nothing to search.
 
-The same functions run from the command line as `primarysource posix outline|read|grep|pages` and
+The same functions run from the command line as `primarysource posix outline|read|search|index|grep|pages` and
 `primarysource ieee802 outline`.
 
 ## 7. Limits and measurements

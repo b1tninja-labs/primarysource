@@ -110,6 +110,40 @@ def cite(page: Page, section: Section | None = None, para: int | str | None = No
     return out + (f" ¶{para}" if para is not None else "")
 
 
+def info(name: str, *, edition: Edition = POSIX_2024, home: Path | None = None) -> str:
+    """The pages a bare name resolves to: `open` is `functions/open` (XSH), `utilities/open` (XCU) and
+    `basedefs/open.h` (XBD) when those exist; `stdio.h` is `basedefs/stdio.h`. Each line is `<ref>  <volume> <title>`.
+    A page id (`functions/open`) resolves to itself. No match is an error that names near misses."""
+    wanted = name.strip().casefold()
+    if not wanted or len(wanted) > MAX_NEEDLE:
+        raise LibError("info needs a name of between 1 and 200 characters", "for example open, pax or stdio.h")
+    listing = pages(edition=edition, home=home)
+    found = [
+        p
+        for p in listing
+        if p.casefold() == wanted
+        or (
+            p.split("/")[-1].casefold() in {wanted, wanted + ".h"} and p.split("/")[0] != "xrat" and "/" not in wanted
+        )
+    ]
+    found.sort(key=lambda p: list(VOLUMES).index(p.split("/")[0]) if p.split("/")[0] in VOLUMES else len(VOLUMES))
+    if not found:
+        stems = {p.split("/")[-1]: p for p in listing}
+        near = difflib.get_close_matches(name.strip(), list(stems), n=3)
+        raise LibError(
+            f"no POSIX page is named {name!r} in {edition.id}",
+            ("did you mean " + ", ".join(stems[n] for n in near)) if near else "posix_grep finds a word in the text",
+        )
+    lines = []
+    for page_id in found:
+        loaded = load_page(page_id, edition=edition, home=home)
+        volume = VOLUMES.get(page_id.split("/")[0], "")
+        lines.append(f"{_ref_text(edition.id, page_id, None)}  {volume} {loaded.document.title}")
+    only = load_page(found[0], edition=edition, home=home) if len(found) == 1 else None
+    footer = {"unit": POSIX.unit, "cite": cite(only) if only is not None else ""}
+    return render("\n".join(lines), footer)
+
+
 def _ref_text(edition: str, page: str, anchor: str | None, para: int | None = None) -> str:
     return POSIX.grammar.format(Ref(edition, page, para, anchor or None))
 

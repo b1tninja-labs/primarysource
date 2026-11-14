@@ -282,11 +282,24 @@ def _outline(reader: Any, items: Sequence[Any], depth: int) -> list[dict[str, An
     return found
 
 
+def _index_after_import() -> None:
+    """Build the search index of the edition just installed; a failure is reported, not fatal to the import."""
+    from primarysource.ieee import posix_index
+
+    try:
+        written = posix_index.build()
+    except LibError as exc:
+        print(f"search index not built:\n{exc.as_text()}", file=sys.stderr)
+        return
+    print(f"indexed {written} section(s) into {posix_index.index_path()}")
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     try:
         if len(args) == 2 and args[0] == "posix":
             report = import_posix(args[1])
+            _index_after_import()
         elif len(args) == 3 and args[0] == "ieee802":
             report = import_pdf(args[1], args[2])
         else:
