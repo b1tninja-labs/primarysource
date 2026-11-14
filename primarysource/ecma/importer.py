@@ -6,6 +6,8 @@ and read once with `_pdf.extract` into `<number>-<edition>.json`, which is what 
 records the pin, the extractor and the time. Placement is a volume: this is the user's own copy, downloaded under
 Ecma's terms (see `catalogue.json`), and is not for an image layer.
 
+A PDF without bookmarks (ECMA-35) is cut at its numbered headings instead.
+
 Run as `primarysource ecma import [NUMBER] [--file PDF]`.
 """
 
@@ -81,7 +83,7 @@ def import_edition(
     part = home / f"{found.key}.pdf.part"
     part.write_bytes(data)
     try:
-        extraction = _pdf.extract(data, part)
+        extraction = _pdf.extract(data, part, numbered=True)
     except BaseException:
         part.unlink(missing_ok=True)
         raise

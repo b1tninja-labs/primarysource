@@ -264,3 +264,37 @@ def test_the_collection_grammar_is_the_real_parser() -> None:
     assert grammar.parse(grammar.format(ref)) == ref
     with pytest.raises(LibError):
         grammar.parse("427#x")
+
+
+# --- a PDF without bookmarks -----------------------------------------------------------------------------------
+
+
+def unbookmarked() -> bytes:
+    from pdffixture import make_pdf
+
+    pages = [
+        ["Invented standard front page.", "1 Scope", "The widget protocol defines gaskets. It applies to sprockets."],
+        ["2 Terms", "A gasket is a seal.", "2.1 Gasket", "A gasket MUST be round."],
+        ["2.2 Sprocket", "A sprocket SHOULD have teeth.", "3 Conformance", "3.1 Levels", "There are two levels."],
+        ["4 Escape sequences", "4.1 Structure", "An escape sequence begins with ESC. It ends with a final byte."],
+    ]
+    return make_pdf(pages, [])
+
+
+def test_a_pdf_without_bookmarks_is_cut_at_its_numbered_headings(tmp_path: Path) -> None:
+    data = unbookmarked()
+    result = import_edition(tmp_path, "999", cat=cat(data), transport=fetch(data))
+    stored = json.loads(result.extraction.read_text(encoding="utf-8"))
+    assert stored["segmenter"] == "numbered headings"
+    ids = [s["id"] for s in stored["sections"]]
+    assert ids == ["front-matter", "1", "2", "2.1", "2.2", "3", "3.1", "4", "4.1"]
+    assert "escape sequence begins with ESC" in stored["sections"][-1]["text"]
+
+
+def test_a_pdf_with_neither_bookmarks_nor_headings_is_refused(tmp_path: Path) -> None:
+    from pdffixture import make_pdf
+
+    data = make_pdf([["Just prose here.", "Nothing is numbered."]], [])
+    with pytest.raises(LibError, match="fewer than 3 numbered headings"):
+        import_edition(tmp_path, "999", cat=cat(data), transport=fetch(data))
+    assert not list(tmp_path.glob("999-1*"))
