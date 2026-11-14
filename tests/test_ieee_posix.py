@@ -147,3 +147,16 @@ def test_reading_before_import_names_the_download_and_the_import_command(tmp_pat
     with pytest.raises(LibError, match="not imported") as caught:
         posix.read("posix-2024§functions/open", home=tmp_path)
     assert "susv5.tgz" in caught.value.action and "primarysource posix import" in caught.value.action
+
+
+def test_a_cite_names_ieee_first_then_issue_8_and_the_volume(installed: tuple[Path, Edition]) -> None:
+    home, pinned = installed
+    loaded = posix.load_page("functions/frob", edition=pinned, home=home)
+    cited = posix.cite(loaded)
+    assert cited.startswith("IEEE Std 1003.1-2024 (The Open Group Base Specifications Issue 8), XSH ")
+
+
+def test_another_edition_is_refused_not_silently_read(installed: tuple[Path, Edition]) -> None:
+    home, pinned = installed
+    with pytest.raises(LibError, match="posix-2017"):
+        posix.read("posix-2017§functions/frob", edition=pinned, home=home)

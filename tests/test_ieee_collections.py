@@ -98,6 +98,13 @@ def test_the_posix_pin_is_the_measured_archive() -> None:
     assert POSIX_2024.archive == "susv5.tgz" and POSIX_2024.size == 4_962_222
     assert POSIX_2024.sha256 == "11c7ee3e98febe3d58d03a02885d0fab9a3564d06a9b02742d9d138ae341a957"
     assert POSIX_2024.designations[:2] == ("IEEE Std 1003.1-2024", "The Open Group Base Specifications Issue 8")
+    assert POSIX_2024.designations == (
+        "IEEE Std 1003.1-2024",
+        "The Open Group Base Specifications Issue 8",
+        "ISO/IEC/IEEE 9945:2026",
+    )
+    assert POSIX_2024.title.startswith("IEEE/Open Group Standard") and POSIX_2024.title.endswith("Issue 8")
+    assert POSIX_2024.edition_date == "2024-06-14"
     assert POSIX_TERMS.placement == IEEE802_TERMS.placement == "volume"
 
 

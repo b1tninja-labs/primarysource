@@ -14,12 +14,14 @@
           "designations": [
             "IEEE Std 1003.1-2024",
             "The Open Group Base Specifications Issue 8",
-            "ISO/IEC/IEEE 9945"
+            "ISO/IEC/IEEE 9945:2026"
           ],
-          "designation_note": "One text under three covers. The ISO/IEC/IEEE 9945 edition was not examined; its year and its identity with this HTML are not verified.",
-          "title": "The Open Group Base Specifications Issue 8, IEEE Std 1003.1-2024",
+          "designation_note": "One text under three covers. IEEE's page for 1003.1-2024 (standards.ieee.org, read 2026-11-13) says it is simultaneously IEEE Std 1003.1-2024 and The Open Group Base Specifications Issue 8, and lists the ISO/IEC/IEEE 9945 International Standard with the same Issue 8 title. ISO/IEC/IEEE 9945:2026 (edition 2, 2026-03, replacing the 2009 first edition) is known only from search-result snippets: iso.org answered HTTP 403 to an automated fetch, so its date and its identity with this HTML are not verified from the primary page. It is sold; this collection neither holds nor imports it.",
+          "title": "IEEE/Open Group Standard for Information Technology--Portable Operating System Interface (POSIX) Base Specifications, Issue 8",
           "publisher": "IEEE and The Open Group",
-          "edition_date": "2024",
+          "edition_date": "2024-06-14",
+          "ieee_page_url": "https://standards.ieee.org/ieee/1003.1/7700/",
+          "ieee_status": "Active Standard (standards.ieee.org, read 2026-11-13)",
           "archive_updated": "2025-04-01",
           "page_url": "https://pubs.opengroup.org/onlinepubs/9799919799/",
           "source_url": "https://pubs.opengroup.org/onlinepubs/9799919799/download/susv5.tgz",
