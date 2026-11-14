@@ -8,6 +8,28 @@
  },
  "editions": [
   {
+   "number": "35",
+   "edition": 6,
+   "designation": "ECMA-35",
+   "title": "Character code structure and extension techniques",
+   "edition_name": "6th edition, December 1994",
+   "page_url": "https://ecma-international.org/publications-and-standards/standards/ecma-35/",
+   "source_url": "https://ecma-international.org/wp-content/uploads/ECMA-35_6th_edition_december_1994.pdf",
+   "size": 303826,
+   "sha256": "cd812a506f93bf44e0e6058fe423144c4dea8a64fbc96589cf99bcbe32fc1bf4"
+  },
+  {
+   "number": "48",
+   "edition": 5,
+   "designation": "ECMA-48",
+   "title": "Control functions for coded character sets",
+   "edition_name": "5th edition, June 1991",
+   "page_url": "https://ecma-international.org/publications-and-standards/standards/ecma-48/",
+   "source_url": "https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf",
+   "size": 1607865,
+   "sha256": "9577ad2514c411584b274ef7a4b3238c80aa93defbb349b18b8c78f78873f450"
+  },
+  {
    "number": "427",
    "edition": 1,
    "designation": "ECMA-427",
