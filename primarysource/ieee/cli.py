@@ -2,6 +2,7 @@
 
 primarysource posix import <susv5.tgz>
 primarysource posix pages [volume]
+primarysource posix info <name>
 primarysource posix outline <page>
 primarysource posix read <ref> [--max-tokens N]
 primarysource posix grep <text> [--volume V] [--limit N] [--start N]
@@ -24,6 +25,7 @@ def _posix_parser() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("import", help="verify and import the user's susv5.tgz").add_argument("archive")
     commands.add_parser("pages", help="list page ids").add_argument("volume", nargs="?")
+    commands.add_parser("info", help="the pages a name resolves to").add_argument("name")
     commands.add_parser("outline", help="a page's headings with refs").add_argument("page")
     read = commands.add_parser("read", help="read by ref")
     read.add_argument("ref")
@@ -58,6 +60,8 @@ def posix_main(argv: Sequence[str]) -> int:
             return importer.main(["posix", args.archive])
         if args.command == "pages":
             return _run("\n".join(posix.pages(args.volume)))
+        if args.command == "info":
+            return _run(posix.info(args.name))
         if args.command == "outline":
             return _run(posix.outline(args.page))
         if args.command == "read":

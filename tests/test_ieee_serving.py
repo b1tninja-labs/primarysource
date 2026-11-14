@@ -28,6 +28,8 @@ def test_the_command_reads_outlines_and_greps(home: Path, capsys: pytest.Capture
     assert capsys.readouterr().out.startswith("A second paragraph about gaskets.")
     assert cli.main(["posix", "grep", "flanges"]) == 0
     assert "#tag_99_01_02_01¶1: Sub-section text about flanges." in capsys.readouterr().out
+    assert cli.main(["posix", "info", "frob"]) == 0
+    assert capsys.readouterr().out.startswith("posix-2024§functions/frob  XSH frob")
     assert cli.main(["posix", "pages", "utilities"]) == 0
     assert capsys.readouterr().out.split() == ["utilities/["]
 
@@ -42,7 +44,7 @@ def test_each_collection_serves_prefixed_tools(home: Path) -> None:
     pytest.importorskip("mcp")
     posix_server = registry.attribute(POSIX, POSIX.server, "server")
     names = [tool.name for tool in asyncio.run(posix_server.list_tools())]
-    assert names == ["posix_read", "posix_outline", "posix_grep", "posix_pages"]
+    assert names == ["posix_read", "posix_outline", "posix_grep", "posix_pages", "posix_info"]
     ieee802_server = registry.attribute(IEEE802, IEEE802.server, "server")
     assert [tool.name for tool in asyncio.run(ieee802_server.list_tools())] == ["ieee802_outline"]
 

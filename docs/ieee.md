@@ -6,7 +6,7 @@ dependency; `ieee802` needs `[ieee]` (`pypdf`, to import PDFs), the umbrella for
 ```
 pip install "primarysource[posix]"             # or "primarysource[ieee]" for posix and ieee802
 primarysource posix import susv5.tgz          # your own download, see section 4
-primarysource mcp --collection posix            # tools posix_read, posix_outline, posix_grep, posix_pages
+primarysource mcp --collection posix            # tools posix_read, posix_outline, posix_grep, posix_pages, posix_info
 primarysource mcp --collection ieee802          # tool ieee802_outline
 ```
 
