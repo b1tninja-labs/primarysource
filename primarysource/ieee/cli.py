@@ -5,6 +5,8 @@ primarysource posix pages [volume]
 primarysource posix info <name>
 primarysource posix outline <page>
 primarysource posix read <ref> [--max-tokens N]
+primarysource posix index
+primarysource posix search <query> [--limit N] [--start N]
 primarysource posix grep <text> [--volume V] [--limit N] [--start N]
 primarysource ieee802 import <file.pdf> <designation>
 primarysource ieee802 outline <designation>
@@ -17,7 +19,7 @@ import sys
 from collections.abc import Sequence
 
 from primarysource.errors import LibError
-from primarysource.ieee import ieee802, importer, posix
+from primarysource.ieee import ieee802, importer, posix, posix_index
 
 
 def _posix_parser() -> argparse.ArgumentParser:
@@ -30,6 +32,11 @@ def _posix_parser() -> argparse.ArgumentParser:
     read = commands.add_parser("read", help="read by ref")
     read.add_argument("ref")
     read.add_argument("--max-tokens", type=int, default=2000)
+    commands.add_parser("index", help="rebuild the search index from the imported pages")
+    search = commands.add_parser("search", help="ranked sections for a question")
+    search.add_argument("query")
+    search.add_argument("--limit", type=int, default=8)
+    search.add_argument("--start", type=int, default=0)
     grep = commands.add_parser("grep", help="find blocks containing text")
     grep.add_argument("text")
     grep.add_argument("--volume")
@@ -66,6 +73,10 @@ def posix_main(argv: Sequence[str]) -> int:
             return _run(posix.outline(args.page))
         if args.command == "read":
             return _run(posix.read(args.ref, max_tokens=args.max_tokens))
+        if args.command == "index":
+            return _run(f"indexed {posix_index.build()} section(s) into {posix_index.index_path()}")
+        if args.command == "search":
+            return _run(posix_index.search(args.query, limit=args.limit, start=args.start))
         return _run(posix.grep(args.text, volume=args.volume, limit=args.limit, start=args.start))
     except LibError as exc:
         print(exc.as_text(), file=sys.stderr)

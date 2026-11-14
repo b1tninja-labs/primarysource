@@ -44,7 +44,14 @@ def test_each_collection_serves_prefixed_tools(home: Path) -> None:
     pytest.importorskip("mcp")
     posix_server = registry.attribute(POSIX, POSIX.server, "server")
     names = [tool.name for tool in asyncio.run(posix_server.list_tools())]
-    assert names == ["posix_read", "posix_outline", "posix_grep", "posix_pages", "posix_info"]
+    assert names == [
+        "posix_read",
+        "posix_outline",
+        "posix_search",
+        "posix_grep",
+        "posix_pages",
+        "posix_info",
+    ]
     ieee802_server = registry.attribute(IEEE802, IEEE802.server, "server")
     assert [tool.name for tool in asyncio.run(ieee802_server.list_tools())] == ["ieee802_outline"]
 
