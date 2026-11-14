@@ -2,14 +2,15 @@
 
 A primary source is the text itself: answer from it, and say exactly where it is.
 
-The shared core for libraries that give agents **citable** document context: a sectioned-document model, a ref
-grammar, token-budgeted paging and a fixed result shape. Readers (PDF, HTML, plain text, XML), a full-text index,
-a CLI and an MCP server are planned and not built: see `ROADMAP.md`.
+One package, many collections. The core is a sectioned-document model, a ref grammar, token-budgeted paging, a fixed result shape, readers, a full-text index, a CLI and an MCP server. Each collection is a subpackage behind an extra: `rfc` (the RFC series, moved in from rfclib), `nist`, `usb`, `itu`, `zim`, `cve`, and more. `PLAN.md` has the design and `ROADMAP.md` the open work.
 
-It exists because five libraries (`rfclib`, `itulib`, `zimlore`, `nistlib`, `usblib`) each wrote these parts
-separately. `PLAN.md` has the measurements and the order in which they adopt it.
+```
+pip install "primarysource[rfc,mcp]"
+primarysource collections
+primarysource mcp --collection rfc
+```
 
-Pre-alpha, not published, standard library only. It ships no document text.
+Pre-alpha. It ships no document text: you fetch the sources yourself.
 
 ## What works today
 
