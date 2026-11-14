@@ -107,6 +107,23 @@ IN_FORCE: tuple[Edition, ...] = (
         note="Catalog sync 2026-11-07: id taken from the ITU component page, digest from the bytes downloaded.",
     ),
     Edition(
+        key="X.660#2011-07",
+        rec="X.660",
+        edition="07/2011",
+        title=(
+            "Procedures for the operation of object identifier registration authorities: "
+            "General procedures and top arcs of the international object identifier tree"
+        ),
+        status="in force",
+        artifact="T-REC-X.660-201107-I!!PDF-E",
+        sha256="0ceed49e87a65dad0b55c51b1ccd95d3cba9449814504eb567d61995fa4ac06b",
+        octets=300_113,
+        note=(
+            "Joint designation ISO/IEC 9834-1:2012. Catalog sync 2026-11-13: id taken from the ITU component page, "
+            "digest from the bytes downloaded."
+        ),
+    ),
+    Edition(
         key="X.691#2021-02",
         rec="X.691",
         edition="02/2021",
