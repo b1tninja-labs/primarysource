@@ -25,13 +25,24 @@ def test_both_collections_load_by_name_from_the_builtin_table() -> None:
     assert registry.load("ieee802") is IEEE802 and IEEE802.prefix == "ieee802_" and IEEE802.unit is Unit.SENTENCE
 
 
-def test_both_collections_share_the_ieee_extra_in_their_install_hint(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_posix_has_its_own_extra_and_ieee802_keeps_ieee_in_the_install_hint(monkeypatch: pytest.MonkeyPatch) -> None:
     targets = registry._targets()
-    assert targets["posix"].install == targets["ieee802"].install == 'pip install "primarysource[ieee]"'
+    assert targets["posix"].install == 'pip install "primarysource[posix]"'
+    assert targets["ieee802"].install == 'pip install "primarysource[ieee]"'
     monkeypatch.setitem(sys.modules, "primarysource.ieee", None)  # the subpackage cannot be imported
-    with pytest.raises(LibError, match="not installed") as caught:
-        registry.load("ieee802", targets)
-    assert caught.value.hint == 'pip install "primarysource[ieee]"'
+    for name, hint in (("posix", "[posix]"), ("ieee802", "[ieee]")):
+        with pytest.raises(LibError, match="not installed") as caught:
+            registry.load(name, targets)
+        assert caught.value.hint == f'pip install "primarysource{hint}"'
+
+
+def test_the_posix_extra_needs_no_dependency_and_ieee_still_carries_pypdf() -> None:
+    import tomllib
+
+    extras = tomllib.loads((PACKAGE.parents[1] / "pyproject.toml").read_text(encoding="utf-8"))["project"][
+        "optional-dependencies"
+    ]
+    assert extras["posix"] == [] and extras["ieee"] == ["pypdf>=5"]
 
 
 def test_both_collections_load_without_pypdf() -> None:

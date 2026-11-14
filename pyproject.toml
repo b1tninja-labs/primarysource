@@ -31,7 +31,10 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["mypy>=1.20", "packaging>=24", "pytest>=8", "ruff>=0.15"]
-# posix and ieee802 (primarysource/ieee/). pypdf is for importing 802 PDFs only; posix needs nothing.
+# primarysource/ieee/ holds two collections. posix needs nothing beyond the standard library, so its extra is empty
+# (it names the collection and keeps the install hint honest); ieee802 imports PDFs with pypdf, and `[ieee]` is the
+# umbrella that installs both collections' needs.
+posix = []
 ieee = ["pypdf>=5"]
 iana = []
 cavp = []
