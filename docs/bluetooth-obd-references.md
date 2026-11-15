@@ -22,6 +22,23 @@ a statement from memory, **(unverified)** one I tried and could not confirm. Lic
 First to add: **#2** (cheap, safe), then **#1+#5** (one reader, one repository, but fetched by the user and kept out of
 git), then **#6/#7** as owner-supplied imports if the `iso` path generalises. **#4** waits for the licence answer.
 
+### 1a. ISO/IEC Publicly Available Standards (asked for first, 2026-11-14)
+
+- **The list's old home is closed.** `https://standards.iso.org/ittf/PubliclyAvailableStandards/index.html` now shows
+  only a notice that the ISO/IEC ITTF web site is closed and that its deliverables are free on the ISO and IEC webstores
+  (read through WebFetch). I could **not** retrieve a current list: `https://www.iso.org/publicly-available-standards.html`
+  answered HTTP 403, and I did not work round the block. The current catalogue location, entry count and terms are
+  **unverified**.
+- **What it was.** Per secondary sources (a JTC 1 SC32 page, a W3C list post, an older Wikipedia text, all dated and
+  unofficial): ISO/IEC JTC 1 information-technology deliverables, about 300 of them, mostly joint ISO/ITU-T texts, free to
+  download as PDF or HTML, **with copyright reserved** ("no part may be reproduced ... without ISO's written
+  permission" per SC32). Free to read, not free to redistribute.
+- **Relevance to this effort: essentially none.** ISO 15765-2 and ISO 14229-1 are TC 22 (road vehicles) and were never JTC 1
+  output; searches found no free copy of ISO 15765, 14229, 15031 or 11898. ISO/IEC 7816 is sold. The JTC 1 items that *were*
+  free are mostly ASN.1 twins of ITU-T texts, which the `itu` collection already covers. Bluetooth is not an ISO standard.
+- **What to do:** nothing to add for Bluetooth/OBD from this list. If the owner wants it as a general collection, the first
+  step is to find the live catalogue (ask ISO, or look from a browser), which is separate work.
+
 ## 2. Bluetooth (publisher: Bluetooth SIG, Inc.)
 
 ### 2.1 Core Specification
