@@ -123,6 +123,17 @@ copies cite "Copyright 2005... by Elm Electronics Inc." Format: PDF, text-based,
 redistribution statement was found. The page-count growth across revisions means the revision matters when citing.
 Many "ELM327" devices are clones implementing an older subset.
 
+**Read 2026-11-14, a copy the owner pointed at:** `https://cdn.sparkfun.com/assets/learn_tutorials/8/3/ELM327DS.pdf`
+(SparkFun's CDN, not Elm Electronics). It is **ELM327DSI**, "ELM327 OBD to RS232 Interpreter - v2.0", 82 pages, PDF
+created 2013-06-12 with Acrobat PDFWriter on a Mac, 387.6 KB. It is **encrypted** (permission flags, not a rights
+statement), has **no bookmark tree**, and its text extracts cleanly with pypdf. The AT command summary is on pp. 9-11,
+descriptions pp. 11-27, programmable parameters pp. 57-62, error messages pp. 78-80, and the index on pp. 81-82. Its
+only terms, on p. 80: "All rights reserved. Copyright 2005 to 2013 by Elm Electronics Inc.", plus a no-warranty,
+no-liability and patent disclaimer. **It grants no right to copy or redistribute**, so a third-party host does not
+change the position. DSI (2013) is older than the DSJ revision (94 pages) seen elsewhere, so commands added later
+(the v2.1+ set, if any) may be missing from it: confirm the revision before citing a command as absent. The copy was
+saved by the fetch tool outside the repository and is not in the tree.
+
 ### 4.2 STN (OBD Solutions, LLC; ScanTool.net is the same company)
 
 - Documents on `https://www.scantool.net/stn1110/` (copyright footer "OBD Solutions, LLC"): the **STN1110 datasheet**,
@@ -176,7 +187,8 @@ describing one implementation, change without versioning, and are not standards;
 - The Core 7.0 adoption date, the exact current Core volume/part layout, and any download agreement in front of the PDF.
 - The GATT Specification Supplement's version and date.
 - Whether the YAML header repeats in every file of the repository; I read two.
-- The official Elm Electronics datasheet URL and current revision letter; every ELM/STN redistribution statement.
+- The official Elm Electronics datasheet URL and the current revision letter (the SparkFun copy is DSI, 2013, and a DSJ
+  exists); every STN redistribution statement. The ELM327 DSI terms themselves were read (§4.1): all rights reserved.
 - Whether ISO 14229-1:2026 is in force; the J1979 and J2534 latest revisions on SAE Mobilus; their prices.
 - The licence of the tcpdump.org link-type page, of the FTE btsnoop page, and of Wireshark's dissectors (GPL from memory).
 - The state of `draft-ietf-opsawg-pcaplinktype`.
