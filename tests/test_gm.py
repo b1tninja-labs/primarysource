@@ -435,3 +435,14 @@ def test_the_mode_06_files_are_recognised_by_the_data_link_their_first_page_name
     assert hook(can)[0].command == 'primarysource gm import "a.pdf"'
     assert hook(identify.Probe("c.pdf", "", ("Component/ System Fault Code",))) == []
     assert "gm" in {name for name, _ in identify.registered_hooks()}
+
+
+def test_clean_text_restores_the_measured_symbols_and_marks_the_rest() -> None:
+    from primarysource.gm import clean_text
+
+    assert (
+        clean_text("Temp \x95 4 and time \x94 5, x \x8f 0, 40\x97s, 200 K \x9f")
+        == "Temp ≥ 4 and time ≤ 5, x ≠ 0, 40µs, 200 K Ω"
+    )
+    assert clean_text("a\x99b\x9cc") == "a\ufffdb\ufffdc"
+    assert clean_text("plain text, 0x95 and é stay") == "plain text, 0x95 and é stay"

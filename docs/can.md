@@ -60,9 +60,9 @@ variable, no collection home, output only to a scratch folder, since deleted.
 
 - 72 pages, 192,556 bytes, 46 sections (46 of 46 bookmarks located), segmenter `bookmarks`, 0.3 s, 39 MB peak, no
   failure. 674 sentences in about 87 KB of text.
-- **Not covered by any section:** the cover and page 2 (the grant above) come before the first bookmark (`recital`,
-  page 3), so that text is neither searchable nor readable through the collection. The grant is in the PDF, not in the
-  index.
+- **Front matter:** the cover and page 2 (the grant above) come before the first bookmark (`recital`, page 3). The
+  collection keeps them as a leading section, `can:bosch-2.0§front-matter` (`front_matter=True` on the spec, an opt-in
+  of `readers.bookmarks.cut` that no other collection uses), so the in-document statement is readable and searchable.
 - 11 ids carry a duplicate suffix (the Part A and Part B clauses). Six sections have no text of their own (`part-a`,
   `3`, `6`, `part-b`, `3-1`, `7-1`): their bookmarks are followed at once by a subsection or a divider page. Reading one that
   has no subsections says it has no text and points at the outline; reading one that has subsections includes them.

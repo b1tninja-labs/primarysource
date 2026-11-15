@@ -54,6 +54,20 @@ def name_file(name: str, digest: str) -> DocId | None:
     return None
 
 
+_C1_SYMBOLS = {0x8F: "≠", 0x94: "≤", 0x95: "≥", 0x97: "µ", 0x9F: "Ω"}
+"""GM's parameter PDFs keep their symbols in per-page ArialMT subsets with no Unicode map, so the extractor returns
+the raw glyph id as a C1 control character. Measured on the 2017 files (docs/gm.md): 0x95 is `>=`, 0x94 `<=`,
+0x8F `!=`, 0x97 the micro sign and 0x9F the ohm sign, written as Greek capital omega. The same byte means the same
+glyph in every Arial subset."""
+_C1_TABLE = {code: _C1_SYMBOLS.get(code, "�") for code in range(0x80, 0xA0)}
+
+
+def clean_text(text: str) -> str:
+    """The five measured symbols restored; any other C1 character (a few equation glyphs) becomes U+FFFD, so no
+    invisible control character is left in the text."""
+    return text.translate(_C1_TABLE)
+
+
 def page_title(first: int, last: int, lines: list[str]) -> str:
     """A parameter page is named by the fault codes it carries (`P0010, P0011`); a page with none (a supporting
     table, a continuation) falls back to the first line of text."""
@@ -81,6 +95,7 @@ SPEC = LocalPdfSpec(
     unit=Unit.BLOCK,
     pages_per_section=1,
     page_title=page_title,
+    clean_text=clean_text,
 )
 
 GM = Collection(

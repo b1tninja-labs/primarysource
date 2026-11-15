@@ -133,6 +133,7 @@ def extract(
     numbered: bool = False,
     pages_per_section: int | None = None,
     page_title: PageTitle | None = None,
+    front_matter: bool = False,
 ) -> dict[str, Any]:
     """Read a PDF into `{"title", "pages", "extractor", "pypdf", "headings_found", "sections": [{"id", "title",
     "depth", "page", "text"}]}`.
@@ -180,12 +181,16 @@ def extract(
                 )
         elif external is not None:
             backend = pdftotext_backend() or Backend("pdftotext", "unknown")
-            sections, located = cut(external, bookmarks)
+            sections, located = cut(external, bookmarks, front_matter=front_matter)
         else:
-            sections, located = cut([str(reader.pages[i].extract_text() or "") for i in range(count)], bookmarks)
+            sections, located = cut(
+                [str(reader.pages[i].extract_text() or "") for i in range(count)],
+                bookmarks,
+                front_matter=front_matter,
+            )
         if bookmarks and external is None and located * 10 < len(bookmarks) * 7:
             layout = [str(reader.pages[i].extract_text(extraction_mode="layout") or "") for i in range(count)]
-            better, better_located = cut(layout, bookmarks)
+            better, better_located = cut(layout, bookmarks, front_matter=front_matter)
             if better_located > located:
                 sections, located = better, better_located
     except LibError:

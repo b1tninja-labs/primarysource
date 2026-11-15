@@ -87,7 +87,12 @@ def _import_data(
         numbered=spec.pages_per_section is None,
         pages_per_section=spec.pages_per_section,
         page_title=spec.page_title,
+        front_matter=spec.front_matter,
     )
+    if spec.clean_text is not None:
+        for section in extraction["sections"]:
+            section["title"] = spec.clean_text(str(section["title"]))
+            section["text"] = spec.clean_text(str(section["text"]))
     title = found.title or str(extraction["title"])
     extraction.update({"title": title, "label": found.label, "doc": found.doc, "sha256": digest})
     atomic_write(

@@ -141,10 +141,11 @@ def cut_numbered(pages: list[str]) -> tuple[list[dict[str, Any]], int]:
     return sections, len(found)
 
 
-def cut(pages: list[str], outline: Outline) -> tuple[list[dict[str, Any]], int]:
+def cut(pages: list[str], outline: Outline, *, front_matter: bool = False) -> tuple[list[dict[str, Any]], int]:
     """Cut page texts into sections at the bookmarked headings. Returns the sections
     (`{"id", "title", "depth", "page", "text"}`, `page` 1-based, `text` the sentences joined by newlines) and how
-    many headings were found as a line of text (the rest fall back to the start of their page)."""
+    many headings were found as a line of text (the rest fall back to the start of their page). With `front_matter`,
+    text before the first heading (a cover, a notice) becomes a leading `front-matter` section."""
     count = len(pages)
     cleaned = ["\n".join(lines) for lines in clean_pages(pages)]
     starts: list[int] = []
@@ -174,6 +175,10 @@ def cut(pages: list[str], outline: Outline) -> tuple[list[dict[str, Any]], int]:
         cursor = max(cursor, spot[0])
     sections: list[dict[str, Any]] = []
     used: Counter[str] = Counter()
+    if front_matter and outline and joined[: spots[0][0]].strip():
+        front = split_sentences(joined[: spots[0][0]])
+        text = "\n".join(front)
+        sections.append({"id": "front-matter", "title": "Front matter", "depth": 0, "page": 1, "text": text})
     for n, (heading, page, depth) in enumerate(outline):
         ident, text_title = heading_id(heading)
         used[ident] += 1

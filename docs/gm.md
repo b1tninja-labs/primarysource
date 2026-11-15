@@ -139,3 +139,13 @@ What the extractor could **not** handle well, and what to expect in the text:
 - **Not tested here:** the no-`pdftotext` path on the real files (pypdf's layout mode, slower, and it raises on a page
   with no content stream, which the reader now reads as empty), and an import through the gate, because the variable
   is the owner's to set.
+
+## Symbol glyphs (decided 2026-11-15)
+
+The parameter PDFs keep their symbols in per-page ArialMT font subsets with no Unicode map, so every extractor
+returns the raw glyph id as a C1 control character (U+0080..U+009F). `gm` restores five of them when it imports, by
+`clean_text` in `primarysource/gm/__init__.py`: U+0095 to `≥`, U+0094 to `≤`, U+008F to `≠`, U+0097 to `µ` and U+009F
+to `Ω`. These were measured against Arial's glyph order on the 2017 files and the same byte means the same glyph in
+every Arial subset. A few equation glyphs use other fonts (about 24 characters in all, probably Σ and ∫); any C1 character
+that is not one of the five becomes U+FFFD, so no invisible control character is left. The shared reader is unchanged and
+other collections are not affected. Re-import to apply it to an existing extraction.

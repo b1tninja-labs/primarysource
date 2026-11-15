@@ -44,6 +44,7 @@ SPEC = LocalPdfSpec(
         "PRIMARYSOURCE_CAN_ACCEPT_TERMS; the error says what to do."
     ),
     ref_example="can:bosch-2.0§3.1¶2",
+    front_matter=True,
 )
 
 CAN = Collection(

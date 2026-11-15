@@ -52,6 +52,11 @@ class LocalPdfSpec:
     unit: Unit = Unit.SENTENCE
     pages_per_section: int | None = None
     page_title: PageTitle | None = None
+    clean_text: Callable[[str], str] | None = None
+    front_matter: bool = False
+    """Keep the text before the first bookmark (a cover, a notice) as a `front-matter` section."""
+    """Applied to every extracted section's title and text before they are stored: a collection's fix for a glyph
+    its PDFs lose (see `gm`)."""
 
     def __post_init__(self) -> None:
         if self.terms.collection != self.name:

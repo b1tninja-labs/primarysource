@@ -125,3 +125,15 @@ def test_the_cover_of_the_specification_is_recognised_and_can_fd_is_not() -> Non
     fd = identify.Probe("can_fd_spec.pdf", "", ("CAN with Flexible Data-Rate\n \nSpecification Version 1.0\n",))
     assert hook(fd) == []
     assert "can" in {name for name, _ in identify.registered_hooks()}
+
+
+def test_front_matter_is_an_opt_in_section_before_the_first_bookmark() -> None:
+    from primarysource.readers.bookmarks import cut
+
+    pages = ["Invented cover. A notice sentence.", "1 Scope", "Body text here."]
+    outline = [("1 Scope", 1, 0)]
+    plain, _ = cut(pages, outline)
+    kept, _ = cut(pages, outline, front_matter=True)
+    assert [s["id"] for s in plain] == ["1"]
+    assert [s["id"] for s in kept] == ["front-matter", "1"]
+    assert "notice" in kept[0]["text"] and kept[0]["page"] == 1
