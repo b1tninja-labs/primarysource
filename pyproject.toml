@@ -65,6 +65,8 @@ itu = ["pypdf>=5"]
 iso = ["pypdf>=5"]
 # IEC Webstore free sync (primarysource/iec/): standard library only; PDFs land on the owner's volume.
 iec = []
+# GM's own published OBD PDFs from the owner's local copies (primarysource/gm/): pypdf reads them at import only.
+gm = ["pypdf>=5"]
 # Kiwix libraries (primarysource/zim/, moved in from zimlore). libzim is a compiled extension (libzim + Xapian,
 # GPL-3.0-or-later); the wheel of this package ships only its own code, and the collection imports and lists
 # without it. PyPI carries libzim wheels for Windows x64, macOS and Linux; Windows on ARM has neither wheel nor a

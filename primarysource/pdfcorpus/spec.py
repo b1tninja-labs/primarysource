@@ -31,6 +31,8 @@ class CorpusSpec:
     read_defaults: Callable[[Path], Mapping[str, str]] | None = None
     alias: Callable[[str], str] | None = None
     index_command: str = ""
+    ref_prefix: str = ""
+    """A prefix a ref may carry and the tools drop (`gm:` in `gm:mode6-can§01-02`); empty for none."""
 
     def corpus_dir(self) -> Path:
         env = os.environ.get(self.env_var)

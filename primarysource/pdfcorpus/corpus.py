@@ -42,6 +42,13 @@ class Corpus:
     index_command: str = ""
     prefix: str = ""
     digest: str = ""
+    ref_prefix: str = ""
+
+    def unprefixed(self, text: str) -> str:
+        """`text` without the collection's ref prefix (`gm:`), if it has one."""
+        if self.ref_prefix and text.lstrip().lower().startswith(self.ref_prefix.lower()):
+            return text.lstrip()[len(self.ref_prefix) :]
+        return text
 
     def tool(self, name: str) -> str:
         """The served name of one of this collection's tools, for a `hint:` line."""
@@ -156,4 +163,5 @@ def load_corpus(spec: CorpusSpec, root: Path | None = None) -> Corpus:
         index_command=spec.index_command or fetch,
         prefix=f"{spec.name}_",
         digest=hashlib.sha256(raw).hexdigest(),
+        ref_prefix=spec.ref_prefix,
     )
