@@ -44,6 +44,7 @@ zimlore-home/
 *.har
 .env
 .env.*
+!.env.example
 *.pem
 *.key
 

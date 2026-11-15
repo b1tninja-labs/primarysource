@@ -52,7 +52,7 @@ DOWNLOAD_HOST_PREFIX = "storage-watermark-"
 """The download link the store hands out is a pre-signed S3 URL on `storage-watermark-prd-iec-ch.s3.<region>
 .amazonaws.com`. Only a host that starts so and ends `.amazonaws.com` is followed."""
 USER_AGENT = "primarysource-iec-client (+https://github.com/b1tninja-labs/primarysource)"
-MAX_BODY = 16 * 1024 * 1024
+MAX_BODY = 32 * 1024 * 1024
 TIMEOUT = 60.0
 MIN_INTERVAL = 1.0
 

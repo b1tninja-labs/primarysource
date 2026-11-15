@@ -260,7 +260,7 @@ def sync_catalog(
     *,
     opt_in: bool = False,
     max_pages: int = 1,
-    page_size: int = 100,
+    page_size: int = 25,
     include_abstract: bool = True,
 ) -> tuple[int, int]:
     """Walk up to `max_pages` pages of `query`, write the stubs, rebuild the index. Returns `(stubs, total)`.
