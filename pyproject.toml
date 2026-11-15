@@ -63,6 +63,10 @@ usb = []
 itu = ["pypdf>=5"]
 # ISO standards from the owner's own purchased PDFs (primarysource/iso/): pypdf reads them at import only.
 iso = ["pypdf>=5"]
+# GM parameter files and the Bosch CAN specification from the owner's own PDFs (primarysource/gm/, can/, on
+# primarysource/localpdf/): pypdf reads them at import only, as for iso. No new dependency.
+gm = ["pypdf>=5"]
+can = ["pypdf>=5"]
 # Kiwix libraries (primarysource/zim/, moved in from zimlore). libzim is a compiled extension (libzim + Xapian,
 # GPL-3.0-or-later); the wheel of this package ships only its own code, and the collection imports and lists
 # without it. PyPI carries libzim wheels for Windows x64, macOS and Linux; Windows on ARM has neither wheel nor a
