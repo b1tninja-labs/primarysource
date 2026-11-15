@@ -78,3 +78,59 @@ def standard() -> tuple[bytes, list[str]]:
         ("Bibliography", 4, 0),
     ]
     return make_pdf(pages, outline), ["1", "2", "2.1", "2.2", "3", "A", "bibliography"]
+
+
+def make_table_pdf(pages: list[list[tuple[str, ...]] | None], title: str = "Invented table") -> bytes:
+    """A PDF of invented tables, for the gm and localpdf tests. `pages` holds each page's rows (a row is its cells,
+    drawn in columns 150 points apart) or None for a page with no text at all, as a scan has. Every text page gets
+    a column-header row and a `Page n of N` footer, which repeat on every page and so are furniture to drop."""
+    from pypdf import PdfWriter
+    from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
+
+    writer = PdfWriter()
+    font = writer._add_object(
+        DictionaryObject(
+            {
+                NameObject("/Type"): NameObject("/Font"),
+                NameObject("/Subtype"): NameObject("/Type1"),
+                NameObject("/BaseFont"): NameObject("/Helvetica"),
+            }
+        )
+    )
+    total = len(pages)
+    for number, rows in enumerate(pages, start=1):
+        page = writer.add_blank_page(612, 792)
+        if rows is None:
+            continue
+        ops = ["BT /F1 11 Tf"]
+        y = 740.0
+        for row in [("Code", "Description", "Limit"), *rows, (f"Page {number} of {total}",)]:
+            for column, cell in enumerate(row):
+                escaped = cell.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+                ops.append(f"1 0 0 1 {72 + 150 * column} {y:.0f} Tm ({escaped}) Tj")
+            y -= 18
+        ops.append("ET")
+        stream = DecodedStreamObject()
+        stream.set_data("\n".join(ops).encode("latin-1"))
+        page[NameObject("/Contents")] = writer._add_object(stream)
+        page[NameObject("/Resources")] = DictionaryObject(
+            {NameObject("/Font"): DictionaryObject({NameObject("/F1"): font})}
+        )
+    writer.add_metadata({"/Title": title})
+    buffer = io.BytesIO()
+    writer.write(buffer)
+    return buffer.getvalue()
+
+
+def table_book() -> bytes:
+    """A five-page invented parameter table: two fault codes on page 1, one on page 2, a page of supporting values
+    with no code, a scanned page with no text, and a closing page of notes."""
+    return make_table_pdf(
+        [
+            [("P0010", "Valve circuit open", "5 volts"), ("P0011", "Valve performance", "250 ms")],
+            [("P0012", "Pump circuit low", "2 volts")],
+            [("Supporting table", "Gasket pressure", "40 kPa")],
+            None,
+            [("Notes", "Invented note", "none")],
+        ]
+    )

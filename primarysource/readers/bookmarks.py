@@ -18,6 +18,7 @@ from __future__ import annotations
 import re
 import unicodedata
 from collections import Counter
+from collections.abc import Callable
 from typing import Any
 
 _NUMBERED = re.compile(r"^(?P<id>\d+(?:\.\d+)*)\.?\s+(?P<title>\S.*)$")
@@ -190,3 +191,42 @@ def cut(pages: list[str], outline: Outline) -> tuple[list[dict[str, Any]], int]:
             }
         )
     return sections, located
+
+
+_GAP = re.compile(r"\s{2,}")
+TITLE_WIDTH = 80
+
+
+def table_lines(text: str) -> list[str]:
+    """The lines of one page of layout text, each a unit: leading and trailing space removed and every run of two
+    or more spaces (a column gap in a table) shown as ` | `. Blank lines are dropped."""
+    return [" | ".join(_GAP.split(line.strip())) for line in text.splitlines() if line.strip()]
+
+
+def cut_pages(
+    pages: list[str],
+    per_section: int = 1,
+    title_of: Callable[[int, int, list[str]], str] | None = None,
+) -> tuple[list[dict[str, Any]], int]:
+    """Cut page texts into one section per page (or per `per_section` pages), for a PDF that is tables, not prose
+    (the GM parameter files). Furniture is dropped as in `cut`; each page's remaining lines are the section's
+    units (`table_lines`), because a table row has no sentence ends. The id is `p<first page>`, or `p<first>-<last>`
+    for a span, the title is `title_of(first, last, lines)` or else the first line of text (at most `TITLE_WIDTH`
+    characters), and a page with no text after cleaning is left out. Returns the sections in `cut`'s shape and the
+    number of pages that had no text at all (a scanned page has none)."""
+    if per_section < 1:
+        raise ValueError("per_section is at least 1")
+    kept = clean_pages(pages, keep_spacing=True)
+    empty = sum(1 for text in pages if not text.strip())
+    sections: list[dict[str, Any]] = []
+    for first in range(0, len(pages), per_section):
+        last = min(first + per_section, len(pages)) - 1
+        units = [unit for lines in kept[first : last + 1] for unit in table_lines("\n".join(lines))]
+        if not units:
+            continue
+        ident = f"p{first + 1}" if last == first else f"p{first + 1}-{last + 1}"
+        title = title_of(first + 1, last + 1, units) if title_of is not None else ""
+        if not title:
+            title = units[0] if len(units[0]) <= TITLE_WIDTH else units[0][: TITLE_WIDTH - 3] + "..."
+        sections.append({"id": ident, "title": title, "depth": 0, "page": first + 1, "text": "\n".join(units)})
+    return sections, empty
