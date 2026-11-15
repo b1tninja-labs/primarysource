@@ -12,7 +12,6 @@ the pages with no text layer (a scan would show here) and the segmenter.
 
 from __future__ import annotations
 
-import io
 import json
 import re
 from collections.abc import Sequence
@@ -30,12 +29,11 @@ from primarysource.pdfcorpus import fts
 from primarysource.pdfcorpus.corpus import load_corpus
 from primarysource.pdfcorpus.index import document_from_dict, sha256_file, write_index
 from primarysource.pdfcorpus.models import Document
+from primarysource.pdfcorpus.pages import read_pages
 from primarysource.pdfcorpus.spec import CorpusSpec
-from primarysource.readers import pdf as reader
 
 _COPY_SUFFIX = re.compile(r"\(\d+\)$")
 INSTALL_RECORD = "install.json"
-MAX_PAGES = 5000
 NO_TEXT_BELOW = 20  # a page with fewer non-space characters than this has no usable text layer
 
 
@@ -65,34 +63,6 @@ def _kind(doc_id: str) -> str:
     if "OBDG" in doc_id.upper():
         return "diagnostics"
     return "pages"
-
-
-def _read(path: Path) -> tuple[list[str], str, str]:
-    """(page texts, extractor label, creation month `YYYY-MM` or "")."""
-    pypdf = reader._pypdf()  # noqa: SLF001 - the shared reader's own "pypdf is missing" error with its install hint
-    try:
-        pdf = pypdf.PdfReader(io.BytesIO(path.read_bytes()), strict=False)
-        count = len(pdf.pages)
-        if count > MAX_PAGES:
-            raise LibError(f"{path.name} has {count} pages, over the {MAX_PAGES} bound", "")
-        created = ""
-        meta = pdf.metadata
-        when = getattr(meta, "creation_date", None) if meta is not None else None
-        if when is not None:
-            created = f"{when.year:04d}-{when.month:02d}"
-        pages = reader.pdftotext_pages(path, count, layout=True)
-        if pages is not None:
-            backend = reader.pdftotext_backend() or reader.Backend("pdftotext", "unknown")
-        else:
-            pages = [str(page.extract_text(extraction_mode="layout") or "") for page in pdf.pages]
-            backend = reader.Backend("pypdf", str(pypdf.__version__))
-    except LibError:
-        raise
-    except Exception as exc:  # noqa: BLE001 - pypdf raises many types on a damaged file
-        raise LibError(
-            f"could not read {path.name}: {type(exc).__name__}: {exc}", "check the file is GM's PDF"
-        ) from exc
-    return pages, backend.label(), created
 
 
 def _load_index(root: Path) -> dict[str, Document]:
@@ -149,7 +119,7 @@ def import_files(
                     Imported(path.name, "unchanged", designation.doc_id, sections=len(known.sections))
                 )
                 continue
-            pages, extractor, created = _read(path)
+            pages, extractor, created = read_pages(path)
             cut = segment(pages, _kind(designation.doc_id))
             text_file = f"text/{designation.doc_id}.txt"
             atomic_write(root / text_file, ("\n".join(cut.lines) + "\n").encode("utf-8"))
