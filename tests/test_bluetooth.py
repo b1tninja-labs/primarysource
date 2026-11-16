@@ -143,6 +143,20 @@ def test_select_takes_named_slugs_or_a_status_and_refuses_an_unknown_slug() -> N
         importer.select(entries, ["nope"])
 
 
+def test_the_download_page_in_front_of_a_file_is_followed_to_the_pdf(tmp_path: Path) -> None:
+    link = GADGET_PDF + "?dlm-dp-dl-force=1&dlm-dp-dl-nonce=abc"
+    interstitial = (
+        f'<html><body>Your download should start.<a href="{link.replace("&", "&amp;")}">here</a></body></html>'
+    )
+    assert catalogue.parse_download_page(interstitial) == link
+    assert catalogue.parse_download_page("<p>nothing</p>") is None
+    served = _served()
+    served[GADGET_PDF] = interstitial.encode()
+    served[link] = _pdf("gadget")
+    report = _run(tmp_path, served, ["gadget-profile-2-0"])
+    assert [o.status for o in report.outcomes] == ["imported"]
+
+
 # ---- fetch and import -----------------------------------------------------------------------------------------
 
 

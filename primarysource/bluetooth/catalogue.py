@@ -116,6 +116,16 @@ def parse_spec_page(page: str) -> str | None:
     return None
 
 
+_FORCE_LINK = re.compile(r"href=\"(?P<href>https://files\.bluetooth\.com/[^\"]*dlm-dp-dl-force=1[^\"]*)\"", re.I)
+
+
+def parse_download_page(page: str) -> str | None:
+    """files.bluetooth.com answers a download address with a page that says the download starts by itself, and links
+    the file with a one-time nonce. That link, or None when the page has none."""
+    found = _FORCE_LINK.search(page)
+    return html.unescape(found["href"]) if found else None
+
+
 def write(path: Path, entries: list[Entry]) -> None:
     from primarysource.fsutil import atomic_write
 

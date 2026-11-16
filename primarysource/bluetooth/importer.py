@@ -160,6 +160,11 @@ def fetch_specs(
                 continue
             data = fetcher.get(pdf_url, MAX_PDF)
             if not data.startswith(b"%PDF-"):
+                # files.bluetooth.com puts a "your download starts automatically" page in front of the file.
+                link = catalogue.parse_download_page(data[:MAX_PAGE].decode("utf-8", errors="replace"))
+                if link is not None:
+                    data = fetcher.get(link, MAX_PDF)
+            if not data.startswith(b"%PDF-"):
                 raise LibError(
                     f"{pdf_url} is not a PDF", "the SIG may have changed its download; nothing was written"
                 )

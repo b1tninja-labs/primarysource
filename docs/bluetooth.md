@@ -69,9 +69,15 @@ own membership.
 - **Not covered:** the HTML editions, the test documents (TS, ICS, IXIT, TCRL), errata and the lists of changes;
   assigned numbers and the GATT supplement are separate documents on the SIG's site, listed there as links rather
   than rows. Tables are `pdftotext -layout` columns, so a wrapped cell is interleaved (see `docs/gm.md` §4).
-- **Not run in full.** Only Battery Service was fetched live (2026-11-15, 3 requests). The other 255 adopted
-  documents have not been fetched, so how well the splitter does on the Core Specification and on the larger
-  profiles is not measured.
+- **A download page in front of the file.** `files.bluetooth.com` answers a download address with a page saying the
+  download starts by itself, linking the file with a one-time nonce. It has no terms to accept; the fetcher follows
+  that link. The first full run did not, and 76 documents failed with "not a PDF" until it did.
+- **Run in full, 2026-11-15.** `fetch` of every adopted specification imported 250 of 256: 48,944 pages and
+  42,083 sections, all cut at numbered headings (none fell back to pages), 874 MB with the PDFs. The Core
+  Specification 6.1 to 7.0 are about 3,800 pages and 1,800 to 2,000 sections each. The other six: five are HTML
+  only (`advanced-audio-distribution-profile-1-2`, `dial-up-networking-profile-1-1`, `gaming-audio-profile-1-0`,
+  `generic-object-exchange-profile-1-1`, `rfcomm-1-1`) and `basic-printing-profile-1-2` links a zip, not a PDF.
+  The section counts were not checked against the PDFs' own contents pages.
 
 ## 4. Tests
 
