@@ -53,6 +53,7 @@ BUILTIN: dict[str, str] = {
     "iso": "primarysource.iso:ISO [iso]",
     "gm": "primarysource.gm:GM [gm]",
     "can": "primarysource.can:CAN [can]",
+    "sae": "primarysource.sae:SAE [sae]",
     "zim": "primarysource.zim.collection:COLLECTION [zim]",
     "cve": "primarysource.cve.collection:COLLECTION",
 }
