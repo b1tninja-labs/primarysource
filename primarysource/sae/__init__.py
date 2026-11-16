@@ -2,10 +2,10 @@
 
 A local-only volume on the shared `primarysource.localpdf` mechanism, behind the terms-acknowledgement gate
 (`primarysource.terms`): `primarysource sae import` refuses unless `PRIMARYSOURCE_SAE_ACCEPT_TERMS` says the owner
-has read the terms under which the copies were obtained and accepts them. The gate records that
-assertion; it does not check anyone's licence. SAE standards are sold, usually under a single-user or company licence, so the copies belong in the
-owner's home folder only: never in this repository or an image (`docs/sae.md`). SAE's terms URL was not verified, so
-the gate names none.
+has read the terms under which the copies were obtained and accepts them. The gate records that assertion; it does
+not check anyone's licence. SAE standards are sold, usually under a single-user or company licence, so the copies
+belong in the owner's home folder only: never in this repository or an image (`docs/sae.md`). SAE's terms URL was
+not verified, so the gate names none.
 
 Two files are recognised by name: `J2735_V201603.pdf` (SAE J2735, March 2016) and `sae.j1979.2002.pdf` (SAE J1979,
 2002, as posted by Public.Resource.Org). Any other name is skipped with a note, never guessed at; add a rule in
