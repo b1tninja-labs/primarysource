@@ -63,6 +63,8 @@ usb = []
 itu = ["pypdf>=5"]
 # ISO standards from the owner's own purchased PDFs (primarysource/iso/): pypdf reads them at import only.
 iso = ["pypdf>=5"]
+# IEC Webstore free sync (primarysource/iec/): standard library only; PDFs land on the owner's volume.
+iec = []
 # Kiwix libraries (primarysource/zim/, moved in from zimlore). libzim is a compiled extension (libzim + Xapian,
 # GPL-3.0-or-later); the wheel of this package ships only its own code, and the collection imports and lists
 # without it. PyPI carries libzim wheels for Windows x64, macOS and Linux; Windows on ARM has neither wheel nor a
@@ -102,6 +104,9 @@ select = ["E", "F", "I", "UP", "S", "B", "SIM"]
 # cve builds git and network requests from fixed URLs it names itself (moved in from cvelib with these ignores).
 "primarysource/cve/*" = ["S603", "S607", "S310"]
 "tests/cve/*" = ["S105", "S106"]
+# iec talks to webstore.iec.ch over urllib (fixed hosts) for the owner's free downloads.
+"primarysource/iec/*" = ["S310"]
+"tests/test_iec*.py" = ["S105", "S106"]
 
 [tool.mypy]
 strict = true

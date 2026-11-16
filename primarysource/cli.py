@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any
 
 from primarysource import registry, scaffold, serve
+from primarysource.envfile import load_env
 from primarysource.errors import LibError
 
 
@@ -68,6 +69,9 @@ def build_server(names: Sequence[str], *, bare: bool = False) -> Any:
 def main(argv: Sequence[str] | None = None) -> int:
     args_in = list(sys.argv[1:] if argv is None else argv)
     try:
+        # A stdio client often starts this process without the user-account environment. The checkout `.env`
+        # supplies PRIMARYSOURCE_HOME and the webstore accounts; a variable the client already set is kept.
+        load_env()
         # `primarysource <collection> ...` hands the rest of the line to that collection's own command
         if args_in and args_in[0] in registry.available():
             collection = registry.load(args_in[0])

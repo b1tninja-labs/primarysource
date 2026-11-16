@@ -40,10 +40,11 @@ zimlore-home/
 *.csv.gz
 .cvelib/
 
-# Captures and secrets
+# Captures and secrets. `.env.example` is the template and is committed; `.env` is the filled-in file.
 *.har
 .env
 .env.*
+!.env.example
 *.pem
 *.key
 
