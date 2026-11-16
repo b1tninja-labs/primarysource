@@ -446,3 +446,21 @@ def test_clean_text_restores_the_measured_symbols_and_marks_the_rest() -> None:
     )
     assert clean_text("a\x99b\x9cc") == "a\ufffdb\ufffdc"
     assert clean_text("plain text, 0x95 and é stay") == "plain text, 0x95 and é stay"
+
+
+def test_a_pdf_that_yields_no_text_is_refused_not_recorded_as_imported(
+    tmp_path: Path, accept: None, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    empty = {
+        "title": "t",
+        "extractor": "pypdf 0",
+        "headings_found": 0,
+        "sections": [{"id": "p1", "title": "", "depth": 0, "page": 1, "text": ""}],
+    }
+    monkeypatch.setattr("primarysource.readers.pdf.extract", lambda *_a, **_k: empty)
+    folder = tmp_path / "gm"
+    path = _drop(folder)
+    with pytest.raises(LibError, match="no text could be read") as raised:
+        store.import_file(SPEC, folder, path)
+    assert "pdftotext" in raised.value.as_text()
+    assert read_record(folder)["documents"] == {}

@@ -89,6 +89,12 @@ def _import_data(
         page_title=spec.page_title,
         front_matter=spec.front_matter,
     )
+    if not any(str(section["text"]).strip() for section in extraction["sections"]):
+        raise LibError(
+            f"{path.name}: no text could be read from any page (the backend was {extraction['extractor']})",
+            "put poppler's `pdftotext` on PATH (table pages are read with it); a scanned PDF has no text to read",
+            spec.import_command,
+        )
     if spec.clean_text is not None:
         for section in extraction["sections"]:
             section["title"] = spec.clean_text(str(section["title"]))
