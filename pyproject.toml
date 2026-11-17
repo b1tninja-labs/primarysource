@@ -63,6 +63,8 @@ usb = []
 itu = ["pypdf>=5"]
 # ISO standards from the owner's own purchased PDFs (primarysource/iso/): pypdf reads them at import only.
 iso = ["pypdf>=5"]
+# GM VIN standards filed with NHTSA (primarysource/vin/): pypdf reads them at import only.
+vin = ["pypdf>=5"]
 # IEC Webstore free sync (primarysource/iec/): standard library only; PDFs land on the owner's volume.
 iec = []
 # Kiwix libraries (primarysource/zim/, moved in from zimlore). libzim is a compiled extension (libzim + Xapian,

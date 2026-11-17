@@ -30,7 +30,7 @@ from primarysource.readers.bookmarks import Outline, cut, cut_numbered
 MAX_BYTES = 64 * 1024 * 1024
 MAX_PAGES = 2000
 MAX_OUTLINE = 6000
-INSTALL_HINT = 'pip install "primarysource[ecma]"  (or [bbf], [ieee], [itu], [iso]); each brings pypdf'
+INSTALL_HINT = 'pip install "primarysource[ecma]"  (or [bbf], [ieee], [itu], [iso], [vin]); each brings pypdf'
 
 _PDFTOTEXT_VERSION = re.compile(rb"pdftotext\s+version\s+(\S+)", re.IGNORECASE)
 
