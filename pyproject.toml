@@ -71,6 +71,8 @@ iec = ["pypdf>=5"]
 msos = ["pypdf>=5"]
 # Bluetooth specifications (primarysource/bluetooth/): the HTML books are fetched with the standard library.
 bluetooth = []
+# Root arcs 0, 1 and 2 (primarysource/oid/): read from the imported X.660 index. Standard library only.
+oid = []
 # Kiwix libraries (primarysource/zim/, moved in from zimlore). libzim is a compiled extension (libzim + Xapian,
 # GPL-3.0-or-later); the wheel of this package ships only its own code, and the collection imports and lists
 # without it. PyPI carries libzim wheels for Windows x64, macOS and Linux; Windows on ARM has neither wheel nor a

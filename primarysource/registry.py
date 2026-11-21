@@ -55,6 +55,7 @@ BUILTIN: dict[str, str] = {
     "iec": "primarysource.iec:IEC",
     "msos": "primarysource.msos:MSOS [msos]",
     "bluetooth": "primarysource.bluetooth:BLUETOOTH",
+    "oid": "primarysource.oid:OID",
     "zim": "primarysource.zim.collection:COLLECTION [zim]",
     "cve": "primarysource.cve.collection:COLLECTION",
 }
