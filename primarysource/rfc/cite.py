@@ -26,11 +26,9 @@ from pathlib import Path
 from . import query as q
 from .index import search as _s
 
-NORM_KEYWORDS = ("MUST NOT", "MUST", "SHALL NOT", "SHALL", "SHOULD NOT",
-                 "SHOULD NOT", "SHOULD", "MAY", "REQUIRED")
+NORM_KEYWORDS = ("MUST NOT", "MUST", "SHALL NOT", "SHALL", "SHOULD NOT", "SHOULD NOT", "SHOULD", "MAY", "REQUIRED")
 _WORDS = re.compile(r"[A-Za-z0-9][A-Za-z0-9.'\-_]*")
-_MONTHS = ["jan", "feb", "mar", "apr", "may", "jun",
-           "jul", "aug", "sep", "oct", "nov", "dec"]
+_MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
 
 
 def _now() -> str:
@@ -43,74 +41,127 @@ def label(doc_id: str) -> str:
     return f"{m.group(1)} {int(m.group(2))}" if m else doc_id
 
 
+_ERRATA_ORDER = (
+    "Verified",
+    "Reported",
+    "Held for Document Update",
+    "Rejected",
+)
+_ERRATA_EFFECT = {
+    "Verified": "read them before implementing",
+    "Reported": "not decided",
+    "Held for Document Update": "not applied",
+    "Rejected": "not applied",
+}
+
+
+def _on_section(rows: list[sqlite3.Row], sec: str) -> tuple[str, list[sqlite3.Row]]:
+    want = _s.norm_sec(sec)
+    # A whole section number. "1" is not an erratum on "6.1.5".
+    token = re.compile(rf"(?<![\w.]){re.escape(want)}(?![\w.])") if want else None
+    return want, [r for r in rows if token and token.search((r["section"] or "").replace("\n", " "))]
+
+
+def _section_errata(doc_id: str, want: str, rows: list[sqlite3.Row]) -> str:
+    """What an agent must do with the errata on the section it is reading.
+
+    A verified erratum changes the text. A held or rejected one is a record
+    and is not applied. A reported one has not been decided."""
+    counts: dict[str, int] = {}
+    for row in rows:
+        counts[row["status"]] = counts.get(row["status"], 0) + 1
+    parts: list[str] = []
+    seen = set(_ERRATA_ORDER)
+    for status in (*_ERRATA_ORDER, *(sorted(set(counts) - seen))):
+        n = counts.get(status)
+        if not n:
+            continue
+        effect = _ERRATA_EFFECT.get(status, "see the record")
+        label = status if status != "Held for Document Update" else "held"
+        parts.append(f"{n} {label.lower()} on this section, {effect}")
+    call = ""
+    if counts.get("Verified"):
+        call = f": errata(ref='{doc_id}§{want}', status='all')"
+    return "errata: " + "; ".join(parts) + call
+
+
 def errata_note(conn: sqlite3.Connection, doc_id: str, sec: str = "") -> str:
     """Errata status for a doc or one section. Distinguishes 'none' from
     'nobody looked' — asserting zero verified errata when the service was
-    never queried would be a false assurance."""
-    rows = conn.execute(
-        "SELECT status, section FROM errata WHERE doc_id=?",
-        (doc_id,)).fetchall()
+    never queried would be a false assurance. On a section, held and rejected
+    errata are named too: they are on file and they are not applied."""
+    rows = conn.execute("SELECT status, section FROM errata WHERE doc_id=?", (doc_id,)).fetchall()
     if not rows:
         from .errata import bulk_synced_at
+
         at = bulk_synced_at(conn)
-        return (f"errata: none (as of {at[:10]})" if at
-                else f"errata: not cached (errata(ref='{doc_id}'))")
+        return f"errata: none (as of {at[:10]})" if at else f"errata: not cached (errata(ref='{doc_id}'))"
     verified = [r for r in rows if r["status"] == "Verified"]
+    if sec:
+        want, here = _on_section(rows, sec)
+        if here:
+            return _section_errata(doc_id, want, here)
+        if verified:
+            return f"errata: {len(verified)} verified elsewhere, none on this section"
+        return f"errata: 0 verified ({len(rows)} on file), none on this section"
     if not verified:
         return f"errata: 0 verified ({len(rows)} on file)"
-    if sec:
-        want = _s.norm_sec(sec)
-        hit = [r for r in verified
-               if want and want in (r["section"] or "").replace("\n", " ")]
-        if hit:
-            # the exact call, so an agent that has not loaded the errata
-            # tool's schema copies the right argument name
-            return (f"errata: {len(hit)} VERIFIED on this section — read "
-                    f"them before implementing: errata(ref='{doc_id}§{want}')")
-        return (f"errata: {len(verified)} verified elsewhere, "
-                f"none on this section")
     return f"errata: {len(verified)} verified"
 
 
-def _span(conn: sqlite3.Connection, doc_id: str, section: str | None,
-          lines: str | None) -> dict:
+def _span(conn: sqlite3.Connection, doc_id: str, section: str | None, lines: str | None) -> dict:
     """Line span + anchor for a section reference, or an explicit 'a-b' line
     range when the caller has no section number to offer."""
     if section:
-        if not conn.execute("SELECT 1 FROM chunks WHERE doc_id=? LIMIT 1",
-                            (doc_id,)).fetchone():
-            return {"ok": False, "reason": f"{doc_id} is not section-indexed "
-                                           "(run `rfclib index build`)"}
+        if not conn.execute("SELECT 1 FROM chunks WHERE doc_id=? LIMIT 1", (doc_id,)).fetchone():
+            return {"ok": False, "reason": f"{doc_id} is not section-indexed (run `rfclib index build`)"}
         span = q._resolve_section_arg(conn, doc_id, section)
         if not span.get("ok"):
-            return {"ok": False, "reason": span.get("reason"),
-                    "suggestions": span.get("suggestions", []),
-                    "outline": span.get("outline", [])}
-        return {"ok": True, "sec_num": span["sec_num"],
-                "sec_title": span.get("sec_title", ""),
-                "start_line": span["start_line"], "end_line": span["end_line"],
-                "frag": span.get("url_frag", "")}
+            return {
+                "ok": False,
+                "reason": span.get("reason"),
+                "suggestions": span.get("suggestions", []),
+                "outline": span.get("outline", []),
+            }
+        return {
+            "ok": True,
+            "sec_num": span["sec_num"],
+            "sec_title": span.get("sec_title", ""),
+            "start_line": span["start_line"],
+            "end_line": span["end_line"],
+            "frag": span.get("url_frag", ""),
+        }
     if lines:
         m = re.fullmatch(r"(\d+)\s*[-:]\s*(\d+)", lines.strip())
         if not m:
-            return {"ok": False,
-                    "reason": f"bad line range {lines!r} (want '1240-1288')"}
-        return {"ok": True, "sec_num": "", "sec_title": "",
-                "start_line": int(m.group(1)), "end_line": int(m.group(2)),
-                "frag": ""}
-    return {"ok": True, "sec_num": "", "sec_title": "", "start_line": 1,
-            "end_line": 0, "frag": ""}
+            return {"ok": False, "reason": f"bad line range {lines!r} (want '1240-1288')"}
+        return {
+            "ok": True,
+            "sec_num": "",
+            "sec_title": "",
+            "start_line": int(m.group(1)),
+            "end_line": int(m.group(2)),
+            "frag": "",
+        }
+    return {"ok": True, "sec_num": "", "sec_title": "", "start_line": 1, "end_line": 0, "frag": ""}
 
 
-def span_text(conn: sqlite3.Connection, doc_id: str, *, mirror_root: Path,
-              section: str | None = None, lines: str | None = None,
-              mode: str = "clean") -> tuple[str, dict]:
+def span_text(
+    conn: sqlite3.Connection,
+    doc_id: str,
+    *,
+    mirror_root: Path,
+    section: str | None = None,
+    lines: str | None = None,
+    mode: str = "clean",
+) -> tuple[str, dict]:
     """The exact text of a span plus its resolved anchor metadata.
 
     mode='clean' (default) is the canonical form span_hash is defined over;
     mode='raw' is byte-exact against the RFC Editor file.
     """
     from .index.chunker import strip_page_furniture
+
     text, served, _p = q._served_text(conn, doc_id, "txt", mirror_root)
     sp = _span(conn, doc_id, section, lines)
     if text is None:
@@ -119,7 +170,7 @@ def span_text(conn: sqlite3.Connection, doc_id: str, *, mirror_root: Path,
         return "", sp
     ls = text.splitlines()
     end = sp["end_line"] or len(ls)
-    body = "\n".join(ls[sp["start_line"] - 1:end])
+    body = "\n".join(ls[sp["start_line"] - 1 : end])
     if mode == "clean":
         body = strip_page_furniture(body)
     return body, dict(sp, ok=True, served_via=served, total_lines=len(ls))
@@ -129,9 +180,25 @@ def _authors_meta(conn, meta) -> str:
     return " and ".join(meta.get("authors") or [])
 
 
-def cite(conn: sqlite3.Connection, doc_id: str, section: str | None = None,
-         lines: str | None = None, style: str = "verbose", *,
-         mirror_root: Path | None = None) -> str:
+def relation_clause(relations: dict) -> str:
+    """Document-level updates, the same clause a section read prints. Empty when there are none."""
+    parts: list[str] = []
+    if relations.get("updates"):
+        parts.append("updates " + ", ".join(relations["updates"]))
+    if relations.get("updated_by"):
+        parts.append("updated by " + ", ".join(relations["updated_by"]))
+    return " | ".join(parts)
+
+
+def cite(
+    conn: sqlite3.Connection,
+    doc_id: str,
+    section: str | None = None,
+    lines: str | None = None,
+    style: str = "verbose",
+    *,
+    mirror_root: Path | None = None,
+) -> str:
     """A canonical, checkable reference — the cheap substitute for pasting
     spec text into code.
 
@@ -142,22 +209,20 @@ def cite(conn: sqlite3.Connection, doc_id: str, section: str | None = None,
     row = q.get_doc_row(conn, doc_id)
     meta = q._row_to_meta(conn, row)
     sp = _span(conn, doc_id, section, lines)
-    if not sp.get("ok") and style in ("verbose", "short", "comment",
-                                      "markdown"):
+    if not sp.get("ok") and style in ("verbose", "short", "comment", "markdown"):
         cands = ", ".join(sp.get("suggestions", [])) or "see get_toc"
-        return (f"CANNOT CITE {label(doc_id)} \u00a7{section}: {sp['reason']}\n"
-                f"candidates: {cands}")
+        return f"CANNOT CITE {label(doc_id)} \u00a7{section}: {sp['reason']}\ncandidates: {cands}"
     sec = sp.get("sec_num", "")
     title = meta.get("title") or ""
     date = (meta.get("pub_date") or "")[:7]
     url = q.anchor_url(meta, sp.get("frag") or "", q.resolve(conn, doc_id))
-    secpart = f" \u00a7{sec}" + (f' "{sp["sec_title"]}"'
-                                 if sp.get("sec_title") else "")
-    linepart = (f" lines {sp['start_line']}-{sp['end_line']}" if lines else "")
+    secpart = f" \u00a7{sec}" + (f' "{sp["sec_title"]}"' if sp.get("sec_title") else "")
+    linepart = f" lines {sp['start_line']}-{sp['end_line']}" if lines else ""
     status = meta.get("current_status") or meta.get("status") or ""
     successor = ", ".join(meta["relations"].get("obsoleted_by", []))
-    state = "current" if meta["is_current"] else \
-        f"OBSOLETE by {successor or 'unknown'}"
+    state = "current" if meta["is_current"] else f"OBSOLETE by {successor or 'unknown'}"
+    clause = relation_clause(meta["relations"])
+    state = f"{state} | {clause}" if clause else state
 
     if style == "short":
         return f"{label(doc_id)}{secpart}{linepart}"
@@ -165,21 +230,25 @@ def cite(conn: sqlite3.Connection, doc_id: str, section: str | None = None,
         return f"[{label(doc_id)}{secpart}{linepart}]({url})"
     if style == "bibtex":
         num = re.sub(r"\D", "", doc_id)
-        series = ("Request for Comments" if doc_id.startswith("RFC")
-                  else {"BCP": "Best Current Practice",
-                        "STD": "Internet Standards",
-                        "FYI": "FYI"}.get(doc_id[:3], "Request for Comments"))
-        month = (_MONTHS[int(date[5:7]) - 1]
-                 if len(date) >= 7 and date[5:7].isdigit() else "")
-        rows = [f"@misc{{rfc{num},",
-                f"  series =       {{{series}}},",
-                f"  number =       {num},",
-                f"  howpublished = {{{label(doc_id)}}},",
-                "  publisher =    {RFC Editor},",
-                f"  doi =          {{{meta.get('doi') or ''}}},",
-                f"  url =          {{{meta.get('canonical_url') or ''}}},",
-                f"  author =       {{{_authors_meta(conn, meta) or ''}}},",
-                f"  title =        {{{{{title}}}}},"]
+        series = (
+            "Request for Comments"
+            if doc_id.startswith("RFC")
+            else {"BCP": "Best Current Practice", "STD": "Internet Standards", "FYI": "FYI"}.get(
+                doc_id[:3], "Request for Comments"
+            )
+        )
+        month = _MONTHS[int(date[5:7]) - 1] if len(date) >= 7 and date[5:7].isdigit() else ""
+        rows = [
+            f"@misc{{rfc{num},",
+            f"  series =       {{{series}}},",
+            f"  number =       {num},",
+            f"  howpublished = {{{label(doc_id)}}},",
+            "  publisher =    {RFC Editor},",
+            f"  doi =          {{{meta.get('doi') or ''}}},",
+            f"  url =          {{{meta.get('canonical_url') or ''}}},",
+            f"  author =       {{{_authors_meta(conn, meta) or ''}}},",
+            f"  title =        {{{{{title}}}}},",
+        ]
         if year := date[:4]:
             rows.append(f"  year =         {year},")
         if month:
@@ -189,16 +258,15 @@ def cite(conn: sqlite3.Connection, doc_id: str, section: str | None = None,
 
     sha = ""
     if mirror_root is not None and (sec or lines):
-        body, _ = span_text(conn, doc_id, mirror_root=mirror_root,
-                            section=section, lines=lines)
+        body, _ = span_text(conn, doc_id, mirror_root=mirror_root, section=section, lines=lines)
         sha = f" | span sha256:{q.span_hash(body)}"
-    tail = (f"{label(doc_id)}{secpart}{linepart} — {title} ({date}, "
-            f"{status}, {state})\n{url} | "
-            f"{errata_note(conn, doc_id, sec)}{sha}")
+    tail = (
+        f"{label(doc_id)}{secpart}{linepart} — {title} ({date}, "
+        f"{status}, {state})\n{url} | "
+        f"{errata_note(conn, doc_id, sec)}{sha}"
+    )
     if style == "comment":
         return "\n".join(("# " + ln) if ln else "#" for ln in tail.split("\n"))
     if not meta["is_current"]:
-        tail += (f"\nWARNING: {label(doc_id)} is obsolete"
-                 + (f"; cite {successor} instead" if successor else ""))
+        tail += f"\nWARNING: {label(doc_id)} is obsolete" + (f"; cite {successor} instead" if successor else "")
     return tail
-

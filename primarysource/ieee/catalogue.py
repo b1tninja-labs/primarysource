@@ -13,6 +13,9 @@ from importlib import resources
 from typing import Any
 
 from primarysource.errors import LibError
+from primarysource.standing import Edition as Standing
+from primarysource.standing import join as join_warning
+from primarysource.standing import warning as standing_warning
 
 PLACEMENTS = ("layer", "volume", "none")
 
@@ -150,6 +153,25 @@ def _family(raw: str) -> tuple[FamilyEntry, ...]:
 
 
 POSIX_FAMILY = _family(resources.files("primarysource.ieee").joinpath("catalogue.json").read_text(encoding="utf-8"))
+
+
+def standing_of(item: Edition) -> str:
+    """What the family catalogue already says about a later text. Empty when the page named no successor."""
+    parts: list[str] = []
+    for name in item.designations:
+        try:
+            entry = family_entry(name)
+        except LibError:
+            continue
+        if "superseded_by" in entry.not_stated:
+            parts.append(f"whether {entry.designation} is superseded was not stated")
+            continue
+        if not entry.superseded_by:
+            continue
+        reading = Standing(entry.designation, 0, current=False)
+        family = [reading, *[Standing(ref, 1, current=True) for ref in entry.superseded_by]]
+        parts.append(standing_warning(reading, family))
+    return join_warning(*parts)
 
 
 def family_entry(designation: str) -> FamilyEntry:

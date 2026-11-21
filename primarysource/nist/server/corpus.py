@@ -16,7 +16,9 @@ __all__ = ["ENV_VAR", "FETCH_COMMAND", "SCHEMA_VERSION", "Corpus", "CorpusError"
 class Corpus(_shared.Corpus):
     """A nist corpus: the shared one with this collection's hooks as defaults."""
 
-    def __init__(self, root: Path, documents: tuple[_shared.Document, ...], defaults: dict[str, str] | None = None) -> None:
+    def __init__(
+        self, root: Path, documents: tuple[_shared.Document, ...], defaults: dict[str, str] | None = None
+    ) -> None:
         super().__init__(
             root,
             documents,
@@ -25,6 +27,7 @@ class Corpus(_shared.Corpus):
             fetch_command=SPEC.fetch_command,
             index_command=SPEC.index_command,
             prefix=f"{SPEC.name}_",
+            standing=SPEC.standing,
         )
 
 

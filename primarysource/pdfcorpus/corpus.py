@@ -42,6 +42,7 @@ class Corpus:
     index_command: str = ""
     prefix: str = ""
     digest: str = ""
+    standing: Callable[[Document, Mapping[str, str]], str] | None = None
 
     def tool(self, name: str) -> str:
         """The served name of one of this collection's tools, for a `hint:` line."""
@@ -156,4 +157,5 @@ def load_corpus(spec: CorpusSpec, root: Path | None = None) -> Corpus:
         index_command=spec.index_command or fetch,
         prefix=f"{spec.name}_",
         digest=hashlib.sha256(raw).hexdigest(),
+        standing=spec.standing,
     )

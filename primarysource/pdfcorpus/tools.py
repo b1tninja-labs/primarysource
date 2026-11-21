@@ -20,6 +20,8 @@ from primarysource.pdfcorpus.corpus import Corpus
 from primarysource.pdfcorpus.models import Document, Section
 from primarysource.refs import RefGrammar
 from primarysource.render import next_start, render
+from primarysource.standing import join as join_warning
+from primarysource.standing import notes as standing_notes
 
 # Document ids are file-safe slugs (`sp800-73pt2-5`, `sp800-53r5-oscal`), matched without regard to case.
 # Section ids are dotted numbers, appendix letters and control ids (`3.2.4`, `A.1`, `AC-2(1)`).
@@ -108,6 +110,13 @@ def resolve(corpus: Corpus, doc: str, section: str | None = None, lines: str | N
     return Target(document, lines=span)
 
 
+def _warning(corpus: Corpus, document: Document) -> str:
+    """Status that is not final, and a later document when the collection recorded one."""
+    status = f"status is {document.status!r}, not 'final'" if document.status.lower() != "final" else ""
+    later = corpus.standing(document, corpus.defaults) if corpus.standing is not None else ""
+    return join_warning(status, later)
+
+
 def _numbered(lines: list[str], start: int, end: int, width: int) -> list[str]:
     return [f"{n:>{width}}: {lines[n - 1]}" for n in range(start, end + 1)]
 
@@ -145,6 +154,13 @@ def search(corpus: Corpus, query: str, doc: str | None = None, limit: int = 8, s
     footer = {
         "next": next_start(result.next_start),
         "relaxed": "no section holds every query word; these hold some" if result.relaxed else "",
+        "warning": join_warning(
+            *standing_notes(
+                (hit.doc_id, _warning(corpus, documents[hit.doc_id]))
+                for hit in result.hits
+                if hit.doc_id in documents
+            )
+        ),
     }
     return render("\n".join(out), footer)
 
@@ -192,7 +208,7 @@ def read(
     footer = {
         "cite": cite,
         "next": f"{d.doc_id}:{last + 1}-{end}" if last < end else "",
-        "warning": f"status is {d.status!r}, not 'final'" if d.status.lower() != "final" else "",
+        "warning": _warning(corpus, d),
     }
     return render(f"{label} ({shown})\n" + "\n".join(taken), footer)
 
@@ -229,7 +245,8 @@ def info(corpus: Corpus, doc: str) -> str:
     warning = ""
     if d.status.lower() != "final":
         warning = f"status is {d.status!r}, not 'final'. Check for a current version before relying on it."
-    return render("\n".join(out), {"warning": warning})
+    later = corpus.standing(d, corpus.defaults) if corpus.standing is not None else ""
+    return render("\n".join(out), {"warning": join_warning(warning, later)})
 
 
 def cite(corpus: Corpus, doc: str, section: str | None = None) -> str:

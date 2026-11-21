@@ -10,6 +10,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from primarysource.standing import Aside
+from primarysource.standing import Edition as Standing
+from primarysource.standing import warning as standing_warning
+
 DOLOGIN = "https://www.itu.int/rec/dologin_pub.asp?lang=e&id={artifact}&type=items"
 
 
@@ -615,3 +619,29 @@ def resolve(key: str) -> Edition:
         if edition.key == key or edition.rec == key:
             return edition
     raise KeyError(f"unknown edition {key!r}; registered: {', '.join(e.key for e in (*IN_FORCE, *SUPERSEDED))}")
+
+
+def _edition_order(edition: str) -> int:
+    month, _, year = edition.partition("/")
+    if month.isdigit() and year.isdigit():
+        return int(year) * 100 + int(month)
+    return 0
+
+
+def standing_of(edition: Edition) -> str:
+    """The warning for this edition, from the registry: a later in-force edition, and amendments not applied to it.
+
+    A status other than ``in force`` or ``superseded`` is not a lifecycle the registry stated, so it says nothing.
+    """
+    if edition.status not in {"in force", "superseded"}:
+        return ""
+    family = [
+        Standing(item.key, _edition_order(item.edition), current=item.status == "in force")
+        for item in (*IN_FORCE, *SUPERSEDED)
+        if item.rec == edition.rec
+    ]
+    reading = next((item for item in family if item.ref == edition.key), None)
+    if reading is None:
+        return ""
+    asides = [Aside(item.key) for item in AMENDMENTS if item.key.startswith(edition.key + "!")]
+    return standing_warning(reading, family, asides)

@@ -19,11 +19,12 @@ from primarysource import cursor
 from primarysource.budget import page as budget_page
 from primarysource.errors import LibError
 from primarysource.ieee import POSIX, POSIX_PAGE, _html
-from primarysource.ieee.catalogue import POSIX_2024, Edition
+from primarysource.ieee.catalogue import POSIX_2024, Edition, standing_of
 from primarysource.ieee.importer import INSTALL_RECORD, collection_home
 from primarysource.model import Document, Section, span_hash
 from primarysource.refs import Ref
 from primarysource.render import next_start, render
+from primarysource.standing import join as join_warning
 
 VOLUMES = {"basedefs": "XBD", "functions": "XSH", "utilities": "XCU", "xrat": "XRAT"}
 """The four volumes' directories and their usual short names."""
@@ -190,7 +191,10 @@ def read(ref: str, *, max_tokens: int = 2000, edition: Edition = POSIX_2024, hom
         "unit": POSIX.unit,
         "span": span_hash(body) if body else "",
         "next": cursor.read_next(_ref_text(edition.id, parsed.section, parsed.anchor), result),
-        "warning": "one block is larger than max_tokens" if result.oversize else "",
+        "warning": join_warning(
+            "one block is larger than max_tokens" if result.oversize else "",
+            standing_of(edition),
+        ),
     }
     return render(body or "(this section has no blocks of its own)", footer)
 

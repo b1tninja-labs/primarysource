@@ -28,6 +28,7 @@ from primarysource.errors import LibError
 from primarysource.model import span_hash
 from primarysource.render import next_start, render
 from primarysource.scaffold import add_tools
+from primarysource.standing import join as join_warning
 
 from . import __version__, corpus, index, sources, text
 from .errata import errata_text
@@ -87,13 +88,14 @@ def _no_clause(item: sources.Edition, number: str) -> LibError:
 
 def _fragments_warning(item: sources.Edition, number: str) -> str:
     extra = index.fragments(item, number) - 1
-    if not extra:
-        return ""
-    return (
-        f"{extra} other extracted fragment(s) carry the number {number} (a numbered sub-item, table cell or history "
-        "row the splitter could not tell from a heading); this is the first. Check the PDF before relying on it "
-        "for a normative claim."
-    )
+    fragment = ""
+    if extra:
+        fragment = (
+            f"{extra} other extracted fragment(s) carry the number {number} (a numbered sub-item, table cell or "
+            "history row the splitter could not tell from a heading); this is the first. Check the PDF before "
+            "relying on it for a normative claim."
+        )
+    return join_warning(fragment, sources.standing_of(item))
 
 
 def _budget_lines(entries: list[str], max_tokens: int) -> list[str]:
