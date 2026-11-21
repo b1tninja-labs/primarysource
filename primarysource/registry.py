@@ -52,6 +52,7 @@ BUILTIN: dict[str, str] = {
     "pep": "primarysource.pep:COLLECTION",
     "kconfig": "primarysource.kconfig:COLLECTION",
     "iso": "primarysource.iso:ISO [iso]",
+    "sae": "primarysource.sae:SAE [iso]",
     "iec": "primarysource.iec:IEC",
     "msos": "primarysource.msos:MSOS [msos]",
     "bluetooth": "primarysource.bluetooth:BLUETOOTH",
