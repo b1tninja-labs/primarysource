@@ -69,6 +69,8 @@ iso = ["pypdf>=5"]
 iec = ["pypdf>=5"]
 # Microsoft Open Specifications (primarysource/msos/): pypdf reads the published PDFs at import only.
 msos = ["pypdf>=5"]
+# Bluetooth specifications (primarysource/bluetooth/): the HTML books are fetched with the standard library.
+bluetooth = []
 # Kiwix libraries (primarysource/zim/, moved in from zimlore). libzim is a compiled extension (libzim + Xapian,
 # GPL-3.0-or-later); the wheel of this package ships only its own code, and the collection imports and lists
 # without it. PyPI carries libzim wheels for Windows x64, macOS and Linux; Windows on ARM has neither wheel nor a
@@ -113,6 +115,8 @@ select = ["E", "F", "I", "UP", "S", "B", "SIM"]
 "tests/test_iec*.py" = ["S105", "S106"]
 # msos downloads the Open Specifications zips from Microsoft's own hosts.
 "primarysource/msos/*" = ["S310"]
+# bluetooth downloads the specification catalog and HTML books from www.bluetooth.com.
+"primarysource/bluetooth/*" = ["S310"]
 
 [tool.mypy]
 strict = true
