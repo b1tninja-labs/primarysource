@@ -66,7 +66,8 @@ def main(argv: Sequence[str]) -> int:
         if args.command == "import":
             imported = importer.import_edition(library.default_home(), args.number, args.edition, file=args.file)
             return _out(
-                f"imported {imported.key}: {imported.sections} sections, {imported.requests} request(s), {imported.pdf}"
+                f"imported {imported.key}: {imported.sections} sections, "
+                f"{imported.requests} request(s), {imported.pdf}"
             )
         if args.command == "docs":
             return _out(library.docs())
