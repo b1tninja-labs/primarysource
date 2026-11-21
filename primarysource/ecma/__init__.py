@@ -4,7 +4,8 @@ Source: the standard's PDF from ecma-international.org, pinned by sha256 in `cat
 user's own `$PRIMARYSOURCE_HOME/ecma/` with `primarysource ecma import 427`. Placement is a volume (Ecma's text
 copyright notice allows copies only with the notice and no modification, and Ecma prefers its own download).
 Reading the PDF needs `pypdf` (the `[ecma]` extra) at import time only, and uses `pdftotext` for the text when it
-is on PATH. `docs/ecma.md` is the user-facing description.
+is on PATH. `primarysource ecma fetch` stores the standards index, and `primarysource ecma sync` imports each
+pinned edition whose page still serves that PDF. `docs/ecma.md` is the user-facing description.
 """
 
 from __future__ import annotations

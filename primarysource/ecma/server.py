@@ -23,7 +23,8 @@ INSTRUCTIONS = (
     "Loop: ecma_search('<words>') -> ecma_read('<ref>'). Refs: 'ecma:427§5.3' (a clause as numbered in the PDF), "
     "'...¶2' (its 2nd sentence), '427@1' pins the edition, 'A' is Annex A. ecma_outline('427') lists clauses as "
     "refs with PDF pages; ecma_cite('<ref>') gives the citation and the hash of the cited text. A clause's span is "
-    "its own text and then each subsection. If nothing is imported, the error says how."
+    "its own text and then each subsection. If nothing is imported, the error says how. When an edition's page "
+    "states it is fully identical with an ISO designation, ecma_docs and the citation say so."
 )
 
 

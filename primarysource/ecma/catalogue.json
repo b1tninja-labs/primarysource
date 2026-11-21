@@ -16,7 +16,8 @@
    "page_url": "https://ecma-international.org/publications-and-standards/standards/ecma-35/",
    "source_url": "https://ecma-international.org/wp-content/uploads/ECMA-35_6th_edition_december_1994.pdf",
    "size": 303826,
-   "sha256": "cd812a506f93bf44e0e6058fe423144c4dea8a64fbc96589cf99bcbe32fc1bf4"
+   "sha256": "cd812a506f93bf44e0e6058fe423144c4dea8a64fbc96589cf99bcbe32fc1bf4",
+   "identical": ["ISO/IEC 2022:1994"]
   },
   {
    "number": "48",
@@ -28,6 +29,28 @@
    "source_url": "https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf",
    "size": 1607865,
    "sha256": "9577ad2514c411584b274ef7a4b3238c80aa93defbb349b18b8c78f78873f450"
+  },
+  {
+   "number": "119",
+   "edition": 5,
+   "designation": "ECMA-119",
+   "title": "Volume and file structure of CD-ROM for information interchange",
+   "edition_name": "5th edition, December 2024",
+   "page_url": "https://ecma-international.org/publications-and-standards/standards/ecma-119/",
+   "source_url": "https://ecma-international.org/wp-content/uploads/ECMA-119_5th_edition_december_2024.pdf",
+   "size": 2230005,
+   "sha256": "60c83ce438ac1c367b82ecf60d8e0ac9d54b40843d62c1f19b80700dc4c19389"
+  },
+  {
+   "number": "167",
+   "edition": 3,
+   "designation": "ECMA-167",
+   "title": "Volume and file structure for write-once and rewritable media using non-sequential recording for information interchange",
+   "edition_name": "3rd edition, June 1997",
+   "page_url": "https://ecma-international.org/publications-and-standards/standards/ecma-167/",
+   "source_url": "https://ecma-international.org/wp-content/uploads/ECMA-167_3rd_edition_june_1997.pdf",
+   "size": 579302,
+   "sha256": "6efe0f591e21da2b17288076b2653dc616800bdc94f83e74acba9279c84c34b7"
   },
   {
    "number": "427",

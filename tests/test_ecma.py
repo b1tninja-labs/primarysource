@@ -60,12 +60,35 @@ def home(tmp_path: Path) -> Path:
 # --- the catalogue and the importer ----------------------------------------------------------------------------
 
 
+def test_the_packaged_catalogue_pins_ecma_119() -> None:
+    edition = packaged_catalogue().edition("119")
+    assert (edition.designation, edition.edition, edition.size) == ("ECMA-119", 5, 2230005)
+    assert edition.sha256 == "60c83ce438ac1c367b82ecf60d8e0ac9d54b40843d62c1f19b80700dc4c19389"
+    assert edition.edition_name == "5th edition, December 2024"
+    assert edition.source_url == (
+        "https://ecma-international.org/wp-content/uploads/ECMA-119_5th_edition_december_2024.pdf"
+    )
+
+
+def test_the_packaged_catalogue_pins_ecma_167() -> None:
+    edition = packaged_catalogue().edition("167")
+    assert (edition.designation, edition.edition, edition.size) == ("ECMA-167", 3, 579302)
+    assert edition.sha256 == "6efe0f591e21da2b17288076b2653dc616800bdc94f83e74acba9279c84c34b7"
+    assert edition.edition_name == "3rd edition, June 1997"
+    assert edition.source_url == (
+        "https://ecma-international.org/wp-content/uploads/ECMA-167_3rd_edition_june_1997.pdf"
+    )
+
+
 def test_the_packaged_catalogue_pins_ecma_427() -> None:
     edition = packaged_catalogue().edition("427")
     assert (edition.designation, edition.edition, edition.size) == ("ECMA-427", 1, 2320437)
     assert edition.sha256 == "037180df99e7d7c26d910dc3adb3fa07c4fb787cc4bd29e43634de3802313825"
     assert packaged_catalogue().terms.placement == "volume"
     assert edition.source_url.startswith("https://ecma-international.org/")
+    same = packaged_catalogue().edition("35")
+    assert same.identical == ("ISO/IEC 2022:1994",)
+    assert packaged_catalogue().edition("119").identical == ()
     with pytest.raises(LibError, match="no Ecma standard 428"):
         packaged_catalogue().edition("428")
     with pytest.raises(ValueError, match="malformed"):
@@ -88,6 +111,47 @@ def test_the_packaged_catalogue_pins_ecma_427() -> None:
                 ],
             }
         )
+    with pytest.raises(ValueError, match="not a designation"):
+        parse_catalogue(
+            {
+                **raw,
+                "editions": [
+                    {
+                        "number": "35",
+                        "edition": 6,
+                        "designation": "ECMA-35",
+                        "title": "t",
+                        "edition_name": "e",
+                        "page_url": "p",
+                        "source_url": "s",
+                        "size": 1,
+                        "sha256": "ab" * 32,
+                        "identical": ["not a standard"],
+                    }
+                ],
+            }
+        )
+
+
+def test_an_identical_edition_is_named_in_the_citation_and_the_catalogue_list() -> None:
+    from primarysource.ecma._pdf import PdfDocument
+    from primarysource.ecma.library import Loaded, _cite_text
+
+    text = _cite_text(
+        Loaded(
+            "35",
+            6,
+            "ECMA-35",
+            "6th edition, December 1994",
+            "Character code structure and extension techniques",
+            "https://ecma-international.org/publications-and-standards/standards/ecma-35/",
+            PdfDocument("", 1, "test", ()),
+        ),
+        None,
+        None,
+    )
+    assert "Fully identical with ISO/IEC 2022:1994." in text
+    assert "fully identical with ISO/IEC 2022:1994" in library.docs()
 
 
 def test_import_stores_the_pdf_its_extraction_and_a_record(tmp_path: Path) -> None:

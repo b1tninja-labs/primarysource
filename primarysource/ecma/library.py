@@ -17,7 +17,7 @@ from pathlib import Path
 from primarysource import budget, cursor
 from primarysource.c2sp._fetch import sha256
 from primarysource.ecma import _pdf
-from primarysource.ecma.catalogue import NUMBER
+from primarysource.ecma.catalogue import NUMBER, identical_with
 from primarysource.ecma.catalogue import catalogue as packaged_catalogue
 from primarysource.ecma.importer import read_record
 from primarysource.errors import LibError
@@ -25,6 +25,10 @@ from primarysource.home import collection_home
 from primarysource.model import span_hash
 from primarysource.refs import Ref, RefGrammar
 from primarysource.render import render
+from primarysource.standing import Edition as Standing
+from primarysource.standing import join as join_warning
+from primarysource.standing import notes as standing_notes
+from primarysource.standing import warning as standing_warning
 
 PREFIX = re.compile(r"^(?:ecma:)?(?:ecma-)?", re.IGNORECASE)
 
@@ -52,6 +56,20 @@ class Loaded:
 
 def default_home() -> Path:
     return collection_home("ecma")
+
+
+def _standing(number: str, edition: int, home: Path | None) -> str:
+    """A later edition of this number in the packaged catalogue. Not imported is still named."""
+    imported = set(read_record(home or default_home())["editions"])
+    family = [
+        Standing(f"ecma:{item.number}@{item.edition}", item.edition, imported=item.key in imported)
+        for item in packaged_catalogue().editions
+        if item.number == number
+    ]
+    reading = Standing(f"ecma:{number}@{edition}", edition, imported=True)
+    if not any(item.ref == reading.ref for item in family):
+        family.append(reading)
+    return standing_warning(reading, family)
 
 
 def parse_ref(text: str) -> Ref:
@@ -123,7 +141,9 @@ def _cite_text(doc: Loaded, section: _pdf.PdfSection | None, para: int | str | N
     where = f", §{section.id} {section.title}" if section else ""
     if para:
         where += f" ¶{para}"
-    return f"Ecma International, {doc.designation}, {doc.title}, {doc.edition_name}{where}. {doc.page_url}"
+    same = identical_with(doc.number, doc.edition)
+    identical = f" Fully identical with {same}." if same else ""
+    return f"Ecma International, {doc.designation}, {doc.title}, {doc.edition_name}{where}.{identical} {doc.page_url}"
 
 
 def _doc(ref: Ref) -> str:
@@ -161,7 +181,7 @@ def read(ref_text: str, max_tokens: int = 2000, home: Path | None = None) -> str
         "unit": "sentence",
         "span": span_hash(body),
         "next": cursor.read_next(scope, chosen),
-        "warning": warning,
+        "warning": join_warning(warning, _standing(doc.number, doc.edition, home)),
     }
     return render(body, footer)
 
@@ -206,8 +226,21 @@ def search(query: str, doc: str | None = None, limit: int = 10, start: int = 0, 
         return render("no matches", {})
     scored.sort()
     shown, nxt = cursor.window(scored, start, limit)
-    footer = {"next": nxt, "relaxed": "only some query words matched" if relaxed else ""}
-    return render("\n".join(f"{ref}: {snip}" for _, _, ref, snip in shown), footer)
+    lines = [f"{ref}: {snip}" for _, _, ref, snip in shown]
+    footer = {
+        "next": nxt,
+        "relaxed": "only some query words matched" if relaxed else "",
+        "warning": join_warning(
+            *standing_notes((ref.split("§", 1)[0], _standing(*_edition_of(ref), home)) for _, _, ref, _ in shown)
+        ),
+    }
+    return render("\n".join(lines), footer)
+
+
+def _edition_of(ref: str) -> tuple[str, int]:
+    token = ref.removeprefix("ecma:").split("§", 1)[0]
+    number, _, edition = token.partition("@")
+    return number, int(edition) if edition.isdigit() else 0
 
 
 def cite(ref_text: str, home: Path | None = None) -> str:
@@ -222,7 +255,7 @@ def cite(ref_text: str, home: Path | None = None) -> str:
         "cite": _cite_text(doc, section, ref.para),
         "unit": "sentence",
         "span": span_hash("\n".join(units)),
-        "warning": warning,
+        "warning": join_warning(warning, _standing(doc.number, doc.edition, home)),
     }
     label = f"ecma:{doc.number}@{doc.edition}" + (f"§{section.id}" if section else "")
     return render(label, footer)
@@ -236,5 +269,6 @@ def docs(home: Path | None = None) -> str:
     lines = [f"placement {cat.terms.placement}; {cat.terms.licence}"]
     for found in cat.editions:
         state = "imported" if found.key in record["editions"] else "not imported"
-        lines.append(f"{state:<13} {found.designation}@{found.edition}  {found.title}, {found.edition_name}")
+        same = f"  fully identical with {', '.join(found.identical)}" if found.identical else ""
+        lines.append(f"{state:<13} {found.designation}@{found.edition}  {found.title}, {found.edition_name}{same}")
     return "\n".join(lines)

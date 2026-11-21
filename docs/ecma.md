@@ -2,7 +2,9 @@
 
 ```
 pip install "primarysource[ecma]"                 # pypdf, needed only to import; add ,mcp to serve it
-primarysource ecma import 427                     # fetches the PDF from ecma-international.org (one request)
+primarysource ecma fetch                          # the standards index and the withdrawn list it links to
+primarysource ecma sync                           # import every pinned edition whose page still serves that PDF
+primarysource ecma import 427                     # one pinned standard (or a PDF you already have, with --file)
 primarysource ecma read "ecma:427§5.3¶2"
 primarysource mcp --collection ecma               # tools ecma_read, ecma_search, ecma_outline, ecma_cite, ecma_docs
 ```
@@ -30,6 +32,30 @@ live under `$PRIMARYSOURCE_HOME/ecma/`.
   summary said "volume until read". The importer downloads from Ecma to the user's home; nothing is baked into an
   image. Moving to a layer would need the notice kept on every copy and a decision that the extraction counts as a
   format change.
+- **ECMA-35, Character code structure and extension techniques, 6th edition, December 1994.** Landing page
+  <https://ecma-international.org/publications-and-standards/standards/ecma-35/> (read 2026-11-21). PDF
+  `.../wp-content/uploads/ECMA-35_6th_edition_december_1994.pdf`, 303,826 bytes, sha256
+  `cd812a506f93bf44e0e6058fe423144c4dea8a64fbc96589cf99bcbe32fc1bf4`. The page states that this edition is
+  fully identical with ISO/IEC 2022:1994. That designation is recorded on the catalogue edition (`identical`),
+  and the ISO tools name `ecma:35@6` when 2022 is asked for and is not in the ISO library. The citation and
+  `ecma_docs` say the same. An ISO number in the page's classification, without that statement, is not recorded.
+- **ECMA-119, Volume and file structure of CD-ROM for information interchange, 5th edition, December 2024.**
+  Landing page <https://ecma-international.org/publications-and-standards/standards/ecma-119/> (read 2026-11-17),
+  which presents the 6th edition, December 2025, as the current document and still links the 5th. PDF
+  `.../wp-content/uploads/ECMA-119_5th_edition_december_2024.pdf`, 2,230,005 bytes, 88 pages, sha256
+  `60c83ce438ac1c367b82ecf60d8e0ac9d54b40843d62c1f19b80700dc4c19389`. Imported 2026-11-17: 254 sections,
+  `pypdf` 6.12.2 (`pdftotext` was not on PATH). The 5th edition's introduction says that edition was developed
+  to be technically identical with ISO/IEC 9660:2023. The 6th edition PDF is on the same page and was not
+  imported: its body was not compared with the 5th. `iso9660` cites clauses from this import. The same
+  catalogue terms apply: the PDF stays on the user's volume.
+- **ECMA-167, Volume and file structure for write-once and rewritable media using non-sequential recording
+  for information interchange, 3rd edition, June 1997.** Landing page
+  <https://ecma-international.org/publications-and-standards/standards/ecma-167/> (read 2026-11-17), which
+  presents that edition as current. PDF
+  `.../wp-content/uploads/ECMA-167_3rd_edition_june_1997.pdf`, 579,302 bytes, 150 pages, sha256
+  `6efe0f591e21da2b17288076b2653dc616800bdc94f83e74acba9279c84c34b7`. Imported 2026-11-17: 400 sections,
+  `pypdf` 6.12.2 (`pdftotext` was not on PATH). `udfvol` cites clauses from this import. The PDF stays on
+  the user's volume.
 
 ## 2. Refs
 
@@ -47,8 +73,21 @@ the whole standard. Bullets are sentences of their own (`•` kept).
 
 `ecma_read(ref, start, max_tokens)`, `ecma_search(query, doc, limit, start)` (sentences containing every word, else
 at least half, flagged `relaxed:`), `ecma_outline(doc)` (clauses with refs and PDF pages), `ecma_cite(ref)`
-(`cite:`, `unit: sentence`, `span:`), `ecma_docs()`. The CLI has the same, plus `import [NUMBER] [--edition N]
-[--file PDF]`; `--file` takes a PDF you downloaded yourself, checked against the same sha256.
+(`cite:`, `unit: sentence`, `span:`), `ecma_docs()`. The CLI has the same, plus `fetch`, `sync [--only NUMBER]`
+and `import [NUMBER] [--edition N] [--file PDF]`. `--file` takes a PDF you downloaded yourself, checked against
+the same sha256. `sync` with no `--only` imports every pinned edition.
+
+Captured 2026-11-17 from `ecma-international.org` (a browser HAR of the standards index; the standard page was
+fetched again because that capture stored no body). The index is one
+`ul.items-list-wrapper`: number, title, last change. It does not link a PDF. It does link
+`/publications-and-standards/withdrawn-standards/`, and that page is the same kind of list. `fetch` stores both
+as `remote.json` in the ecma home and downloads nothing else.
+
+A standard's page carries the current edition in `p.ecma-item-edition` and one `a.download` outside
+`ul.ecma-item-archives`. Older editions are the rows of that list. `sync` opens the page for each edition in
+`catalogue.json`, and imports it only when that page still serves the pinned URL. An edition already stored
+under the pin is skipped. A URL that has moved is an error and nothing is written. A standard the index lists
+and the catalogue does not pin is not downloaded: the pin is the sha256 checked before the PDF is parsed.
 
 ## 4. The PDF reader is private, and a core change is proposed
 
@@ -79,7 +118,20 @@ extraction succeeds. A stored PDF or extraction that no longer matches (hash, JS
 `primarysource ecma import 427`: one request, 80 sections (every one non-empty), 394 sentences, `pdftotext`
 backend, well under a second. `ecma:427§5.3` is "Separator characters" (the brief's example).
 
+`primarysource ecma import 119 --edition 5` (2026-11-17): one request, 254 sections, 88 pages, `pypdf`
+backend. The stored PDF is `119-5.pdf` under the ecma home. ECMA-48, already imported in that home, was
+left in place.
+
+`primarysource ecma import 167 --edition 3` (2026-11-17): one request, 400 sections, 150 pages, `pypdf`
+backend. The stored PDF is `167-3.pdf` under the ecma home.
+
 ## 7. Open
 
-See the `ecma.*` roadmap rows in the coordinator's report: Ecmarkup source from `Ecma-TC54/ECMA-427`, other Ecma
-standards, a layer placement decision, and table extraction.
+Ecmarkup source from `Ecma-TC54/ECMA-427` was not examined. Editions the index lists and `catalogue.json` does
+not pin are not downloaded. A layer placement decision and table extraction are still open. Technical reports
+are a separate archive and were not in the capture. The catalogue cannot hold one: a number is one to four
+digits, and a standard page is parsed as the heading `ECMA-N` with a single current download. ECMA TR/112,
+1st edition, December 2023, *Universal Disk Format (UDF) specification*, is eight part PDFs on
+<https://ecma-international.org/publications-and-standards/technical-reports/ecma-tr-112/>
+(`ECMA_TR-112-1` through `ECMA_TR-112-8`, each `..._1st_edition_december_2023.pdf`). No pin was invented.
+`udfvol` leaves that revision as a note until a row needs one part.
