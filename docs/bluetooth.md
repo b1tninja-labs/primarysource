@@ -66,9 +66,9 @@ own membership.
 - **Sections** are the PDF's numbered headings (`primarysource/pdfcorpus/split.py`, the splitter nist and usb use),
   so refs are `bluetooth:battery-service§3.2.1.4`. A PDF with no usable headings falls back to a section per page,
   `p1`, `p2`. Measured on Battery Service 1.1: 30 pages, 91 sections.
-- **Not covered:** the HTML editions, the test documents (TS, ICS, IXIT, TCRL), errata and the lists of changes;
-  assigned numbers and the GATT supplement are separate documents on the SIG's site, listed there as links rather
-  than rows. Tables are `pdftotext -layout` columns, so a wrapped cell is interleaved (see `docs/gm.md` §4).
+- **Not covered:** the HTML editions, the test documents (TS, ICS, IXIT, TCRL), errata and the lists of changes.
+  Assigned numbers and the GATT supplement are not listing rows; they are added by hand in the catalogue and fetched
+  by name (§5). Tables are `pdftotext -layout` columns, so a wrapped cell is interleaved (see `docs/gm.md` §4).
 - **A download page in front of the file.** `files.bluetooth.com` answers a download address with a page saying the
   download starts by itself, linking the file with a one-time nonce. It has no terms to accept; the fetcher follows
   that link. The first full run did not, and 76 documents failed with "not a PDF" until it did.
@@ -84,4 +84,60 @@ own membership.
 `tests/test_bluetooth.py`: listing and spec-page parsing, an unparseable listing refused, the cache, selection,
 the fetch (pin, no-PDF, unchanged, changed and `--repin`, one failure not stopping the rest), pacing and the host
 allow-list, the offline setting, registration and the five prefixed tools. The pages and PDFs are invented and the
-transport is a dictionary: no test touches the network.
+transport is a dictionary: no test touches the network. The supplements are tested the same way: their addresses and
+versions, that a supplement is fetched from its PDF address without reading its page, that only the listed clauses
+reach the corpus, that a missing clause is refused, and that a heading the splitter misses is found by its exact line
+(`test_a_heading_the_splitter_misses_is_found_by_its_exact_line_and_a_contents_row_is_not`).
+
+## 5. The GATT Specification Supplement and Assigned Numbers
+
+Both are on the SIG's site as "Supplemental Document" pages, not as rows of the listing, so the catalogue adds them
+by hand (`SUPPLEMENTS` in `primarysource/bluetooth/catalogue.py`). Read 2026-11-21.
+
+| Document | Name in the collection | SIG page | PDF (fetched from) | Version date | Pages |
+|---|---|---|---|---|---|
+| GATT Specification Supplement (GSS) | `gatt-specification-supplement` | `https://www.bluetooth.com/specifications/gss/` | `https://btprodspecificationrefs.blob.core.windows.net/gatt-specification-supplement/GATT_Specification_Supplement.pdf` | 2026-09-09 | 207 |
+| Assigned Numbers | `assigned-numbers` | `https://www.bluetooth.com/specifications/assigned-numbers/` | `https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/Assigned_Numbers/out/en/Assigned_Numbers.pdf` | 2026-11-16 | 447 |
+
+- **GSS** is the SIG's abbreviation for the GATT Specification Supplement. The Core Specification Supplement is a
+  different document and is not in this collection. The GSS PDF is on the SIG's own storage account, which the SIG's
+  page links; the fetch allow-list admits that one host and no other.
+- **Pins.** `pins.json` holds the sha256 of each PDF as first fetched (trust on first use): the GSS
+  `34ad6b5f…9150b8`, Assigned Numbers `c2c873c8…bf106`, both pinned 2026-11-21. Each PDF's front page carries the
+  version date above; the SIG's pages give no status word, so the collection records `published`, and the tools warn
+  on it like any non-final status.
+- **Licence.** Both PDFs are marked "Bluetooth SIG Proprietary", and the same non-member evaluation terms as §2 apply.
+  Stored only on the owner's volume, never in this repository.
+- **Fetch.** `primarysource bluetooth catalogue`, then `primarysource bluetooth fetch gatt-specification-supplement
+  assigned-numbers`. A plain `fetch` takes only `adopted` documents, so these two are not fetched by it.
+
+### What is kept
+
+The whole PDF is downloaded and pinned, but only the clauses below reach `text/` and the index. A listed clause
+keeps its own text and its subsections. Everything else is read past, not indexed. Medical, health, bio and
+body-sensor clauses are not listed, and `install.json` records how many sections were left out.
+
+- **GSS, kept (10 sections):** 1 Introduction; 2.1 Data Types (2.1.1 Special medfloat32 and medfloat16 values);
+  2.2 Units; 2.3 Values and represented values (2.3.1, 2.3.2); 2.4 Representation of multi-field characteristics or
+  descriptors; 4 Descriptors; 4.1 Valid Range. **Left out:** §2 intro, §2.5 CRC calculation, all of §3 Characteristics
+  (a catalogue of sensor and measurement characteristics, none needed for the bridge) and §5 References.
+- **Assigned Numbers, kept (17 sections):** 1 Introduction; 2.3 Common Data Types; 2.4 Characteristic Presentation
+  Format (2.4.1 GATT Format Types, 2.4.2 GATT Characteristic Presentation Format Name Space, 2.4.2.1 Bluetooth SIG GATT
+  Characteristic Presentation Format Description); 2.5 PSMs and SPSMs; 2.6.1 Definition; 2.9 LE-U CID; 3.4 GATT
+  Services (3.4.1 Services by Name, 3.4.2 Services by UUID); 3.6 Declarations; 3.7 Descriptors; 3.8 Characteristics
+  (3.8.1 Characteristics by Name, 3.8.2 Characteristics by UUID). **Left out:** §2.1, §2.2, §2.6.2 and §2.6.3
+  (appearance category ranges), §2.7 to §2.8 and §2.10 to §2.13 (classic Class of Device, HCI codec, MWS, AMP),
+  §3.1 to §3.3 and §3.5 and §3.9 to §3.12 (SDP, units, object types, SDO and member services), §4 Mesh, §5 Service
+  Discovery, §6 Profiles and Services, §7 Company Identifiers and §8 References.
+- **Judgment on the identifier tables.** §3.4, §3.6 to §3.8 are single clauses that list every SIG service,
+  characteristic and descriptor by identifier, so their rows for medical and health services come with them as
+  identifiers only. No health or medical profile clause, and no text of one, is kept. Filtering the rows out would
+  mean editing a table, which this cut does not do.
+- **Located headings.** The PDF has no heading for chapter 3, and the splitter in `pdfcorpus/split.py` accepts a
+  numbered heading only under a parent it has already seen. So it finds none of 3.4, 3.6, 3.7 or 3.8, though it does
+  find their subsections. Those four are located by their exact heading line (`AN_LOCATED`). A contents row is not
+  matched, since it has leaders and a page number. The splitter itself is unchanged.
+- **Where the clauses do not match this document's content.** AN §2.9 "LE-U CID" lists only the reserved range
+  `0x0020` to `0x003E`; the fixed LE channels (ATT, LE signalling) are not in this clause. The clause's own reference
+  points to Core Specification Vol 3 Part A §2.1. Neither supplement names a serial or UART GATT service: the
+  bridge's UART service is vendor-defined and is not covered here.

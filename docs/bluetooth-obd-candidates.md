@@ -29,8 +29,8 @@ the Part footers read "Version Date: 2026-11-02"; `bluetooth_info` reports 2026-
 | HCI functional spec (Vol 4 Part E) | `core-specification-7-0` | §2.5.2 Part E header (verified) | Held | Needed only if the bridge talks HCI, not via the OS stack. |
 | Link Layer (Vol 6 Part B) | `core-specification-7-0` | §2.7.2 Part B header (verified) | Held | For LE connection and advertising. |
 | Architecture (Vol 1 Part A) | `core-specification-7-0` | §3.4 Physical links, Vol 1 Part A p.280 (verified); §3.5 Logical links; §3.6 L2CAP channels | Held | Background for the ATT/L2CAP mapping. |
-| GATT Specification Supplement (GSS) | `gatt-specification-supplement` — **not in the collection** | none held | **Candidate** | Not among the doc ids `bluetooth_info` lists. Add to the listing or fetch by hand. Defines GATT characteristics not in Core or in a service spec. |
-| Assigned Numbers (company ids, 16-bit UUIDs) | `assigned-numbers` — **not in the collection** | none held | **Candidate** | Published as a YAML repository by the SIG, not as a spec page. Proprietary header with no grant of licence: fetch per user, never commit. The decision document (§2.5, read 2026-11-14, not re-verified here) reports that the SIG's SDO list assigns `0xFFF0`–`0xFFF2`, so a vendor adapter's use of them is not an assignment to that vendor. |
+| GATT Specification Supplement (GSS, 2026-09-09) | `gatt-specification-supplement` | §4.1 Valid Range (the one descriptor it defines); §2.3 Values and represented values | Held (2026-11-21) | Added by hand in the catalogue, kept to the clauses in `docs/bluetooth.md` §5. §3 (characteristics) is not kept. Cite with `bluetooth:gatt-specification-supplement§<clause>`. |
+| Assigned Numbers (2026-11-16) | `assigned-numbers` | §3.4 GATT Services; §3.6 Declarations; §3.7 Descriptors (CCCD `0x2902`); §3.8 Characteristics; §2.5 PSMs and SPSMs; §2.9 LE-U CID (reserved range only in this edition) | Held (2026-11-21) | The PDF from the SIG's page, not the YAML repository. Chapter 3 has no heading, so §3.4, §3.6, §3.7 and §3.8 are located by their heading lines (`docs/bluetooth.md` §5). The fixed LE CIDs are not in §2.9; the Core is the source for them. |
 | Serial Port Profile 1.2 + RFCOMM 1.2 | `serial-port-profile-1-2`, `rfcomm-1-2` | clauses not yet pinned | Held | **Conditional.** Only if a classic (BR/EDR, non-LE) adapter is targeted. Not part of the BLE GATT scope. |
 
 Core Specification 6.0 to 6.3, the 5.x amendments and the 7.0 "Version 5.1" Parts are also held. Use 7.0 for
@@ -82,8 +82,9 @@ These do not belong in `bluetooth`, `iso`, `gm` or `ieee802`. Keep them in their
 
 - The 7.0 clause position of: L2CAP fixed-channel CIDs, the H4 UART packet format, the CCCD and Characteristic
   Properties clauses. These are unpinned, not guessed.
-- GSS and Assigned Numbers are not in the bluetooth catalogue; their acquisition and licence are open
-  (see the decision document, §2.4 and §6, on the `cbc1b5` branch).
+- GSS and Assigned Numbers were added to the bluetooth catalogue on 2026-11-21 (`docs/bluetooth.md` §5), so their
+  clause pointers in §1 are checked against the PDFs. Their licence is the SIG's non-member evaluation terms, as for
+  the other specifications (`docs/bluetooth.md` §2 and §5). The serial/UART GATT service is not in either document.
 - ISO 15765-2 2024 and ISO 14229-1 2020/2026: edition status not confirmed against iso.org in this session.
 - GMLAN message specification: not located in the gm corpus.
 

@@ -16,6 +16,7 @@ from primarysource import cli, registry
 from primarysource.bluetooth import COLLECTION, catalogue, importer
 from primarysource.bluetooth.spec import SPEC
 from primarysource.errors import LibError
+from primarysource.fetch import check_url
 from primarysource.pdfcorpus import corpus as pdfcorpus_corpus
 from primarysource.pdfcorpus import tools
 
@@ -280,3 +281,91 @@ def test_fetch_honours_the_offline_setting(tmp_path: Path, monkeypatch: pytest.M
     fetcher = importer.new_fetcher(None, 0)
     with pytest.raises(LibError, match="offline"):
         fetcher.get(catalogue.LISTING_URL, 10)
+
+
+# ---- the two supplements: GATT Specification Supplement and Assigned Numbers ----------------------------------
+
+GSS_PAGES = [
+    "1 Introduction",
+    "Invented introduction sentence.",
+    "2 Conventions",
+    "Invented convention sentence.",
+    "2.1 Data Types",
+    "Invented data type sentence.",
+    "3 Characteristics",
+    "Invented characteristic sentence about blood pressure.",
+    "3.1 Acceleration",
+    "Invented sensor sentence.",
+    "4 Descriptors",
+    "Invented descriptor introduction.",
+    "4.1 Valid Range",
+    "Invented range sentence.",
+]
+
+
+def test_the_supplements_carry_their_sig_addresses_and_versions() -> None:
+    by_slug = {e.slug: e for e in catalogue.SUPPLEMENTS}
+    gss = by_slug["gatt-specification-supplement"]
+    assert (gss.revision, gss.page, gss.pdf) == ("2026-09-09", catalogue.GSS_PAGE, catalogue.GSS_PDF)
+    an = by_slug["assigned-numbers"]
+    assert (an.revision, an.page, an.pdf) == ("2026-11-16", catalogue.AN_PAGE, catalogue.AN_PDF)
+    for entry in catalogue.SUPPLEMENTS:
+        check_url(entry.pdf, catalogue.HOSTS)
+        assert entry.corpus_status == "published"
+    assert gss.number == "Bluetooth GATT Specification Supplement 2026-09-09"
+    assert an.number == "Bluetooth Assigned Numbers 2026-11-16"
+    assert importer.select(catalogue.SUPPLEMENTS, []) == []  # `fetch` with no slugs does not take them
+    assert len(importer.select(catalogue.SUPPLEMENTS, [], "any")) == 2
+
+
+def test_the_supplements_are_added_to_the_listing_and_round_trip_through_the_cache(tmp_path: Path) -> None:
+    entries = importer.refresh_catalogue(tmp_path, importer.new_fetcher(_transport(_served()), 0))
+    slugs = [e.slug for e in entries]
+    assert slugs[-2:] == ["gatt-specification-supplement", "assigned-numbers"]
+    assert catalogue.read(tmp_path / "catalogue.json") == entries
+    assert catalogue.read(tmp_path / "catalogue.json")[-1].clauses == catalogue.AN_CLAUSES
+    catalogue.write(tmp_path / "again.json", list(catalogue.SUPPLEMENTS))
+    assert catalogue.read(tmp_path / "again.json") == list(catalogue.SUPPLEMENTS)
+
+
+def test_a_supplement_is_fetched_from_its_pdf_address_and_only_its_clauses_are_kept(tmp_path: Path) -> None:
+    pdf = make_pdf([GSS_PAGES], [])
+    transport = _transport({catalogue.GSS_PDF: pdf})
+    fetcher = importer.new_fetcher(transport, 0)
+    entries = [e for e in catalogue.SUPPLEMENTS if e.slug == "gatt-specification-supplement"]
+    report = importer.fetch_specs(SPEC, entries, fetcher, home=tmp_path, root=tmp_path / "corpus")
+    assert [o.status for o in report.outcomes] == ["imported"]
+    assert transport.calls == [catalogue.GSS_PDF]  # the SIG's page is not read: its PDF address is in the catalogue
+    text = (tmp_path / "corpus" / "text" / "gatt-specification-supplement.txt").read_text(encoding="utf-8")
+    assert "Invented range sentence." in text and "Invented data type sentence." in text
+    assert "blood pressure" not in text and "Invented sensor sentence." not in text  # §3 is read past
+    record = json.loads((tmp_path / "corpus" / "install.json").read_text(encoding="utf-8"))
+    kept = record["documents"]["gatt-specification-supplement"]
+    assert (kept["version"], kept["source"], kept["sections_left_out"]) == (
+        "2026-09-09",
+        catalogue.GSS_PDF,
+        3,
+    )
+    loaded = pdfcorpus_corpus.load_corpus(SPEC, tmp_path / "corpus")
+    assert "Invented range sentence." in tools.read(loaded, "bluetooth:gatt-specification-supplement§4.1")
+
+
+def test_a_clause_the_pdf_does_not_have_is_refused() -> None:
+    with pytest.raises(LibError, match="none of the clauses"):
+        importer._cut(["1 Introduction\nText.\n"], ("9",))
+
+
+def test_a_heading_the_splitter_misses_is_found_by_its_exact_line_and_a_contents_row_is_not() -> None:
+    pages = [
+        "1 Introduction\nIntro text.\n2 Core\nCore text.\n2.1 Sub\nSub text.\n"
+        "3.6 Declarations . . . . . . 9\n"
+        "3.6 Declarations\nDeclaration text.\n3.7 Descriptors UUID\nDescriptor text.\n"
+    ]
+    lines, sections, left_out = importer._cut(
+        pages, ("3.6", "3.7"), (("3.6", "Declarations"), ("3.7", "Descriptors"))
+    )
+    assert [s.id for s in sections] == ["3.6", "3.7"] and left_out == 3
+    assert lines[sections[0].start_line - 1] == "3.6 Declarations"
+    assert "Declaration text." in lines and "Descriptor text." in lines and "Intro text." not in lines
+    with pytest.raises(LibError, match="is not in the PDF"):
+        importer._cut(pages, ("3.8",), (("3.8", "Characteristics"),))

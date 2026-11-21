@@ -17,6 +17,7 @@ reported and the rest go on, so a long run can be repeated and resumes where it 
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
@@ -68,12 +69,13 @@ def new_fetcher(transport: Callable[[str, int], bytes] | None = None, interval: 
 def refresh_catalogue(home: Path, fetcher: Fetcher) -> list[Entry]:
     """Read the SIG's listing and cache it as `catalogue.json`. Refuses a page that lists nothing."""
     page = fetcher.get(catalogue.LISTING_URL, MAX_PAGE).decode("utf-8", errors="replace")
-    entries = catalogue.parse_listing(page)
-    if not entries:
+    listed = catalogue.parse_listing(page)
+    if not listed:
         raise LibError(
             "the listing page held no specifications, so its layout has changed",
             "the parser in primarysource/bluetooth/catalogue.py needs updating; nothing was written",
         )
+    entries = [*listed, *catalogue.SUPPLEMENTS]
     catalogue.write(home / "catalogue.json", entries)
     return entries
 
@@ -90,7 +92,46 @@ def select(entries: Sequence[Entry], slugs: Sequence[str], status: str = "adopte
     return [e for e in entries if wanted == "any" or e.status.lower() == wanted]
 
 
-def _cut(pages: list[str]) -> tuple[list[str], list[Section]]:
+def _listed(section_id: str, clauses: Sequence[str]) -> bool:
+    return any(section_id == clause or section_id.startswith(f"{clause}.") for clause in clauses)
+
+
+def _with_located(lines: list[str], sections: list[Section], located: Sequence[tuple[str, str]]) -> list[Section]:
+    """The splitter's sections with each `(clause, heading)` the splitter missed added, found by its exact line.
+
+    A heading line is the clause number and title, optionally followed by a table's "UUID" column label, and nothing
+    else, so a contents row (which has leaders and a page number) cannot match. Each section runs to the line before
+    the next heading.
+    """
+    starts = [(s.start_line, s.id, s.heading) for s in sections]
+    known = {s.id for s in sections}
+    for clause, title in located:
+        if clause in known:
+            continue
+        pattern = re.compile(rf"^\s*{re.escape(clause)}\s+{re.escape(title)}(?:\s+UUID)?\s*$")
+        hit = next((n for n, line in enumerate(lines, start=1) if pattern.match(line)), None)
+        if hit is None:
+            raise LibError(
+                f"the heading '{clause} {title}' is not in the PDF",
+                "the AN_LOCATED list in primarysource/bluetooth/catalogue.py does not match this edition; "
+                "nothing was written",
+            )
+        starts.append((hit, clause, title))
+    starts.sort()
+    return [
+        Section(sec_id, heading, start, starts[i + 1][0] - 1 if i + 1 < len(starts) else len(lines))
+        for i, (start, sec_id, heading) in enumerate(starts)
+    ]
+
+
+def _cut(
+    pages: list[str], clauses: Sequence[str] = (), located: Sequence[tuple[str, str]] = ()
+) -> tuple[list[str], list[Section], int]:
+    """The document's text and sections, and how many sections were left out.
+
+    With `clauses`, only those clauses (and their subsections) are kept: the text is rebuilt from their lines alone,
+    so what was left out is not in the corpus at all, not merely unindexed.
+    """
     text = "\n".join(pages)
     lines = text.split("\n")
     found = split_sections(text)
@@ -100,13 +141,25 @@ def _cut(pages: list[str]) -> tuple[list[str], list[Section]]:
         if section.id not in seen and section.end_line <= len(lines):
             seen.add(section.id)
             sections.append(section)
+    if clauses:
+        sections = _with_located(lines, sections, located)
+        kept = [s for s in sections if _listed(s.id, clauses)]
+        if not kept:
+            raise LibError(
+                "none of the clauses this collection keeps was found in the PDF's headings",
+                "the clauses in primarysource/bluetooth/catalogue.py do not match this edition; nothing was written",
+            )
+        keep_lines = sorted({n for s in kept for n in range(s.start_line, s.end_line + 1)})
+        index = {old: new for new, old in enumerate(keep_lines, start=1)}
+        cut = [Section(s.id, s.heading, index[s.start_line], index[s.end_line]) for s in kept]
+        return [lines[n - 1] for n in keep_lines], cut, len(sections) - len(kept)
     if not sections:
         first = 1
         for number, page in enumerate(pages, start=1):
             last = first + page.count("\n")
             sections.append(Section(f"p{number}", f"page {number}", first, max(first, last)))
             first = last + 1
-    return lines, sections
+    return lines, sections, 0
 
 
 def _json(path: Path, default: dict[str, Any]) -> dict[str, Any]:
@@ -154,7 +207,12 @@ def fetch_specs(
             done(Outcome(entry.slug, "unchanged", sections=len(known.sections)))
             continue
         try:
-            pdf_url = catalogue.parse_spec_page(fetcher.get(entry.page, MAX_PAGE).decode("utf-8", errors="replace"))
+            if entry.pdf:
+                pdf_url: str | None = entry.pdf
+            else:
+                pdf_url = catalogue.parse_spec_page(
+                    fetcher.get(entry.page, MAX_PAGE).decode("utf-8", errors="replace")
+                )
             if pdf_url is None:
                 done(Outcome(entry.slug, "no-pdf", note="its page offers no PDF (HTML only)"))
                 continue
@@ -182,7 +240,7 @@ def fetch_specs(
             pdf_path = home / "pdf" / f"{entry.slug}.pdf"
             atomic_write(pdf_path, data)
             pages, extractor, created = read_pages(pdf_path)
-            lines, sections = _cut(pages)
+            lines, sections, left_out = _cut(pages, entry.clauses, entry.located)
             text_file = f"text/{entry.slug}.txt"
             atomic_write(root / text_file, ("\n".join(lines) + "\n").encode("utf-8"))
             documents[entry.slug] = Document(
@@ -199,10 +257,14 @@ def fetch_specs(
             now = datetime.now(UTC).isoformat(timespec="seconds")
             pins[entry.slug] = {"sha256": digest, "bytes": len(data), "source": pdf_url, "pinned": now}
             record["documents"][entry.slug] = {
+                "version": entry.revision,
+                "source": pdf_url,
                 "pages": len(pages),
                 "extractor": extractor,
                 "sections": len(sections),
                 "segmenter": "numbered headings" if sections and not sections[0].id.startswith("p") else "pages",
+                "clauses": list(entry.clauses),
+                "sections_left_out": left_out,
                 "imported": now,
             }
             changed = True
