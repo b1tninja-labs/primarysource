@@ -44,6 +44,7 @@ BUILTIN: dict[str, str] = {
     "c2sp": "primarysource.c2sp:C2SP",
     "bbf": "primarysource.bbf:BBF [bbf]",
     "ecma": "primarysource.ecma:ECMA [ecma]",
+    "openspecs": "primarysource.openspecs:OPENSPECS",
     "gitdocs": "primarysource.gitdocs:COLLECTION",
     "debpolicy": "primarysource.debpolicy:COLLECTION",
     "rpmdocs": "primarysource.rpmdocs:COLLECTION",
