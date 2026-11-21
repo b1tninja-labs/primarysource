@@ -53,6 +53,7 @@ BUILTIN: dict[str, str] = {
     "kconfig": "primarysource.kconfig:COLLECTION",
     "iso": "primarysource.iso:ISO [iso]",
     "iec": "primarysource.iec:IEC",
+    "msos": "primarysource.msos:MSOS [msos]",
     "zim": "primarysource.zim.collection:COLLECTION [zim]",
     "cve": "primarysource.cve.collection:COLLECTION",
 }

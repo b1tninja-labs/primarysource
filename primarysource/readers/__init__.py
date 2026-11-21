@@ -4,6 +4,7 @@
 - `markdown`: a strict Markdown subset into headings and blocks (`cl.reader_markdown`).
 - `pdf`: a bookmarked PDF into sections of sentences, `pypdf` imported only when a PDF is read
   (`cl.reader_pdf_pypdf`); `bookmarks` cuts the page texts at the bookmarks (`cl.segment_bookmarks`).
+- `rtf`: a Word RTF paper into sections at `\\outlinelevel` headings (`cl.reader_rtf`).
 - `xml`: the one hardened XML parser: no DTDs, no entities, no network (`cl.reader_xml_hardened`).
 
 Standard library only, apart from `pypdf`, which is an ingest-time extra (PLAN.md §5.13).
