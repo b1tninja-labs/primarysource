@@ -176,7 +176,8 @@ def _serving_modules() -> dict[str, str]:
     modules = {f"core:{name}": name for name in CORE_SERVING}
     for name in registry.available():
         collection = registry.load(name)
-        modules[name] = collection.server.partition(":")[0]
+        if collection.server:  # a sync-only collection (iec) has no serving path to check
+            modules[name] = collection.server.partition(":")[0]
     return modules
 
 

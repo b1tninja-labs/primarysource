@@ -62,7 +62,14 @@ def build_server(names: Sequence[str], *, bare: bool = False) -> Any:
     served = []
     for name in dict.fromkeys(names):
         collection = registry.load(name)
+        # A sync-only collection (iec) declares no server: it has no MCP tools, so it is not served.
+        if not collection.server:
+            continue
         served.append(scaffold.Served(collection.name, collection.title, collection_server(collection)))
+    if not served:
+        raise LibError(
+            f"none of {', '.join(dict.fromkeys(names))} serves MCP tools", "name a collection that serves tools"
+        )
     return scaffold.compose(served, bare=bare)
 
 
