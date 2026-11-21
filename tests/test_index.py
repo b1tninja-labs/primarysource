@@ -132,6 +132,30 @@ def test_a_query_without_words_is_an_error_naming_the_remedy() -> None:
     assert raised.value.hint
 
 
+def test_a_dotted_identifier_in_the_body_is_found(tmp_path: Path) -> None:
+    path = tmp_path / "dotted.sqlite3"
+    doc = _doc(
+        "P1",
+        (
+            "1",
+            "Part numbers",
+            "The registry lists part 9.8.7.6.50 and marker 7.7.7.7.70 beside the older code 4.4.2.",
+        ),
+        ("2", "Other", "Nothing numbered here, only lanterns."),
+    )
+    index.rebuild(path, [doc], rebuild_command=REBUILD)
+    assert index.fts_query("9.8.7.6.5") == '"9.8.7.6.5"*'
+    conn = index.open_read(path, rebuild_command=REBUILD)
+    try:
+        assert _ids(index.search(conn, "9.8.7.6.5")) == [("P1", "1")]
+        assert _ids(index.search(conn, "7.7.7.7.7")) == [("P1", "1")]
+        assert _ids(index.search(conn, "4.4.2")) == [("P1", "1")]
+        assert index.search(conn, "4.4.3").hits == ()
+        assert index.search(conn, "9.8.7.6.4").hits == ()
+    finally:
+        conn.close()
+
+
 # --- cl.search_relaxed -----------------------------------------------------------------------------------------
 
 

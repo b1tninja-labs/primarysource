@@ -19,8 +19,10 @@ How it is opened is the point of most of this module:
 - **A rebuild** (`rebuild`) writes a temporary file in the same directory and `os.replace`s it over the old index,
   so a reader sees the old index or the new one, never a half-built one.
 
-Search (`search`) quotes every user term (`fts_query`), so FTS5 syntax in a question cannot raise. It asks for
-every term first; only when nothing has them all does it ask for any term, and says so with `relaxed`.
+Search (`search`) quotes every user term (`fts_query`), so FTS5 syntax in a question cannot raise. A dotted
+numeric identifier is that quoted phrase with a prefix marker on its last component, so `9.8.7.6.5` also
+matches a longer identifier such as `9.8.7.6.50`. It asks for every term first; only when nothing has them
+all does it ask for any term, and says so with `relaxed`.
 """
 
 from __future__ import annotations
@@ -328,27 +330,43 @@ _FILLER = frozenset(
     ]
 )
 _WORD = re.compile(r"\w")
+_DOTTED_ID = re.compile(r"\d+(?:\.\d+)+")
+_TERM_PUNCT = "?.,;:!()\"'"
 
 
 def query_terms(raw: str) -> tuple[str, ...]:
     """The searchable terms of `raw`: whitespace-separated tokens holding a word character, filler dropped."""
     tokens = [token for token in raw.split() if _WORD.search(token)]
-    content = [token for token in tokens if token.strip("?.,;:!()\"'").lower() not in _FILLER]
+    content = [token for token in tokens if token.strip(_TERM_PUNCT).lower() not in _FILLER]
     return tuple(dict.fromkeys(content or tokens))
+
+
+def _fts_term(term: str) -> str:
+    """One MATCH term. Quotes are doubled so the term cannot be read as FTS5 syntax.
+
+    `porter unicode61` splits on `.`. Quoting `9.8.7.6.5` as one phrase finds that exact sequence of tokens.
+    A longer identifier such as `9.8.7.6.50` shares every component except the last, which only begins with
+    the queried component, so the last token is a prefix. The same rule matches `1.2` inside `1.20`.
+    """
+    core = term.strip(_TERM_PUNCT)
+    if _DOTTED_ID.fullmatch(core):
+        return '"' + core.replace('"', '""') + '"*'
+    return '"' + term.replace('"', '""') + '"'
 
 
 def fts_query(raw: str, *, any_term: bool = False) -> str:
     """A MATCH expression that FTS5 accepts whatever the user typed.
 
     Every term is quoted as a phrase, with internal double quotes doubled (FTS5's own escape), so `set-of`,
-    `NEAR(`, `title:x`, `a*` and a stray `"` are searched as words instead of parsed as operators. Terms are ANDed,
-    or ORed with `any_term`. The trade is stated rather than hidden: FTS5 syntax does not work from a query box.
+    `NEAR(`, `title:x`, `a*` and a stray `"` are searched as words instead of parsed as operators. A dotted
+    numeric identifier keeps that quoting and adds a prefix marker (`_fts_term`). Terms are ANDed, or ORed
+    with `any_term`. The trade is stated rather than hidden: FTS5 syntax does not work from a query box.
     """
     terms = query_terms(raw)
     if not terms:
         raise LibError("the query has no words to search for", "pass at least one word")
     joiner = " OR " if any_term else " "
-    return joiner.join('"' + term.replace('"', '""') + '"' for term in terms)
+    return joiner.join(_fts_term(term) for term in terms)
 
 
 @dataclass(frozen=True, slots=True)
