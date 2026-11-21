@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 import pytest
-from cursor_check import follow_list, follow_read
+from cursor_check import follow_list, follow_read, split
 from pdffixture import standard
 
 from primarysource import cli, registry
@@ -206,8 +206,9 @@ def test_search_reads_the_index_not_the_extraction(home: Path) -> None:
 def test_search_pages_with_a_start_cursor_and_filters_by_document(home: Path) -> None:
     _drop(home, "ISO_IEC_9999_2026(en).pdf")
     import_folder(home)
-    rows = library.search("a", limit=100, home=home).rstrip("\n").split("\n")
-    assert follow_list(lambda start: library.search("a", limit=2, start=start, home=home)) == rows
+    body, footer = split(library.search("a", limit=100, home=home))
+    assert follow_list(lambda start: library.search("a", limit=2, start=start, home=home)) == body.split("\n")
+    assert footer["warning"] == "iso:9999@2024: a later edition is recorded: iso:9999@2026"
     only = library.search("gasket", doc="9999@2026", limit=100, home=home)
     assert only.count("iso:9999@2026") >= 1 and "iso:9999@2024" not in only
 

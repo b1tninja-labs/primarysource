@@ -87,6 +87,12 @@ $PRIMARYSOURCE_HOME/iso              # otherwise
     `pdftotext -layout` text and the shared splitter (`pdfcorpus/split.py`), which reads the contents page.
     Measured 2026-11-13: ISO/IEC 7816-3:2006 gives 113 clauses and ISO/IEC 7816-4:2005 gives 125, from
     clause 1 on.
+  - A free joint edition named by the IEC sync record (`free-sync.json`), whose PDF has neither bookmarks nor
+    numbered headings, is cut one section per page. Any other unbookmarked PDF is still refused. A zip of such
+    an edition contributes its own PDF; other members stay where they are. `iso_docs` and the citation say
+    `free joint publication`. When the cover's reference number prints a different year from the IEC record, a
+    ref for either year reads that import. A ref that names one of these editions and is not imported yet names
+    the file already on disk and the import command.
   - A distributor's tracking string printed before a heading (`` --`,``,`---1 Scope ``) is stripped.
   - When the PDF's title metadata is useless (`Microsoft Word - C038770e.doc`), the English title on the
     cover is used.
@@ -107,6 +113,12 @@ $PRIMARYSOURCE_HOME/iso              # otherwise
   footer.
   - Errors carry `hint` (the tool to call) and `action` (the import or index command).
   - `iso_docs` says when a source PDF has changed since import, or is missing.
+  - When an Ecma edition's own page states that the edition is fully identical with the standard asked for,
+    the error names that `ecma:` ref. If the edition is already imported, `hint` is `ecma_read` of that ref;
+    otherwise `action` is `primarysource ecma import`. A search whose whole query is that standard, year
+    included, adds the same `same text:` line, after any hits. A bare number is left as a word search when it
+    hits. `iso_docs` lists these editions as `same text`. The ISO number in an Ecma page's classification is
+    not that statement, and is not recorded.
 - **Tests** (`tests/test_iso.py`, `tests/test_identify.py`). They use invented PDFs, with and without
   bookmarks and with an ISO-style cover and running header. They never use ISO text.
 

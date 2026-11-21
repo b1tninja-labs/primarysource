@@ -30,7 +30,7 @@ from primarysource.readers.bookmarks import Outline, cut, cut_numbered
 MAX_BYTES = 64 * 1024 * 1024
 MAX_PAGES = 2000
 MAX_OUTLINE = 6000
-INSTALL_HINT = 'pip install "primarysource[ecma]"  (or [bbf], [ieee], [itu], [iso]); each brings pypdf'
+INSTALL_HINT = 'pip install "primarysource[ecma]"  (or [bbf], [iec], [ieee], [itu], [iso]); each brings pypdf'
 
 _PDFTOTEXT_VERSION = re.compile(rb"pdftotext\s+version\s+(\S+)", re.IGNORECASE)
 
@@ -183,5 +183,54 @@ def extract(data: bytes, path: Path | None = None, *, numbered: bool = False) ->
         "pypdf": pypdf.__version__,
         "headings_found": located,
         "segmenter": "bookmarks" if bookmarks else "numbered headings",
+        "sections": sections,
+    }
+
+
+def _page_title(text: str, number: int) -> str:
+    line = next((" ".join(raw.split()) for raw in text.splitlines() if raw.strip()), f"page {number}")
+    return line[:80].rstrip()
+
+
+def extract_pages(data: bytes, path: Path | None = None) -> dict[str, Any]:
+    """One section per PDF page, with the same record shape as `extract`.
+
+    For a free joint publication that has no bookmarks and no numbered headings. `pdftotext` supplies the page
+    text when it is on PATH and `path` is given; otherwise `pypdf` does."""
+    if len(data) > MAX_BYTES:
+        raise LibError(f"PDF is {len(data)} bytes, over the {MAX_BYTES} byte bound", "")
+    pypdf = _pypdf()
+    try:
+        reader = pypdf.PdfReader(io.BytesIO(data), strict=False)
+        count = len(reader.pages)
+        if count > MAX_PAGES:
+            raise LibError(f"PDF has {count} pages, over the {MAX_PAGES} bound", "")
+        if count < 1:
+            raise LibError("the PDF has no pages", "")
+        meta = reader.metadata
+        title = str(meta.title) if meta is not None and meta.title else ""
+        external = pdftotext_pages(path, count) if path is not None else None
+        backend = Backend("pypdf", str(pypdf.__version__))
+        if external is not None:
+            texts = external
+            backend = pdftotext_backend() or Backend("pdftotext", "unknown")
+        else:
+            texts = [str(page.extract_text() or "") for page in reader.pages]
+    except LibError:
+        raise
+    except Exception as exc:  # noqa: BLE001 - pypdf raises many types on hostile input
+        message = f"could not read the PDF: {type(exc).__name__}: {exc}"
+        raise LibError(message, "check the file is the publisher's PDF") from exc
+    sections = [
+        {"id": str(number), "title": _page_title(text, number), "depth": 0, "page": number, "text": text}
+        for number, text in enumerate(texts, start=1)
+    ]
+    return {
+        "title": title,
+        "pages": count,
+        "extractor": backend.label(),
+        "pypdf": pypdf.__version__,
+        "headings_found": count,
+        "segmenter": "pages",
         "sections": sections,
     }

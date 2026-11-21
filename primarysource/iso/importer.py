@@ -9,13 +9,17 @@ its bookmarks, or at its numbered headings when it has none, as older ISO editio
 `extracted/<key>.json`, which is what serving reads, so the PDF is never copied and serving never needs `pypdf`.
 `install.json` records the designation, the sha256, size and mtime of the source, the extractor and the
 segmenter. When the PDF's title metadata is useless (`Microsoft Word - C038770e.doc`), the English title on the
-cover is used. After an import the core FTS5 index (`index.sqlite`) is rebuilt atomically. Nothing here fetches,
-and nothing records the buyer's watermark or a distributor's tracking string.
+cover is used. A free joint edition named by the IEC sync record, whose PDF has no bookmarks and no numbered
+headings, is indexed one section per page; any other unbookmarked PDF is still refused. A zip of such an
+edition contributes its own PDF and leaves every other member where it is. After an import the core FTS5 index
+(`index.sqlite`) is rebuilt atomically. Nothing here fetches, and nothing records the buyer's watermark or a
+distributor's tracking string.
 """
 
 from __future__ import annotations
 
 import json
+import zipfile
 from collections.abc import Iterator
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -25,6 +29,7 @@ from typing import Any
 from primarysource import index
 from primarysource.errors import LibError
 from primarysource.fsutil import atomic_write, sha256
+from primarysource.iso import joint
 from primarysource.iso.designation import Designation, from_filename, parse
 from primarysource.iso.identify import cover_title, useful_title
 from primarysource.model import Document, Section, Unit
@@ -117,7 +122,15 @@ def import_file(home: Path, path: Path, designation: str | None = None, *, reind
     if not data.startswith(b"%PDF-"):
         raise LibError(f"{path.name} is not a PDF", "", "use the PDF as delivered by the ISO store")
     found, note = designate(path, designation)
-    extraction = pdf.extract(data, path, numbered=True)
+    try:
+        extraction = pdf.extract(data, path, numbered=True)
+    except LibError as exc:
+        if "no bookmarks" not in exc.message or (
+            joint.lookup(found.doc) is None and joint.by_name(path.name) is None
+        ):
+            raise
+        extraction = pdf.extract_pages(data, path)
+        note = "; ".join(part for part in (note, "free joint publication, indexed by page") if part)
     digest = sha256(data)
     extraction.update({"designation": found.label, "doc": found.doc, "sha256": digest})
     if not useful_title(str(extraction["title"]), found.label):
@@ -177,6 +190,7 @@ def import_folder(home: Path, folder: Path | None = None) -> tuple[list[ImportRe
             f"{IMPORT_COMMAND}",
         )
     record = read_record(home)
+    _place_joint_pdfs(folder, record)
     by_source = {entry.get("source"): entry for entry in record["documents"].values()}
     done: list[ImportResult] = []
     skipped: list[tuple[str, str]] = []
@@ -191,6 +205,20 @@ def import_folder(home: Path, folder: Path | None = None) -> tuple[list[ImportRe
     if done:
         rebuild_index(home)
     return done, skipped
+
+
+def _place_joint_pdfs(folder: Path, record: dict[str, Any]) -> None:
+    """Copy a free joint edition's own PDF out of a zip in `folder` when that edition is not imported yet."""
+    imported = set(record["documents"])
+    table = joint.catalogue()
+    for archive in sorted(path for path in folder.iterdir() if path.is_file() and path.suffix.lower() == ".zip"):
+        item = joint.by_name(archive.name, table)
+        if item is None or item.doc in imported:
+            continue
+        try:
+            joint.place_publication(folder, archive, item)
+        except (OSError, zipfile.BadZipFile):
+            continue
 
 
 def documents(home: Path) -> Iterator[Document]:

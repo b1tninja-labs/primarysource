@@ -30,31 +30,62 @@ def designation_of(label: str) -> Designation:
 _EDITION = re.compile(r"\bedition\b", re.IGNORECASE)
 _DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
 _STOP = re.compile(r"Reference\s+number|\bPartie\b|[àâçéèêëîïôûùüÿœ]")
+_BANNER = re.compile(r"^(?:©.*|INTERNATIONAL(?:\s+STANDARD)?|STANDARD|ISO(?:/IEC)?|\d+(?:-\d+)*)$", re.IGNORECASE)
 _JUNK_TITLE = re.compile(r"^\s*$|^(?:Microsoft Word|untitled)|\.(?:docx?|pdf|indd|fm)\b", re.IGNORECASE)
+_LETTER = re.compile(r"[A-Za-z]")
+
+
+def _title_lines(lines: list[str]) -> list[str]:
+    """English title lines after the edition line: skip a date, stop at the French title."""
+    title: list[str] = []
+    for line in lines:
+        if _DATE.fullmatch(line):
+            continue
+        if _STOP.search(line):
+            break
+        title.append(line)
+    return title
+
+
+def _title_above(lines: list[str]) -> list[str]:
+    """English title lines above the edition line.
+
+    They end at the French title. A standard banner (`INTERNATIONAL STANDARD`, `ISO`, the number) after some
+    other text means that text is a running header, not the title, so the result is empty."""
+    title: list[str] = []
+    for line in lines:
+        if _DATE.fullmatch(line) or _BANNER.match(line):
+            if title:
+                return []
+            continue
+        if _STOP.search(line):
+            return title
+        title.append(line)
+    return title
 
 
 def cover_title(probe: Probe) -> str:
-    """The English title printed on an ISO cover: the lines after the edition line, up to the French title or
-    the `Reference number` line. Empty when the cover does not have that shape."""
+    """The English title printed on an ISO cover.
+
+    Most covers print it after the edition line. Some print it above that line, with the French title and then
+    `INTERNATIONAL STANDARD` between the title and the edition. Empty when the cover does not have that shape."""
     if not probe.pages:
         return ""
     lines = [" ".join(line.split()) for line in probe.pages[0].splitlines() if line.strip()]
-    start = next((i + 1 for i, line in enumerate(lines) if _EDITION.search(line)), None)
-    if start is None:
+    edition = next((i for i, line in enumerate(lines) if _EDITION.search(line)), None)
+    if edition is None:
         return ""
-    title: list[str] = []
-    for line in lines[start:]:
-        if _STOP.search(line):
-            break
-        if not _DATE.fullmatch(line):
-            title.append(line)
-    return " ".join(title)
+    after = _title_lines(lines[edition + 1 :])
+    if after:
+        return " ".join(after)
+    return " ".join(_title_above(lines[:edition]))
 
 
 def useful_title(title: str, designation: str) -> bool:
-    """False for title metadata that names a file or a word processor (`Microsoft Word - C038770e.doc`) or that is
-    only the designation again."""
-    return not _JUNK_TITLE.search(title) and title.strip() != designation
+    """False for title metadata that names a file or a word processor (`Microsoft Word - C038770e.doc`), that is
+    only the designation again, or that has no letters (a byte-order mark stored as the title)."""
+    text = title.replace("\ufeff", "").strip()
+    return bool(_LETTER.search(text)) and not _JUNK_TITLE.search(text) and text != designation
 
 
 def _merge(found: list[Candidate]) -> list[Candidate]:

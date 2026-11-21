@@ -190,7 +190,18 @@ def test_a_useless_title_is_replaced_by_the_english_title_on_the_cover(tmp_path:
         ),
     )
     assert cover_title(probe) == "Widgets — Part 1: Gaskets"
+    above = Probe(
+        "y.pdf",
+        "",
+        (
+            "© ISO 2024\nRoad widgets — Diagnostic\nPart 2:\nGaskets\n"
+            "Pièces — Partie 2: Joints\nINTERNATIONAL\nSTANDARD\nISO\n9999-2\n"
+            "Third edition\n2024-04-01\nReference number\nISO 9999-2:2024(E)",
+        ),
+    )
+    assert cover_title(above) == "Road widgets — Diagnostic Part 2: Gaskets"
     assert not useful_title("Microsoft Word - C099999e.doc", "ISO/IEC 9999:2024")
+    assert not useful_title("\ufeff", "ISO 9999-2:2024")
     assert not useful_title("ISO/IEC 9999:2024", "ISO/IEC 9999:2024") and useful_title("Widgets", "ISO/IEC 9999:2024")
     result = import_file(tmp_path / "iso", _write(tmp_path, "ISO_IEC_9999_2024.pdf", iso_pdf()))
     assert read_record(tmp_path / "iso")["documents"][result.doc]["title"] == ""  # no title on that cover

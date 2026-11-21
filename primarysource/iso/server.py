@@ -24,7 +24,8 @@ INSTRUCTIONS = (
     "Refs: 'iso:9899@2024§6.5.2' (a clause as numbered in the PDF), '...¶3' (from its 3rd sentence), '9899' means "
     "the newest imported year, 'A' is Annex A; 'ISO/IEC 9899:2024§6.5.2' works too. iso_outline('9899') lists "
     "clauses as refs; iso_cite('<ref>') gives the citation and the hash of the cited text. iso_docs lists what is "
-    "imported. If a standard is not imported, the error says what the user must do."
+    "imported. If a standard is not imported, the error says what the user must do. When Ecma states an edition "
+    "is fully identical with that standard, the error names the ecma: ref and the hint is ecma_read."
 )
 
 
