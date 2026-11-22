@@ -44,7 +44,7 @@ def resolve_doc(corpus: Corpus, doc: str) -> Document:
     Failing that, a bare name with no revision resolves through the corpus's defaults (NIST: "NIST SP 800-53"
     -> the current final revision), when the collection supplies them. An explicit id or number always wins.
     """
-    key = _norm(doc)
+    key = _norm(corpus.unprefixed(doc))
     for d in corpus.documents:
         if _norm(d.doc_id) == key or _norm(d.number) == key:
             return d
@@ -90,6 +90,7 @@ def resolve(corpus: Corpus, doc: str, section: str | None = None, lines: str | N
     """
     if section is not None and lines is not None:
         raise ToolError("give one of section or lines, not both", "")
+    doc = corpus.unprefixed(doc)
     ref = None
     if "§" in doc or "::" in doc or ":" in doc:
         ref = GRAMMAR.parse(doc)
